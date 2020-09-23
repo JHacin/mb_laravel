@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Laravel</title>
         <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+        <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
     </head>
     <body>
-        <nav class="navbar is-primary" role="navigation" aria-label="glavni meni">
+        <nav class="navbar is-secondary" role="navigation" aria-label="glavni meni">
             <div class="navbar-brand">
                 <a class="navbar-item" href="{{ route('homepage') }}">
                     <img src="{{ asset('/img/logo.png') }}" alt="Mačji boter">
@@ -42,8 +43,12 @@
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-secondary">Registracija</a>
-                            <a class="button is-light">Prijava</a>
+                            <a class="button is-primary" href="{{ route('register') }}">
+                                Registracija
+                            </a>
+                            <a class="button is-light" href="{{ route('login') }}">
+                                Prijava
+                            </a>
                         </div>
                     </div>
                 </div>
