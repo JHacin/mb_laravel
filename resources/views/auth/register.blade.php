@@ -7,7 +7,7 @@
                 @csrf
                 <div class="field">
                     <label class="label" for="name">Uporabniško ime</label>
-                    <div class="control has-icons-left has-icons-right">
+                    <div class="control has-icons-left">
                         <input
                             class="input"
                             type="text"
@@ -27,7 +27,7 @@
 
                 <div class="field">
                     <label class="label" for="email">Email</label>
-                    <div class="control has-icons-left has-icons-right">
+                    <div class="control has-icons-left">
                         <input
                             class="input"
                             type="email"
@@ -46,7 +46,7 @@
 
                 <div class="field">
                     <label class="label" for="password">Geslo</label>
-                    <div class="control has-icons-left has-icons-right">
+                    <div class="control has-icons-left">
                         <input
                             class="input"
                             type="password"
@@ -64,7 +64,7 @@
 
                 <div class="field">
                     <label class="label" for="password-confirm">Potrditev gesla</label>
-                    <div class="control has-icons-left has-icons-right">
+                    <div class="control has-icons-left">
                         <input
                             class="input"
                             type="password"
