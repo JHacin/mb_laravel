@@ -20,8 +20,8 @@
                             autofocus
                         >
                         <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
+                          <i class="fas fa-envelope"></i>
+                        </span>
                     </div>
                 </div>
 
@@ -38,8 +38,8 @@
                             autocomplete="current-password"
                         >
                         <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
+                          <i class="fas fa-key"></i>
+                        </span>
                     </div>
                 </div>
 
