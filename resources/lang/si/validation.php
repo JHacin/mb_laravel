@@ -130,9 +130,13 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'email' => [
+            'unique' => 'Ta email naslov je že v uporabi.',
         ],
+        'password' => [
+            'min' => 'Geslo mora biti dolgo vsaj :min znakov.',
+            'confirmed' => 'Gesli se ne ujemata.',
+        ]
     ],
 
     /*
