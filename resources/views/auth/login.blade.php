@@ -5,6 +5,11 @@
         <div class="container">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
+
+                @error('email')
+                    <div class="notification is-danger">{{ $message }}</div>
+                @enderror
+
                 <div class="field">
                     <label class="label" for="email">Email</label>
                     <div class="control has-icons-left">

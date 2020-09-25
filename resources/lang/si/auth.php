@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Podatki se ne ujemajo z nobenim računom v naši bazi.',
-    'throttle' => 'Preveč preizkusov. Poskusite ponovno čez :seconds sekund.',
+    'failed' => 'Nepravilen email naslov in/ali geslo.',
+    'throttle' => 'Preveč neuspešnih vnosov. Poskusite ponovno čez :seconds sekund.',
 
 ];
