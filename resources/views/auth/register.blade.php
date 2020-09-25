@@ -9,7 +9,7 @@
                     <label class="label" for="name">Uporabniško ime</label>
                     <div class="control has-icons-left">
                         <input
-                            class="input"
+                            class="input @error('name') is-danger @enderror"
                             type="text"
                             id="name"
                             name="name"
@@ -23,13 +23,16 @@
                           <i class="fas fa-user"></i>
                         </span>
                     </div>
+                    @error('name')
+                        <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="field">
                     <label class="label" for="email">Email</label>
                     <div class="control has-icons-left">
                         <input
-                            class="input"
+                            class="input @error('email') is-danger @enderror"
                             type="email"
                             id="email"
                             name="email"
@@ -42,13 +45,16 @@
                           <i class="fas fa-envelope"></i>
                         </span>
                     </div>
+                    @error('email')
+                    <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="field">
                     <label class="label" for="password">Geslo</label>
                     <div class="control has-icons-left">
                         <input
-                            class="input"
+                            class="input @error('password') is-danger @enderror"
                             type="password"
                             id="password"
                             name="password"
@@ -60,13 +66,16 @@
                           <i class="fas fa-key"></i>
                         </span>
                     </div>
+                    @error('password')
+                        <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="field">
                     <label class="label" for="password-confirm">Potrditev gesla</label>
                     <div class="control has-icons-left">
                         <input
-                            class="input"
+                            class="input @error('password_confirmation') is-danger @enderror"
                             type="password"
                             id="password-confirm"
                             name="password_confirmation"
@@ -78,6 +87,9 @@
                           <i class="fas fa-key"></i>
                         </span>
                     </div>
+                    @error('password_confirmation')
+                        <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="field">
