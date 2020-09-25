@@ -5,11 +5,18 @@
         <div class="container">
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
+
+                @if (session('status'))
+                    <div class="notification is-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
                 <div class="field">
                     <label class="label" for="email">Email</label>
                     <div class="control has-icons-left">
                         <input
-                            class="input"
+                            class="input @error('email') is-danger @enderror"
                             type="email"
                             id="email"
                             name="email"
@@ -23,6 +30,9 @@
                           <i class="fas fa-envelope"></i>
                         </span>
                     </div>
+                    @error('email')
+                        <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="field">

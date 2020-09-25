@@ -4,6 +4,13 @@
     <section class="section">
         <div class="container">
             <h1 class="is-size-3">Potrditev email naslova</h1>
+
+            @if (session('resent'))
+                <div class="notification is-success">
+                   Na email naslov smo vam poslali novo povezavo.
+                </div>
+            @endif
+
             <div>Pred nadaljevanjem je treba opraviti potrditev email naslova. Na mail vam je bila poslana povezava.</div>
             <div>Če povezave niste prejeli,</div>
             <form method="POST" action="{{ route('verification.resend') }}">

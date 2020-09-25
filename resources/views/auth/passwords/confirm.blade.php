@@ -12,7 +12,7 @@
                     <label class="label is-sr-only" for="password">Geslo</label>
                     <div class="control has-icons-left">
                         <input
-                            class="input"
+                            class="input @error('password') is-danger @enderror"
                             type="password"
                             id="password"
                             name="password"
@@ -24,6 +24,9 @@
                           <i class="fas fa-key"></i>
                         </span>
                     </div>
+                    @error('password')
+                        <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="field">
