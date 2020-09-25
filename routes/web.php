@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('home');
+Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile.index');
 
 // Auth routes
 Route::get('/prijava', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
