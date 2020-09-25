@@ -52,12 +52,25 @@
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-primary" href="{{ route('register') }}">
-                                Registracija
-                            </a>
-                            <a class="button is-light" href="{{ route('login') }}">
-                                Prijava
-                            </a>
+                            @auth
+                                <a class="button is-primary" href="{{ route('home') }}">
+                                    Profil
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="button is-light">Odjava</button>
+                                </form>
+                            @endauth
+
+                            @guest
+                                <a class="button is-primary" href="{{ route('register') }}">
+                                    Registracija
+                                </a>
+                                <a class="button is-light" href="{{ route('login') }}">
+                                    Prijava
+                                </a>
+                            @endguest
                         </div>
                     </div>
                 </div>
