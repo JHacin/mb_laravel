@@ -14,38 +14,38 @@ return [
     */
 
     // Forms
-    'save_action_save_and_new'         => 'Save and new item',
-    'save_action_save_and_edit'        => 'Save and edit this item',
-    'save_action_save_and_back'        => 'Save and back',
-    'save_action_save_and_preview'     => 'Save and preview',
+    'save_action_save_and_new'         => 'Shrani in dodaj nov vnos',
+    'save_action_save_and_edit'        => 'Shrani in ponovno uredi vnos',
+    'save_action_save_and_back'        => 'Shrani in pojdi nazaj',
+    'save_action_save_and_preview'     => 'Shrani in pojdi na predogled',
     'save_action_changed_notification' => 'Default behaviour after saving has been changed.',
 
     // Create form
-    'add'                 => 'Add',
-    'back_to_all'         => 'Back to all ',
-    'cancel'              => 'Cancel',
-    'add_a_new'           => 'Add a new ',
+    'add'                 => 'Dodaj entiteto tipa',
+    'back_to_all'         => 'Nazaj na seznam ',
+    'cancel'              => 'Prekliči',
+    'add_a_new'           => 'Dodaj novo entiteto tipa ',
 
     // Edit form
-    'edit'                 => 'Edit',
-    'save'                 => 'Save',
+    'edit'                 => 'Uredi',
+    'save'                 => 'Shrani',
 
     // Translatable models
-    'edit_translations' => 'Translation',
-    'language'          => 'Language',
+    'edit_translations' => 'Prevod',
+    'language'          => 'Jezik',
 
     // CRUD table view
     'all'                       => 'All ',
     'in_the_database'           => 'in the database',
-    'list'                      => 'List',
-    'reset'                     => 'Reset',
-    'actions'                   => 'Actions',
-    'preview'                   => 'Preview',
-    'delete'                    => 'Delete',
+    'list'                      => 'Seznam',
+    'reset'                     => 'Ponastavi',
+    'actions'                   => 'Dejanja',
+    'preview'                   => 'Predogled',
+    'delete'                    => 'Izbriši',
     'admin'                     => 'Admin',
     'details_row'               => 'This is the details row. Modify as you please.',
     'details_row_loading_error' => 'There was an error loading the details. Please retry.',
-    'clone'                     => 'Clone',
+    'clone'                     => 'Kloniraj',
     'clone_success'             => '<strong>Entry cloned</strong><br>A new entry has been added, with the same information as this one.',
     'clone_failure'             => '<strong>Cloning failed</strong><br>The new entry could not be created. Please try again.',
 
@@ -81,16 +81,16 @@ return [
     'ajax_error_text'  => 'Error loading page. Please refresh the page.',
 
     // DataTables translation
-    'emptyTable'     => 'No data available in table',
-    'info'           => 'Showing _START_ to _END_ of _TOTAL_ entries',
-    'infoEmpty'      => 'No entries',
+    'emptyTable'     => 'Na voljo ni podatkov.',
+    'info'           => 'Prikazanih _START_ do _END_ od _TOTAL_ vnosov',
+    'infoEmpty'      => 'Ni vnosov',
     'infoFiltered'   => '(filtered from _MAX_ total entries)',
     'infoPostFix'    => '.',
     'thousands'      => ',',
-    'lengthMenu'     => '_MENU_ entries per page',
+    'lengthMenu'     => '_MENU_ vnosov na stran',
     'loadingRecords' => 'Loading...',
     'processing'     => 'Processing...',
-    'search'         => 'Search',
+    'search'         => 'Išči',
     'zeroRecords'    => 'No matching entries found',
     'paginate'       => [
         'first'    => 'First',
