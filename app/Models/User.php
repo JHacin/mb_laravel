@@ -52,6 +52,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles, CrudTrait;
 
+    public const ROLE_SUPER_ADMIN = 'super-admin';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_EDITOR = 'editor';
+    public const ROLE_AUTHENTICATED = 'authenticated';
+
     /**
      * The attributes that are mass assignable.
      *
