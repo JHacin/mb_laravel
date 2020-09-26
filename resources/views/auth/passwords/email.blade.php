@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
+@section('meta_title', 'Ponastavitev gesla | Mačji boter')
+
 @section('content')
     <section class="section">
         <div class="container">
+            <h1 class="title">Ponastavitev gesla</h1>
+
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
 

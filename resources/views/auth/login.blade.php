@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
+@section('meta_title', 'Prijava | Mačji boter')
+
 @section('content')
     <section class="section">
         <div class="container">
+            <h1 class="title">Prijava</h1>
+
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 

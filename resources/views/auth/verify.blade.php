@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
+@section('meta_title', 'Potrditev email naslova | Mačji boter')
+
 @section('content')
     <section class="section">
         <div class="container">
-            <h1 class="is-size-3">Potrditev email naslova</h1>
+            <h1 class="title">Potrditev email naslova</h1>
 
             @if (session('resent'))
                 <div class="notification is-success">

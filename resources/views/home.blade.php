@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Homepage</h1>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Mačji boter</h1>
+        </div>
+    </section>
 @endsection
