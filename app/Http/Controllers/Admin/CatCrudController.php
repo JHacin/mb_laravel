@@ -37,7 +37,7 @@ class CatCrudController extends CrudController
     {
         CRUD::setModel(Cat::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/muce');
-        CRUD::setEntityNameStrings('muca', 'muce');
+        CRUD::setEntityNameStrings('Muca', 'Muce');
     }
 
     /**
