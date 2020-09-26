@@ -117,8 +117,8 @@ return [
     'please_fix'          => 'Please fix the following errors:',
 
     // global crud - success / error notification bubbles
-    'insert_success' => 'The item has been added successfully.',
-    'update_success' => 'The item has been modified successfully.',
+    'insert_success' => 'Vnos uspešen.',
+    'update_success' => 'Urejanje uspešno.',
 
     // CRUD reorder view
     'reorder'                      => 'Reorder',
