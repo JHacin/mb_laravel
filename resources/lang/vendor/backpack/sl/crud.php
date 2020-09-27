@@ -129,8 +129,8 @@ return [
     'reorder_error_message'        => 'Your order has not been saved.',
 
     // CRUD yes/no
-    'yes' => 'Yes',
-    'no'  => 'No',
+    'yes' => 'Da',
+    'no'  => 'Ne',
 
     // CRUD filters navbar view
     'filters'        => 'Filters',
