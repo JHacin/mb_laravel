@@ -18,7 +18,7 @@ return [
     'save_action_save_and_edit'        => 'Shrani in ponovno uredi vnos',
     'save_action_save_and_back'        => 'Shrani in pojdi nazaj',
     'save_action_save_and_preview'     => 'Shrani in pojdi na predogled',
-    'save_action_changed_notification' => 'Default behaviour after saving has been changed.',
+    'save_action_changed_notification' => 'Privzeto dejanje po vnosu se je spremenilo.',
 
     // Create form
     'add'                 => 'Dodaj entiteto tipa',

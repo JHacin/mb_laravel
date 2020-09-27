@@ -62,6 +62,17 @@ class Cat extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'date_of_arrival' => 'date',
+        'date_of_birth' => 'date',
+        'is_active' => 'boolean',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

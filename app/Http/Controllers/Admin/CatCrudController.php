@@ -48,17 +48,37 @@ class CatCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name')->label('Ime')->type('text');
+        CRUD::addColumn([
+            'name' => 'name',
+            'label' => 'Ime',
+            'type' => 'text',
+        ]);
         CRUD::addColumn([
             'name' => 'gender',
             'label' => 'Spol',
             'type' => 'model_function',
             'function_name' => 'getGenderLabel',
         ]);
-        CRUD::column('date_of_arrival')->label('Datum sprejema')->type('date');
-        CRUD::column('is_active')->label('Objavljena')->type('boolean');
-        CRUD::column('created_at')->label('Datum objave')->type('date');
-        CRUD::column('updated_at')->label('Zadnja sprememba')->type('date');
+        CRUD::addColumn([
+            'name' => 'date_of_arrival',
+            'label' => 'Datum sprejema',
+            'type' => 'date',
+        ]);
+        CRUD::addColumn([
+            'name' => 'is_active',
+            'label' => 'Objavljena',
+            'type' => 'boolean',
+        ]);
+        CRUD::addColumn([
+            'name' => 'created_at',
+            'label' => 'Datum objave',
+            'type' => 'date',
+        ]);
+        CRUD::addColumn([
+            'name' => 'updated_at',
+            'label' => 'Zadnja sprememba',
+            'type' => 'date',
+        ]);
 
         CRUD::addFilter(
             [
@@ -86,12 +106,40 @@ class CatCrudController extends CrudController
     {
         CRUD::setValidation(CatRequest::class);
 
-        CRUD::field('name')->label('Ime')->type('text');
-        CRUD::field('gender')->label('Spol')->type('text');
-        CRUD::field('story')->label('Zgodba')->type('text');
-        CRUD::field('date_of_birth')->label('Datum rojstva')->type('text');
-        CRUD::field('date_of_arrival')->label('Datum sprejema')->type('text');
-        CRUD::field('is_active')->label('Objavljena')->type('text');
+        CRUD::addField([
+            'name' => 'name',
+            'label' => 'Ime',
+            'type' => 'text',
+        ]);
+        CRUD::addField([
+            'name' => 'gender',
+            'label' => 'Spol',
+            'type' => 'radio',
+            'options' => Cat::GENDER_LABELS,
+            'inline' => true,
+            'default' => Cat::GENDER_UNKNOWN,
+        ]);
+        CRUD::addField([
+            'name' => 'date_of_birth',
+            'label' => 'Datum rojstva',
+            'type' => 'date_picker',
+        ]);
+        CRUD::addField([
+            'name' => 'date_of_arrival',
+            'label' => 'Datum sprejema v zavetišče',
+            'type' => 'date_picker',
+        ]);
+        CRUD::addField([
+            'name' => 'story',
+            'label' => 'Zgodba',
+            'type' => 'wysiwyg',
+        ]);
+        CRUD::addField([
+            'name' => 'is_active',
+            'label' => 'Objavljena',
+            'type' => 'checkbox',
+            'hint' => 'Ali naj bo muca javno vidna (npr. na seznamu vseh muc).',
+        ]);
     }
 
     /**
