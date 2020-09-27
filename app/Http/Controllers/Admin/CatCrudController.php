@@ -59,6 +59,21 @@ class CatCrudController extends CrudController
         CRUD::column('is_active')->label('Objavljena')->type('boolean');
         CRUD::column('created_at')->label('Datum objave')->type('date');
         CRUD::column('updated_at')->label('Zadnja sprememba')->type('date');
+
+        CRUD::addFilter(
+            [
+                'type' => 'dropdown',
+                'name' => 'is_active',
+                'label' => 'Objavljene'
+            ],
+            [
+                true => 'Da',
+                false => 'Ne'
+            ],
+            function ($value) {
+                $this->crud->addClause('where', 'is_active', $value);
+            }
+        );
     }
 
     /**

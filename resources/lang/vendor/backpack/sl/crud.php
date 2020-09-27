@@ -84,7 +84,7 @@ return [
     'emptyTable'     => 'Na voljo ni podatkov.',
     'info'           => 'Prikazanih _START_ do _END_ od _TOTAL_ vnosov',
     'infoEmpty'      => 'Ni vnosov',
-    'infoFiltered'   => '(filtered from _MAX_ total entries)',
+    'infoFiltered'   => '(filtrirano od _MAX_ skupnih vnosov)',
     'infoPostFix'    => '.',
     'thousands'      => ',',
     'lengthMenu'     => '_MENU_ vnosov na stran',
@@ -135,7 +135,7 @@ return [
     // CRUD filters navbar view
     'filters'        => 'Filters',
     'toggle_filters' => 'Toggle filters',
-    'remove_filters' => 'Remove filters',
+    'remove_filters' => 'Odstrani filtre',
 
     // Fields
     'browse_uploads'            => 'Browse uploads',
