@@ -68,6 +68,14 @@ class Cat extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * @return string
+     */
+    public function getGenderLabel()
+    {
+        return self::GENDER_LABELS[$this->gender];
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

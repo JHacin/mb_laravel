@@ -48,13 +48,17 @@ class CatCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        CRUD::column('name')->label('Ime')->type('text');
+        CRUD::addColumn([
+            'name' => 'gender',
+            'label' => 'Spol',
+            'type' => 'model_function',
+            'function_name' => 'getGenderLabel',
+        ]);
+        CRUD::column('date_of_arrival')->label('Datum sprejema')->type('date');
+        CRUD::column('is_active')->label('Objavljena')->type('boolean');
+        CRUD::column('created_at')->label('Datum objave')->type('date');
+        CRUD::column('updated_at')->label('Zadnja sprememba')->type('date');
     }
 
     /**
@@ -67,13 +71,12 @@ class CatCrudController extends CrudController
     {
         CRUD::setValidation(CatRequest::class);
 
-        CRUD::setFromDb(); // fields
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
-         */
+        CRUD::field('name')->label('Ime')->type('text');
+        CRUD::field('gender')->label('Spol')->type('text');
+        CRUD::field('story')->label('Zgodba')->type('text');
+        CRUD::field('date_of_birth')->label('Datum rojstva')->type('text');
+        CRUD::field('date_of_arrival')->label('Datum sprejema')->type('text');
+        CRUD::field('is_active')->label('Objavljena')->type('text');
     }
 
     /**
