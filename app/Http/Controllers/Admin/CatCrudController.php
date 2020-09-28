@@ -8,7 +8,6 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -25,7 +24,6 @@ class CatCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
-    use ShowOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -48,6 +46,11 @@ class CatCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::addColumn([
+            'name' => 'id',
+            'label' => 'Šifra',
+            'type' => 'number',
+        ]);
         CRUD::addColumn([
             'name' => 'name',
             'label' => 'Ime',
@@ -72,19 +75,21 @@ class CatCrudController extends CrudController
         CRUD::addColumn([
             'name' => 'created_at',
             'label' => 'Datum objave',
-            'type' => 'date',
+            'type' => 'datetime',
         ]);
         CRUD::addColumn([
             'name' => 'updated_at',
             'label' => 'Zadnja sprememba',
-            'type' => 'date',
+            'type' => 'datetime',
         ]);
+
+        CRUD::orderBy('updated_at', 'DESC');
 
         CRUD::addFilter(
             [
                 'type' => 'dropdown',
                 'name' => 'is_active',
-                'label' => 'Objavljene'
+                'label' => 'Objavljena'
             ],
             [
                 true => 'Da',
