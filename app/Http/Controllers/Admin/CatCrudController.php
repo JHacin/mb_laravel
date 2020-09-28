@@ -123,11 +123,17 @@ class CatCrudController extends CrudController
             'name' => 'date_of_birth',
             'label' => 'Datum rojstva',
             'type' => 'date_picker',
+            'date_picker_options' => [
+                'format' => 'dd. mm. yyyy',
+            ],
         ]);
         CRUD::addField([
             'name' => 'date_of_arrival',
             'label' => 'Datum sprejema v zavetišče',
             'type' => 'date_picker',
+            'date_picker_options' => [
+                'format' => 'dd. mm. yyyy',
+            ],
         ]);
         CRUD::addField([
             'name' => 'story',

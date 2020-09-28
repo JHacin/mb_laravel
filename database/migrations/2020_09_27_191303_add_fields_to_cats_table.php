@@ -17,8 +17,8 @@ class AddFieldsToCatsTable extends Migration
         Schema::table('cats', function (Blueprint $table) {
             $table->smallInteger('gender')->default(Cat::GENDER_UNKNOWN);
             $table->text('story')->nullable();
-            $table->date('date_of_arrival');
-            $table->date('date_of_birth');
+            $table->date('date_of_arrival')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->boolean('is_active');
         });
     }

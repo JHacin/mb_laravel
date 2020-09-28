@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use App\Models\Cat;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CatRequest extends FormRequest
 {
@@ -14,7 +15,6 @@ class CatRequest extends FormRequest
      */
     public function authorize()
     {
-        // only allow updates if the user is logged in
         return backpack_auth()->check();
     }
 
@@ -26,7 +26,18 @@ class CatRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => ['string', 'min:2', 'max:100'],
+            'gender' => [
+                Rule::in([
+                    Cat::GENDER_UNKNOWN,
+                    Cat::GENDER_MALE,
+                    Cat::GENDER_FEMALE
+                ]),
+            ],
+            'date_of_birth' => ['nullable', 'date', 'before:now'],
+            'date_of_arrival' => ['nullable', 'date', 'before:now'],
+            'story' => ['nullable', 'string'],
+            'is_active' => ['boolean'],
         ];
     }
 
@@ -50,7 +61,9 @@ class CatRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'name.min' => 'Ime mora biti dolgo vsaj 2 znaka.',
+            'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
+            'date_of_arrival.before' => 'Datum sprejema mora biti v preteklosti.',
         ];
     }
 }

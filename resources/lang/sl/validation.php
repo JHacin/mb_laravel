@@ -21,7 +21,7 @@ return [
     'alpha_dash' => 'Polje lahko vsebuje le črke, številke, podčrtaje in vezaje.',
     'alpha_num' => 'Polje lahko vsebuje le črke in številke.',
     'array' => 'Polje mora biti niz.',
-    'before' => 'Vrednost mora biti datum po :date.',
+    'before' => 'Vrednost mora biti datum pred :date.',
     'before_or_equal' => 'Vrednost mora biti datum pred ali enak :date.',
     'between' => [
         'numeric' => 'Vrednost mora biti med :min in :max.',
