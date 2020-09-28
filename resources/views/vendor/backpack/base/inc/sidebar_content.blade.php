@@ -19,3 +19,8 @@
         <i class='nav-icon la la-cat'></i> Muce
     </a>
 </li>
+
+<li class='nav-item'>
+    <a class='nav-link' href='{{ backpack_url('botrovanja') }}'>
+        <i class='nav-icon la la-hands-helping'></i> Botrovanja</a>
+</li>

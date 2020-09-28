@@ -7,6 +7,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -47,6 +48,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read Collection|Sponsorship[] $sponsorships
+ * @property-read int|null $sponsorships_count
  */
 class User extends Authenticatable
 {
@@ -83,4 +86,57 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get the sponsorships that include this user.
+     *
+     * @return HasMany
+     */
+    public function sponsorships()
+    {
+        return $this->hasMany(Sponsorship::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Returns the email followed by the ID enclosed in parentheses.
+     *
+     * @return string
+     */
+    public function getEmailAndIdAttribute() {
+        return sprintf('%s (%d)', $this->email, $this->id);
+    }
+
+    /**
+     * Identifiable attribute for Backpack (in selects).
+     *
+     * @return string
+     */
+    public function identifiableAttribute()
+    {
+        return 'email_and_id';
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
 }

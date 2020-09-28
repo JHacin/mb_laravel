@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -24,6 +25,7 @@ class CatCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
+    use ShowOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -74,7 +76,7 @@ class CatCrudController extends CrudController
         ]);
         CRUD::addColumn([
             'name' => 'created_at',
-            'label' => 'Datum objave',
+            'label' => 'Datum vnosa',
             'type' => 'datetime',
         ]);
         CRUD::addColumn([

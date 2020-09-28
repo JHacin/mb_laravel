@@ -5,7 +5,9 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -33,6 +35,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Cat whereIsActive($value)
  * @method static Builder|Cat whereStory($value)
  * @mixin Eloquent
+ * @property-read Collection|Sponsorship[] $sponsorships
+ * @property-read int|null $sponsorships_count
  */
 class Cat extends Model
 {
@@ -80,6 +84,8 @@ class Cat extends Model
     */
 
     /**
+     * Convert the stored integer to a label shown to the user.
+     *
      * @return string
      */
     public function getGenderLabel()
@@ -93,6 +99,16 @@ class Cat extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Get the sponsorships that include this cat.
+     *
+     * @return HasMany
+     */
+    public function sponsorships()
+    {
+        return $this->hasMany(Sponsorship::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -104,6 +120,25 @@ class Cat extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Returns the name followed by the ID enclosed in parentheses.
+     *
+     * @return string
+     */
+    public function getNameAndIdAttribute() {
+        return sprintf('%s (%d)', $this->name, $this->id);
+    }
+
+    /**
+     * Identifiable attribute for Backpack (in selects).
+     *
+     * @return string
+     */
+    public function identifiableAttribute()
+    {
+        return 'name_and_id';
+    }
 
     /*
     |--------------------------------------------------------------------------
