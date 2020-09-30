@@ -27,6 +27,61 @@ class CatCrudController extends CrudController
     use DeleteOperation;
     use ShowOperation;
 
+    protected $idColumnDefinition = [
+        'name' => 'id',
+        'label' => 'Šifra',
+        'type' => 'number',
+    ];
+
+    protected $nameColumnDefinition = [
+        'name' => 'name',
+        'label' => 'Ime',
+        'type' => 'text',
+    ];
+
+    protected $genderColumnDefinition = [
+        'name' => 'gender',
+        'label' => 'Spol',
+        'type' => 'model_function',
+        'function_name' => 'getGenderLabel',
+    ];
+
+    protected $storyColumnDefinition = [
+        'name' => 'story',
+        'label' => 'Zgodba',
+        'type' => 'text',
+    ];
+
+    protected $dateOfArrivalColumnDefinition = [
+        'name' => 'date_of_arrival',
+        'label' => 'Datum sprejema',
+        'type' => 'date',
+    ];
+
+    protected $dateOfBirthColumnDefinition = [
+        'name' => 'date_of_birth',
+        'label' => 'Datum rojstva',
+        'type' => 'date',
+    ];
+
+    protected $isActiveColumnDefinition = [
+        'name' => 'is_active',
+        'label' => 'Objavljena',
+        'type' => 'boolean',
+    ];
+
+    protected $createdAtColumnDefinition = [
+        'name' => 'created_at',
+        'label' => 'Datum vnosa',
+        'type' => 'datetime',
+    ];
+
+    protected $updatedAtColumnDefinition = [
+        'name' => 'updated_at',
+        'label' => 'Zadnja sprememba',
+        'type' => 'datetime',
+    ];
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -48,42 +103,13 @@ class CatCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::addColumn([
-            'name' => 'id',
-            'label' => 'Šifra',
-            'type' => 'number',
-        ]);
-        CRUD::addColumn([
-            'name' => 'name',
-            'label' => 'Ime',
-            'type' => 'text',
-        ]);
-        CRUD::addColumn([
-            'name' => 'gender',
-            'label' => 'Spol',
-            'type' => 'model_function',
-            'function_name' => 'getGenderLabel',
-        ]);
-        CRUD::addColumn([
-            'name' => 'date_of_arrival',
-            'label' => 'Datum sprejema',
-            'type' => 'date',
-        ]);
-        CRUD::addColumn([
-            'name' => 'is_active',
-            'label' => 'Objavljena',
-            'type' => 'boolean',
-        ]);
-        CRUD::addColumn([
-            'name' => 'created_at',
-            'label' => 'Datum vnosa',
-            'type' => 'datetime',
-        ]);
-        CRUD::addColumn([
-            'name' => 'updated_at',
-            'label' => 'Zadnja sprememba',
-            'type' => 'datetime',
-        ]);
+        CRUD::addColumn($this->idColumnDefinition);
+        CRUD::addColumn($this->nameColumnDefinition);
+        CRUD::addColumn($this->genderColumnDefinition);
+        CRUD::addColumn($this->dateOfArrivalColumnDefinition);
+        CRUD::addColumn($this->isActiveColumnDefinition);
+        CRUD::addColumn($this->createdAtColumnDefinition);
+        CRUD::addColumn($this->updatedAtColumnDefinition);
 
         CRUD::orderBy('updated_at', 'DESC');
 
@@ -101,6 +127,26 @@ class CatCrudController extends CrudController
                 $this->crud->addClause('where', 'is_active', $value);
             }
         );
+    }
+
+    /**
+     * Define what is displayed in the Show view.
+     *
+     * @return void
+     */
+    protected function setupShowOperation()
+    {
+        CRUD::set('show.setFromDb', false);
+
+        CRUD::addColumn($this->idColumnDefinition);
+        CRUD::addColumn($this->nameColumnDefinition);
+        CRUD::addColumn($this->genderColumnDefinition);
+        CRUD::addColumn($this->storyColumnDefinition);
+        CRUD::addColumn($this->dateOfArrivalColumnDefinition);
+        CRUD::addColumn($this->dateOfBirthColumnDefinition);
+        CRUD::addColumn($this->isActiveColumnDefinition);
+        CRUD::addColumn($this->createdAtColumnDefinition);
+        CRUD::addColumn($this->updatedAtColumnDefinition);
     }
 
     /**
