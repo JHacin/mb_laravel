@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Admin\CrudColumnHelper;
 use App\Http\Requests\CatRequest;
 use App\Models\Cat;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -27,59 +28,41 @@ class CatCrudController extends CrudController
     use DeleteOperation;
     use ShowOperation;
 
-    protected $idColumnDefinition = [
-        'name' => 'id',
-        'label' => 'Šifra',
-        'type' => 'number',
-    ];
-
-    protected $nameColumnDefinition = [
+    const NAME_COLUMN_DEFINITION = [
         'name' => 'name',
         'label' => 'Ime',
         'type' => 'text',
     ];
 
-    protected $genderColumnDefinition = [
+    const GENDER_COLUMN_DEFINITION = [
         'name' => 'gender',
         'label' => 'Spol',
         'type' => 'model_function',
         'function_name' => 'getGenderLabel',
     ];
 
-    protected $storyColumnDefinition = [
+    const STORY_COLUMN_DEFINITION = [
         'name' => 'story',
         'label' => 'Zgodba',
         'type' => 'text',
     ];
 
-    protected $dateOfArrivalColumnDefinition = [
+    const DATE_OF_ARRIVAL_COLUMN_DEFINITION = [
         'name' => 'date_of_arrival',
         'label' => 'Datum sprejema',
         'type' => 'date',
     ];
 
-    protected $dateOfBirthColumnDefinition = [
+    const DATE_OF_BIRTH_COLUMN_DEFINITION = [
         'name' => 'date_of_birth',
         'label' => 'Datum rojstva',
         'type' => 'date',
     ];
 
-    protected $isActiveColumnDefinition = [
+    const IS_ACTIVE_COLUMN_DEFINITION = [
         'name' => 'is_active',
         'label' => 'Objavljena',
         'type' => 'boolean',
-    ];
-
-    protected $createdAtColumnDefinition = [
-        'name' => 'created_at',
-        'label' => 'Datum vnosa',
-        'type' => 'datetime',
-    ];
-
-    protected $updatedAtColumnDefinition = [
-        'name' => 'updated_at',
-        'label' => 'Zadnja sprememba',
-        'type' => 'datetime',
     ];
 
     /**
@@ -103,13 +86,13 @@ class CatCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::addColumn($this->idColumnDefinition);
-        CRUD::addColumn($this->nameColumnDefinition);
-        CRUD::addColumn($this->genderColumnDefinition);
-        CRUD::addColumn($this->dateOfArrivalColumnDefinition);
-        CRUD::addColumn($this->isActiveColumnDefinition);
-        CRUD::addColumn($this->createdAtColumnDefinition);
-        CRUD::addColumn($this->updatedAtColumnDefinition);
+        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
+        CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
+        CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);
+        CRUD::addColumn(self::DATE_OF_ARRIVAL_COLUMN_DEFINITION);
+        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
 
         CRUD::orderBy('updated_at', 'DESC');
 
@@ -138,15 +121,15 @@ class CatCrudController extends CrudController
     {
         CRUD::set('show.setFromDb', false);
 
-        CRUD::addColumn($this->idColumnDefinition);
-        CRUD::addColumn($this->nameColumnDefinition);
-        CRUD::addColumn($this->genderColumnDefinition);
-        CRUD::addColumn($this->storyColumnDefinition);
-        CRUD::addColumn($this->dateOfArrivalColumnDefinition);
-        CRUD::addColumn($this->dateOfBirthColumnDefinition);
-        CRUD::addColumn($this->isActiveColumnDefinition);
-        CRUD::addColumn($this->createdAtColumnDefinition);
-        CRUD::addColumn($this->updatedAtColumnDefinition);
+        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
+        CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
+        CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);
+        CRUD::addColumn(self::STORY_COLUMN_DEFINITION);
+        CRUD::addColumn(self::DATE_OF_ARRIVAL_COLUMN_DEFINITION);
+        CRUD::addColumn(self::DATE_OF_BIRTH_COLUMN_DEFINITION);
+        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
     }
 
     /**

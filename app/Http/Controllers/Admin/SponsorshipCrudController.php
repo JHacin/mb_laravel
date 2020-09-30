@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Admin\CrudColumnHelper;
 use App\Http\Requests\SponsorshipRequest;
 use App\Models\Sponsorship;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -28,6 +29,42 @@ class SponsorshipCrudController extends CrudController
     use ShowOperation;
 
     /**
+     * @return array
+     */
+    protected function getCatColumnDefinition()
+    {
+        return [
+            'name' => 'cat',
+            'label' => 'Muca',
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function($crud, $column, $entry, $related_key) {
+                    return backpack_url('muce', [$related_key, 'show']);
+                },
+                'target' => '_blank',
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUserColumnDefinition()
+    {
+        return [
+            'name' => 'user',
+            'label' => 'Uporabnik',
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function($crud, $column, $entry, $related_key) {
+                    return backpack_url('uporabniki', [$related_key, 'show']);
+                },
+                'target' => '_blank',
+            ]
+        ];
+    }
+
+    /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
      * @return void
@@ -48,40 +85,29 @@ class SponsorshipCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::addColumn([
-            'name' => 'id',
-            'label' => 'Šifra',
-            'type' => 'number',
-        ]);
-        CRUD::addColumn([
-            'name' => 'cat',
-            'label' => 'Muca',
-            'type' => 'relationship',
-            'wrapper' => [
-                'href' => function($crud, $column, $entry, $related_key) {
-                    return backpack_url('muce', [$related_key, 'show']);
-                },
-                'target' => '_blank',
-            ]
-        ]);
-        CRUD::addColumn([
-            'name' => 'user',
-            'label' => 'Uporabnik',
-            'type' => 'relationship',
-            'wrapper' => [
-                'href' => function($crud, $column, $entry, $related_key) {
-                    return backpack_url('uporabniki', [$related_key, 'show']);
-                },
-                'target' => '_blank',
-            ]
-        ]);
-        CRUD::addColumn([
-            'name' => 'created_at',
-            'label' => 'Datum vnosa',
-            'type' => 'datetime',
-        ]);
+        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
+        CRUD::addColumn(self::getCatColumnDefinition());
+        CRUD::addColumn(self::getUserColumnDefinition());
+        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
 
         CRUD::orderBy('created_at', 'DESC');
+    }
+
+    /**
+     * Define what is displayed in the Show view.
+     *
+     * @return void
+     */
+    protected function setupShowOperation()
+    {
+        CRUD::set('show.setFromDb', false);
+
+        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
+        CRUD::addColumn(self::getCatColumnDefinition());
+        CRUD::addColumn(self::getUserColumnDefinition());
+        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
     }
 
     /**
