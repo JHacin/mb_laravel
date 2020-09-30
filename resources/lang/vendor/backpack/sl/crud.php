@@ -21,10 +21,10 @@ return [
     'save_action_changed_notification' => 'Privzeto dejanje po vnosu se je spremenilo.',
 
     // Create form
-    'add'                 => 'Dodaj entiteto tipa',
+    'add'                 => 'Dodaj vnos tipa',
     'back_to_all'         => 'Nazaj na seznam ',
     'cancel'              => 'Prekliči',
-    'add_a_new'           => 'Dodaj novo entiteto tipa ',
+    'add_a_new'           => 'Dodaj nov vnos tipa ',
 
     // Edit form
     'edit'                 => 'Uredi',
@@ -50,13 +50,13 @@ return [
     'clone_failure'             => '<strong>Cloning failed</strong><br>The new entry could not be created. Please try again.',
 
     // Confirmation messages and bubbles
-    'delete_confirm'                              => 'Are you sure you want to delete this item?',
-    'delete_confirmation_title'                   => 'Item Deleted',
-    'delete_confirmation_message'                 => 'The item has been deleted successfully.',
-    'delete_confirmation_not_title'               => 'NOT deleted',
-    'delete_confirmation_not_message'             => "There's been an error. Your item might not have been deleted.",
-    'delete_confirmation_not_deleted_title'       => 'Not deleted',
-    'delete_confirmation_not_deleted_message'     => 'Nothing happened. Your item is safe.',
+    'delete_confirm'                              => 'Ali ste prepričani, da želite izbrisati ta vnos?',
+    'delete_confirmation_title'                   => 'Vnos izbrisan',
+    'delete_confirmation_message'                 => 'Vnos je bil uspešno izbrisan.',
+    'delete_confirmation_not_title'               => 'Brisanje neuspešno',
+    'delete_confirmation_not_message'             => 'Prišlo je do napake. Vnos najverjetneje ni bil izbrisan.',
+    'delete_confirmation_not_deleted_title'       => 'Brisanje preklicano',
+    'delete_confirmation_not_deleted_message'     => 'Vnos ni bil izbrisan.',
 
     // Bulk actions
     'bulk_no_entries_selected_title'   => 'No entries selected',

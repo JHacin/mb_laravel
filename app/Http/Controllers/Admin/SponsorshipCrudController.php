@@ -75,6 +75,9 @@ class SponsorshipCrudController extends CrudController
         CRUD::setModel(Sponsorship::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/botrovanja');
         CRUD::setEntityNameStrings('Botrovanje', 'Botrovanja');
+        CRUD::setSubheading('Dodaj novo botrovanje', 'create');
+        CRUD::setSubheading('Uredi botrovanje', 'edit');
+        CRUD::setSubheading('Podatki botrovanja', 'show');
     }
 
     /**

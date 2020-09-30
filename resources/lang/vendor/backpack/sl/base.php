@@ -41,7 +41,7 @@ return [
     'cancel'                 => 'Prekliči',
     'error'                  => 'Napaka',
     'success'                => 'Success',
-    'warning'                => 'Warning',
+    'warning'                => 'Pozor!',
     'notice'                 => 'Notice',
     'old_password_incorrect' => 'Old password is incorrect.',
     'password_dont_match'    => 'Passwords do not match.',
