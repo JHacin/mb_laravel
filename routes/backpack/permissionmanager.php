@@ -15,7 +15,7 @@ Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => ['web', backpack_middleware()],
 ], function () {
-    Route::crud('permission', 'PermissionCrudController');
-    Route::crud('role', 'RoleCrudController');
-    Route::crud('user', 'UserCrudController');
+    Route::crud(config('routes.admin.permissions'), 'PermissionCrudController');
+    Route::crud(config('routes.admin.roles'), 'RoleCrudController');
+    Route::crud('uporabniki', 'UserCrudController');
 });

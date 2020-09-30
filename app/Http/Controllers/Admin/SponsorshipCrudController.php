@@ -39,7 +39,7 @@ class SponsorshipCrudController extends CrudController
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function($crud, $column, $entry, $related_key) {
-                    return backpack_url('muce', [$related_key, 'show']);
+                    return backpack_url(config('routes.admin.cats'), [$related_key, 'show']);
                 },
                 'target' => '_blank',
             ]
@@ -57,7 +57,7 @@ class SponsorshipCrudController extends CrudController
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function($crud, $column, $entry, $related_key) {
-                    return backpack_url('uporabniki', [$related_key, 'show']);
+                    return backpack_url(config('routes.admin.users'), [$related_key, 'show']);
                 },
                 'target' => '_blank',
             ]
@@ -73,7 +73,7 @@ class SponsorshipCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(Sponsorship::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/botrovanja');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsorships'));
         CRUD::setEntityNameStrings('Botrovanje', 'Botrovanja');
         CRUD::setSubheading('Dodaj novo botrovanje', 'create');
         CRUD::setSubheading('Uredi botrovanje', 'edit');

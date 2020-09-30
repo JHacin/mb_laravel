@@ -6,6 +6,15 @@ use Backpack\PermissionManager\app\Http\Controllers\RoleCrudController as Backpa
 
 class RoleCrudController extends BackpackRoleCrudController
 {
+    /**
+     * @inheritdoc
+     */
+    public function setup()
+    {
+        parent::setup();
+        $this->crud->setRoute(backpack_url(config('routes.admin.roles')));
+    }
+
     public function setupListOperation()
     {
         $this->crud->addColumn([

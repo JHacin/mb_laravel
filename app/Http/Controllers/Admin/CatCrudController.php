@@ -74,7 +74,7 @@ class CatCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(Cat::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/muce');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.cats'));
         CRUD::setEntityNameStrings('Muca', 'Muce');
         CRUD::setSubheading('Dodaj novo muco', 'create');
         CRUD::setSubheading('Uredi muco', 'edit');

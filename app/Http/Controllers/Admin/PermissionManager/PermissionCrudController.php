@@ -6,4 +6,12 @@ use Backpack\PermissionManager\app\Http\Controllers\PermissionCrudController as 
 
 class PermissionCrudController extends BackpackPermissionCrudController
 {
+    /**
+     * @inheritdoc
+     */
+    public function setup()
+    {
+        parent::setup();
+        $this->crud->setRoute(backpack_url(config('routes.admin.permissions')));
+    }
 }
