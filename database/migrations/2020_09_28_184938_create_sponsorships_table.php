@@ -14,10 +14,10 @@ class CreateSponsorshipsTable extends Migration
     {
         Schema::create('sponsorships', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('cat_id');
-            $table->foreign('cat_id')->references('id')->on('cats');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('cat_id')->nullable();
+            $table->foreign('cat_id')->references('id')->on('cats')->nullOnDelete();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
             $table->timestamps();
         });
     }
