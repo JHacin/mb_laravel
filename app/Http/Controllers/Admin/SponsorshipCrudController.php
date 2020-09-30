@@ -41,7 +41,6 @@ class SponsorshipCrudController extends CrudController
                 'href' => function($crud, $column, $entry, $related_key) {
                     return backpack_url(config('routes.admin.cats'), [$related_key, 'show']);
                 },
-                'target' => '_blank',
             ]
         ];
     }
@@ -59,7 +58,6 @@ class SponsorshipCrudController extends CrudController
                 'href' => function($crud, $column, $entry, $related_key) {
                     return backpack_url(config('routes.admin.users'), [$related_key, 'show']);
                 },
-                'target' => '_blank',
             ]
         ];
     }
