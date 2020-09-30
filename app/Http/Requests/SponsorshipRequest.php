@@ -25,7 +25,8 @@ class SponsorshipRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'cat_id' => ['required', 'integer', 'exists:cats,id'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 
@@ -49,7 +50,8 @@ class SponsorshipRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'cat_id.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
+            'user_id.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
         ];
     }
 }
