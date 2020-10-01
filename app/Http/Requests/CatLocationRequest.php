@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CatLocationRequest extends FormRequest
@@ -25,7 +26,11 @@ class CatLocationRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'address' => ['nullable', 'string', 'min:2', 'max:255'],
+            'zip_code' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', new CountryCode],
         ];
     }
 

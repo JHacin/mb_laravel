@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Admin\CrudColumnHelper;
+use App\Helpers\CountryList;
 use App\Http\Requests\CatLocationRequest;
 use App\Models\CatLocation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -55,7 +56,8 @@ class CatLocationCrudController extends CrudController
     const COUNTRY_COLUMN_DEFINITION = [
         'name' => 'country',
         'label' => 'Država',
-        'type' => 'text',
+        'type' => 'select_from_array',
+        'options' => CountryList::COUNTRY_NAMES,
     ];
 
     /**
@@ -146,7 +148,10 @@ class CatLocationCrudController extends CrudController
         CRUD::addField([
             'name' => 'country',
             'label' => 'Država',
-            'type' => 'text',
+            'type' => 'select2_from_array',
+            'options' => CountryList::COUNTRY_NAMES,
+            'allows_null' => true,
+            'default' => 'SI'
         ]);
     }
 
