@@ -22,5 +22,12 @@
 
 <li class='nav-item'>
     <a class='nav-link' href='{{ backpack_url(config('routes.admin.sponsorships')) }}'>
-        <i class='nav-icon la la-hands-helping'></i> Botrovanja</a>
+        <i class='nav-icon la la-hands-helping'></i> Botrovanja
+    </a>
+</li>
+
+<li class='nav-item'>
+    <a class='nav-link' href='{{ backpack_url(config('routes.admin.cat_locations')) }}'>
+        <i class='nav-icon la la-map-marker'></i> Lokacije
+    </a>
 </li>

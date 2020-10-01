@@ -37,6 +37,7 @@ use Illuminate\Support\Carbon;
  * @mixin Eloquent
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
+ * @property-read string $name_and_id
  */
 class Cat extends Model
 {

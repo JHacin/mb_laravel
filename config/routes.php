@@ -7,6 +7,7 @@ return [
         'roles' => 'vloge',
         'permissions' => 'dovoljenja',
         'cats' => 'muce',
+        'cat_locations' => 'lokacije',
         'sponsorships' => 'botrovanja',
     ]
 ];

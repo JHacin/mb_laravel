@@ -89,8 +89,6 @@ class CatCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setHeading('Seznam muc', 'create');
-
         CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
         CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
         CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);

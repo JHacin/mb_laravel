@@ -50,6 +50,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @mixin Eloquent
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
+ * @property-read string $email_and_id
  */
 class User extends Authenticatable
 {
