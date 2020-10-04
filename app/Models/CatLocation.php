@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -61,6 +62,16 @@ class CatLocation extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Get the cats that are on this location.
+     *
+     * @return HasMany
+     */
+    public function cats()
+    {
+        return $this->hasMany(Cat::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

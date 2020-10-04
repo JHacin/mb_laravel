@@ -66,6 +66,23 @@ class CatCrudController extends CrudController
     ];
 
     /**
+     * @return array
+     */
+    protected function getLocationColumnDefinition()
+    {
+        return [
+            'name' => 'location',
+            'label' => 'Lokacija',
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'show']);
+                },
+            ]
+        ];
+    }
+
+    /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
      * @return void
@@ -93,6 +110,7 @@ class CatCrudController extends CrudController
         CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
         CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);
         CRUD::addColumn(self::DATE_OF_ARRIVAL_COLUMN_DEFINITION);
+        CRUD::addColumn(self::getLocationColumnDefinition());
         CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
@@ -130,6 +148,7 @@ class CatCrudController extends CrudController
         CRUD::addColumn(self::STORY_COLUMN_DEFINITION);
         CRUD::addColumn(self::DATE_OF_ARRIVAL_COLUMN_DEFINITION);
         CRUD::addColumn(self::DATE_OF_BIRTH_COLUMN_DEFINITION);
+        CRUD::addColumn(self::getLocationColumnDefinition());
         CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
@@ -178,6 +197,12 @@ class CatCrudController extends CrudController
             'name' => 'story',
             'label' => 'Zgodba',
             'type' => 'wysiwyg',
+        ]);
+        CRUD::addField([
+            'name' => 'location_id',
+            'label' => 'Lokacija',
+            'type' => 'relationship',
+            'placeholder' => 'Izberi lokacijo',
         ]);
         CRUD::addField([
             'name' => 'is_active',
