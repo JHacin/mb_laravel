@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CatPhotoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/cat-photos/upload', [CatPhotoController::class, 'upload'])->name('cat_photo.upload');
+Route::post('/cat-photos/delete', [CatPhotoController::class, 'delete'])->name('cat_photo.delete');

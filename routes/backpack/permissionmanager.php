@@ -17,5 +17,5 @@ Route::group([
 ], function () {
     Route::crud(config('routes.admin.permissions'), 'PermissionCrudController');
     Route::crud(config('routes.admin.roles'), 'RoleCrudController');
-    Route::crud('uporabniki', 'UserCrudController');
+    Route::crud(config('routes.admin.users'), 'UserCrudController');
 });

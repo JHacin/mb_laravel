@@ -39,6 +39,11 @@ use Illuminate\Support\Carbon;
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
  * @property-read string $name_and_id
+ * @property int|null $location_id
+ * @property-read CatLocation|null $location
+ * @property-read Collection|CatPhoto[] $photos
+ * @property-read int|null $photos_count
+ * @method static Builder|Cat whereLocationId($value)
  */
 class Cat extends Model
 {
@@ -100,6 +105,16 @@ class Cat extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Get this cat's photos.
+     *
+     * @return HasMany
+     */
+    public function photos()
+    {
+        return $this->hasMany(CatPhoto::class);
+    }
 
     /**
      * Get the sponsorships that include this cat.
