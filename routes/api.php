@@ -20,4 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/cat-photos/upload', [CatPhotoController::class, 'upload'])->name('cat_photo.upload');
-Route::post('/cat-photos/delete', [CatPhotoController::class, 'delete'])->name('cat_photo.delete');
+Route::post('/cat-photos/{name}/delete', [CatPhotoController::class, 'delete'])->name('cat_photo.delete');

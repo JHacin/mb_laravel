@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Admin\CrudColumnHelper;
 use App\Http\Requests\CatRequest;
 use App\Models\Cat;
+use App\Models\CatPhoto;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -23,7 +24,7 @@ use Exception;
 class CatCrudController extends CrudController
 {
     use ListOperation;
-    use CreateOperation;
+    use CreateOperation { store as traitStore; }
     use UpdateOperation;
     use DeleteOperation;
     use ShowOperation;
@@ -165,6 +166,11 @@ class CatCrudController extends CrudController
         CRUD::setValidation(CatRequest::class);
 
         CRUD::addField([
+            'name' => 'photos[]',
+            'label' => 'Slika',
+            'type' => 'image_ajax',
+        ]);
+        CRUD::addField([
             'name' => 'name',
             'label' => 'Ime',
             'type' => 'text',
@@ -210,6 +216,28 @@ class CatCrudController extends CrudController
             'type' => 'checkbox',
             'hint' => 'Ali naj bo muca javno vidna (npr. na seznamu vseh muc).',
         ]);
+    }
+
+    public function store()
+    {
+        $response = $this->traitStore();
+
+        $cat = $this->crud->getCurrentEntry();
+
+
+        if ($cat instanceof Cat) {
+            $photos = $this->crud->getRequest()->get('photos');
+
+            foreach ($photos as $idx => $path) {
+                $photo = new CatPhoto;
+                $photo->path = $path;
+                $photo->alt = 'test_alt';
+                $photo->cat_id = $cat->id;
+                $photo->save();
+            }
+        }
+
+        return $response;
     }
 
     /**

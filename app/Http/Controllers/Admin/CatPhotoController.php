@@ -21,23 +21,25 @@ class CatPhotoController extends Controller
 
         //Todo: return err if $image->isValid() is false
 
-        $name = 'test.jpg';
-//        $name = time() . '_' . $image->getClientOriginalName();
+        $name = time() . '_' . $image->getClientOriginalName();
         $path = $image->storeAs('muce/slike', $name, 'public');
 
-        return $path;
+        return response()->json([
+            'name' => $name,
+            'path' => $path,
+        ]);
     }
 
     /**
      * Remove a photo from the filesystem.
      *
-     * @param Request $request
+     * @param string $name
      *
      * @return string
      */
-    public function delete(Request $request)
+    public function delete(string $name)
     {
-        Storage::disk('public')->delete('muce/slike/test.jpg');
+        Storage::disk('public')->delete('muce/slike/' . $name);
 
         return 'OK';
     }
