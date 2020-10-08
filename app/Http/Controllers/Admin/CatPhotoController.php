@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Image;
 use Storage;
 
 class CatPhotoController extends Controller
@@ -17,15 +18,19 @@ class CatPhotoController extends Controller
      */
     public function upload(Request $request)
     {
-        $image = $request->file('image');
+        $base64 = $request->get('photo_base64');
+        // Todo: throw if missing or not valid base64
 
-        //Todo: return err if $image->isValid() is false
+        $image = Image::make($base64)->encode('jpg', 90);
 
-        $name = time() . '_' . $image->getClientOriginalName();
-        $path = $image->storeAs('muce/slike', $name, 'public');
+        $filename = md5($base64 . time()) . '.jpg';
+
+        $path = 'muce/slike/' . $filename;
+
+        Storage::disk('public')->put($path, $image->stream());
 
         return response()->json([
-            'name' => $name,
+            'name' => $filename,
             'path' => $path,
         ]);
     }

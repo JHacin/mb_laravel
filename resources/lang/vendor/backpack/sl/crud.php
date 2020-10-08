@@ -148,7 +148,7 @@ return [
     'internal_link'             => 'Internal link',
     'internal_link_placeholder' => 'Internal slug. Ex: \'admin/page\' (no quotes) for \':url\'',
     'external_link'             => 'External link',
-    'choose_file'               => 'Choose file',
+    'choose_file'               => 'Izberi datoteko',
     'new_item'                  => 'New Item',
     'select_entry'              => 'Select an entry',
     'select_entries'            => 'Select entries',

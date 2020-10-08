@@ -29,6 +29,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CatPhoto wherePath($value)
  * @method static Builder|CatPhoto whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int $index
+ * @method static Builder|CatPhoto whereIndex($value)
  */
 class CatPhoto extends Model
 {

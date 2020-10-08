@@ -166,10 +166,18 @@ class CatCrudController extends CrudController
         CRUD::setValidation(CatRequest::class);
 
         CRUD::addField([
-            'name' => 'photos[]',
-            'label' => 'Slika',
-            'type' => 'image_ajax',
+            'name' => 'photo_0',
+            'label' => 'Glavna (prikazna) slika',
+            'type' => 'cat_image',
+            'hint' => 'Slika bo uporabljena na naslovni strani, seznamu muc in kot glavna na individualni strani.'
         ]);
+        foreach ([1, 2, 3] as $index) {
+            CRUD::addField([
+                'name' => 'photo_' . $index,
+                'label' => 'Slika ' . ($index + 1),
+                'type' => 'cat_image',
+            ]);
+        }
         CRUD::addField([
             'name' => 'name',
             'label' => 'Ime',
@@ -226,12 +234,12 @@ class CatCrudController extends CrudController
 
 
         if ($cat instanceof Cat) {
-            $photos = $this->crud->getRequest()->get('photos');
+            $request = $this->crud->getRequest();
 
-            foreach ($photos as $idx => $path) {
+            foreach ([0, 1, 2, 3] as $index) {
                 $photo = new CatPhoto;
-                $photo->path = $path;
-                $photo->alt = 'test_alt';
+                $photo->path = $request->get('photo_' . $index);
+                $photo->index = $index;
                 $photo->cat_id = $cat->id;
                 $photo->save();
             }
