@@ -9,6 +9,8 @@ use Storage;
 
 class CatPhotoController extends Controller
 {
+    const PATH_ROOT = 'muce/slike/';
+
     /**
      * Store a photo in the filesystem and return its ID.
      *
@@ -25,26 +27,25 @@ class CatPhotoController extends Controller
 
         $filename = md5($base64 . time()) . '.jpg';
 
-        $path = 'muce/slike/' . $filename;
+        $path = self::PATH_ROOT . $filename;
 
         Storage::disk('public')->put($path, $image->stream());
 
         return response()->json([
-            'name' => $filename,
-            'path' => $path,
+            'filename' => $filename,
         ]);
     }
 
     /**
      * Remove a photo from the filesystem.
      *
-     * @param string $name
+     * @param string $filename
      *
      * @return string
      */
-    public function delete(string $name)
+    public function delete(string $filename)
     {
-        Storage::disk('public')->delete('muce/slike/' . $name);
+        Storage::disk('public')->delete(self::PATH_ROOT . $filename);
 
         return 'OK';
     }

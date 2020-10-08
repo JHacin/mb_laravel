@@ -176,7 +176,7 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
                         $modal.modal('hide');
 
                         $.ajax({
-                            url: 'http://homestead.test/api/cat-photos/upload',
+                            url: '{{ route('cat_photos.upload') }}',
                             data: data,
                             cache: false,
                             contentType: false,
@@ -184,8 +184,8 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
                             method: 'POST',
                             success: function(data) {
                                 $previewArea.show();
-                                $hiddenImage.val(data.path);
-                                $removeBtn.attr('data-name', data.name);
+                                $hiddenImage.val(data.filename);
+                                $removeBtn.attr('data-filename', data.filename);
                                 $removeBtn.show();
                             },
                             complete: function () {
@@ -196,13 +196,12 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
                 });
 
                 $removeBtn.on('click', function () {
-                    const name = $(this).attr('data-name');
-
+                    const filename = $(this).attr('data-filename');
                     $element.attr('data-state', 'loading');
 
                     $.ajax({
-                        url: `http://homestead.test/api/cat-photos/${name}/delete`,
-                        method: 'POST',
+                        url: '{{ route('cat_photos.upload') }}' + `/${filename}`,
+                        method: 'DELETE',
                         success: function() {
                             $mainImage.cropper("destroy");
                             $mainImage.attr('src','');

@@ -232,7 +232,6 @@ class CatCrudController extends CrudController
 
         $cat = $this->crud->getCurrentEntry();
 
-
         if ($cat instanceof Cat) {
             $request = $this->crud->getRequest();
 
