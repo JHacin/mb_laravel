@@ -17,7 +17,7 @@ class CreateCatPhotosTable extends Migration
             $table->string('filename');
             $table->string('alt')->nullable();
             $table->integer('index');
-            $table->foreignId('cat_id')->constrained('cats')->cascadeOnDelete();
+            $table->foreignId('cat_id')->constrained('cats');
             $table->timestamps();
         });
     }

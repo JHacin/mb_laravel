@@ -16,7 +16,6 @@ class CatPhotoService
      * Return the full path relative to the public storage root.
      *
      * @param string $filename
-     *
      * @return string
      */
     public static function getFullPath(string $filename)
@@ -43,7 +42,6 @@ class CatPhotoService
      * relative to PATH_ROOT.
      *
      * @param string $base64
-     *
      * @return string
      */
     public function createImageFromBase64(string $base64)
@@ -63,7 +61,6 @@ class CatPhotoService
      * @param Cat $cat
      * @param string $filename
      * @param int $index
-     *
      * @return void
      */
     public function create(Cat $cat, string $filename, int $index)
@@ -79,7 +76,6 @@ class CatPhotoService
      * Remove a photo from the filesystem.
      *
      * @param string $filename
-     *
      * @return void
      */
     public function deleteFromDisk(string $filename)
