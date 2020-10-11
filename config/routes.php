@@ -8,7 +8,6 @@ return [
         'permissions' => 'dovoljenja',
         'cats' => 'muce',
         'cat_locations' => 'lokacije',
-        'cat_photos' => 'cat_photos',
         'sponsorships' => 'botrovanja',
     ]
 ];

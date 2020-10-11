@@ -6,6 +6,7 @@ use App\Helpers\Admin\CrudColumnHelper;
 use App\Http\Requests\CatRequest;
 use App\Models\Cat;
 use App\Models\CatPhoto;
+use App\Services\CatPhotoService;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -15,6 +16,8 @@ use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 /**
  * Class CatCrudController
@@ -24,8 +27,12 @@ use Exception;
 class CatCrudController extends CrudController
 {
     use ListOperation;
-    use CreateOperation { store as traitStore; }
-    use UpdateOperation;
+    use CreateOperation {
+        store as traitStore;
+    }
+    use UpdateOperation {
+        update as traitUpdate;
+    }
     use DeleteOperation;
     use ShowOperation;
 
@@ -67,6 +74,22 @@ class CatCrudController extends CrudController
     ];
 
     /**
+     * @var CatPhotoService
+     */
+    private $catPhotoService;
+
+    /**
+     * CatCrudController constructor.
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->catPhotoService = new CatPhotoService();
+    }
+
+
+    /**
      * @return array
      */
     protected function getLocationColumnDefinition()
@@ -76,7 +99,7 @@ class CatCrudController extends CrudController
             'label' => 'Lokacija',
             'type' => 'relationship',
             'wrapper' => [
-                'href' => function($crud, $column, $entry, $related_key) {
+                'href' => function ($crud, $column, $entry, $related_key) {
                     return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'show']);
                 },
             ]
@@ -226,27 +249,6 @@ class CatCrudController extends CrudController
         ]);
     }
 
-    public function store()
-    {
-        $response = $this->traitStore();
-
-        $cat = $this->crud->getCurrentEntry();
-
-        if ($cat instanceof Cat) {
-            $request = $this->crud->getRequest();
-
-            foreach ([0, 1, 2, 3] as $index) {
-                $photo = new CatPhoto;
-                $photo->path = $request->get('photo_' . $index);
-                $photo->index = $index;
-                $photo->cat_id = $cat->id;
-                $photo->save();
-            }
-        }
-
-        return $response;
-    }
-
     /**
      * Define what happens when the Update operation is loaded.
      *
@@ -256,5 +258,95 @@ class CatCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+
+        /** @var Cat $cat */
+        $cat = $this->crud->getCurrentEntry();
+
+        foreach ([0, 1, 2, 3] as $index) {
+            /** @var CatPhoto $photo */
+            $photo = $cat->getPhotoByIndex($index);
+
+            if ($photo) {
+                CRUD::modifyField('photo_' . $index, ['default' => $photo->getUrl()]);
+            }
+        }
+    }
+
+
+    /**
+     * Update cat photos.
+     *
+     * @return Response
+     */
+    public function update()
+    {
+        /** @var Response $response */
+        $response = $this->traitUpdate();
+
+        /** @var Cat $cat */
+        $cat = $this->crud->getCurrentEntry();
+        $request = $this->crud->getRequest();
+
+        foreach ([0, 1, 2, 3] as $index) {
+            $existingImage = $cat->getPhotoByIndex($index);
+            $imagePath = $request->get('photo_' . $index);
+
+            if (!$imagePath) {
+                if ($existingImage) {
+                    try {
+                        $existingImage->delete();
+                    } catch (Exception $exception) {
+                        continue;
+                    }
+                }
+
+                continue;
+            }
+
+            // If it's a base64 string, it means the user selected a new image.
+            if ($this->catPhotoService->isBase64ImageString($imagePath)) {
+                if ($existingImage) {
+                    try {
+                        $existingImage->delete();
+                    } catch (Exception $e) {
+                        continue;
+                    }
+                }
+
+                $filename = $this->catPhotoService->createImageFromBase64($imagePath);
+                $this->catPhotoService->create($cat, $filename, $index);
+
+                continue;
+            }
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * Create cat photos & connect them to the created cat.
+     *
+     * @return RedirectResponse
+     */
+    public function store()
+    {
+        $response = $this->traitStore();
+
+        /** @var Cat $cat */
+        $cat = $this->crud->getCurrentEntry();
+        $request = $this->crud->getRequest();
+
+        foreach ([0, 1, 2, 3] as $index) {
+            $base64 = $request->get('photo_' . $index);
+            if (!$base64) {
+                continue;
+            }
+
+            $filename = $this->catPhotoService->createImageFromBase64($request->get('photo_' . $index));
+            $this->catPhotoService->create($cat, $filename, $index);
+        }
+
+        return $response;
     }
 }

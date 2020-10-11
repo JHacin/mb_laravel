@@ -21,6 +21,8 @@ use Illuminate\Support\Carbon;
  * @property string|null $country
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection|Cat[] $cats
+ * @property-read int|null $cats_count
  * @method static Builder|CatLocation newModelQuery()
  * @method static Builder|CatLocation newQuery()
  * @method static Builder|CatLocation query()
@@ -33,8 +35,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CatLocation whereUpdatedAt($value)
  * @method static Builder|CatLocation whereZipCode($value)
  * @mixin Eloquent
- * @property-read Collection|Cat[] $cats
- * @property-read int|null $cats_count
  */
 class CatLocation extends Model
 {

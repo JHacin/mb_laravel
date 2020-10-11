@@ -21,8 +21,15 @@ use Illuminate\Support\Carbon;
  * @property string $date_of_arrival
  * @property string $date_of_birth
  * @property int $is_active
+ * @property int|null $location_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection|Sponsorship[] $sponsorships
+ * @property-read int|null $sponsorships_count
+ * @property-read string $name_and_id
+ * @property-read CatLocation|null $location
+ * @property-read Collection|CatPhoto[] $photos
+ * @property-read int|null $photos_count
  * @method static Builder|Cat newModelQuery()
  * @method static Builder|Cat newQuery()
  * @method static Builder|Cat query()
@@ -35,15 +42,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Cat whereGender($value)
  * @method static Builder|Cat whereIsActive($value)
  * @method static Builder|Cat whereStory($value)
- * @mixin Eloquent
- * @property-read Collection|Sponsorship[] $sponsorships
- * @property-read int|null $sponsorships_count
- * @property-read string $name_and_id
- * @property int|null $location_id
- * @property-read CatLocation|null $location
- * @property-read Collection|CatPhoto[] $photos
- * @property-read int|null $photos_count
  * @method static Builder|Cat whereLocationId($value)
+ * @mixin Eloquent
  */
 class Cat extends Model
 {
@@ -107,6 +107,15 @@ class Cat extends Model
     */
 
     /**
+     * @param int $index
+     * @return Model|HasMany|object|null
+     */
+    public function getPhotoByIndex(int $index)
+    {
+        return $this->photos()->where('index', $index)->first();
+    }
+
+    /**
      * Get this cat's photos.
      *
      * @return HasMany
@@ -153,7 +162,8 @@ class Cat extends Model
      *
      * @return string
      */
-    public function getNameAndIdAttribute() {
+    public function getNameAndIdAttribute()
+    {
         return sprintf('%s (%d)', $this->name, $this->id);
     }
 

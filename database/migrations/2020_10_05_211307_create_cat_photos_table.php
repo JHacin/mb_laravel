@@ -14,7 +14,7 @@ class CreateCatPhotosTable extends Migration
     {
         Schema::create('cat_photos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('path');
+            $table->string('filename');
             $table->string('alt')->nullable();
             $table->integer('index');
             $table->foreignId('cat_id')->constrained('cats')->cascadeOnDelete();

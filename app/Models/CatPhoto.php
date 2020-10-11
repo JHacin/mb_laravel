@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
+use App\Services\CatPhotoService;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Storage;
 
 /**
  * App\Models\CatPhoto
  *
  * @property int $id
- * @property string $path
  * @property string|null $alt
  * @property int $cat_id
+ * @property string $filename
+ * @property int $index
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Cat $cat
@@ -26,15 +29,16 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CatPhoto whereCatId($value)
  * @method static Builder|CatPhoto whereCreatedAt($value)
  * @method static Builder|CatPhoto whereId($value)
- * @method static Builder|CatPhoto wherePath($value)
  * @method static Builder|CatPhoto whereUpdatedAt($value)
- * @mixin Eloquent
- * @property int $index
  * @method static Builder|CatPhoto whereIndex($value)
+ * @method static Builder|CatPhoto whereFilename($value)
+ * @mixin Eloquent
  */
 class CatPhoto extends Model
 {
     use HasFactory;
+
+
 
     /**
      * Get the cat this photo belongs to.
@@ -44,5 +48,15 @@ class CatPhoto extends Model
     public function cat()
     {
         return $this->belongsTo(Cat::class);
+    }
+
+    /**
+     * Returns the full URL for this photo.
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return Storage::url(CatPhotoService::getFullPath($this->filename));
     }
 }

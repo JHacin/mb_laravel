@@ -34,6 +34,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read Collection|Role[] $roles
  * @property-read int|null $roles_count
+ * @property-read Collection|Sponsorship[] $sponsorships
+ * @property-read int|null $sponsorships_count
+ * @property-read string $email_and_id
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User permission($permissions)
@@ -48,9 +51,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
- * @property-read Collection|Sponsorship[] $sponsorships
- * @property-read int|null $sponsorships_count
- * @property-read string $email_and_id
  */
 class User extends Authenticatable
 {

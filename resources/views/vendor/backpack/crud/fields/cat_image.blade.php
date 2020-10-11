@@ -1,5 +1,5 @@
 @php
-$value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $field['value'] : (isset($field['default']) ? $field['default'] : '' ))
+$value = old($field['name']) ?? $field['default'] ?? '';
 @endphp
 
 @include('crud::fields.inc.wrapper_start')
@@ -8,9 +8,7 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
         <label>{!! $field['label'] !!}</label>
     </div>
 
-    <div data-handle="previewArea" class="image-preview-container mb-2">
-        <img src="" alt="">
-    </div>
+    <img class="preview-image mb-2" data-handle="previewImage" src="{{ $value }}" alt="">
 
     <div class="btn-group align-items-center">
         <div class="btn btn-light btn-sm btn-file">
@@ -28,15 +26,16 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
                 value="{{ $value }}"
             >
         </div>
-        <button class="delete-button btn btn-light btn-sm" type="button" data-handle="remove">
+        <button
+            class="delete-button btn btn-light btn-sm"
+            type="button"
+            data-handle="remove"
+        >
             <i class="la la-trash text-danger"></i>
         </button>
-        <div class="loading-spinner spinner-border spinner-border-sm text-secondary ml-1" role="status">
-            <span class="sr-only">Nalagam...</span>
-        </div>
     </div>
 
-    <div data-handle="modal" class="modal fade" tabindex="-1" role="dialog">
+    <div data-handle="crop-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,21 +74,9 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
     @push('crud_fields_styles')
         <link href="{{ asset('packages/cropperjs/dist/cropper.min.css') }}" rel="stylesheet" type="text/css" />
         <style>
-            .image-preview-container {
-                width: 200px;
-                max-width: 100%;
-            }
-
-            .image-preview-container img {
-                width: 100%;
-            }
-
-            .loading-spinner {
-               display: none;
-            }
-
-            .wrapper[data-state="loading"] .loading-spinner {
+            .preview-image {
                 display: block;
+                width: 200px;
             }
 
             img {
@@ -128,10 +115,10 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
                 const $mainImage = $element.find('[data-handle=mainImage]');
                 const $uploadImage = $element.find("[data-handle=uploadImage]");
                 const $hiddenImage = $element.find("[data-handle=hiddenImage]");
-                const $removeBtn = $element.find("[data-handle=remove]");
-                const $previewArea = $element.find("[data-handle=previewArea]");
-                const $modal = $element.find("[data-handle=modal]");
-                const $modalSubmit = $modal.find('[data-handle=modalSubmit]');
+                const $previewImage = $element.find("[data-handle=previewImage]");
+                const $deleteBtn = $element.find("[data-handle=remove]");
+                const $cropModal = $element.find("[data-handle=crop-modal]");
+                const $cropModalSubmit = $cropModal.find('[data-handle=modalSubmit]');
 
                 // https://github.com/fengyuanchen/cropperjs#options
                 const cropperOptions = {
@@ -140,16 +127,16 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
                 }
 
                 if (!$hiddenImage.val()){
-                    $previewArea.hide();
-                    $removeBtn.hide();
+                    $previewImage.hide();
+                    $deleteBtn.hide();
                 }
 
                 $mainImage.attr('src', $hiddenImage.val());
 
                 $uploadImage.on('change', function(event) {
-                    $modal.appendTo('body').modal('show');
+                    $cropModal.appendTo('body').modal('show');
 
-                    $modal.on('shown.bs.modal', function() {
+                    $cropModal.on('shown.bs.modal', function() {
                         const file = event.target.files[0];
                         const fr = new FileReader();
                         fr.readAsDataURL(file);
@@ -164,55 +151,21 @@ $value = old($field['name']) ? old($field['name']) : (isset($field['value']) ? $
                         }
                     })
 
-                    $modalSubmit.on('click', function () {
+                    $cropModalSubmit.on('click', function () {
                         const imageURL = $mainImage.cropper('getCroppedCanvas').toDataURL('image/jpeg');
                         $hiddenImage.val(imageURL);
-                        $previewArea.find('img').attr('src', imageURL);
-
-                        const data = new FormData();
-                        data.append('photo_base64', $hiddenImage.val());
-
-                        $element.attr('data-state', 'loading');
-                        $modal.modal('hide');
-
-                        $.ajax({
-                            url: '{{ route('cat_photos.upload') }}',
-                            data: data,
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            method: 'POST',
-                            success: function(data) {
-                                $previewArea.show();
-                                $hiddenImage.val(data.filename);
-                                $removeBtn.attr('data-filename', data.filename);
-                                $removeBtn.show();
-                            },
-                            complete: function () {
-                                $element.attr('data-state', '');
-                            }
-                        });
+                        $previewImage.attr('src', imageURL);
+                        $previewImage.show();
+                        $deleteBtn.show();
+                        $cropModal.modal('hide');
                     });
                 });
 
-                $removeBtn.on('click', function () {
-                    const filename = $(this).attr('data-filename');
-                    $element.attr('data-state', 'loading');
-
-                    $.ajax({
-                        url: '{{ route('cat_photos.upload') }}' + `/${filename}`,
-                        method: 'DELETE',
-                        success: function() {
-                            $mainImage.cropper("destroy");
-                            $mainImage.attr('src','');
-                            $hiddenImage.val('');
-                            $removeBtn.hide();
-                            $previewArea.hide();
-                        },
-                        complete: function () {
-                            $element.attr('data-state', '');
-                        }
-                    });
+                $deleteBtn.on('click', function () {
+                    $hiddenImage.val('');
+                    $previewImage.hide();
+                    $previewImage.attr('src', '');
+                    $deleteBtn.hide();
                 });
             }
         </script>
