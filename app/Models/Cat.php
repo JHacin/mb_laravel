@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\CatPhotoService;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -113,6 +114,24 @@ class Cat extends Model
     public function getPhotoByIndex(int $index)
     {
         return $this->photos()->where('index', $index)->first();
+    }
+
+    /**
+     * Returns the first photo found on a cat, checking from lowest to highest index.
+     *
+     * @return Model|HasMany|object|null
+     */
+    public function getFirstPhoto()
+    {
+        foreach (CatPhotoService::INDICES as $index) {
+            $photo = self::getPhotoByIndex($index);
+
+            if ($photo) {
+                return $photo;
+            }
+        }
+
+        return null;
     }
 
     /**

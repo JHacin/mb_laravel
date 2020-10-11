@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Cat;
+use App\Services\CatPhotoService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -40,7 +41,7 @@ class CatRequest extends FormRequest
             'is_active' => ['boolean'],
         ];
 
-        foreach ([0, 1, 2, 3] as $index) {
+        foreach (CatPhotoService::INDICES as $index) {
             $rules['photo_' . $index] = ['nullable', 'string'];
         }
 

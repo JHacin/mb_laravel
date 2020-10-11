@@ -36,6 +36,12 @@ class CatCrudController extends CrudController
     use DeleteOperation;
     use ShowOperation;
 
+    const PHOTO_COLUMN_DEFINITION = [
+        'name' => 'photo',
+        'label' => 'Slika',
+        'type' => 'cat_photo',
+    ];
+
     const NAME_COLUMN_DEFINITION = [
         'name' => 'name',
         'label' => 'Ime',
@@ -131,6 +137,7 @@ class CatCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
+        CRUD::addColumn(self::PHOTO_COLUMN_DEFINITION);
         CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
         CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);
         CRUD::addColumn(self::DATE_OF_ARRIVAL_COLUMN_DEFINITION);
@@ -167,6 +174,7 @@ class CatCrudController extends CrudController
         CRUD::set('show.setFromDb', false);
 
         CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
+        CRUD::addColumn(self::PHOTO_COLUMN_DEFINITION);
         CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
         CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);
         CRUD::addColumn(self::STORY_COLUMN_DEFINITION);
@@ -220,17 +228,11 @@ class CatCrudController extends CrudController
                 'format' => 'dd. mm. yyyy',
             ],
         ]);
-        CRUD::addField([
-            'name' => 'photo_0',
-            'label' => 'Glavna (prikazna) slika',
-            'type' => 'cat_image',
-            'hint' => 'Slika bo uporabljena na naslovni strani, seznamu muc in kot glavna na individualni strani.'
-        ]);
-        foreach ([1, 2, 3] as $index) {
+        foreach ($this->catPhotoService::INDICES as $index) {
             CRUD::addField([
                 'name' => 'photo_' . $index,
                 'label' => 'Slika ' . ($index + 1),
-                'type' => 'cat_image',
+                'type' => 'cat_photo',
             ]);
         }
         CRUD::addField([
@@ -265,7 +267,7 @@ class CatCrudController extends CrudController
         /** @var Cat $cat */
         $cat = $this->crud->getCurrentEntry();
 
-        foreach ([0, 1, 2, 3] as $index) {
+        foreach ($this->catPhotoService::INDICES as $index) {
             /** @var CatPhoto $photo */
             $photo = $cat->getPhotoByIndex($index);
 
@@ -290,7 +292,7 @@ class CatCrudController extends CrudController
         $cat = $this->crud->getCurrentEntry();
         $request = $this->crud->getRequest();
 
-        foreach ([0, 1, 2, 3] as $index) {
+        foreach ($this->catPhotoService::INDICES as $index) {
             $existingImage = $cat->getPhotoByIndex($index);
             $imagePath = $request->get('photo_' . $index);
 
@@ -340,7 +342,7 @@ class CatCrudController extends CrudController
         $cat = $this->crud->getCurrentEntry();
         $request = $this->crud->getRequest();
 
-        foreach ([0, 1, 2, 3] as $index) {
+        foreach ($this->catPhotoService::INDICES as $index) {
             $base64 = $request->get('photo_' . $index);
             if (!$base64) {
                 continue;

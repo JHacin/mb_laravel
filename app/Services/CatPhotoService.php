@@ -12,6 +12,8 @@ class CatPhotoService
 {
     const PATH_ROOT = 'muce/slike/';
 
+    const INDICES = [0, 1, 2, 3];
+
     /**
      * Return the full path relative to the public storage root.
      *
