@@ -189,22 +189,12 @@ class CatCrudController extends CrudController
         CRUD::setValidation(CatRequest::class);
 
         CRUD::addField([
-            'name' => 'photo_0',
-            'label' => 'Glavna (prikazna) slika',
-            'type' => 'cat_image',
-            'hint' => 'Slika bo uporabljena na naslovni strani, seznamu muc in kot glavna na individualni strani.'
-        ]);
-        foreach ([1, 2, 3] as $index) {
-            CRUD::addField([
-                'name' => 'photo_' . $index,
-                'label' => 'Slika ' . ($index + 1),
-                'type' => 'cat_image',
-            ]);
-        }
-        CRUD::addField([
             'name' => 'name',
             'label' => 'Ime',
             'type' => 'text',
+            'attributes' => [
+                'required' => 'required',
+            ]
         ]);
         CRUD::addField([
             'name' => 'gender',
@@ -230,6 +220,19 @@ class CatCrudController extends CrudController
                 'format' => 'dd. mm. yyyy',
             ],
         ]);
+        CRUD::addField([
+            'name' => 'photo_0',
+            'label' => 'Glavna (prikazna) slika',
+            'type' => 'cat_image',
+            'hint' => 'Slika bo uporabljena na naslovni strani, seznamu muc in kot glavna na individualni strani.'
+        ]);
+        foreach ([1, 2, 3] as $index) {
+            CRUD::addField([
+                'name' => 'photo_' . $index,
+                'label' => 'Slika ' . ($index + 1),
+                'type' => 'cat_image',
+            ]);
+        }
         CRUD::addField([
             'name' => 'story',
             'label' => 'Zgodba',

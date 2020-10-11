@@ -126,12 +126,18 @@ class SponsorshipCrudController extends CrudController
             'label' => 'Muca',
             'type' => 'relationship',
             'placeholder' => 'Izberi muco',
+            'attributes' => [
+                'required' => 'required',
+            ]
         ]);
         CRUD::addField([
             'name' => 'user_id',
             'label' => 'Uporabnik',
             'type' => 'relationship',
             'placeholder' => 'Izberi uporabnika',
+            'attributes' => [
+                'required' => 'required',
+            ]
         ]);
     }
 

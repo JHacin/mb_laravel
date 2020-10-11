@@ -31,7 +31,7 @@ $value = old($field['name']) ?? $field['default'] ?? '';
             type="button"
             data-handle="remove"
         >
-            <i class="la la-trash text-danger"></i>
+            <i class="la la-trash"></i>
         </button>
     </div>
 

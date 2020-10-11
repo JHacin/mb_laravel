@@ -25,7 +25,7 @@ class CatRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => ['string', 'min:2', 'max:100'],
             'gender' => [
                 Rule::in([
@@ -39,6 +39,12 @@ class CatRequest extends FormRequest
             'story' => ['nullable', 'string'],
             'is_active' => ['boolean'],
         ];
+
+        foreach ([0, 1, 2, 3] as $index) {
+            $rules['photo_' . $index] = ['nullable', 'string'];
+        }
+
+        return $rules;
     }
 
     /**

@@ -129,6 +129,9 @@ class CatLocationCrudController extends CrudController
             'name' => 'name',
             'label' => 'Ime',
             'type' => 'text',
+            'attributes' => [
+                'required' => 'required',
+            ]
         ]);
         CRUD::addField([
             'name' => 'address',
