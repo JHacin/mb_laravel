@@ -78,7 +78,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'gender',
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'phone',
+        'address',
+        'zip_code',
+        'city',
+        'country',
+        'is_active',
     ];
 
     /**
@@ -132,7 +144,8 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getEmailAndIdAttribute() {
+    public function getEmailAndIdAttribute()
+    {
         return sprintf('%s (%d)', $this->email, $this->id);
     }
 

@@ -10,7 +10,7 @@ return [
     | Author: Lúdio Oliveira <ludio.ao@gmail.com>
     |
     */
-    'name'                  => 'Ime',
+    'name'                  => 'Uporabniško ime',
     'role'                  => 'Vloga',
     'roles'                 => 'Vloge',
     'roles_have_permission' => 'Vloge, ki imajo to dovoljenje',
@@ -22,9 +22,8 @@ return [
     'extra_permissions'     => 'Dodatna dovoljenja',
     'password'              => 'Geslo',
     'password_confirmation' => 'Potrditev gesla',
-    'user_role_permission'  => 'User Role Permissions',
+    'user_role_permission'  => 'Vloge in dovoljenja',
     'user'                  => 'Uporabnik',
     'users'                 => 'Uporabniki',
     'guard_type'            => 'Guard Type',
-
 ];
