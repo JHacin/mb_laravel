@@ -61,6 +61,17 @@ class User extends Authenticatable
     public const ROLE_EDITOR = 'editor';
     public const ROLE_AUTHENTICATED = 'authenticated';
 
+    public const GENDER_UNKNOWN = 0;
+    public const GENDER_MALE = 1;
+    public const GENDER_FEMALE = 2;
+
+    public const GENDER_LABELS = [
+        self::GENDER_UNKNOWN => 'Neznano',
+        self::GENDER_MALE => 'Moški',
+        self::GENDER_FEMALE => 'Ženska',
+    ];
+
+
     /**
      * The attributes that are mass assignable.
      *
