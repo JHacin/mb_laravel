@@ -15,6 +15,24 @@ class UserCrudController extends BackpackUserCrudController
 {
     use ShowOperation;
 
+    const FIRST_NAME_COLUMN_DEFINITION = [
+        'name' => 'first_name',
+        'label' => 'Ime',
+        'type' => 'text',
+    ];
+
+    const LAST_NAME_COLUMN_DEFINITION = [
+        'name' => 'last_name',
+        'label' => 'Priimek',
+        'type' => 'text',
+    ];
+
+    const IS_ACTIVE_COLUMN_DEFINITION = [
+        'name' => 'is_active',
+        'label' => 'Aktiviran',
+        'type' => 'boolean',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -89,6 +107,19 @@ class UserCrudController extends BackpackUserCrudController
         ]);
     }
 
+    public function setupListOperation()
+    {
+        parent::setupListOperation();
+
+        $this->crud->removeColumn('permissions');
+
+        $this->crud->addColumn(self::FIRST_NAME_COLUMN_DEFINITION)->afterColumn('email');
+        $this->crud->addColumn(self::LAST_NAME_COLUMN_DEFINITION)->afterColumn('first_name');
+        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+    }
+
     public function setupCreateOperation()
     {
         parent::setupCreateOperation();
@@ -121,11 +152,29 @@ class UserCrudController extends BackpackUserCrudController
             'label' => trans('backpack::permissionmanager.email'),
             'type' => 'text',
         ]);
+        CRUD::addColumn(self::FIRST_NAME_COLUMN_DEFINITION);
+        CRUD::addColumn(self::LAST_NAME_COLUMN_DEFINITION);
         CRUD::addColumn([
-            'name' => 'email_verified_at',
-            'label' => 'Datum potrditve email naslova',
+            'name' => 'gender',
+            'label' => 'Spol',
+            'type' => 'model_function',
+            'function_name' => 'getGenderLabel',
+        ]);
+        CRUD::addColumn([
+            'name' => 'date_of_birth',
+            'label' => 'Datum rojstva',
             'type' => 'date',
         ]);
+        CRUD::addColumn([
+            'name' => 'phone',
+            'label' => 'Telefon',
+            'type' => 'text',
+        ]);
+        CRUD::addColumn(CrudColumnHelper::ADDRESS_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::ZIP_CODE_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::CITY_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::COUNTRY_COLUMN_DEFINITION);
+        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
     }

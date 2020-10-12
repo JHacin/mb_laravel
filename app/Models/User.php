@@ -30,6 +30,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int $gender
+ * @property string|null $first_name
+ * @property string|null $last_name
+ * @property string|null $date_of_birth
+ * @property string|null $phone
+ * @property string|null $address
+ * @property string|null $zip_code
+ * @property string|null $city
+ * @property string|null $country
+ * @property int $is_active
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|Permission[] $permissions
@@ -52,6 +62,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
+ * @method static Builder|User whereAddress($value)
+ * @method static Builder|User whereCity($value)
+ * @method static Builder|User whereCountry($value)
+ * @method static Builder|User whereDateOfBirth($value)
+ * @method static Builder|User whereFirstName($value)
+ * @method static Builder|User whereGender($value)
+ * @method static Builder|User whereIsActive($value)
+ * @method static Builder|User whereLastName($value)
+ * @method static Builder|User wherePhone($value)
+ * @method static Builder|User whereZipCode($value)
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -131,12 +151,30 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Convert the stored integer to a label shown to the user.
+     *
+     * @return string
+     */
+    public function getGenderLabel()
+    {
+        return self::GENDER_LABELS[$this->gender];
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
+        'date_of_birth' => 'date',
+        'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
 
