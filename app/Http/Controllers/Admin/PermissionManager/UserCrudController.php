@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\PermissionManager;
 
 use App\Helpers\Admin\CrudColumnHelper;
 use App\Helpers\CountryList;
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -49,6 +51,14 @@ class UserCrudController extends BackpackUserCrudController
             'type' => 'text',
         ]);
         CRUD::addField([
+            'name' => 'date_of_birth',
+            'label' => 'Datum rojstva',
+            'type' => 'date_picker',
+            'date_picker_options' => [
+                'format' => 'dd. mm. yyyy',
+            ],
+        ]);
+        CRUD::addField([
             'name' => 'address',
             'label' => 'Naslov',
             'type' => 'text',
@@ -77,6 +87,18 @@ class UserCrudController extends BackpackUserCrudController
             'type' => 'checkbox',
             'hint' => 'Uporabnik, ki ni aktiviran, se še ne more prijaviti v račun.',
         ]);
+    }
+
+    public function setupCreateOperation()
+    {
+        parent::setupCreateOperation();
+        $this->crud->setValidation(UserCreateRequest::class);
+    }
+
+    public function setupUpdateOperation()
+    {
+        parent::setupUpdateOperation();
+        $this->crud->setValidation(UserUpdateRequest::class);
     }
 
     /**

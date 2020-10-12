@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Rules\CountryCode;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,6 +14,7 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -71,6 +73,33 @@ class User extends Authenticatable
         self::GENDER_FEMALE => 'Ženska',
     ];
 
+    public static function getCustomFieldValidationRules()
+    {
+        return [
+            'first_name' => ['nullable', 'string', 'max:255'],
+            'last_name' => ['nullable', 'string', 'max:255'],
+            'gender' => [
+                Rule::in([
+                    self::GENDER_UNKNOWN,
+                    self::GENDER_MALE,
+                    self::GENDER_FEMALE
+                ]),
+            ],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'date_of_birth' => ['nullable', 'date', 'before:now'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'zip_code' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', new CountryCode],
+        ];
+    }
+
+    public static function getCustomFieldValidationMessages()
+    {
+        return [
+            'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
+        ];
+    }
 
     /**
      * The attributes that are mass assignable.
