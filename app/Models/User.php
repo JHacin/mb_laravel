@@ -86,6 +86,12 @@ class User extends Authenticatable
     public const GENDER_MALE = 1;
     public const GENDER_FEMALE = 2;
 
+    public const ADMIN_ROLES = [
+        self::ROLE_SUPER_ADMIN,
+        self::ROLE_ADMIN,
+        self::ROLE_EDITOR,
+    ];
+
     public const GENDER_LABELS = [
         self::GENDER_UNKNOWN => 'Neznano',
         self::GENDER_MALE => 'Moški',
@@ -150,22 +156,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /**
-     * Convert the stored integer to a label shown to the user.
-     *
-     * @return string
-     */
-    public function getGenderLabel()
-    {
-        return self::GENDER_LABELS[$this->gender];
-    }
-
     /**
      * The attributes that should be cast to native types.
      *
@@ -176,6 +166,32 @@ class User extends Authenticatable
         'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Check if this user has one of the admin roles.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole(self::ADMIN_ROLES);
+    }
+
+    /**
+     * Convert the stored integer to a label shown to the user.
+     *
+     * @return string
+     */
+    public function getGenderLabel()
+    {
+        return self::GENDER_LABELS[$this->gender];
+    }
 
     /*
     |--------------------------------------------------------------------------

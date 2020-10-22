@@ -2,7 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CheckIfAdmin
 {
@@ -17,24 +24,23 @@ class CheckIfAdmin
      * change the contents of this method to check that the logged in user
      * is an admin, and not a regular user.
      *
-     * @param [type] $user [description]
+     * @param Authenticatable|User $user
      *
-     * @return bool [description]
+     * @return bool
      */
     private function checkIfUserIsAdmin($user)
     {
-        // return ($user->is_admin == 1);
-        return true;
+        return $user->isAdmin();
     }
 
     /**
      * Answer to unauthorized access request.
      *
-     * @param [type] $request [description]
+     * @param Request $request
      *
-     * @return [type] [description]
+     * @return Application|ResponseFactory|RedirectResponse|Response
      */
-    private function respondToUnauthorizedRequest($request)
+    private function respondToUnauthorizedRequest(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             return response(trans('backpack::base.unauthorized'), 401);
@@ -46,12 +52,12 @@ class CheckIfAdmin
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (backpack_auth()->guest()) {
             return $this->respondToUnauthorizedRequest($request);
