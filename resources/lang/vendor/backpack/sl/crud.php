@@ -91,7 +91,7 @@ return [
     'loadingRecords' => 'Loading...',
     'processing'     => 'Processing...',
     'search'         => 'Išči',
-    'zeroRecords'    => 'No matching entries found',
+    'zeroRecords'    => 'Ni rezultatov',
     'paginate'       => [
         'first'    => 'First',
         'last'     => 'Last',
@@ -135,7 +135,7 @@ return [
     // CRUD filters navbar view
     'filters'        => 'Filters',
     'toggle_filters' => 'Toggle filters',
-    'remove_filters' => 'Odstrani filtre',
+    'remove_filters' => 'Počisti filtre',
 
     // Fields
     'browse_uploads'            => 'Browse uploads',

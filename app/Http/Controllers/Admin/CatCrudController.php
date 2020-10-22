@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Admin\CrudColumnHelper;
 use App\Http\Requests\CatRequest;
 use App\Models\Cat;
+use App\Models\CatLocation;
 use App\Models\CatPhoto;
 use App\Services\CatPhotoService;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -150,9 +151,35 @@ class CatCrudController extends CrudController
 
         CRUD::addFilter(
             [
+                'name' => 'location_id',
+                'type' => 'select2',
+                'label' => 'Lokacija',
+            ],
+            function () {
+                return CatLocation::all()->pluck('name', 'id')->toArray();
+            },
+            function ($value) {
+                $this->crud->addClause('where', 'location_id', $value);
+            }
+        );
+
+        CRUD::addFilter(
+            [
+                'name' => 'gender',
                 'type' => 'dropdown',
+                'label' => 'Spol',
+            ],
+            Cat::GENDER_LABELS,
+            function ($value) {
+                $this->crud->addClause('where', 'gender', $value);
+            }
+        );
+
+        CRUD::addFilter(
+            [
                 'name' => 'is_active',
-                'label' => 'Objavljena'
+                'type' => 'dropdown',
+                'label' => 'Objavljena',
             ],
             [
                 true => 'Da',

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Admin\CrudColumnHelper;
 use App\Http\Requests\SponsorshipRequest;
+use App\Models\Cat;
 use App\Models\Sponsorship;
+use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -93,6 +95,34 @@ class SponsorshipCrudController extends CrudController
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
 
         CRUD::orderBy('created_at', 'DESC');
+
+        CRUD::addFilter(
+            [
+                'name' => 'cat_id',
+                'type' => 'select2',
+                'label' => 'Muca',
+            ],
+            function () {
+                return Cat::all()->pluck('name_and_id', 'id')->toArray();
+            },
+            function ($value) {
+                $this->crud->addClause('where', 'cat_id', $value);
+            }
+        );
+
+        CRUD::addFilter(
+            [
+                'name' => 'user_id',
+                'type' => 'select2',
+                'label' => 'Uporabnik',
+            ],
+            function () {
+                return User::all()->pluck('email_and_id', 'id')->toArray();
+            },
+            function ($value) {
+                $this->crud->addClause('where', 'user_id', $value);
+            }
+        );
     }
 
     /**
