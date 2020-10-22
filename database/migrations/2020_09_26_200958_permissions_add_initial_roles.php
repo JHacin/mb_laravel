@@ -16,7 +16,6 @@ class PermissionsAddInitialRoles extends Migration
         Role::create(['name' => User::ROLE_SUPER_ADMIN, 'label' => 'Super Administrator']);
         Role::create(['name' => User::ROLE_ADMIN, 'label' => 'Administrator']);
         Role::create(['name' => User::ROLE_EDITOR, 'label' => 'Urednik']);
-        Role::create(['name' => User::ROLE_AUTHENTICATED, 'label' => 'Uporabnik']);
     }
 
     /**
@@ -30,6 +29,5 @@ class PermissionsAddInitialRoles extends Migration
         Role::findByName(User::ROLE_SUPER_ADMIN)->delete();
         Role::findByName(User::ROLE_ADMIN)->delete();
         Role::findByName(User::ROLE_EDITOR)->delete();
-        Role::findByName(User::ROLE_AUTHENTICATED)->delete();
     }
 }

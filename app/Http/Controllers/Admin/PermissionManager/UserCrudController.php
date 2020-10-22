@@ -45,6 +45,7 @@ class UserCrudController extends BackpackUserCrudController
     protected function addUserFields()
     {
         parent::addUserFields();
+
         CRUD::addField([
             'name' => 'first_name',
             'label' => 'Ime',

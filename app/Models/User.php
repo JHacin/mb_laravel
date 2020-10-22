@@ -81,7 +81,6 @@ class User extends Authenticatable
     public const ROLE_SUPER_ADMIN = 'super-admin';
     public const ROLE_ADMIN = 'admin';
     public const ROLE_EDITOR = 'editor';
-    public const ROLE_AUTHENTICATED = 'authenticated';
 
     public const GENDER_UNKNOWN = 0;
     public const GENDER_MALE = 1;
