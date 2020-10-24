@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('home');
+Route::get('/muce', [App\Http\Controllers\PagesController::class, 'catList'])->name('cat_list');
+
 Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile.index');
 
 // Auth routes

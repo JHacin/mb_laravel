@@ -44,7 +44,7 @@
                         <a class="navbar-link">Muce</a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item">Seznam</a>
+                            <a class="navbar-item" href="{{ route('cat_list') }}">Seznam</a>
                         </div>
                     </div>
                 </div>

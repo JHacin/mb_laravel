@@ -4,13 +4,7 @@
 
     /** @var Cat $entry */
     $cat = $entry;
-    $url = '';
-
-    /** @var CatPhoto|null $photo */
-    $photo = $cat->getFirstPhoto();
-    if ($photo) {
-        $url = $photo->getUrl();
-    }
+    $url = $cat->first_photo_url;
 @endphp
 
 <span>

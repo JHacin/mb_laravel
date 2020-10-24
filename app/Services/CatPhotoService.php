@@ -15,6 +15,14 @@ class CatPhotoService
     const INDICES = [0, 1, 2, 3];
 
     /**
+     * @return string
+     */
+    public static function getPlaceholderImage()
+    {
+        return asset('img/placeholder.png');
+    }
+
+    /**
      * Check if the provided is a base64-encoded image string.
      * This is used e.g. to determine if the photo_n field in the request contains an existing image path
      * or a new image (encoded as base64).

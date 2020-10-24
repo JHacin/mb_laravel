@@ -45,6 +45,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Cat whereStory($value)
  * @method static Builder|Cat whereLocationId($value)
  * @mixin Eloquent
+ * @property-read string $first_photo_url
  */
 class Cat extends Model
 {
@@ -108,30 +109,15 @@ class Cat extends Model
     */
 
     /**
-     * Returns the first photo found on a cat, checking from lowest to highest index.
-     *
-     * @return Model|HasMany|object|null
-     */
-    public function getFirstPhoto()
-    {
-        foreach (CatPhotoService::INDICES as $index) {
-            $photo = self::getPhotoByIndex($index);
-
-            if ($photo) {
-                return $photo;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param int $index
-     * @return Model|HasMany|object|null
+     * @return CatPhoto|null
      */
     public function getPhotoByIndex(int $index)
     {
-        return $this->photos()->where('index', $index)->first();
+        /** @var CatPhoto $photo */
+        $photo = $this->photos()->where('index', $index)->first();
+
+        return $photo;
     }
 
     /**
@@ -175,6 +161,25 @@ class Cat extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Finds the first photo it can, and returns its URL, otherwise an empty string.
+     * Todo: replace empty string with some sort of image fallback?
+     *
+     * @return string
+     */
+    public function getFirstPhotoUrlAttribute()
+    {
+        foreach (CatPhotoService::INDICES as $index) {
+            $photo = self::getPhotoByIndex($index);
+
+            if ($photo) {
+                return $photo->getUrl();
+            }
+        }
+
+        return CatPhotoService::getPlaceholderImage();
+    }
 
     /**
      * Returns the name followed by the ID enclosed in parentheses.

@@ -305,7 +305,6 @@ class CatCrudController extends CrudController
         $cat = $this->crud->getCurrentEntry();
 
         foreach ($this->catPhotoService::INDICES as $index) {
-            /** @var CatPhoto $photo */
             $photo = $cat->getPhotoByIndex($index);
 
             if ($photo) {
