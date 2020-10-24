@@ -7,9 +7,11 @@ use App\Helpers\CountryList;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+use App\Services\UserMailService;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
+use Illuminate\Http\Request;
 
 class UserCrudController extends BackpackUserCrudController
 {
@@ -124,7 +126,15 @@ class UserCrudController extends BackpackUserCrudController
     public function setupCreateOperation()
     {
         parent::setupCreateOperation();
+
         $this->crud->setValidation(UserCreateRequest::class);
+
+        CRUD::addField([
+            'name' => 'should_send_welcome_email',
+            'label' => 'Pošlji obvestilo o ustvarjenem računu?',
+            'type' => 'checkbox',
+            'hint' => 'Uporabnik bo na svoj email naslov prejel sporočilo, v katerem se mu izreče dobrodošlica.',
+        ]);
     }
 
     public function setupUpdateOperation()
@@ -179,4 +189,23 @@ class UserCrudController extends BackpackUserCrudController
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
     }
+
+    public function store()
+    {
+        $response = parent::store();
+
+        /** @var Request $request */
+        $request = $this->crud->getRequest();
+
+        if ($request->input('should_send_welcome_email', false)) {
+            /** @var User $user */
+            $user = $this->crud->getCurrentEntry();
+
+            UserMailService::sendWelcomeEMail($user);
+        }
+
+        return $response;
+    }
+
+
 }

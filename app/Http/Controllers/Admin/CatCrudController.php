@@ -18,6 +18,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
@@ -317,11 +318,12 @@ class CatCrudController extends CrudController
 
         /** @var Cat $cat */
         $cat = $this->crud->getCurrentEntry();
+        /** @var Request $request */
         $request = $this->crud->getRequest();
 
         foreach ($this->catPhotoService::INDICES as $index) {
             $existingImage = $cat->getPhotoByIndex($index);
-            $imagePath = $request->get('photo_' . $index);
+            $imagePath = $request->input('photo_' . $index);
 
             if (!$imagePath) {
                 if ($existingImage) {
@@ -367,10 +369,11 @@ class CatCrudController extends CrudController
 
         /** @var Cat $cat */
         $cat = $this->crud->getCurrentEntry();
+        /** @var Request $request */
         $request = $this->crud->getRequest();
 
         foreach ($this->catPhotoService::INDICES as $index) {
-            $base64 = $request->get('photo_' . $index);
+            $base64 = $request->input('photo_' . $index);
             if (!$base64) {
                 continue;
             }
