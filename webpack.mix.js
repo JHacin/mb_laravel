@@ -17,7 +17,8 @@ mix
     .sass('resources/scss/app.scss', 'public/css')
     .browserSync({
         ui: false,
-        proxy: process.env.BROWSERSYNC_PROXY || 'localhost',
-        port: process.env.BROWSERSYNC_PORT || 3000,
+        proxy: process.env.MIX_BROWSERSYNC_PROXY,
+        port: process.env.MIX_BROWSERSYNC_PORT,
         notify: false,
+        open: false,
     });
