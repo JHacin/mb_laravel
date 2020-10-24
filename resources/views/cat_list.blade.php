@@ -30,8 +30,18 @@
                             </div>
 
                             <footer class="card-footer">
-                                <a href="#" class="card-footer-item">Preberi mojo zgodbo</a>
-                                <a href="#" class="card-footer-item">Postani moj boter</a>
+                                <a
+                                    href="{{ route('cat_details', ['id' => $cat->id]) }}"
+                                    class="card-footer-item"
+                                >
+                                    Preberi mojo zgodbo
+                                </a>
+                                <a
+                                    href="{{ route('become_cat_sponsor', ['id' => $cat->id]) }}"
+                                    class="card-footer-item"
+                                >
+                                    Postani moj boter
+                                </a>
                             </footer>
                         </div>
                     </div>

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('home');
 Route::get('/muce', [App\Http\Controllers\PagesController::class, 'catList'])->name('cat_list');
+Route::get('/muce/{id}', [App\Http\Controllers\PagesController::class, 'catDetails'])->name('cat_details');
+Route::get('/muce/{id}/postani-boter', [App\Http\Controllers\PagesController::class, 'becomeCatSponsor'])->name('become_cat_sponsor');
 
 Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile.index');
 
