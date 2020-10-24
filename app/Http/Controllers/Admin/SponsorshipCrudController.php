@@ -31,40 +31,6 @@ class SponsorshipCrudController extends CrudController
     use ShowOperation;
 
     /**
-     * @return array
-     */
-    protected function getCatColumnDefinition()
-    {
-        return [
-            'name' => 'cat',
-            'label' => 'Muca',
-            'type' => 'relationship',
-            'wrapper' => [
-                'href' => function($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.cats'), [$related_key, 'show']);
-                },
-            ]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getUserColumnDefinition()
-    {
-        return [
-            'name' => 'user',
-            'label' => 'Uporabnik',
-            'type' => 'relationship',
-            'wrapper' => [
-                'href' => function($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.users'), [$related_key, 'show']);
-                },
-            ]
-        ];
-    }
-
-    /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
      * @return void
@@ -126,6 +92,40 @@ class SponsorshipCrudController extends CrudController
     }
 
     /**
+     * @return array
+     */
+    protected function getCatColumnDefinition()
+    {
+        return [
+            'name' => 'cat',
+            'label' => 'Muca',
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.cats'), [$related_key, 'show']);
+                },
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUserColumnDefinition()
+    {
+        return [
+            'name' => 'user',
+            'label' => 'Uporabnik',
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.users'), [$related_key, 'show']);
+                },
+            ]
+        ];
+    }
+
+    /**
      * Define what is displayed in the Show view.
      *
      * @return void
@@ -139,6 +139,17 @@ class SponsorshipCrudController extends CrudController
         CRUD::addColumn(self::getUserColumnDefinition());
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     *
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        $this->setupCreateOperation();
     }
 
     /**
@@ -169,16 +180,5 @@ class SponsorshipCrudController extends CrudController
                 'required' => 'required',
             ]
         ]);
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        $this->setupCreateOperation();
     }
 }

@@ -15,17 +15,6 @@ class CatPhotoService
     const INDICES = [0, 1, 2, 3];
 
     /**
-     * Return the full path relative to the public storage root.
-     *
-     * @param string $filename
-     * @return string
-     */
-    public static function getFullPath(string $filename)
-    {
-        return self::PATH_ROOT . $filename;
-    }
-
-    /**
      * Check if the provided is a base64-encoded image string.
      * This is used e.g. to determine if the photo_n field in the request contains an existing image path
      * or a new image (encoded as base64).
@@ -55,6 +44,17 @@ class CatPhotoService
         Storage::disk('public')->put(CatPhotoService::getFullPath($filename), $image->stream());
 
         return $filename;
+    }
+
+    /**
+     * Return the full path relative to the public storage root.
+     *
+     * @param string $filename
+     * @return string
+     */
+    public static function getFullPath(string $filename)
+    {
+        return self::PATH_ROOT . $filename;
     }
 
     /**

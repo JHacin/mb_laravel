@@ -108,15 +108,6 @@ class Cat extends Model
     */
 
     /**
-     * @param int $index
-     * @return Model|HasMany|object|null
-     */
-    public function getPhotoByIndex(int $index)
-    {
-        return $this->photos()->where('index', $index)->first();
-    }
-
-    /**
      * Returns the first photo found on a cat, checking from lowest to highest index.
      *
      * @return Model|HasMany|object|null
@@ -132,6 +123,15 @@ class Cat extends Model
         }
 
         return null;
+    }
+
+    /**
+     * @param int $index
+     * @return Model|HasMany|object|null
+     */
+    public function getPhotoByIndex(int $index)
+    {
+        return $this->photos()->where('index', $index)->first();
     }
 
     /**

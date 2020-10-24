@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-class CountryList {
+class CountryList
+{
 
     const COUNTRY_NAMES = [
         'AF' => 'Afganistan',

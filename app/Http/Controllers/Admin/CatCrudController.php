@@ -96,24 +96,6 @@ class CatCrudController extends CrudController
         $this->catPhotoService = new CatPhotoService();
     }
 
-
-    /**
-     * @return array
-     */
-    protected function getLocationColumnDefinition()
-    {
-        return [
-            'name' => 'location',
-            'label' => 'Lokacija',
-            'type' => 'relationship',
-            'wrapper' => [
-                'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'show']);
-                },
-            ]
-        ];
-    }
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -128,6 +110,84 @@ class CatCrudController extends CrudController
         CRUD::setSubheading('Dodaj novo muco', 'create');
         CRUD::setSubheading('Uredi muco', 'edit');
         CRUD::setSubheading('Podatki muce', 'show');
+    }
+
+    /**
+     * Update cat photos.
+     *
+     * @return Response
+     */
+    public function update()
+    {
+        /** @var Response $response */
+        $response = $this->traitUpdate();
+
+        /** @var Cat $cat */
+        $cat = $this->crud->getCurrentEntry();
+        /** @var Request $request */
+        $request = $this->crud->getRequest();
+
+        foreach ($this->catPhotoService::INDICES as $index) {
+            $existingImage = $cat->getPhotoByIndex($index);
+            $imagePath = $request->input('photo_' . $index);
+
+            if (!$imagePath) {
+                if ($existingImage) {
+                    try {
+                        $existingImage->delete();
+                    } catch (Exception $exception) {
+                        continue;
+                    }
+                }
+
+                continue;
+            }
+
+            // If it's a base64 string, it means the user selected a new image.
+            if ($this->catPhotoService->isBase64ImageString($imagePath)) {
+                if ($existingImage) {
+                    try {
+                        $existingImage->delete();
+                    } catch (Exception $e) {
+                        continue;
+                    }
+                }
+
+                $filename = $this->catPhotoService->createImageFromBase64($imagePath);
+                $this->catPhotoService->create($cat, $filename, $index);
+
+                continue;
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Create cat photos & connect them to the created cat.
+     *
+     * @return RedirectResponse
+     */
+    public function store()
+    {
+        $response = $this->traitStore();
+
+        /** @var Cat $cat */
+        $cat = $this->crud->getCurrentEntry();
+        /** @var Request $request */
+        $request = $this->crud->getRequest();
+
+        foreach ($this->catPhotoService::INDICES as $index) {
+            $base64 = $request->input('photo_' . $index);
+            if (!$base64) {
+                continue;
+            }
+
+            $filename = $this->catPhotoService->createImageFromBase64($request->get('photo_' . $index));
+            $this->catPhotoService->create($cat, $filename, $index);
+        }
+
+        return $response;
     }
 
     /**
@@ -193,6 +253,23 @@ class CatCrudController extends CrudController
     }
 
     /**
+     * @return array
+     */
+    protected function getLocationColumnDefinition()
+    {
+        return [
+            'name' => 'location',
+            'label' => 'Lokacija',
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'show']);
+                },
+            ]
+        ];
+    }
+
+    /**
      * Define what is displayed in the Show view.
      *
      * @return void
@@ -212,6 +289,29 @@ class CatCrudController extends CrudController
         CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     *
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        $this->setupCreateOperation();
+
+        /** @var Cat $cat */
+        $cat = $this->crud->getCurrentEntry();
+
+        foreach ($this->catPhotoService::INDICES as $index) {
+            /** @var CatPhoto $photo */
+            $photo = $cat->getPhotoByIndex($index);
+
+            if ($photo) {
+                CRUD::modifyField('photo_' . $index, ['default' => $photo->getUrl()]);
+            }
+        }
     }
 
     /**
@@ -280,108 +380,5 @@ class CatCrudController extends CrudController
             'type' => 'checkbox',
             'hint' => 'Ali naj bo muca javno vidna (npr. na seznamu vseh muc).',
         ]);
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-        $this->setupCreateOperation();
-
-        /** @var Cat $cat */
-        $cat = $this->crud->getCurrentEntry();
-
-        foreach ($this->catPhotoService::INDICES as $index) {
-            /** @var CatPhoto $photo */
-            $photo = $cat->getPhotoByIndex($index);
-
-            if ($photo) {
-                CRUD::modifyField('photo_' . $index, ['default' => $photo->getUrl()]);
-            }
-        }
-    }
-
-
-    /**
-     * Update cat photos.
-     *
-     * @return Response
-     */
-    public function update()
-    {
-        /** @var Response $response */
-        $response = $this->traitUpdate();
-
-        /** @var Cat $cat */
-        $cat = $this->crud->getCurrentEntry();
-        /** @var Request $request */
-        $request = $this->crud->getRequest();
-
-        foreach ($this->catPhotoService::INDICES as $index) {
-            $existingImage = $cat->getPhotoByIndex($index);
-            $imagePath = $request->input('photo_' . $index);
-
-            if (!$imagePath) {
-                if ($existingImage) {
-                    try {
-                        $existingImage->delete();
-                    } catch (Exception $exception) {
-                        continue;
-                    }
-                }
-
-                continue;
-            }
-
-            // If it's a base64 string, it means the user selected a new image.
-            if ($this->catPhotoService->isBase64ImageString($imagePath)) {
-                if ($existingImage) {
-                    try {
-                        $existingImage->delete();
-                    } catch (Exception $e) {
-                        continue;
-                    }
-                }
-
-                $filename = $this->catPhotoService->createImageFromBase64($imagePath);
-                $this->catPhotoService->create($cat, $filename, $index);
-
-                continue;
-            }
-        }
-
-        return $response;
-    }
-
-
-    /**
-     * Create cat photos & connect them to the created cat.
-     *
-     * @return RedirectResponse
-     */
-    public function store()
-    {
-        $response = $this->traitStore();
-
-        /** @var Cat $cat */
-        $cat = $this->crud->getCurrentEntry();
-        /** @var Request $request */
-        $request = $this->crud->getRequest();
-
-        foreach ($this->catPhotoService::INDICES as $index) {
-            $base64 = $request->input('photo_' . $index);
-            if (!$base64) {
-                continue;
-            }
-
-            $filename = $this->catPhotoService->createImageFromBase64($request->get('photo_' . $index));
-            $this->catPhotoService->create($cat, $filename, $index);
-        }
-
-        return $response;
     }
 }

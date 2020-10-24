@@ -44,6 +44,56 @@ class UserCrudController extends BackpackUserCrudController
         $this->crud->setRoute(backpack_url(config('routes.admin.users')));
     }
 
+    public function setupListOperation()
+    {
+        parent::setupListOperation();
+
+        $this->crud->removeColumn('permissions');
+
+        $this->crud->addColumn(self::FIRST_NAME_COLUMN_DEFINITION)->afterColumn('email');
+        $this->crud->addColumn(self::LAST_NAME_COLUMN_DEFINITION)->afterColumn('first_name');
+        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
+        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+    }
+
+    public function setupCreateOperation()
+    {
+        parent::setupCreateOperation();
+
+        $this->crud->setValidation(UserCreateRequest::class);
+
+        CRUD::addField([
+            'name' => 'should_send_welcome_email',
+            'label' => 'Pošlji obvestilo o ustvarjenem računu?',
+            'type' => 'checkbox',
+            'hint' => 'Uporabnik bo na svoj email naslov prejel sporočilo, v katerem se mu izreče dobrodošlica.',
+        ]);
+    }
+
+    public function setupUpdateOperation()
+    {
+        parent::setupUpdateOperation();
+        $this->crud->setValidation(UserUpdateRequest::class);
+    }
+
+    public function store()
+    {
+        $response = parent::store();
+
+        /** @var Request $request */
+        $request = $this->crud->getRequest();
+
+        if ($request->input('should_send_welcome_email', false)) {
+            /** @var User $user */
+            $user = $this->crud->getCurrentEntry();
+
+            UserMailService::sendWelcomeEMail($user);
+        }
+
+        return $response;
+    }
+
     protected function addUserFields()
     {
         parent::addUserFields();
@@ -110,39 +160,6 @@ class UserCrudController extends BackpackUserCrudController
         ]);
     }
 
-    public function setupListOperation()
-    {
-        parent::setupListOperation();
-
-        $this->crud->removeColumn('permissions');
-
-        $this->crud->addColumn(self::FIRST_NAME_COLUMN_DEFINITION)->afterColumn('email');
-        $this->crud->addColumn(self::LAST_NAME_COLUMN_DEFINITION)->afterColumn('first_name');
-        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
-    }
-
-    public function setupCreateOperation()
-    {
-        parent::setupCreateOperation();
-
-        $this->crud->setValidation(UserCreateRequest::class);
-
-        CRUD::addField([
-            'name' => 'should_send_welcome_email',
-            'label' => 'Pošlji obvestilo o ustvarjenem računu?',
-            'type' => 'checkbox',
-            'hint' => 'Uporabnik bo na svoj email naslov prejel sporočilo, v katerem se mu izreče dobrodošlica.',
-        ]);
-    }
-
-    public function setupUpdateOperation()
-    {
-        parent::setupUpdateOperation();
-        $this->crud->setValidation(UserUpdateRequest::class);
-    }
-
     /**
      * Define what is displayed in the Show view.
      *
@@ -188,23 +205,6 @@ class UserCrudController extends BackpackUserCrudController
         CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
-    }
-
-    public function store()
-    {
-        $response = parent::store();
-
-        /** @var Request $request */
-        $request = $this->crud->getRequest();
-
-        if ($request->input('should_send_welcome_email', false)) {
-            /** @var User $user */
-            $user = $this->crud->getCurrentEntry();
-
-            UserMailService::sendWelcomeEMail($user);
-        }
-
-        return $response;
     }
 
 

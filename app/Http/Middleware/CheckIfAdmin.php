@@ -15,22 +15,24 @@ class CheckIfAdmin
 {
 
     /**
-     * Checked that the logged in user is an administrator.
+     * Handle an incoming request.
      *
-     * --------------
-     * VERY IMPORTANT
-     * --------------
-     * If you have both regular users and admins inside the same table,
-     * change the contents of this method to check that the logged in user
-     * is an admin, and not a regular user.
+     * @param Request $request
+     * @param Closure $next
      *
-     * @param Authenticatable|User $user
-     *
-     * @return bool
+     * @return mixed
      */
-    private function checkIfUserIsAdmin($user)
+    public function handle(Request $request, Closure $next)
     {
-        return $user->isAdmin();
+        if (backpack_auth()->guest()) {
+            return $this->respondToUnauthorizedRequest($request);
+        }
+
+        if (!$this->checkIfUserIsAdmin(backpack_user())) {
+            return $this->respondToUnauthorizedRequest($request);
+        }
+
+        return $next($request);
     }
 
     /**
@@ -50,24 +52,22 @@ class CheckIfAdmin
     }
 
     /**
-     * Handle an incoming request.
+     * Checked that the logged in user is an administrator.
      *
-     * @param Request $request
-     * @param Closure $next
+     * --------------
+     * VERY IMPORTANT
+     * --------------
+     * If you have both regular users and admins inside the same table,
+     * change the contents of this method to check that the logged in user
+     * is an admin, and not a regular user.
      *
-     * @return mixed
+     * @param Authenticatable|User $user
+     *
+     * @return bool
      */
-    public function handle(Request $request, Closure $next)
+    private function checkIfUserIsAdmin($user)
     {
-        if (backpack_auth()->guest()) {
-            return $this->respondToUnauthorizedRequest($request);
-        }
-
-        if (!$this->checkIfUserIsAdmin(backpack_user())) {
-            return $this->respondToUnauthorizedRequest($request);
-        }
-
-        return $next($request);
+        return $user->isAdmin();
     }
 
 }

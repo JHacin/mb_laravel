@@ -39,7 +39,6 @@ class CatPhoto extends Model
     use HasFactory;
 
 
-
     /**
      * Get the cat this photo belongs to.
      *

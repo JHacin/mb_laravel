@@ -97,6 +97,44 @@ class User extends Authenticatable
         self::GENDER_MALE => 'Moški',
         self::GENDER_FEMALE => 'Ženska',
     ];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'gender',
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'phone',
+        'address',
+        'zip_code',
+        'city',
+        'country',
+        'is_active',
+    ];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'date_of_birth' => 'date',
+        'is_active' => 'boolean',
+        'email_verified_at' => 'datetime',
+    ];
 
     public static function getCustomFieldValidationRules()
     {
@@ -126,47 +164,6 @@ class User extends Authenticatable
             'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
         ];
     }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'gender',
-        'first_name',
-        'last_name',
-        'date_of_birth',
-        'phone',
-        'address',
-        'zip_code',
-        'city',
-        'country',
-        'is_active',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'date_of_birth' => 'date',
-        'is_active' => 'boolean',
-        'email_verified_at' => 'datetime',
-    ];
 
     /*
     |--------------------------------------------------------------------------
