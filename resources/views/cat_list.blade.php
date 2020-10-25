@@ -19,7 +19,7 @@
                                 <div class="media">
                                     <div class="media-content">
                                         <p class="title is-4">{{ $cat->name }}</p>
-                                        <p class="subtitle is-6">{{ $cat->getGenderLabel() }}</p>
+                                        <p class="subtitle is-6">{{ $cat->gender_label }}</p>
                                     </div>
                                 </div>
 

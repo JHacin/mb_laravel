@@ -22,6 +22,7 @@ use Storage;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Cat $cat
+ * @property-read string $url
  * @method static Builder|CatPhoto newModelQuery()
  * @method static Builder|CatPhoto newQuery()
  * @method static Builder|CatPhoto query()
@@ -38,6 +39,26 @@ class CatPhoto extends Model
 {
     use HasFactory;
 
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
+
+    protected $table = 'cat_locations';
+    protected $guarded = ['id'];
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
 
     /**
      * Get the cat this photo belongs to.
@@ -49,13 +70,31 @@ class CatPhoto extends Model
         return $this->belongsTo(Cat::class);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
     /**
      * Returns the full URL for this photo.
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrlAttribute()
     {
         return Storage::url(CatPhotoService::getFullPath($this->filename));
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
 }

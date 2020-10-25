@@ -183,10 +183,9 @@ class UserCrudController extends BackpackUserCrudController
         CRUD::addColumn(self::FIRST_NAME_COLUMN_DEFINITION);
         CRUD::addColumn(self::LAST_NAME_COLUMN_DEFINITION);
         CRUD::addColumn([
-            'name' => 'gender',
+            'name' => 'gender_label',
             'label' => 'Spol',
-            'type' => 'model_function',
-            'function_name' => 'getGenderLabel',
+            'type' => 'text',
         ]);
         CRUD::addColumn([
             'name' => 'date_of_birth',

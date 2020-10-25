@@ -49,6 +49,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
  * @property-read string $email_and_id
+ * @property-read string $gender_label
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User permission($permissions)
@@ -78,6 +79,12 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles, CrudTrait;
 
+    /*
+    |--------------------------------------------------------------------------
+    | CONSTANTS
+    |--------------------------------------------------------------------------
+    */
+
     public const ROLE_SUPER_ADMIN = 'super-admin';
     public const ROLE_ADMIN = 'admin';
     public const ROLE_EDITOR = 'editor';
@@ -97,6 +104,13 @@ class User extends Authenticatable
         self::GENDER_MALE => 'Moški',
         self::GENDER_FEMALE => 'Ženska',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
+
     /**
      * The attributes that are mass assignable.
      *
@@ -117,6 +131,7 @@ class User extends Authenticatable
         'country',
         'is_active',
     ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -125,6 +140,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -135,6 +151,12 @@ class User extends Authenticatable
         'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
 
     public static function getCustomFieldValidationRules()
     {
@@ -165,12 +187,6 @@ class User extends Authenticatable
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
     /**
      * Check if this user has one of the admin roles.
      *
@@ -182,13 +198,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Convert the stored integer to a label shown to the user.
+     * Identifiable attribute for Backpack (in selects).
      *
      * @return string
      */
-    public function getGenderLabel()
+    public function identifiableAttribute()
     {
-        return self::GENDER_LABELS[$this->gender];
+        return 'email_and_id';
     }
 
     /*
@@ -220,6 +236,16 @@ class User extends Authenticatable
     */
 
     /**
+     * Convert the stored integer to a label shown to the user.
+     *
+     * @return string
+     */
+    public function getGenderLabelAttribute()
+    {
+        return self::GENDER_LABELS[$this->gender];
+    }
+
+    /**
      * Returns the email followed by the ID enclosed in parentheses.
      *
      * @return string
@@ -227,16 +253,6 @@ class User extends Authenticatable
     public function getEmailAndIdAttribute()
     {
         return sprintf('%s (%d)', $this->email, $this->id);
-    }
-
-    /**
-     * Identifiable attribute for Backpack (in selects).
-     *
-     * @return string
-     */
-    public function identifiableAttribute()
-    {
-        return 'email_and_id';
     }
 
     /*

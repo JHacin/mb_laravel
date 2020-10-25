@@ -50,10 +50,9 @@ class CatCrudController extends CrudController
     ];
 
     const GENDER_COLUMN_DEFINITION = [
-        'name' => 'gender',
+        'name' => 'gender_label',
         'label' => 'Spol',
-        'type' => 'model_function',
-        'function_name' => 'getGenderLabel',
+        'type' => 'text',
     ];
 
     const STORY_COLUMN_DEFINITION = [
@@ -322,7 +321,7 @@ class CatCrudController extends CrudController
             $photo = $cat->getPhotoByIndex($index);
 
             if ($photo) {
-                CRUD::modifyField('photo_' . $index, ['default' => $photo->getUrl()]);
+                CRUD::modifyField('photo_' . $index, ['default' => $photo->url]);
             }
         }
     }

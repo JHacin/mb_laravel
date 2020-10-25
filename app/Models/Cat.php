@@ -35,6 +35,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection|CatPhoto[] $photos
  * @property-read int|null $photos_count
  * @property-read string $first_photo_url
+ * @property-read string $gender_label
  * @method static Builder|Cat newModelQuery()
  * @method static Builder|Cat newQuery()
  * @method static Builder|Cat query()
@@ -98,25 +99,6 @@ class Cat extends Model
     */
 
     /**
-     * @inheritdoc
-     */
-    protected static function booted()
-    {
-        // Only make active Cats visible to the public. This scope is manually cleared in admin.
-        static::addGlobalScope('is_active', function (Builder $builder) {
-            $builder->where('is_active', true);
-        });
-    }
-
-    /**
-     * Remove global scopes such as only returning cats with is_active=1 (used in admin).
-     */
-    public function clearGlobalScopes()
-    {
-        static::$globalScopes = [];
-    }
-
-    /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions(): SlugOptions
@@ -136,13 +118,25 @@ class Cat extends Model
     }
 
     /**
-     * Convert the stored integer to a label shown to the user.
+     * Identifiable attribute for Backpack (in selects).
      *
      * @return string
      */
-    public function getGenderLabel()
+    public function identifiableAttribute()
     {
-        return self::GENDER_LABELS[$this->gender];
+        return 'name_and_id';
+    }
+
+    /**
+     * @param int $index
+     * @return CatPhoto|null
+     */
+    public function getPhotoByIndex(int $index)
+    {
+        /** @var CatPhoto $photo */
+        $photo = $this->photos()->where('index', $index)->first();
+
+        return $photo;
     }
 
     /*
@@ -172,6 +166,57 @@ class Cat extends Model
     }
 
     /**
+     * Get this cat's photos.
+     *
+     * @return HasMany
+     */
+    public function photos()
+    {
+        return $this->hasMany(CatPhoto::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * @inheritdoc
+     */
+    protected static function booted()
+    {
+        // Only make active Cats visible to the public. This scope is manually cleared in admin.
+        static::addGlobalScope('is_active', function (Builder $builder) {
+            $builder->where('is_active', true);
+        });
+    }
+
+    /**
+     * Remove global scopes such as only returning cats with is_active=1 (used in admin).
+     */
+    public function clearGlobalScopes()
+    {
+        static::$globalScopes = [];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Convert the stored integer to a label shown to the user.
+     *
+     * @return string
+     */
+    public function getGenderLabelAttribute()
+    {
+        return self::GENDER_LABELS[$this->gender];
+    }
+
+    /**
      * Finds the first photo it can, and returns its URL, otherwise an empty string.
      * Todo: replace empty string with some sort of image fallback?
      *
@@ -183,45 +228,11 @@ class Cat extends Model
             $photo = self::getPhotoByIndex($index);
 
             if ($photo) {
-                return $photo->getUrl();
+                return $photo->url;
             }
         }
 
         return CatPhotoService::getPlaceholderImage();
-    }
-
-    /**
-     * @param int $index
-     * @return CatPhoto|null
-     */
-    public function getPhotoByIndex(int $index)
-    {
-        /** @var CatPhoto $photo */
-        $photo = $this->photos()->where('index', $index)->first();
-
-        return $photo;
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
-
-    /**
-     * Get this cat's photos.
-     *
-     * @return HasMany
-     */
-    public function photos()
-    {
-        return $this->hasMany(CatPhoto::class);
     }
 
     /**
@@ -232,16 +243,6 @@ class Cat extends Model
     public function getNameAndIdAttribute()
     {
         return sprintf('%s (%d)', $this->name, $this->id);
-    }
-
-    /**
-     * Identifiable attribute for Backpack (in selects).
-     *
-     * @return string
-     */
-    public function identifiableAttribute()
-    {
-        return 'name_and_id';
     }
 
     /*
