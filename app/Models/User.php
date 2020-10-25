@@ -33,13 +33,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $gender
  * @property string|null $first_name
  * @property string|null $last_name
- * @property string|null $date_of_birth
+ * @property Carbon|null $date_of_birth
  * @property string|null $phone
  * @property string|null $address
  * @property string|null $zip_code
  * @property string|null $city
  * @property string|null $country
- * @property int $is_active
+ * @property boolean $is_active
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|Permission[] $permissions

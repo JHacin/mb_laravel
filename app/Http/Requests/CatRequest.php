@@ -36,7 +36,8 @@ class CatRequest extends FormRequest
                 ]),
             ],
             'date_of_birth' => ['nullable', 'date', 'before:now'],
-            'date_of_arrival' => ['nullable', 'date', 'before:now'],
+            'date_of_arrival_mh' => ['nullable', 'date', 'before:now'],
+            'date_of_arrival_boter' => ['nullable', 'date', 'before:now'],
             'story' => ['nullable', 'string'],
             'is_active' => ['boolean'],
         ];
@@ -70,7 +71,8 @@ class CatRequest extends FormRequest
         return [
             'name.min' => 'Ime mora biti dolgo vsaj 2 znaka.',
             'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
-            'date_of_arrival.before' => 'Datum sprejema mora biti v preteklosti.',
+            'date_of_arrival_mh.before' => 'Datum sprejema v zavetišče mora biti v preteklosti.',
+            'date_of_arrival_boter.before' => 'Datum vstopa v botrstvo mora biti v preteklosti.',
         ];
     }
 }

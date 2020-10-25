@@ -61,9 +61,15 @@ class CatCrudController extends CrudController
         'type' => 'text',
     ];
 
-    const DATE_OF_ARRIVAL_COLUMN_DEFINITION = [
-        'name' => 'date_of_arrival',
-        'label' => 'Datum sprejema',
+    const DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION = [
+        'name' => 'date_of_arrival_mh',
+        'label' => 'Datum sprejema v Mačjo hišo',
+        'type' => 'date',
+    ];
+
+    const DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION = [
+        'name' => 'date_of_arrival_boter',
+        'label' => 'Datum vstopa v botrstvo',
         'type' => 'date',
     ];
 
@@ -215,7 +221,8 @@ class CatCrudController extends CrudController
         CRUD::addColumn(self::PHOTO_COLUMN_DEFINITION);
         CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
         CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);
-        CRUD::addColumn(self::DATE_OF_ARRIVAL_COLUMN_DEFINITION);
+        CRUD::addColumn(self::DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION);
+        CRUD::addColumn(self::DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION);
         CRUD::addColumn(self::getLocationColumnDefinition());
         CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
         CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
@@ -296,7 +303,8 @@ class CatCrudController extends CrudController
         CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
         CRUD::addColumn(self::GENDER_COLUMN_DEFINITION);
         CRUD::addColumn(self::STORY_COLUMN_DEFINITION);
-        CRUD::addColumn(self::DATE_OF_ARRIVAL_COLUMN_DEFINITION);
+        CRUD::addColumn(self::DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION);
+        CRUD::addColumn(self::DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION);
         CRUD::addColumn(self::DATE_OF_BIRTH_COLUMN_DEFINITION);
         CRUD::addColumn(self::getLocationColumnDefinition());
         CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
@@ -361,8 +369,16 @@ class CatCrudController extends CrudController
             ],
         ]);
         CRUD::addField([
-            'name' => 'date_of_arrival',
+            'name' => 'date_of_arrival_mh',
             'label' => 'Datum sprejema v zavetišče',
+            'type' => 'date_picker',
+            'date_picker_options' => [
+                'format' => 'dd. mm. yyyy',
+            ],
+        ]);
+        CRUD::addField([
+            'name' => 'date_of_arrival_boter',
+            'label' => 'Datum vstopa v botrstvo',
             'type' => 'date_picker',
             'date_picker_options' => [
                 'format' => 'dd. mm. yyyy',

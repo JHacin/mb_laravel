@@ -22,9 +22,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property int $gender
  * @property string|null $story
- * @property string $date_of_arrival
- * @property string $date_of_birth
- * @property int $is_active
+ * @property Carbon|null $date_of_birth
+ * @property Carbon|null $date_of_arrival_mh
+ * @property Carbon|null $date_of_arrival_boter
+ * @property boolean $is_active
  * @property int|null $location_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -44,8 +45,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Cat whereName($value)
  * @method static Builder|Cat whereSlug($value)
  * @method static Builder|Cat whereUpdatedAt($value)
- * @method static Builder|Cat whereDateOfArrival($value)
  * @method static Builder|Cat whereDateOfBirth($value)
+ * @method static Builder|Cat whereDateOfArrivalMh($value)
+ * @method static Builder|Cat whereDateOfArrivalBoter($value)
  * @method static Builder|Cat whereGender($value)
  * @method static Builder|Cat whereIsActive($value)
  * @method static Builder|Cat whereStory($value)
@@ -67,9 +69,9 @@ class Cat extends Model
     public const GENDER_FEMALE = 2;
 
     public const GENDER_LABELS = [
-        self::GENDER_UNKNOWN => 'Neznano',
-        self::GENDER_MALE => 'Samec',
-        self::GENDER_FEMALE => 'Samica',
+        self::GENDER_UNKNOWN => 'neznano',
+        self::GENDER_MALE => 'samec',
+        self::GENDER_FEMALE => 'samica',
     ];
 
     /*
@@ -87,8 +89,9 @@ class Cat extends Model
      * @var array
      */
     protected $casts = [
-        'date_of_arrival' => 'date',
         'date_of_birth' => 'date',
+        'date_of_arrival_mh' => 'date',
+        'date_of_arrival_boter' => 'date',
         'is_active' => 'boolean',
     ];
 

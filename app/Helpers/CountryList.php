@@ -2,9 +2,16 @@
 
 namespace App\Helpers;
 
+/**
+ * Class CountryList
+ * @package App\Helpers
+ */
 class CountryList
 {
 
+    /**
+     * Country code / translated name pairs.
+     */
     const COUNTRY_NAMES = [
         'AF' => 'Afganistan',
         'AX' => 'Ålandski otoki',

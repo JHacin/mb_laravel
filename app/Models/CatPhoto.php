@@ -45,7 +45,7 @@ class CatPhoto extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'cat_locations';
+    protected $table = 'cat_photos';
     protected $guarded = ['id'];
 
     /*
