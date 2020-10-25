@@ -96,6 +96,20 @@ class CatCrudController extends CrudController
     }
 
     /**
+     * Since we have a global scope on the Cat model (queries will only return Cats with is_active=true),
+     * we need to manually clear it - Backpack doesn't yet provide a standard way of bypassing scopes.
+     */
+    public function clearGlobalScopes()
+    {
+        /** @var Cat $catQuery */
+        $catQuery = $this->crud->query;
+        $this->crud->query = $catQuery->withoutGlobalScopes();
+        /** @var Cat $catModel */
+        $catModel = $this->crud->model;
+        $catModel->clearGlobalScopes();
+    }
+
+    /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
      * @return void
@@ -109,6 +123,7 @@ class CatCrudController extends CrudController
         CRUD::setSubheading('Dodaj novo muco', 'create');
         CRUD::setSubheading('Uredi muco', 'edit');
         CRUD::setSubheading('Podatki muce', 'show');
+        $this->clearGlobalScopes();
     }
 
     /**

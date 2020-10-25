@@ -98,6 +98,25 @@ class Cat extends Model
     */
 
     /**
+     * @inheritdoc
+     */
+    protected static function booted()
+    {
+        // Only make active Cats visible to the public. This scope is manually cleared in admin.
+        static::addGlobalScope('is_active', function (Builder $builder) {
+            $builder->where('is_active', true);
+        });
+    }
+
+    /**
+     * Remove global scopes such as only returning cats with is_active=1 (used in admin).
+     */
+    public function clearGlobalScopes()
+    {
+        static::$globalScopes = [];
+    }
+
+    /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions(): SlugOptions
