@@ -11,12 +11,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Cat
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property int $gender
  * @property string|null $story
  * @property string $date_of_arrival
@@ -31,12 +34,14 @@ use Illuminate\Support\Carbon;
  * @property-read CatLocation|null $location
  * @property-read Collection|CatPhoto[] $photos
  * @property-read int|null $photos_count
+ * @property-read string $first_photo_url
  * @method static Builder|Cat newModelQuery()
  * @method static Builder|Cat newQuery()
  * @method static Builder|Cat query()
  * @method static Builder|Cat whereCreatedAt($value)
  * @method static Builder|Cat whereId($value)
  * @method static Builder|Cat whereName($value)
+ * @method static Builder|Cat whereSlug($value)
  * @method static Builder|Cat whereUpdatedAt($value)
  * @method static Builder|Cat whereDateOfArrival($value)
  * @method static Builder|Cat whereDateOfBirth($value)
@@ -45,11 +50,16 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Cat whereStory($value)
  * @method static Builder|Cat whereLocationId($value)
  * @mixin Eloquent
- * @property-read string $first_photo_url
  */
 class Cat extends Model
 {
-    use CrudTrait;
+    use CrudTrait, HasSlug;
+
+    /*
+    |--------------------------------------------------------------------------
+    | CONSTANTS
+    |--------------------------------------------------------------------------
+    */
 
     public const GENDER_UNKNOWN = 0;
     public const GENDER_MALE = 1;
@@ -68,12 +78,7 @@ class Cat extends Model
     */
 
     protected $table = 'cats';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
-    // protected $hidden = [];
-    // protected $dates = [];
 
     /**
      * The attributes that should be casted to native types.
@@ -93,6 +98,25 @@ class Cat extends Model
     */
 
     /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(30);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
      * Convert the stored integer to a label shown to the user.
      *
      * @return string
@@ -107,28 +131,6 @@ class Cat extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * @param int $index
-     * @return CatPhoto|null
-     */
-    public function getPhotoByIndex(int $index)
-    {
-        /** @var CatPhoto $photo */
-        $photo = $this->photos()->where('index', $index)->first();
-
-        return $photo;
-    }
-
-    /**
-     * Get this cat's photos.
-     *
-     * @return HasMany
-     */
-    public function photos()
-    {
-        return $this->hasMany(CatPhoto::class);
-    }
 
     /**
      * Get the sponsorships that include this cat.
@@ -150,18 +152,6 @@ class Cat extends Model
         return $this->belongsTo(CatLocation::class);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
-
     /**
      * Finds the first photo it can, and returns its URL, otherwise an empty string.
      * Todo: replace empty string with some sort of image fallback?
@@ -179,6 +169,40 @@ class Cat extends Model
         }
 
         return CatPhotoService::getPlaceholderImage();
+    }
+
+    /**
+     * @param int $index
+     * @return CatPhoto|null
+     */
+    public function getPhotoByIndex(int $index)
+    {
+        /** @var CatPhoto $photo */
+        $photo = $this->photos()->where('index', $index)->first();
+
+        return $photo;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get this cat's photos.
+     *
+     * @return HasMany
+     */
+    public function photos()
+    {
+        return $this->hasMany(CatPhoto::class);
     }
 
     /**

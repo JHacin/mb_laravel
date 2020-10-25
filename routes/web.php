@@ -2,22 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+// Publicly visible pages
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('home');
 Route::get('/muce', [App\Http\Controllers\PagesController::class, 'catList'])->name('cat_list');
-Route::get('/muce/{id}', [App\Http\Controllers\PagesController::class, 'catDetails'])->name('cat_details');
-Route::get('/muce/{id}/postani-boter', [App\Http\Controllers\PagesController::class, 'becomeCatSponsor'])->name('become_cat_sponsor');
+Route::get('/muce/{cat}', [App\Http\Controllers\PagesController::class, 'catDetails'])->name('cat_details');
+Route::get('/muce/{cat}/postani-boter', [App\Http\Controllers\PagesController::class, 'becomeCatSponsor'])->name('become_cat_sponsor');
 
+// User pages
 Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile.index');
 
 // Auth routes

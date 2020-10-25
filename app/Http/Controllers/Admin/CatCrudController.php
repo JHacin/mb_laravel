@@ -6,7 +6,6 @@ use App\Helpers\Admin\CrudColumnHelper;
 use App\Http\Requests\CatRequest;
 use App\Models\Cat;
 use App\Models\CatLocation;
-use App\Models\CatPhoto;
 use App\Services\CatPhotoService;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;

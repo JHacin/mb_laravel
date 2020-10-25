@@ -31,13 +31,13 @@
 
                             <footer class="card-footer">
                                 <a
-                                    href="{{ route('cat_details', ['id' => $cat->id]) }}"
+                                    href="{{ route('cat_details', $cat) }}"
                                     class="card-footer-item"
                                 >
                                     Preberi mojo zgodbo
                                 </a>
                                 <a
-                                    href="{{ route('become_cat_sponsor', ['id' => $cat->id]) }}"
+                                    href="{{ route('become_cat_sponsor', $cat) }}"
                                     class="card-footer-item"
                                 >
                                     Postani moj boter

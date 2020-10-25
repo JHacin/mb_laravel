@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Cat;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PagesController extends Controller
@@ -36,38 +35,22 @@ class PagesController extends Controller
     /**
      * Show the cat details page.
      *
-     * @param Request $request
+     * @param Cat $cat
      * @return Application|Factory|View|void
      */
-    public function catDetails(Request $request)
+    public function catDetails(Cat $cat)
     {
-        $id = $request->route()->parameter('id');
-
-        $cat = Cat::find($id);
-
-        if (!$cat) {
-            return abort(404);
-        }
-
         return view('cat_details', ['cat' => $cat]);
     }
 
     /**
      * Show the page with the form for sponsoring a cat.
      *
-     * @param Request $request
+     * @param Cat $cat
      * @return Application|Factory|View|void
      */
-    public function becomeCatSponsor(Request $request)
+    public function becomeCatSponsor(Cat $cat)
     {
-        $id = $request->route()->parameter('id');
-
-        $cat = Cat::find($id);
-
-        if (!$cat) {
-            return abort(404);
-        }
-
         return view('become_cat_sponsor', ['cat' => $cat]);
     }
 
