@@ -58,6 +58,23 @@
                     <strong>{{ $cat->gender_label }}</strong>
                 </div>
             </div>
+
+            <a class="button is-primary" href="{{ route('become_cat_sponsor', $cat) }}">
+                Postani moj boter
+            </a>
+
+            <h4 class="title is-4">Moja zgodba</h4>
+
+            <div class="content">
+                {!! $cat->story !!}
+            </div>
+
+            <h5 class="title is-5">Moji botri</h5>
+            <div>
+                @foreach($cat->sponsorships as $sponsorship)
+                    <x-sponsor-details :sponsor="$sponsorship->user"/>
+                @endforeach
+            </div>
         </div>
     </section>
 @endsection

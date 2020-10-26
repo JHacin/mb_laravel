@@ -40,7 +40,7 @@ class PagesController extends Controller
      */
     public function catDetails(Cat $cat)
     {
-        return view('cat_details', ['cat' => $cat]);
+        return view('cat_details', ['cat' => $cat->load('sponsorships.user')]);
     }
 
     /**
