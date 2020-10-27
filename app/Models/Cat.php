@@ -221,7 +221,6 @@ class Cat extends Model
 
     /**
      * Finds the first photo it can, and returns its URL, otherwise an empty string.
-     * Todo: replace empty string with some sort of image fallback?
      *
      * @return string
      */

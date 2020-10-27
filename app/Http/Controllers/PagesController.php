@@ -28,7 +28,7 @@ class PagesController extends Controller
      */
     public function catList()
     {
-        $cats = Cat::all();
+        $cats = Cat::withCount('sponsorships')->get();
 
         return view('cat_list', ['cats' => $cats]);
     }
