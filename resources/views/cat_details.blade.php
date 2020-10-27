@@ -71,9 +71,12 @@
 
             <h5 class="title is-5">Moji botri</h5>
             <div>
-                @foreach($cat->sponsorships as $sponsorship)
-                    <x-sponsor-details :sponsor="$sponsorship->user"/>
+                @foreach($sponsors['identified'] as $sponsor)
+                    <x-sponsor-details :sponsor="$sponsor"/>
                 @endforeach
+                @if(count($sponsors['anonymous']) > 0)
+                    <div>{{ $sponsors['anonymous_count_label'] }}</div>
+                @endif
             </div>
         </div>
     </section>

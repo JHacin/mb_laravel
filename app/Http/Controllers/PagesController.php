@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SponsorList;
 use App\Models\Cat;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -40,7 +41,12 @@ class PagesController extends Controller
      */
     public function catDetails(Cat $cat)
     {
-        return view('cat_details', ['cat' => $cat->load('sponsorships.user')]);
+        $viewData = [
+            'cat' => $cat,
+            'sponsors' => SponsorList::prepareViewData($cat->sponsorships),
+        ];
+
+        return view('cat_details', $viewData);
     }
 
     /**

@@ -8,6 +8,9 @@ use Illuminate\View\View;
 
 class SponsorDetails extends Component
 {
+    const MISSING_FIRST_NAME_PLACEHOLDER = 'brez imena';
+    const MISSING_CITY_PLACEHOLDER = 'neznan kraj';
+
     /**
      * @var User
      */
@@ -30,6 +33,11 @@ class SponsorDetails extends Component
      */
     public function render()
     {
-        return view('components.sponsor-details');
+        $viewData = [
+            'first_name' => $this->sponsor->first_name ?? self::MISSING_FIRST_NAME_PLACEHOLDER,
+            'city' => $this->sponsor->city ?? self::MISSING_CITY_PLACEHOLDER,
+        ];
+
+        return view('components.sponsor-details', $viewData);
     }
 }
