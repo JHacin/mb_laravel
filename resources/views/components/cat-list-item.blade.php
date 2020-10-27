@@ -27,20 +27,22 @@
             </div>
         </div>
 
-        <p>
-            <span>Trenutno botrov:</span>
-            <strong>{{ $cat->sponsorships_count }}</strong>
-        </p>
+        <div class="content">
+            <p>
+                <span>Trenutno botrov:</span>
+                <strong>{{ $cat->sponsorships_count }}</strong>
+            </p>
 
-        <p>
-            <span>Datum vstopa v botrstvo:</span>
-            <strong>{{ $dateOfArrivalBoter }}</strong>
-        </p>
+            <p>
+                <span>Datum vstopa v botrstvo:</span>
+                <strong>{{ $dateOfArrivalBoter }}</strong>
+            </p>
 
-        <p>
-            <span>Trenutna starost:</span>
-            <strong>{{ $currentAge }}</strong>
-        </p>
+            <p>
+                <span>Trenutna starost:</span>
+                <strong>{{ $currentAge }}</strong>
+            </p>
+        </div>
     </div>
 
     <footer class="card-footer">

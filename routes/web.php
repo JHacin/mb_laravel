@@ -11,6 +11,9 @@ Route::get('/muce/{cat}/postani-boter', [App\Http\Controllers\PagesController::c
 // User pages
 Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile.index');
 
+// Sponsorship form submit routes
+Route::post('/muce/{cat}/postani-boter', [App\Http\Controllers\SponsorshipController::class, 'becomeCatSponsor'])->name('become_cat_sponsor.submit');
+
 // Auth routes
 Route::get('/prijava', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/prijava', [App\Http\Controllers\Auth\LoginController::class, 'login']);
