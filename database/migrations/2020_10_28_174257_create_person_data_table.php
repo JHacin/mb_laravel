@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldsToUsersTable extends Migration
+class CreatePersonDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,10 @@ class AddFieldsToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('person_data', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->string('email')->nullable();
             $table->smallInteger('gender')->default(PersonData::GENDER_UNKNOWN);
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -24,7 +27,7 @@ class AddFieldsToUsersTable extends Migration
             $table->string('zip_code')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
-            $table->boolean('is_active');
+            $table->timestamps();
         });
     }
 
@@ -35,17 +38,6 @@ class AddFieldsToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('gender');
-            $table->dropColumn('first_name');
-            $table->dropColumn('last_name');
-            $table->dropColumn('date_of_birth');
-            $table->dropColumn('phone');
-            $table->dropColumn('address');
-            $table->dropColumn('zip_code');
-            $table->dropColumn('city');
-            $table->dropColumn('country');
-            $table->dropColumn('is_active');
-        });
+        Schema::dropIfExists('person_data');
     }
 }

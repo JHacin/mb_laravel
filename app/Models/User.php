@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -18,6 +19,7 @@ use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+
 
 /**
  * App\Models\User
@@ -30,26 +32,17 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property int $gender
- * @property string|null $first_name
- * @property string|null $last_name
- * @property Carbon|null $date_of_birth
- * @property string|null $phone
- * @property string|null $address
- * @property string|null $zip_code
- * @property string|null $city
- * @property string|null $country
- * @property boolean $is_active
+ * @property bool $is_active
+ * @property-read string $email_and_id
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|Permission[] $permissions
  * @property-read int|null $permissions_count
+ * @property-read PersonData|null $personData
  * @property-read Collection|Role[] $roles
  * @property-read int|null $roles_count
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
- * @property-read string $email_and_id
- * @property-read string $gender_label
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User permission($permissions)
@@ -59,20 +52,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereEmail($value)
  * @method static Builder|User whereEmailVerifiedAt($value)
  * @method static Builder|User whereId($value)
+ * @method static Builder|User whereIsActive($value)
  * @method static Builder|User whereName($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
- * @method static Builder|User whereAddress($value)
- * @method static Builder|User whereCity($value)
- * @method static Builder|User whereCountry($value)
- * @method static Builder|User whereDateOfBirth($value)
- * @method static Builder|User whereFirstName($value)
- * @method static Builder|User whereGender($value)
- * @method static Builder|User whereIsActive($value)
- * @method static Builder|User whereLastName($value)
- * @method static Builder|User wherePhone($value)
- * @method static Builder|User whereZipCode($value)
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -89,20 +73,10 @@ class User extends Authenticatable
     public const ROLE_ADMIN = 'admin';
     public const ROLE_EDITOR = 'editor';
 
-    public const GENDER_UNKNOWN = 0;
-    public const GENDER_MALE = 1;
-    public const GENDER_FEMALE = 2;
-
     public const ADMIN_ROLES = [
         self::ROLE_SUPER_ADMIN,
         self::ROLE_ADMIN,
         self::ROLE_EDITOR,
-    ];
-
-    public const GENDER_LABELS = [
-        self::GENDER_UNKNOWN => 'Neznano',
-        self::GENDER_MALE => 'Moški',
-        self::GENDER_FEMALE => 'Ženska',
     ];
 
     /*
@@ -110,6 +84,13 @@ class User extends Authenticatable
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['personData'];
 
     /**
      * The attributes that are mass assignable.
@@ -120,15 +101,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'gender',
-        'first_name',
-        'last_name',
-        'date_of_birth',
-        'phone',
-        'address',
-        'zip_code',
-        'city',
-        'country',
         'is_active',
     ];
 
@@ -147,7 +119,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'date_of_birth' => 'date',
         'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
@@ -161,21 +132,21 @@ class User extends Authenticatable
     public static function getCustomFieldValidationRules()
     {
         return [
-            'first_name' => ['nullable', 'string', 'max:255'],
-            'last_name' => ['nullable', 'string', 'max:255'],
-            'gender' => [
+            'personData.first_name' => ['nullable', 'string', 'max:255'],
+            'personData.last_name' => ['nullable', 'string', 'max:255'],
+            'personData.gender' => [
                 Rule::in([
-                    self::GENDER_UNKNOWN,
-                    self::GENDER_MALE,
-                    self::GENDER_FEMALE
+                    PersonData::GENDER_UNKNOWN,
+                    PersonData::GENDER_MALE,
+                    PersonData::GENDER_FEMALE
                 ]),
             ],
-            'phone' => ['nullable', 'string', 'max:255'],
-            'date_of_birth' => ['nullable', 'date', 'before:now'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'zip_code' => ['nullable', 'string', 'max:255'],
-            'city' => ['nullable', 'string', 'max:255'],
-            'country' => ['nullable', new CountryCode],
+            'personData.phone' => ['nullable', 'string', 'max:255'],
+            'personData.date_of_birth' => ['nullable', 'date', 'before:now'],
+            'personData.address' => ['nullable', 'string', 'max:255'],
+            'personData.zip_code' => ['nullable', 'string', 'max:255'],
+            'personData.city' => ['nullable', 'string', 'max:255'],
+            'personData.country' => ['nullable', new CountryCode],
             'is_active' => ['boolean'],
         ];
     }
@@ -183,7 +154,7 @@ class User extends Authenticatable
     public static function getCustomFieldValidationMessages()
     {
         return [
-            'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
+            'personData.date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
         ];
     }
 
@@ -214,6 +185,16 @@ class User extends Authenticatable
     */
 
     /**
+     * Get this user's personal information.
+     *
+     * @return HasOne
+     */
+    public function personData()
+    {
+        return $this->hasOne(PersonData::class);
+    }
+
+    /**
      * Get the sponsorships that include this user.
      *
      * @return HasMany
@@ -234,16 +215,6 @@ class User extends Authenticatable
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * Convert the stored integer to a label shown to the user.
-     *
-     * @return string
-     */
-    public function getGenderLabelAttribute()
-    {
-        return self::GENDER_LABELS[$this->gender];
-    }
 
     /**
      * Returns the email followed by the ID enclosed in parentheses.
