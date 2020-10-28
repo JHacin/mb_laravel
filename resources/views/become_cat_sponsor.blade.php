@@ -5,7 +5,7 @@
         <div class="container">
             <h1 class="title">Dogovor o posvojitvi na daljavo</h1>
 
-            <form method="POST" action="{{ route('become_cat_sponsor.submit', $cat) }}">
+            <form method="POST" action="{{ route('become_cat_sponsor', $cat) }}">
                 @csrf
 
                 <div class="field">

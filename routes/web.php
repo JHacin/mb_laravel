@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('home');
 Route::get('/muce', [App\Http\Controllers\PagesController::class, 'catList'])->name('cat_list');
 Route::get('/muce/{cat}', [App\Http\Controllers\PagesController::class, 'catDetails'])->name('cat_details');
-Route::get('/muce/{cat}/postani-boter', [App\Http\Controllers\PagesController::class, 'becomeCatSponsor'])->name('become_cat_sponsor');
+
+// Cat sponsorship
+Route::get('/muce/{cat}/postani-boter', [App\Http\Controllers\CatSponsorshipController::class, 'form'])->name('become_cat_sponsor');
+Route::post('/muce/{cat}/postani-boter', [App\Http\Controllers\CatSponsorshipController::class, 'submit']);
 
 // User pages
 Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile.index');
-
-// Sponsorship form submit routes
-Route::post('/muce/{cat}/postani-boter', [App\Http\Controllers\SponsorshipController::class, 'becomeCatSponsor'])->name('become_cat_sponsor.submit');
 
 // Auth routes
 Route::get('/prijava', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');

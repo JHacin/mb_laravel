@@ -48,16 +48,4 @@ class PagesController extends Controller
 
         return view('cat_details', $viewData);
     }
-
-    /**
-     * Show the page with the form for sponsoring a cat.
-     *
-     * @param Cat $cat
-     * @return Application|Factory|View|void
-     */
-    public function becomeCatSponsor(Cat $cat)
-    {
-        return view('become_cat_sponsor', ['cat' => $cat]);
-    }
-
 }
