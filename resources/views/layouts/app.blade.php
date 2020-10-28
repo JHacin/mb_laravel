@@ -9,8 +9,6 @@
 
         <title>@yield('meta_title', 'Mačji boter')</title>
 
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
         <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 
         <!-- Styles -->
@@ -87,5 +85,9 @@
             Zasebnost |
             Oblikovanje: Lana, izvedba: Jan Hacin
         </footer>
+
+        <!-- Scripts -->
+        <script src="{{ mix('js/app.js') }}"></script>
+        @yield('footer-scripts')
     </body>
 </html>

@@ -121,3 +121,7 @@
         </div>
     </section>
 @endsection
+
+@section('footer-scripts')
+    <script src="{{ mix('js/become-cat-sponsor-form.js') }}"></script>
+@endsection
