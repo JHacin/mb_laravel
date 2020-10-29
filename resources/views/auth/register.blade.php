@@ -9,92 +9,11 @@
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                <div class="field">
-                    <label class="label" for="name">Uporabniško ime</label>
-                    <div class="control has-icons-left">
-                        <input
-                            class="input @error('name') is-danger @enderror"
-                            type="text"
-                            id="name"
-                            name="name"
-                            placeholder="Uporabniško ime"
-                            value="{{ old('name') }}"
-                            required
-                            autocomplete="name"
-                            autofocus
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-user"></i>
-                        </span>
-                    </div>
-                    @error('name')
-                        <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
 
-                <div class="field">
-                    <label class="label" for="email">Email</label>
-                    <div class="control has-icons-left">
-                        <input
-                            class="input @error('email') is-danger @enderror"
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Email"
-                            value="{{ old('email') }}"
-                            required
-                            autocomplete="email"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-envelope"></i>
-                        </span>
-                    </div>
-                    @error('email')
-                    <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="label" for="password">{{ trans('user.password') }}</label>
-                    <div class="control has-icons-left">
-                        <input
-                            class="input @error('password') is-danger @enderror"
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="{{ trans('user.password') }}"
-                            required
-                            autocomplete="new-password"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-key"></i>
-                        </span>
-                    </div>
-                    @error('password')
-                    <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="label" for="password-confirm">{{ trans('user.password_confirm') }}</label>
-                    <div class="control has-icons-left">
-                        <input
-                            class="input @error('password_confirmation') is-danger @enderror"
-                            type="password"
-                            id="password-confirm"
-                            name="password_confirmation"
-                            placeholder="{{ trans('user.password_confirm') }}"
-                            required
-                            autocomplete="new-password"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-key"></i>
-                        </span>
-                    </div>
-                    @error('password_confirmation')
-                    <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
+                <x-user-name-field autocomplete="name" autofocus />
+                <x-user-email-field autocomplete="email" autofocus />
+                <x-user-password-field required autocomplete="new-password" />
+                <x-user-password-confirm-field required autocomplete="new-password" />
 
                 <div class="field">
                     <div class="control">

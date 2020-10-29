@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('meta_title', 'Profil | Mačji boter')
+@section('meta_title', 'Moj profil | Mačji boter')
 
 @php
     use App\Models\User;
@@ -17,78 +17,13 @@
             <form method="POST" action="{{ route('user-profile') }}">
                 @csrf
 
-                <input type="hidden" name="id" value="{{ $user->id }}">
+                <x-user-name-field value="{{ $user->name }}" />
+                <x-user-email-field value="{{ $user->email }}" />
+                <x-user-password-field />
+                <x-user-password-confirm-field />
 
                 <div class="field">
-                    <label for="name" class="label">{{ trans('user.name') }}*</label>
-                    <div class="control">
-                        <input
-                            name="name"
-                            id="name"
-                            class="input @error('name') is-danger @enderror"
-                            type="text"
-                            placeholder="{{ trans('user.name') }}"
-                            value="{{ old('name') ?? $user->name }}"
-                        >
-                    </div>
-                    @error('name')
-                    <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label for="email" class="label">{{ trans('user.email') }}*</label>
-                    <div class="control">
-                        <input
-                            name="email"
-                            id="email"
-                            class="input @error('email') is-danger @enderror"
-                            type="text"
-                            placeholder="{{ trans('user.email') }}"
-                            value="{{ old('email') ?? $user->email }}"
-                        >
-                    </div>
-                    @error('email')
-                    <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="label" for="password">{{ trans('user.password') }}</label>
-                    <div class="control">
-                        <input
-                            class="input @error('password') is-danger @enderror"
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="{{ trans('user.password') }}"
-                            autocomplete="new-password"
-                        >
-                    </div>
-                    @error('password')
-                    <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="label" for="password-confirm">{{ trans('user.password_confirm') }}</label>
-                    <div class="control">
-                        <input
-                            class="input @error('password_confirmation') is-danger @enderror"
-                            type="password"
-                            id="password-confirm"
-                            name="password_confirmation"
-                            placeholder="{{ trans('user.password_confirm') }}"
-                            autocomplete="new-password"
-                        >
-                    </div>
-                    @error('password_confirmation')
-                    <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <button type="submit" class="button is-primary">Potrdi</button>
+                    <button type="submit" class="button is-primary">{{ trans('forms.confirm') }}</button>
                 </div>
             </form>
         </div>

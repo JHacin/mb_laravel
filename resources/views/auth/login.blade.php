@@ -11,46 +11,11 @@
                 @csrf
 
                 @error('email')
-                    <div class="notification is-danger">{{ $message }}</div>
+                <div class="notification is-danger">{{ $message }}</div>
                 @enderror
 
-                <div class="field">
-                    <label class="label" for="email">Email</label>
-                    <div class="control has-icons-left">
-                        <input
-                            class="input"
-                            type="email"
-                            id="email"
-                            name="email"
-                            value="{{ old('email') }}"
-                            placeholder="Email"
-                            required
-                            autocomplete="email"
-                            autofocus
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-envelope"></i>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label" for="password">Geslo</label>
-                    <div class="control has-icons-left">
-                        <input
-                            class="input"
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Geslo"
-                            required
-                            autocomplete="current-password"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-key"></i>
-                        </span>
-                    </div>
-                </div>
+                <x-user-email-field autocomplete="email" autofocus />
+                <x-user-password-field required autocomplete="current-password" />
 
                 <div class="field">
                     <div class="control">

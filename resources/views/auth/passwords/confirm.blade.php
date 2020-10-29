@@ -12,26 +12,7 @@
             <form method="POST" action="{{ route('password.confirm') }}">
                 @csrf
 
-                <div class="field">
-                    <label class="label is-sr-only" for="password">Geslo</label>
-                    <div class="control has-icons-left">
-                        <input
-                            class="input @error('password') is-danger @enderror"
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Geslo"
-                            required
-                            autocomplete="current-password"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-key"></i>
-                        </span>
-                    </div>
-                    @error('password')
-                        <p class="help is-danger">{{ $message }}</p>
-                    @enderror
-                </div>
+                <x-user-password-field required autocomplete="current-password" />
 
                 <div class="field">
                     <div class="control">

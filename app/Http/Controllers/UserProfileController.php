@@ -52,6 +52,10 @@ class UserProfileController extends Controller
         $user = Auth::user();
         $user->update($update);
 
+        $user->personData()->update([
+            'email' => $data['email'],
+        ]);
+
         return redirect()->back();
     }
 }

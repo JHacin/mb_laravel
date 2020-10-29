@@ -1,10 +1,9 @@
 @php
     use App\Models\Cat;
-    use App\Models\CatPhoto;
 
     /** @var Cat $entry */
     $cat = $entry;
-    $url = $cat->first_photo_url;
+    $url = $cat->first_photo_url
 @endphp
 
 <span>
