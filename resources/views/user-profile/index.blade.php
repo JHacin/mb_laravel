@@ -21,6 +21,15 @@
                 <x-user-email-field value="{{ $user->email }}" />
                 <x-user-password-field />
                 <x-user-password-confirm-field />
+                <x-person-data-first-name-field value="{{ $user->personData->first_name }}" />
+                <x-person-data-last-name-field value="{{ $user->personData->last_name }}" />
+                <x-person-data-gender-field value="{{ $user->personData->gender }}" />
+                <x-person-data-phone-field value="{{ $user->personData->phone }}" />
+                <x-person-data-date-of-birth-field value="{{ $user->personData->date_of_birth }}" />
+                <x-person-data-address-field value="{{ $user->personData->address }}" />
+                <x-person-data-zip-code-field value="{{ $user->personData->zip_code }}" />
+                <x-person-data-city-field value="{{ $user->personData->city }}" />
+                <x-person-data-country-field value="{{ $user->personData->country }}" />
 
                 <div class="field">
                     <button type="submit" class="button is-primary">{{ trans('forms.confirm') }}</button>

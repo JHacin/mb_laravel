@@ -62,6 +62,12 @@ class PersonData extends Model
     public const GENDER_MALE = 1;
     public const GENDER_FEMALE = 2;
 
+    public const GENDERS = [
+        self::GENDER_UNKNOWN,
+        self::GENDER_MALE,
+        self::GENDER_FEMALE,
+    ];
+
     public const GENDER_LABELS = [
         self::GENDER_UNKNOWN => 'Neznano',
         self::GENDER_MALE => 'Moški',

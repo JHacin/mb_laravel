@@ -31,13 +31,7 @@ class UserValidation
         return [
             'personData.first_name' => ['nullable', 'string', 'max:255'],
             'personData.last_name' => ['nullable', 'string', 'max:255'],
-            'personData.gender' => [
-                Rule::in([
-                    PersonData::GENDER_UNKNOWN,
-                    PersonData::GENDER_MALE,
-                    PersonData::GENDER_FEMALE
-                ]),
-            ],
+            'personData.gender' => [Rule::in(PersonData::GENDERS)],
             'personData.phone' => ['nullable', 'string', 'max:255'],
             'personData.date_of_birth' => ['nullable', 'date', 'before:now'],
             'personData.address' => ['nullable', 'string', 'max:255'],

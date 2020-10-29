@@ -140,7 +140,7 @@ class CatLocationCrudController extends CrudController
             'type' => 'select2_from_array',
             'options' => CountryList::COUNTRY_NAMES,
             'allows_null' => true,
-            'default' => 'SI'
+            'default' => CountryList::DEFAULT
         ]);
     }
 }

@@ -9,6 +9,8 @@ namespace App\Helpers;
 class CountryList
 {
 
+    const DEFAULT = 'SI';
+
     /**
      * Country code / translated name pairs.
      */

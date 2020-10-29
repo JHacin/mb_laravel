@@ -13,7 +13,6 @@ const mix = require('laravel-mix');
 
 mix.copyDirectory('resources/img', 'public/img')
     .js('resources/js/app.js', 'public/js')
-    .js('resources/js/become-cat-sponsor-form.js', 'public/js/become-cat-sponsor-form.js')
     .sass('resources/scss/app.scss', 'public/css')
     .browserSync({
         ui: false,

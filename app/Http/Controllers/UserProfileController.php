@@ -38,6 +38,7 @@ class UserProfileController extends Controller
      */
     public function update(UserUpdateRequest $request)
     {
+        $user = Auth::user();
         $data = $request->all();
 
         $update = [
@@ -49,12 +50,14 @@ class UserProfileController extends Controller
             $update['password'] = Hash::make($data['password']);
         }
 
-        $user = Auth::user();
-        $user->update($update);
 
-        $user->personData()->update([
-            'email' => $data['email'],
-        ]);
+        $user->update($update);
+        $user->personData()->update(
+            array_merge(
+                $data['personData'],
+                ['email' => $data['email']]
+            )
+        );
 
         return redirect()->back();
     }

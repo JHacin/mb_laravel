@@ -122,6 +122,13 @@
     </section>
 @endsection
 
-@section('footer-scripts')
-    <script src="{{ mix('js/become-cat-sponsor-form.js') }}"></script>
-@endsection
+@push('footer-scripts')
+    <script>
+        flatpickr(document.getElementById('date_of_birth'), {
+            altInput: true,
+            altFormat: 'j. n. Y',
+            dateFormat: 'Y-m-d',
+            maxDate: dayjs().toDate()
+        });
+    </script>
+@endpush

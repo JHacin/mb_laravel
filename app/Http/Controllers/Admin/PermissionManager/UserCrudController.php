@@ -80,6 +80,7 @@ class UserCrudController extends BackpackUserCrudController
         CRUD::modifyField('email', ['tab' => self::TAB_ACCOUNT_DATA]);
         CRUD::modifyField('password', ['tab' => self::TAB_ACCOUNT_DATA]);
         CRUD::modifyField('password_confirmation', ['tab' => self::TAB_ACCOUNT_DATA]);
+        /** @noinspection PhpParamsInspection */
         CRUD::modifyField(['roles', 'permissions'], ['tab' => self::TAB_ACCOUNT_DATA]);
 
         CRUD::addField([
@@ -142,7 +143,7 @@ class UserCrudController extends BackpackUserCrudController
             'type' => 'select2_from_array',
             'options' => CountryList::COUNTRY_NAMES,
             'allows_null' => true,
-            'default' => 'SI',
+            'default' => CountryList::DEFAULT,
             'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
