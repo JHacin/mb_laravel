@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Rules\CountryCode;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,7 +14,6 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -128,35 +126,6 @@ class User extends Authenticatable
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
-    public static function getCustomFieldValidationRules()
-    {
-        return [
-            'personData.first_name' => ['nullable', 'string', 'max:255'],
-            'personData.last_name' => ['nullable', 'string', 'max:255'],
-            'personData.gender' => [
-                Rule::in([
-                    PersonData::GENDER_UNKNOWN,
-                    PersonData::GENDER_MALE,
-                    PersonData::GENDER_FEMALE
-                ]),
-            ],
-            'personData.phone' => ['nullable', 'string', 'max:255'],
-            'personData.date_of_birth' => ['nullable', 'date', 'before:now'],
-            'personData.address' => ['nullable', 'string', 'max:255'],
-            'personData.zip_code' => ['nullable', 'string', 'max:255'],
-            'personData.city' => ['nullable', 'string', 'max:255'],
-            'personData.country' => ['nullable', new CountryCode],
-            'is_active' => ['boolean'],
-        ];
-    }
-
-    public static function getCustomFieldValidationMessages()
-    {
-        return [
-            'personData.date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
-        ];
-    }
 
     /**
      * Check if this user has one of the admin roles.

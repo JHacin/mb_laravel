@@ -51,7 +51,7 @@
                     <div class="navbar-item">
                         <div class="buttons">
                             @auth
-                                <a class="button is-primary" href="{{ route('user-profile.index') }}">
+                                <a class="button is-primary" href="{{ route('user-profile') }}">
                                     Profil
                                 </a>
 

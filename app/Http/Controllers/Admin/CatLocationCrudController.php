@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Admin\CrudColumnHelper;
 use App\Helpers\CountryList;
-use App\Http\Requests\CatLocationRequest;
+use App\Http\Requests\Admin\AdminCatLocationRequest;
 use App\Models\CatLocation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -109,7 +109,7 @@ class CatLocationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CatLocationRequest::class);
+        CRUD::setValidation(AdminCatLocationRequest::class);
 
         CRUD::addField([
             'name' => 'name',

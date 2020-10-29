@@ -55,14 +55,14 @@
                 </div>
 
                 <div class="field">
-                    <label class="label" for="password">Geslo</label>
+                    <label class="label" for="password">{{ trans('user.password') }}</label>
                     <div class="control has-icons-left">
                         <input
                             class="input @error('password') is-danger @enderror"
                             type="password"
                             id="password"
                             name="password"
-                            placeholder="Geslo"
+                            placeholder="{{ trans('user.password') }}"
                             required
                             autocomplete="new-password"
                         >
@@ -71,19 +71,19 @@
                         </span>
                     </div>
                     @error('password')
-                        <p class="help is-danger">{{ $message }}</p>
+                    <p class="help is-danger">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="field">
-                    <label class="label" for="password-confirm">Potrditev gesla</label>
+                    <label class="label" for="password-confirm">{{ trans('user.password_confirm') }}</label>
                     <div class="control has-icons-left">
                         <input
                             class="input @error('password_confirmation') is-danger @enderror"
                             type="password"
                             id="password-confirm"
                             name="password_confirmation"
-                            placeholder="Potrditev gesla"
+                            placeholder="{{ trans('user.password_confirm') }}"
                             required
                             autocomplete="new-password"
                         >
@@ -92,7 +92,7 @@
                         </span>
                     </div>
                     @error('password_confirmation')
-                        <p class="help is-danger">{{ $message }}</p>
+                    <p class="help is-danger">{{ $message }}</p>
                     @enderror
                 </div>
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Admin\CrudColumnHelper;
-use App\Http\Requests\CatRequest;
+use App\Http\Requests\Admin\AdminCatRequest;
 use App\Models\Cat;
 use App\Models\CatLocation;
 use App\Services\CatPhotoService;
@@ -342,7 +342,7 @@ class CatCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CatRequest::class);
+        CRUD::setValidation(AdminCatRequest::class);
 
         CRUD::addField([
             'name' => 'name',

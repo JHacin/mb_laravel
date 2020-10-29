@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $user->personData()->create($data);
+        $user->personData()->create(['email' => $user->email]);
 
         UserMailService::sendWelcomeEMail($user);
 

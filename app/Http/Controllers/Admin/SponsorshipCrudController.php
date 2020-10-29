@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Admin\CrudColumnHelper;
-use App\Http\Requests\SponsorshipRequest;
+use App\Http\Requests\Admin\AdminSponsorshipRequest;
 use App\Models\Cat;
 use App\Models\Sponsorship;
 use App\Models\User;
@@ -160,7 +160,7 @@ class SponsorshipCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(SponsorshipRequest::class);
+        CRUD::setValidation(AdminSponsorshipRequest::class);
 
         CRUD::addField([
             'name' => 'cat_id',

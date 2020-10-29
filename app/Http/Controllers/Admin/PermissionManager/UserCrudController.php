@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\PermissionManager;
 
 use App\Helpers\Admin\CrudColumnHelper;
 use App\Helpers\CountryList;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\Admin\AdminUserCreateRequest;
+use App\Http\Requests\Admin\AdminUserUpdateRequest;
 use App\Models\PersonData;
 use App\Models\User;
 use App\Services\UserMailService;
@@ -163,7 +163,7 @@ class UserCrudController extends BackpackUserCrudController
     {
         parent::setupCreateOperation();
 
-        $this->crud->setValidation(UserCreateRequest::class);
+        $this->crud->setValidation(AdminUserCreateRequest::class);
 
         CRUD::addField([
             'name' => 'should_send_welcome_email',
@@ -182,7 +182,7 @@ class UserCrudController extends BackpackUserCrudController
     public function setupUpdateOperation()
     {
         parent::setupUpdateOperation();
-        $this->crud->setValidation(UserUpdateRequest::class);
+        $this->crud->setValidation(AdminUserUpdateRequest::class);
     }
 
     /**

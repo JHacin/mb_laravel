@@ -12,7 +12,8 @@ Route::get('/muce/{cat}/postani-boter', [App\Http\Controllers\CatSponsorshipCont
 Route::post('/muce/{cat}/postani-boter', [App\Http\Controllers\CatSponsorshipController::class, 'submit']);
 
 // User pages
-Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile.index');
+Route::get('/profil', [App\Http\Controllers\UserProfileController::class, 'index'])->name('user-profile');
+Route::post('/profil', [App\Http\Controllers\UserProfileController::class, 'update']);
 
 // Auth routes
 Route::get('/prijava', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');

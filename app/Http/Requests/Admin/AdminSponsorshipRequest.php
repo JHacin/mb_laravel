@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
-use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CatLocationRequest extends FormRequest
+class AdminSponsorshipRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,6 @@ class CatLocationRequest extends FormRequest
      */
     public function authorize()
     {
-        // only allow updates if the user is logged in
         return backpack_auth()->check();
     }
 
@@ -26,11 +24,8 @@ class CatLocationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'min:2', 'max:255'],
-            'address' => ['nullable', 'string', 'min:2', 'max:255'],
-            'zip_code' => ['nullable', 'string', 'max:255'],
-            'city' => ['nullable', 'string', 'max:255'],
-            'country' => ['nullable', new CountryCode],
+            'cat_id' => ['required', 'integer', 'exists:cats,id'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 
@@ -54,7 +49,8 @@ class CatLocationRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'cat_id.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
+            'user_id.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
         ];
     }
 }
