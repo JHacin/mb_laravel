@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Admin\CrudColumnHelper;
-use App\Helpers\CountryList;
+use App\Helpers\Admin\CrudFieldHelper;
 use App\Http\Requests\Admin\AdminCatLocationRequest;
 use App\Models\CatLocation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -13,7 +13,6 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Exception;
 
 /**
@@ -28,13 +27,6 @@ class CatLocationCrudController extends CrudController
     use UpdateOperation;
     use DeleteOperation;
     use ShowOperation;
-
-    const NAME_COLUMN_DEFINITION = [
-        'name' => 'name',
-        'label' => 'Ime',
-        'type' => 'text',
-    ];
-
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      *
@@ -43,12 +35,12 @@ class CatLocationCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(CatLocation::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.cat_locations'));
-        CRUD::setEntityNameStrings('Lokacija', 'Lokacije');
-        CRUD::setSubheading('Dodaj novo lokacijo', 'create');
-        CRUD::setSubheading('Uredi lokacijo', 'edit');
-        CRUD::setSubheading('Podatki lokacije', 'show');
+        $this->crud->setModel(CatLocation::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.cat_locations'));
+        $this->crud->setEntityNameStrings('Lokacija', 'Lokacije');
+        $this->crud->setSubheading('Dodaj novo lokacijo', 'create');
+        $this->crud->setSubheading('Uredi lokacijo', 'edit');
+        $this->crud->setSubheading('Podatki lokacije', 'show');
     }
 
     /**
@@ -59,16 +51,16 @@ class CatLocationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
-        CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::ADDRESS_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::ZIP_CODE_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::CITY_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::COUNTRY_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(CrudColumnHelper::name());
+        $this->crud->addColumn(CrudColumnHelper::address());
+        $this->crud->addColumn(CrudColumnHelper::zipCode());
+        $this->crud->addColumn(CrudColumnHelper::city());
+        $this->crud->addColumn(CrudColumnHelper::country());
+        $this->crud->addColumn(CrudColumnHelper::createdAt());
+        $this->crud->addColumn(CrudColumnHelper::updatedAt());
 
-        CRUD::orderBy('updated_at', 'DESC');
+        $this->crud->orderBy('updated_at', 'DESC');
     }
 
     /**
@@ -78,16 +70,16 @@ class CatLocationCrudController extends CrudController
      */
     protected function setupShowOperation()
     {
-        CRUD::set('show.setFromDb', false);
+        $this->crud->set('show.setFromDb', false);
 
-        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
-        CRUD::addColumn(self::NAME_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::ADDRESS_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::ZIP_CODE_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::CITY_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::COUNTRY_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(CrudColumnHelper::name());
+        $this->crud->addColumn(CrudColumnHelper::address());
+        $this->crud->addColumn(CrudColumnHelper::zipCode());
+        $this->crud->addColumn(CrudColumnHelper::city());
+        $this->crud->addColumn(CrudColumnHelper::country());
+        $this->crud->addColumn(CrudColumnHelper::createdAt());
+        $this->crud->addColumn(CrudColumnHelper::updatedAt());
     }
 
     /**
@@ -109,9 +101,9 @@ class CatLocationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(AdminCatLocationRequest::class);
+        $this->crud->setValidation(AdminCatLocationRequest::class);
 
-        CRUD::addField([
+        $this->crud->addField([
             'name' => 'name',
             'label' => 'Ime',
             'type' => 'text',
@@ -119,28 +111,7 @@ class CatLocationCrudController extends CrudController
                 'required' => 'required',
             ]
         ]);
-        CRUD::addField([
-            'name' => 'address',
-            'label' => 'Naslov',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'zip_code',
-            'label' => 'Poštna številka',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'city',
-            'label' => 'Kraj',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'country',
-            'label' => 'Država',
-            'type' => 'select2_from_array',
-            'options' => CountryList::COUNTRY_NAMES,
-            'allows_null' => true,
-            'default' => CountryList::DEFAULT
-        ]);
+
+        CrudFieldHelper::addAddressFields($this->crud);
     }
 }

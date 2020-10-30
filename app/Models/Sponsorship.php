@@ -9,24 +9,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
+
 /**
  * App\Models\Sponsorship
  *
  * @property int $id
- * @property int $cat_id
- * @property int $user_id
+ * @property int|null $cat_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Cat $cat
- * @property-read User $user
+ * @property int|null $person_data_id
+ * @property-read Cat|null $cat
+ * @property-read PersonData|null $personData
  * @method static Builder|Sponsorship newModelQuery()
  * @method static Builder|Sponsorship newQuery()
  * @method static Builder|Sponsorship query()
  * @method static Builder|Sponsorship whereCatId($value)
  * @method static Builder|Sponsorship whereCreatedAt($value)
  * @method static Builder|Sponsorship whereId($value)
+ * @method static Builder|Sponsorship wherePersonDataId($value)
  * @method static Builder|Sponsorship whereUpdatedAt($value)
- * @method static Builder|Sponsorship whereUserId($value)
  * @mixin Eloquent
  */
 class Sponsorship extends Model
@@ -65,13 +66,13 @@ class Sponsorship extends Model
     }
 
     /**
-     * Get the user in this sponsorship.
+     * Get the person in this sponsorship.
      *
      * @return BelongsTo
      */
-    public function user()
+    public function personData()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(PersonData::class);
     }
 
     /*

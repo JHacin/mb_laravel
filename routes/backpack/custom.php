@@ -16,4 +16,5 @@ Route::group([
     Route::crud(config('routes.admin.cats'), 'CatCrudController');
     Route::crud(config('routes.admin.sponsorships'), 'SponsorshipCrudController');
     Route::crud(config('routes.admin.cat_locations'), 'CatLocationCrudController');
+    Route::crud(config('routes.admin.person_data'), 'PersonDataCrudController');
 }); // this should be the absolute last line of this file

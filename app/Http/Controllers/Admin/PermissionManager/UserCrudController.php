@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Admin\PermissionManager;
 
 use App\Helpers\Admin\CrudColumnHelper;
-use App\Helpers\CountryList;
+use App\Helpers\Admin\CrudFieldHelper;
 use App\Http\Requests\Admin\AdminUserCreateRequest;
 use App\Http\Requests\Admin\AdminUserUpdateRequest;
-use App\Models\PersonData;
 use App\Models\User;
 use App\Services\UserMailService;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,24 +16,6 @@ use Illuminate\Http\Request;
 class UserCrudController extends BackpackUserCrudController
 {
     use ShowOperation;
-
-    const FIRST_NAME_COLUMN_DEFINITION = [
-        'name' => 'personData.first_name',
-        'label' => 'Ime',
-        'type' => 'text',
-    ];
-
-    const LAST_NAME_COLUMN_DEFINITION = [
-        'name' => 'personData.last_name',
-        'label' => 'Priimek',
-        'type' => 'text',
-    ];
-
-    const IS_ACTIVE_COLUMN_DEFINITION = [
-        'name' => 'is_active',
-        'label' => 'Aktiviran',
-        'type' => 'boolean',
-    ];
 
     /**
      * @inheritdoc
@@ -57,11 +37,11 @@ class UserCrudController extends BackpackUserCrudController
 
         $this->crud->removeColumn('permissions');
 
-        $this->crud->addColumn(self::FIRST_NAME_COLUMN_DEFINITION)->afterColumn('email');
-        $this->crud->addColumn(self::LAST_NAME_COLUMN_DEFINITION)->afterColumn('personData.first_name');
-        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+        $this->crud->addColumn(CrudColumnHelper::firstName(['name' => 'personData.first_name']))->afterColumn('email');
+        $this->crud->addColumn(CrudColumnHelper::lastName(['name' => 'personData.last_name']))->afterColumn('personData.first_name');
+        $this->crud->addColumn(CrudColumnHelper::isActive());
+        $this->crud->addColumn(CrudColumnHelper::createdAt());
+        $this->crud->addColumn(CrudColumnHelper::updatedAt());
     }
 
     /**
@@ -73,63 +53,11 @@ class UserCrudController extends BackpackUserCrudController
     {
         parent::addUserFields();
 
-        CRUD::addField([
-            'name' => 'personData.first_name',
-            'label' => 'Ime',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'personData.last_name',
-            'label' => 'Priimek',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'personData.gender',
-            'label' => 'Spol',
-            'type' => 'radio',
-            'options' => PersonData::GENDER_LABELS,
-            'inline' => true,
-            'default' => PersonData::GENDER_UNKNOWN,
-        ]);
-        CRUD::addField([
-            'name' => 'personData.phone',
-            'label' => 'Telefon',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'personData.date_of_birth',
-            'label' => 'Datum rojstva',
-            'type' => 'date_picker',
-            'date_picker_options' => [
-                'format' => 'dd. mm. yyyy',
-            ],
-        ]);
-        CRUD::addField([
-            'name' => 'personData.address',
-            'label' => 'Naslov',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'personData.zip_code',
-            'label' => 'Poštna številka',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'personData.city',
-            'label' => 'Kraj',
-            'type' => 'text',
-        ]);
-        CRUD::addField([
-            'name' => 'personData.country',
-            'label' => 'Država',
-            'type' => 'select2_from_array',
-            'options' => CountryList::COUNTRY_NAMES,
-            'allows_null' => true,
-            'default' => CountryList::DEFAULT,
-        ]);
-        CRUD::addField([
+        CrudFieldHelper::addPersonDataFields($this->crud);
+
+        $this->crud->addField([
             'name' => 'is_active',
-            'label' => 'Aktiviran',
+            'label' => trans('user.is_active'),
             'type' => 'checkbox',
             'hint' => 'Uporabnik, ki ni aktiviran, se še ne more prijaviti v račun.',
         ]);
@@ -146,7 +74,7 @@ class UserCrudController extends BackpackUserCrudController
 
         $this->crud->setValidation(AdminUserCreateRequest::class);
 
-        CRUD::addField([
+        $this->crud->addField([
             'name' => 'should_send_welcome_email',
             'label' => 'Pošlji obvestilo o ustvarjenem računu?',
             'type' => 'checkbox',
@@ -172,60 +100,31 @@ class UserCrudController extends BackpackUserCrudController
      */
     protected function setupShowOperation()
     {
-        CRUD::set('show.setFromDb', false);
+        $this->crud->set('show.setFromDb', false);
 
-        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
-        CRUD::addColumn([
+        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn([
             'name' => 'name',
-            'label' => trans('backpack::permissionmanager.name'),
+            'label' => trans('user.name'),
             'type' => 'text',
         ]);
-        CRUD::addColumn([
+        $this->crud->addColumn([
             'name' => 'email',
-            'label' => trans('backpack::permissionmanager.email'),
+            'label' => trans('user.email'),
             'type' => 'text',
         ]);
-        CRUD::addColumn(self::FIRST_NAME_COLUMN_DEFINITION);
-        CRUD::addColumn(self::LAST_NAME_COLUMN_DEFINITION);
-        CRUD::addColumn([
-            'name' => 'personData.gender_label',
-            'label' => 'Spol',
-            'type' => 'text',
-        ]);
-        CRUD::addColumn([
-            'name' => 'personData.date_of_birth',
-            'label' => 'Datum rojstva',
-            'type' => 'date',
-        ]);
-        CRUD::addColumn([
-            'name' => 'personData.phone',
-            'label' => 'Telefon',
-            'type' => 'text',
-        ]);
-        CRUD::addColumn([
-            'name' => 'personData.address',
-            'label' => 'Naslov',
-            'type' => 'text',
-        ]);
-        CRUD::addColumn([
-            'name' => 'personData.zip_code',
-            'label' => 'Poštna številka',
-            'type' => 'text',
-        ]);
-        CRUD::addColumn([
-            'name' => 'personData.city',
-            'label' => 'Kraj',
-            'type' => 'text',
-        ]);
-        CRUD::addColumn([
-            'name' => 'personData.country',
-            'label' => 'Država',
-            'type' => 'select_from_array',
-            'options' => CountryList::COUNTRY_NAMES,
-        ]);
-        CRUD::addColumn(self::IS_ACTIVE_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+        $this->crud->addColumn(CrudColumnHelper::firstName(['name' => 'personData.first_name']));
+        $this->crud->addColumn(CrudColumnHelper::lastName(['name' => 'personData.last_name']));
+        $this->crud->addColumn(CrudColumnHelper::genderLabel(['name' => 'personData.gender_label']));
+        $this->crud->addColumn(CrudColumnHelper::dateOfBirth(['name' => 'personData.date_of_birth']));
+        $this->crud->addColumn(CrudColumnHelper::phone(['name' => 'personData.phone']));
+        $this->crud->addColumn(CrudColumnHelper::address(['name' => 'personData.address']));
+        $this->crud->addColumn(CrudColumnHelper::zipCode(['name' => 'personData.zip_code']));
+        $this->crud->addColumn(CrudColumnHelper::city(['name' => 'personData.city']));
+        $this->crud->addColumn(CrudColumnHelper::country(['name' => 'personData.country']));
+        $this->crud->addColumn(CrudColumnHelper::isActive());
+        $this->crud->addColumn(CrudColumnHelper::createdAt());
+        $this->crud->addColumn(CrudColumnHelper::updatedAt());
     }
 
     /**

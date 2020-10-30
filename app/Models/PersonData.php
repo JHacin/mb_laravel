@@ -111,11 +111,26 @@ class PersonData extends Model
         'date_of_birth' => 'date',
     ];
 
+    /**
+     * Used in Backpack when showing the model instance label via relationship inputs.
+     *
+     * @var string
+     */
+    protected $identifiableAttribute = 'email_and_user_id';
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * @return bool
+     */
+    public function belongsToRegisteredUser()
+    {
+        return $this->user()->exists();
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -153,6 +168,16 @@ class PersonData extends Model
     public function getGenderLabelAttribute()
     {
         return self::GENDER_LABELS[$this->gender];
+    }
+
+    /**
+     * Returns the email followed by the user ID (or the "not registered" label) enclosed in parentheses.
+     *
+     * @return string
+     */
+    public function getEmailAndUserIdAttribute()
+    {
+        return sprintf('%s (%s)', $this->email, $this->user_id ?? 'ni registriran');
     }
 
     /*

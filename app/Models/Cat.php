@@ -95,6 +95,13 @@ class Cat extends Model
         'is_active' => 'boolean',
     ];
 
+    /**
+     * Used in Backpack when showing the model instance label via relationship inputs.
+     *
+     * @var string
+     */
+    protected $identifiableAttribute = 'name_and_id';
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -118,16 +125,6 @@ class Cat extends Model
     public function getRouteKeyName()
     {
         return 'slug';
-    }
-
-    /**
-     * Identifiable attribute for Backpack (in selects).
-     *
-     * @return string
-     */
-    public function identifiableAttribute()
-    {
-        return 'name_and_id';
     }
 
     /**

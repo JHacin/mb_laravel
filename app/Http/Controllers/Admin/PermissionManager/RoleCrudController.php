@@ -19,7 +19,7 @@ class RoleCrudController extends BackpackRoleCrudController
     {
         $this->crud->addColumn([
             'name' => 'label',
-            'label' => trans('backpack::permissionmanager.name'),
+            'label' => trans('user.name'),
             'type' => 'text',
         ]);
 

@@ -9,5 +9,6 @@ return [
         'cats' => 'muce',
         'cat_locations' => 'lokacije',
         'sponsorships' => 'botrovanja',
+        'person_data' => 'neregistrirani-botri',
     ]
 ];

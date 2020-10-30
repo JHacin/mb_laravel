@@ -14,7 +14,6 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Exception;
 
 /**
@@ -29,67 +28,6 @@ class SponsorshipCrudController extends CrudController
     use UpdateOperation;
     use DeleteOperation;
     use ShowOperation;
-
-    /**
-     * Configure the CrudPanel object. Apply settings to all operations.
-     *
-     * @return void
-     * @throws Exception
-     */
-    public function setup()
-    {
-        CRUD::setModel(Sponsorship::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsorships'));
-        CRUD::setEntityNameStrings('Botrovanje', 'Botrovanja');
-        CRUD::setSubheading('Dodaj novo botrovanje', 'create');
-        CRUD::setSubheading('Uredi botrovanje', 'edit');
-        CRUD::setSubheading('Podatki botrovanja', 'show');
-    }
-
-    /**
-     * Define what happens when the List operation is loaded.
-     *
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
-     */
-    protected function setupListOperation()
-    {
-        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
-        CRUD::addColumn(self::getCatColumnDefinition());
-        CRUD::addColumn(self::getUserColumnDefinition());
-        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
-
-        CRUD::orderBy('created_at', 'DESC');
-
-        CRUD::addFilter(
-            [
-                'name' => 'cat_id',
-                'type' => 'select2',
-                'label' => 'Muca',
-            ],
-            function () {
-                return Cat::all()->pluck('name_and_id', 'id')->toArray();
-            },
-            function ($value) {
-                $this->crud->addClause('where', 'cat_id', $value);
-            }
-        );
-
-        CRUD::addFilter(
-            [
-                'name' => 'user_id',
-                'type' => 'select2',
-                'label' => 'Uporabnik',
-            ],
-            function () {
-                return User::all()->pluck('email_and_id', 'id')->toArray();
-            },
-            function ($value) {
-                $this->crud->addClause('where', 'user_id', $value);
-            }
-        );
-    }
 
     /**
      * @return array
@@ -114,31 +52,108 @@ class SponsorshipCrudController extends CrudController
     protected function getUserColumnDefinition()
     {
         return [
-            'name' => 'user',
-            'label' => 'Uporabnik',
+            'name' => 'personData',
+            'label' => 'Boter',
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.users'), [$related_key, 'show']);
+                    /** @var Sponsorship $entry */
+                    $route = $entry->personData->belongsToRegisteredUser()
+                        ? config('routes.admin.users')
+                        : config('routes.admin.person_data');
+
+                    return backpack_url($route, [$related_key, 'show']);
                 },
             ]
         ];
     }
 
     /**
-     * Define what is displayed in the Show view.
+     * Configure the CrudPanel object. Apply settings to all operations.
      *
      * @return void
+     * @throws Exception
      */
-    protected function setupShowOperation()
+    public function setup()
     {
-        CRUD::set('show.setFromDb', false);
+        $this->crud->setModel(Sponsorship::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsorships'));
+        $this->crud->setEntityNameStrings('Botrovanje', 'Botrovanja');
+        $this->crud->setSubheading('Dodaj novo botrovanje', 'create');
+        $this->crud->setSubheading('Uredi botrovanje', 'edit');
+        $this->crud->setSubheading('Podatki botrovanja', 'show');
+    }
 
-        CRUD::addColumn(CrudColumnHelper::ID_COLUMN_DEFINITION);
-        CRUD::addColumn(self::getCatColumnDefinition());
-        CRUD::addColumn(self::getUserColumnDefinition());
-        CRUD::addColumn(CrudColumnHelper::CREATED_AT_COLUMN_DEFINITION);
-        CRUD::addColumn(CrudColumnHelper::UPDATED_AT_COLUMN_DEFINITION);
+    /**
+     * Define what happens when the List operation is loaded.
+     *
+     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
+     * @return void
+     */
+    protected function setupListOperation()
+    {
+        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(self::getCatColumnDefinition());
+        $this->crud->addColumn(self::getUserColumnDefinition());
+        $this->crud->addColumn(CrudColumnHelper::createdAt());
+        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+
+        $this->crud->orderBy('created_at', 'DESC');
+
+        $this->crud->addFilter(
+            [
+                'name' => 'cat_id',
+                'type' => 'select2',
+                'label' => 'Muca',
+            ],
+            function () {
+                return Cat::all()->pluck('name_and_id', 'id')->toArray();
+            },
+            function ($value) {
+                $this->crud->addClause('where', 'cat_id', $value);
+            }
+        );
+
+        $this->crud->addFilter(
+            [
+                'name' => 'user_id',
+                'type' => 'select2',
+                'label' => 'Uporabnik',
+            ],
+            function () {
+                return User::all()->pluck('email_and_id', 'id')->toArray();
+            },
+            function ($value) {
+                $this->crud->addClause('where', 'user_id', $value);
+            }
+        );
+    }
+
+    /**
+     * Define what happens when the Create operation is loaded.
+     *
+     * @see https://backpackforlaravel.com/docs/crud-operation-create
+     * @return void
+     */
+    protected function setupCreateOperation()
+    {
+        $this->crud->setValidation(AdminSponsorshipRequest::class);
+
+        $this->crud->addField([
+            'name' => 'cat',
+            'label' => 'Muca',
+            'type' => 'relationship',
+            'placeholder' => 'Izberi muco',
+            'attributes' => [
+                'required' => 'required',
+            ]
+        ]);
+        $this->crud->addField([
+            'name' => 'personData',
+            'label' => 'Boter',
+            'type' => 'relationship',
+            'placeholder' => 'Izberi botra',
+        ]);
     }
 
     /**
@@ -153,32 +168,18 @@ class SponsorshipCrudController extends CrudController
     }
 
     /**
-     * Define what happens when the Create operation is loaded.
+     * Define what is displayed in the Show view.
      *
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
-    protected function setupCreateOperation()
+    protected function setupShowOperation()
     {
-        CRUD::setValidation(AdminSponsorshipRequest::class);
+        $this->crud->set('show.setFromDb', false);
 
-        CRUD::addField([
-            'name' => 'cat_id',
-            'label' => 'Muca',
-            'type' => 'relationship',
-            'placeholder' => 'Izberi muco',
-            'attributes' => [
-                'required' => 'required',
-            ]
-        ]);
-        CRUD::addField([
-            'name' => 'user_id',
-            'label' => 'Uporabnik',
-            'type' => 'relationship',
-            'placeholder' => 'Izberi uporabnika',
-            'attributes' => [
-                'required' => 'required',
-            ]
-        ]);
+        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(self::getCatColumnDefinition());
+        $this->crud->addColumn(self::getUserColumnDefinition());
+        $this->crud->addColumn(CrudColumnHelper::createdAt());
+        $this->crud->addColumn(CrudColumnHelper::updatedAt());
     }
 }

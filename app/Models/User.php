@@ -121,6 +121,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Used in Backpack when showing the model instance label via relationship inputs.
+     *
+     * @var string
+     */
+    protected $identifiableAttribute = 'email_and_id';
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -135,16 +142,6 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->hasRole(self::ADMIN_ROLES);
-    }
-
-    /**
-     * Identifiable attribute for Backpack (in selects).
-     *
-     * @return string
-     */
-    public function identifiableAttribute()
-    {
-        return 'email_and_id';
     }
 
     /*

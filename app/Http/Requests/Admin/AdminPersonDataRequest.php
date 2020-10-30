@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminSponsorshipRequest extends FormRequest
+class AdminPersonDataRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +13,7 @@ class AdminSponsorshipRequest extends FormRequest
      */
     public function authorize()
     {
+        // only allow updates if the user is logged in
         return backpack_auth()->check();
     }
 
@@ -23,10 +24,7 @@ class AdminSponsorshipRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'cat' => ['required', 'integer', 'exists:cats,id'],
-            'personData' => ['required', 'integer', 'exists:person_data,id'],
-        ];
+        return [];
     }
 
     /**
@@ -49,8 +47,7 @@ class AdminSponsorshipRequest extends FormRequest
     public function messages()
     {
         return [
-            'cat_id.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
-            'user_id.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
+            //
         ];
     }
 }
