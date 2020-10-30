@@ -5,9 +5,11 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 
@@ -28,7 +30,10 @@ use Illuminate\Support\Carbon;
  * @property string|null $country
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read string $email_and_user_id
  * @property-read string $gender_label
+ * @property-read Collection|Sponsorship[] $sponsorships
+ * @property-read int|null $sponsorships_count
  * @property-read User|null $user
  * @method static Builder|PersonData newModelQuery()
  * @method static Builder|PersonData newQuery()
@@ -146,6 +151,16 @@ class PersonData extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the sponsorships that include this user.
+     *
+     * @return HasMany
+     */
+    public function sponsorships()
+    {
+        return $this->hasMany(Sponsorship::class);
     }
 
     /*

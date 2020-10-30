@@ -7,7 +7,6 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -39,8 +38,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read PersonData|null $personData
  * @property-read Collection|Role[] $roles
  * @property-read int|null $roles_count
- * @property-read Collection|Sponsorship[] $sponsorships
- * @property-read int|null $sponsorships_count
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User permission($permissions)
@@ -158,16 +155,6 @@ class User extends Authenticatable
     public function personData()
     {
         return $this->hasOne(PersonData::class);
-    }
-
-    /**
-     * Get the sponsorships that include this user.
-     *
-     * @return HasMany
-     */
-    public function sponsorships()
-    {
-        return $this->hasMany(Sponsorship::class);
     }
 
     /*

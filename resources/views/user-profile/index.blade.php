@@ -6,12 +6,26 @@
     use App\Models\User;
 
     /** @var User $user */
-    $user = Auth::user()
+    $user = Auth::getUser()->loadMissing('personData.sponsorships.cat');
+    $sponsorships = $user->personData->sponsorships
 @endphp
 
 @section('content')
     <section class="section">
         <div class="container">
+            <h1 class="title">Moja botrovanja</h1>
+            @if($sponsorships->count() === 0)
+                <div>Nimate še botrovanj.</div>
+            @else
+                @foreach($sponsorships as $sponsorship)
+                    <div>
+                        <a href="{{ route('cat_details', $sponsorship->cat) }}">
+                            {{ $sponsorship->cat->name }}
+                        </a>
+                    </div>
+                @endforeach
+            @endif
+
             <h1 class="title">Moj profil</h1>
 
             <form method="POST" action="{{ route('user-profile') }}">
