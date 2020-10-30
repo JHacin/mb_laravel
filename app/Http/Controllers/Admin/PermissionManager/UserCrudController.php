@@ -19,9 +19,6 @@ class UserCrudController extends BackpackUserCrudController
 {
     use ShowOperation;
 
-    const TAB_ACCOUNT_DATA = 'Račun';
-    const TAB_PERSONAL_DATA = 'Osebni podatki';
-
     const FIRST_NAME_COLUMN_DEFINITION = [
         'name' => 'personData.first_name',
         'label' => 'Ime',
@@ -76,24 +73,15 @@ class UserCrudController extends BackpackUserCrudController
     {
         parent::addUserFields();
 
-        CRUD::modifyField('name', ['tab' => self::TAB_ACCOUNT_DATA]);
-        CRUD::modifyField('email', ['tab' => self::TAB_ACCOUNT_DATA]);
-        CRUD::modifyField('password', ['tab' => self::TAB_ACCOUNT_DATA]);
-        CRUD::modifyField('password_confirmation', ['tab' => self::TAB_ACCOUNT_DATA]);
-        /** @noinspection PhpParamsInspection */
-        CRUD::modifyField(['roles', 'permissions'], ['tab' => self::TAB_ACCOUNT_DATA]);
-
         CRUD::addField([
             'name' => 'personData.first_name',
             'label' => 'Ime',
             'type' => 'text',
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.last_name',
             'label' => 'Priimek',
             'type' => 'text',
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.gender',
@@ -102,13 +90,11 @@ class UserCrudController extends BackpackUserCrudController
             'options' => PersonData::GENDER_LABELS,
             'inline' => true,
             'default' => PersonData::GENDER_UNKNOWN,
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.phone',
             'label' => 'Telefon',
             'type' => 'text',
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.date_of_birth',
@@ -117,25 +103,21 @@ class UserCrudController extends BackpackUserCrudController
             'date_picker_options' => [
                 'format' => 'dd. mm. yyyy',
             ],
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.address',
             'label' => 'Naslov',
             'type' => 'text',
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.zip_code',
             'label' => 'Poštna številka',
             'type' => 'text',
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.city',
             'label' => 'Kraj',
             'type' => 'text',
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'personData.country',
@@ -144,14 +126,12 @@ class UserCrudController extends BackpackUserCrudController
             'options' => CountryList::COUNTRY_NAMES,
             'allows_null' => true,
             'default' => CountryList::DEFAULT,
-            'tab' => self::TAB_PERSONAL_DATA
         ]);
         CRUD::addField([
             'name' => 'is_active',
             'label' => 'Aktiviran',
             'type' => 'checkbox',
             'hint' => 'Uporabnik, ki ni aktiviran, se še ne more prijaviti v račun.',
-            'tab' => self::TAB_ACCOUNT_DATA
         ]);
     }
 
@@ -171,7 +151,6 @@ class UserCrudController extends BackpackUserCrudController
             'label' => 'Pošlji obvestilo o ustvarjenem računu?',
             'type' => 'checkbox',
             'hint' => 'Uporabnik bo na svoj email naslov prejel sporočilo, v katerem se mu izreče dobrodošlica.',
-            'tab' => self::TAB_ACCOUNT_DATA,
         ]);
     }
 
