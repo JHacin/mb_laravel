@@ -19,11 +19,23 @@ class RoleCrudController extends BackpackRoleCrudController
     {
         $this->crud->addColumn([
             'name' => 'label',
-            'label' => trans('user.name'),
+            'label' => trans('backpack::permissionmanager.name'),
             'type' => 'text',
         ]);
 
         parent::setupListOperation();
+
+        $this->crud->modifyColumn(
+            'users',
+            [
+                'wrapper' => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return backpack_url(config('routes.admin.users') . '?role=' . $entry->getKey());
+                    },
+                ],
+                'suffix' => ' uporabnikov',
+            ]
+        );
 
         $this->crud->removeColumn('name');
     }
