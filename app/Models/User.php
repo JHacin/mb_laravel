@@ -64,6 +64,8 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
 
+    public const ATTR__PERSON_DATA = 'personData';
+
     public const ROLE_SUPER_ADMIN = 'super-admin';
     public const ROLE_ADMIN = 'admin';
     public const ROLE_EDITOR = 'editor';
@@ -130,6 +132,36 @@ class User extends Authenticatable
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * @return array
+     */
+    public static function getSharedValidationRules()
+    {
+        $rules = [
+            'is_active' => ['boolean'],
+        ];
+
+        foreach (PersonData::getSharedValidationRules() as $fieldName => $ruleDef) {
+            $rules[self::ATTR__PERSON_DATA . '.' . $fieldName] = $ruleDef;
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getSharedValidationMessages()
+    {
+        $messages = [];
+
+        foreach (PersonData::getSharedValidationMessages() as $validatorName => $message) {
+            $messages[self::ATTR__PERSON_DATA . '.' . $validatorName] = $message;
+        }
+
+        return $messages;
+    }
 
     /**
      * Check if this user has one of the admin roles.

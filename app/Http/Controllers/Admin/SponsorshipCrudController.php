@@ -147,7 +147,7 @@ class SponsorshipCrudController extends CrudController
                 'label' => trans('sponsor.sponsor'),
             ],
             function () {
-                return PersonData::all()->pluck(PersonData::ATTR_EMAIL_AND_USER_ID, 'id')->toArray();
+                return PersonData::all()->pluck(PersonData::ATTR__EMAIL_AND_USER_ID, 'id')->toArray();
             },
             function ($value) {
                 $this->crud->addClause('where', Sponsorship::ATTR__PERSON_DATA_ID, $value);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\PersonData;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminPersonDataRequest extends FormRequest
@@ -24,7 +25,7 @@ class AdminPersonDataRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return PersonData::getSharedValidationRules();
     }
 
     /**
@@ -46,8 +47,6 @@ class AdminPersonDataRequest extends FormRequest
      */
     public function messages()
     {
-        return [
-            //
-        ];
+        return PersonData::getSharedValidationMessages();
     }
 }

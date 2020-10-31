@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\UserValidation;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -28,7 +28,7 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return array_merge(
-            UserValidation::getCustomFieldValidationRules(),
+            User::getSharedValidationRules(),
             [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
@@ -42,6 +42,6 @@ class UserUpdateRequest extends FormRequest
      */
     public function messages()
     {
-        return UserValidation::getCustomFieldValidationMessages();
+        return User::getSharedValidationMessages();
     }
 }

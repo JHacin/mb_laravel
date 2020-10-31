@@ -33,7 +33,7 @@ class PersonDataCrudController extends CrudController
      */
     protected function hideDataForRegisteredUsers()
     {
-        $this->crud->addClause('where', 'user_id', null);
+        $this->crud->addClause('where', PersonData::ATTR__USER_ID, null);
     }
 
     /**

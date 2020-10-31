@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Helpers\UserValidation;
+use App\Models\User;
 use Backpack\PermissionManager\app\Http\Requests\UserUpdateCrudRequest;
 
 class AdminUserUpdateRequest extends UserUpdateCrudRequest
@@ -14,7 +14,7 @@ class AdminUserUpdateRequest extends UserUpdateCrudRequest
      */
     public function rules()
     {
-        return array_merge(parent::rules(), UserValidation::getCustomFieldValidationRules());
+        return array_merge(parent::rules(), User::getSharedValidationRules());
     }
 
     /**
@@ -22,6 +22,6 @@ class AdminUserUpdateRequest extends UserUpdateCrudRequest
      */
     public function messages()
     {
-        return array_merge(parent::rules(), UserValidation::getCustomFieldValidationMessages());
+        return array_merge(parent::rules(), User::getSharedValidationMessages());
     }
 }

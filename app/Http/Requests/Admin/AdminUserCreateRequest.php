@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Helpers\UserValidation;
+use App\Models\User;
 use Backpack\PermissionManager\app\Http\Requests\UserStoreCrudRequest;
 
 class AdminUserCreateRequest extends UserStoreCrudRequest
@@ -14,7 +14,7 @@ class AdminUserCreateRequest extends UserStoreCrudRequest
     {
         return array_merge(
             parent::rules(),
-            UserValidation::getCustomFieldValidationRules(),
+            User::getSharedValidationRules(),
             ['should_send_welcome_email' => ['boolean']]
         );
     }
@@ -24,6 +24,6 @@ class AdminUserCreateRequest extends UserStoreCrudRequest
      */
     public function messages()
     {
-        return array_merge(parent::rules(), UserValidation::getCustomFieldValidationMessages());
+        return array_merge(parent::rules(), User::getSharedValidationMessages());
     }
 }
