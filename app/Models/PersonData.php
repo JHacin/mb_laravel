@@ -66,6 +66,7 @@ class PersonData extends Model
     | CONSTANTS
     |--------------------------------------------------------------------------
     */
+    public const TABLE_NAME = 'person_data';
 
     public const ATTR__USER_ID = 'user_id';
     public const ATTR__EMAIL_AND_USER_ID = 'email_and_user_id';
@@ -102,7 +103,7 @@ class PersonData extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'person_data';
+    protected $table = self::TABLE_NAME;
     protected $guarded = ['id'];
 
     /**
@@ -146,6 +147,9 @@ class PersonData extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * @return array
+     */
     public static function getSharedValidationRules()
     {
         return [

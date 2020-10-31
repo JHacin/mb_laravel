@@ -78,6 +78,15 @@ class PersonDataCrudController extends CrudController
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(AdminPersonDataRequest::class);
+
+        $this->crud->addField([
+            'name' => PersonData::ATTR__EMAIL,
+            'type' => 'email',
+            'label' => trans('user.email'),
+            'attributes' => [
+                'required' => 'required'
+            ]
+        ]);
         CrudFieldGenerator::addPersonDataFields($this->crud);
     }
 

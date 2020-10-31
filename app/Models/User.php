@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\SharedAttributes;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -63,8 +64,10 @@ class User extends Authenticatable
     | CONSTANTS
     |--------------------------------------------------------------------------
     */
+    public const TABLE_NAME = 'users';
 
     public const ATTR__PERSON_DATA = 'personData';
+    public const ATTR__EMAIL = SharedAttributes::EMAIL;
 
     public const ROLE_SUPER_ADMIN = 'super-admin';
     public const ROLE_ADMIN = 'admin';
@@ -81,6 +84,8 @@ class User extends Authenticatable
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+
+    protected $table = self::TABLE_NAME;
 
     /**
      * The relationships that should always be loaded.

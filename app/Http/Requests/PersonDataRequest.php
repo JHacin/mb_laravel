@@ -2,14 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Models\PersonData;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class UserUpdateRequest extends FormRequest
+class PersonDataRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -17,7 +16,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -28,20 +27,25 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return array_merge(
-            User::getSharedValidationRules(),
+            PersonData::getSharedValidationRules(),
             [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::TABLE_NAME)->ignore(Auth::id())],
-                'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+                PersonData::ATTR__EMAIL => [
+                    'required',
+                    'string',
+                    'email',
+                    Rule::unique(User::TABLE_NAME, User::ATTR__EMAIL),
+                ]
             ]
         );
     }
 
     /**
-     * @inheritdoc
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
      */
     public function messages()
     {
-        return User::getSharedValidationMessages();
+        return PersonData::getSharedValidationMessages();
     }
 }

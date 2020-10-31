@@ -2,51 +2,45 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\PersonDataRequest;
 use App\Models\PersonData;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
 
-class AdminPersonDataRequest extends FormRequest
+class AdminPersonDataRequest extends PersonDataRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function authorize()
     {
-        // only allow updates if the user is logged in
         return backpack_auth()->check();
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * @return Unique
+     */
+    protected function getUniqueEmailRuleForPersonDataTable()
+    {
+        $rule = Rule::unique(PersonData::TABLE_NAME, PersonData::ATTR__EMAIL);
+
+        $currentEntry = $this->get('id');
+        if ($currentEntry !== null) {
+            return $rule->ignore($currentEntry);
+        }
+
+        return $rule;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function rules()
     {
-        return PersonData::getSharedValidationRules();
-    }
+        $rules = parent::rules();
 
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
-        ];
-    }
+        $rules[PersonData::ATTR__EMAIL][] = $this->getUniqueEmailRuleForPersonDataTable();
 
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return PersonData::getSharedValidationMessages();
+        return $rules;
     }
 }
