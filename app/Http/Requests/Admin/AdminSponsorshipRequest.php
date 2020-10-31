@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Sponsorship;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminSponsorshipRequest extends FormRequest
@@ -24,8 +25,10 @@ class AdminSponsorshipRequest extends FormRequest
     public function rules()
     {
         return [
-            'cat' => ['required', 'integer', 'exists:cats,id'],
-            'personData' => ['required', 'integer', 'exists:person_data,id'],
+            Sponsorship::ATTR__CAT => ['required', 'integer', 'exists:cats,id'],
+            Sponsorship::ATTR__PERSON_DATA => ['required', 'integer', 'exists:person_data,id'],
+            Sponsorship::ATTR__IS_ANONYMOUS => ['boolean'],
+            Sponsorship::ATTR__MONTHLY_AMOUNT => ['required', 'numeric', 'between:0,' . config('money.decimal_max')],
         ];
     }
 
@@ -49,8 +52,8 @@ class AdminSponsorshipRequest extends FormRequest
     public function messages()
     {
         return [
-            'cat_id.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
-            'user_id.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
+            Sponsorship::ATTR__CAT . '.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
+            Sponsorship::ATTR__PERSON_DATA . '.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
         ];
     }
 }

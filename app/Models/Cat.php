@@ -64,6 +64,8 @@ class Cat extends Model
     |--------------------------------------------------------------------------
     */
 
+    public const ATTR_NAME_AND_ID = 'name_and_id';
+
     public const GENDER_UNKNOWN = 0;
     public const GENDER_MALE = 1;
     public const GENDER_FEMALE = 2;

@@ -96,7 +96,7 @@ class CrudFieldGenerator
             'hint' => 'Decimalne vrednosti naj bodo ločene s piko. Dovoljeni sta največ 2 decimalki.',
             'attributes' => [
                 'min' => '0.00',
-                'max' => '999999.99',
+                'max' => config('money.decimal_max'),
                 'step' => '0.01',
                 'placeholder' => '0.00'
             ]

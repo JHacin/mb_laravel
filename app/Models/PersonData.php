@@ -63,6 +63,9 @@ class PersonData extends Model
     | CONSTANTS
     |--------------------------------------------------------------------------
     */
+
+    public const ATTR_EMAIL_AND_USER_ID = 'email_and_user_id';
+
     public const GENDER_UNKNOWN = 0;
     public const GENDER_MALE = 1;
     public const GENDER_FEMALE = 2;
@@ -121,7 +124,7 @@ class PersonData extends Model
      *
      * @var string
      */
-    protected $identifiableAttribute = 'email_and_user_id';
+    protected $identifiableAttribute = self::ATTR_EMAIL_AND_USER_ID;
 
     /*
     |--------------------------------------------------------------------------

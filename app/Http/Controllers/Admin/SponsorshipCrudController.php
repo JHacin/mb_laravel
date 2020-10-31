@@ -6,8 +6,8 @@ use App\Helpers\Admin\CrudColumnGenerator;
 use App\Helpers\Admin\CrudFieldGenerator;
 use App\Http\Requests\Admin\AdminSponsorshipRequest;
 use App\Models\Cat;
+use App\Models\PersonData;
 use App\Models\Sponsorship;
-use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -36,7 +36,7 @@ class SponsorshipCrudController extends CrudController
     protected function getCatColumnDefinition()
     {
         return [
-            'name' => 'cat',
+            'name' => Sponsorship::ATTR__CAT,
             'label' => trans('cat.cat'),
             'type' => 'relationship',
             'wrapper' => [
@@ -50,10 +50,10 @@ class SponsorshipCrudController extends CrudController
     /**
      * @return array
      */
-    protected function getUserColumnDefinition()
+    protected function getPersonDataColumnDefinition()
     {
         return [
-            'name' => 'personData',
+            'name' => Sponsorship::ATTR__PERSON_DATA,
             'label' => trans('sponsor.sponsor'),
             'type' => 'relationship',
             'wrapper' => [
@@ -75,7 +75,7 @@ class SponsorshipCrudController extends CrudController
     protected function getMonthlyAmountColumnDefinition()
     {
         return CrudColumnGenerator::moneyColumn([
-            'name' => 'monthly_amount',
+            'name' => Sponsorship::ATTR__MONTHLY_AMOUNT,
             'label' => trans('admin.sponsorship_monthly_amount')
         ]);
     }
@@ -86,7 +86,7 @@ class SponsorshipCrudController extends CrudController
     protected function getIsAnonymousColumnDefinition()
     {
         return [
-            'name' => 'is_anonymous',
+            'name' => Sponsorship::ATTR__IS_ANONYMOUS,
             'label' => 'Anonimno',
             'type' => 'boolean',
         ];
@@ -118,7 +118,7 @@ class SponsorshipCrudController extends CrudController
     {
         $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn(self::getCatColumnDefinition());
-        $this->crud->addColumn(self::getUserColumnDefinition());
+        $this->crud->addColumn(self::getPersonDataColumnDefinition());
         $this->crud->addColumn(self::getMonthlyAmountColumnDefinition());
         $this->crud->addColumn(self::getIsAnonymousColumnDefinition());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
@@ -128,29 +128,29 @@ class SponsorshipCrudController extends CrudController
 
         $this->crud->addFilter(
             [
-                'name' => 'cat_id',
+                'name' => Sponsorship::ATTR__CAT,
                 'type' => 'select2',
                 'label' => trans('cat.cat'),
             ],
             function () {
-                return Cat::all()->pluck('name_and_id', 'id')->toArray();
+                return Cat::all()->pluck(Cat::ATTR_NAME_AND_ID, 'id')->toArray();
             },
             function ($value) {
-                $this->crud->addClause('where', 'cat_id', $value);
+                $this->crud->addClause('where', Sponsorship::ATTR__CAT_ID, $value);
             }
         );
 
         $this->crud->addFilter(
             [
-                'name' => 'user_id',
+                'name' => Sponsorship::ATTR__PERSON_DATA,
                 'type' => 'select2',
-                'label' => 'Uporabnik',
+                'label' => trans('sponsor.sponsor'),
             ],
             function () {
-                return User::all()->pluck('email_and_id', 'id')->toArray();
+                return PersonData::all()->pluck(PersonData::ATTR_EMAIL_AND_USER_ID, 'id')->toArray();
             },
             function ($value) {
-                $this->crud->addClause('where', 'user_id', $value);
+                $this->crud->addClause('where', Sponsorship::ATTR__PERSON_DATA_ID, $value);
             }
         );
     }
@@ -166,7 +166,7 @@ class SponsorshipCrudController extends CrudController
         $this->crud->setValidation(AdminSponsorshipRequest::class);
 
         $this->crud->addField([
-            'name' => 'cat',
+            'name' => Sponsorship::ATTR__CAT,
             'label' => trans('cat.cat'),
             'type' => 'relationship',
             'placeholder' => 'Izberi muco',
@@ -175,17 +175,17 @@ class SponsorshipCrudController extends CrudController
             ]
         ]);
         $this->crud->addField([
-            'name' => 'personData',
+            'name' => Sponsorship::ATTR__PERSON_DATA,
             'label' => trans('sponsor.sponsor'),
             'type' => 'relationship',
             'placeholder' => 'Izberi botra',
         ]);
         $this->crud->addField(CrudFieldGenerator::moneyField([
-            'name' => 'monthly_amount',
+            'name' => Sponsorship::ATTR__MONTHLY_AMOUNT,
             'label' => trans('admin.sponsorship_monthly_amount'),
         ]));
         $this->crud->addField([
-            'name' => 'is_anonymous',
+            'name' => Sponsorship::ATTR__IS_ANONYMOUS,
             'label' => 'Botrovanje naj bo anonimno',
             'type' => 'checkbox',
         ]);
@@ -214,7 +214,7 @@ class SponsorshipCrudController extends CrudController
 
         $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn(self::getCatColumnDefinition());
-        $this->crud->addColumn(self::getUserColumnDefinition());
+        $this->crud->addColumn(self::getPersonDataColumnDefinition());
         $this->crud->addColumn(self::getMonthlyAmountColumnDefinition());
         $this->crud->addColumn(self::getIsAnonymousColumnDefinition());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
