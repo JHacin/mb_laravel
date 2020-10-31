@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Admin\CrudColumnHelper;
+use App\Helpers\Admin\CrudColumnGenerator;
+use App\Helpers\Admin\CrudFieldGenerator;
 use App\Http\Requests\Admin\AdminSponsorshipRequest;
 use App\Models\Cat;
 use App\Models\Sponsorship;
@@ -36,7 +37,7 @@ class SponsorshipCrudController extends CrudController
     {
         return [
             'name' => 'cat',
-            'label' => 'Muca',
+            'label' => trans('cat.cat'),
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
@@ -53,7 +54,7 @@ class SponsorshipCrudController extends CrudController
     {
         return [
             'name' => 'personData',
-            'label' => 'Boter',
+            'label' => trans('sponsor.sponsor'),
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
@@ -65,6 +66,29 @@ class SponsorshipCrudController extends CrudController
                     return backpack_url($route, [$related_key, 'show']);
                 },
             ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMonthlyAmountColumnDefinition()
+    {
+        return CrudColumnGenerator::moneyColumn([
+            'name' => 'monthly_amount',
+            'label' => trans('admin.sponsorship_monthly_amount')
+        ]);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getIsAnonymousColumnDefinition()
+    {
+        return [
+            'name' => 'is_anonymous',
+            'label' => 'Anonimno',
+            'type' => 'boolean',
         ];
     }
 
@@ -92,11 +116,13 @@ class SponsorshipCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn(self::getCatColumnDefinition());
         $this->crud->addColumn(self::getUserColumnDefinition());
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(self::getMonthlyAmountColumnDefinition());
+        $this->crud->addColumn(self::getIsAnonymousColumnDefinition());
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
         $this->crud->orderBy('created_at', 'DESC');
 
@@ -104,7 +130,7 @@ class SponsorshipCrudController extends CrudController
             [
                 'name' => 'cat_id',
                 'type' => 'select2',
-                'label' => 'Muca',
+                'label' => trans('cat.cat'),
             ],
             function () {
                 return Cat::all()->pluck('name_and_id', 'id')->toArray();
@@ -141,7 +167,7 @@ class SponsorshipCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'cat',
-            'label' => 'Muca',
+            'label' => trans('cat.cat'),
             'type' => 'relationship',
             'placeholder' => 'Izberi muco',
             'attributes' => [
@@ -150,10 +176,20 @@ class SponsorshipCrudController extends CrudController
         ]);
         $this->crud->addField([
             'name' => 'personData',
-            'label' => 'Boter',
+            'label' => trans('sponsor.sponsor'),
             'type' => 'relationship',
             'placeholder' => 'Izberi botra',
         ]);
+        $this->crud->addField(CrudFieldGenerator::moneyField([
+            'name' => 'monthly_amount',
+            'label' => trans('admin.sponsorship_monthly_amount'),
+        ]));
+        $this->crud->addField([
+            'name' => 'is_anonymous',
+            'label' => 'Botrovanje naj bo anonimno',
+            'type' => 'checkbox',
+        ]);
+
     }
 
     /**
@@ -176,10 +212,12 @@ class SponsorshipCrudController extends CrudController
     {
         $this->crud->set('show.setFromDb', false);
 
-        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn(self::getCatColumnDefinition());
         $this->crud->addColumn(self::getUserColumnDefinition());
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(self::getMonthlyAmountColumnDefinition());
+        $this->crud->addColumn(self::getIsAnonymousColumnDefinition());
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Admin\CrudColumnHelper;
-use App\Helpers\Admin\CrudFieldHelper;
+use App\Helpers\Admin\CrudColumnGenerator;
+use App\Helpers\Admin\CrudFieldGenerator;
 use App\Http\Requests\Admin\AdminPersonDataRequest;
 use App\Models\PersonData;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -58,15 +58,15 @@ class PersonDataCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addColumn(CrudColumnHelper::id());
-        $this->crud->addColumn(CrudColumnHelper::email());
-        $this->crud->addColumn(CrudColumnHelper::firstName());
-        $this->crud->addColumn(CrudColumnHelper::lastName());
-        $this->crud->addColumn(CrudColumnHelper::genderLabel());
-        $this->crud->addColumn(CrudColumnHelper::address());
-        $this->crud->addColumn(CrudColumnHelper::city());
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(CrudColumnGenerator::id());
+        $this->crud->addColumn(CrudColumnGenerator::email());
+        $this->crud->addColumn(CrudColumnGenerator::firstName());
+        $this->crud->addColumn(CrudColumnGenerator::lastName());
+        $this->crud->addColumn(CrudColumnGenerator::genderLabel());
+        $this->crud->addColumn(CrudColumnGenerator::address());
+        $this->crud->addColumn(CrudColumnGenerator::city());
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
     }
 
     /**
@@ -78,7 +78,7 @@ class PersonDataCrudController extends CrudController
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(AdminPersonDataRequest::class);
-        CrudFieldHelper::addPersonDataFields($this->crud);
+        CrudFieldGenerator::addPersonDataFields($this->crud);
     }
 
     /**
@@ -101,18 +101,18 @@ class PersonDataCrudController extends CrudController
     {
         $this->crud->set('show.setFromDb', false);
 
-        $this->crud->addColumn(CrudColumnHelper::id());
-        $this->crud->addColumn(CrudColumnHelper::email());
-        $this->crud->addColumn(CrudColumnHelper::firstName());
-        $this->crud->addColumn(CrudColumnHelper::lastName());
-        $this->crud->addColumn(CrudColumnHelper::genderLabel());
-        $this->crud->addColumn(CrudColumnHelper::dateOfBirth());
-        $this->crud->addColumn(CrudColumnHelper::phone());
-        $this->crud->addColumn(CrudColumnHelper::address());
-        $this->crud->addColumn(CrudColumnHelper::city());
-        $this->crud->addColumn(CrudColumnHelper::zipCode());
-        $this->crud->addColumn(CrudColumnHelper::country());
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(CrudColumnGenerator::id());
+        $this->crud->addColumn(CrudColumnGenerator::email());
+        $this->crud->addColumn(CrudColumnGenerator::firstName());
+        $this->crud->addColumn(CrudColumnGenerator::lastName());
+        $this->crud->addColumn(CrudColumnGenerator::genderLabel());
+        $this->crud->addColumn(CrudColumnGenerator::dateOfBirth());
+        $this->crud->addColumn(CrudColumnGenerator::phone());
+        $this->crud->addColumn(CrudColumnGenerator::address());
+        $this->crud->addColumn(CrudColumnGenerator::city());
+        $this->crud->addColumn(CrudColumnGenerator::zipCode());
+        $this->crud->addColumn(CrudColumnGenerator::country());
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
     }
 }

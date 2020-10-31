@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Admin\CrudColumnHelper;
-use App\Helpers\Admin\CrudFieldHelper;
+use App\Helpers\Admin\CrudColumnGenerator;
+use App\Helpers\Admin\CrudFieldGenerator;
 use App\Http\Requests\Admin\AdminCatLocationRequest;
 use App\Models\CatLocation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -51,14 +51,14 @@ class CatLocationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addColumn(CrudColumnHelper::id());
-        $this->crud->addColumn(CrudColumnHelper::name());
-        $this->crud->addColumn(CrudColumnHelper::address());
-        $this->crud->addColumn(CrudColumnHelper::zipCode());
-        $this->crud->addColumn(CrudColumnHelper::city());
-        $this->crud->addColumn(CrudColumnHelper::country());
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(CrudColumnGenerator::id());
+        $this->crud->addColumn(CrudColumnGenerator::name());
+        $this->crud->addColumn(CrudColumnGenerator::address());
+        $this->crud->addColumn(CrudColumnGenerator::zipCode());
+        $this->crud->addColumn(CrudColumnGenerator::city());
+        $this->crud->addColumn(CrudColumnGenerator::country());
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
         $this->crud->orderBy('updated_at', 'DESC');
     }
@@ -72,14 +72,14 @@ class CatLocationCrudController extends CrudController
     {
         $this->crud->set('show.setFromDb', false);
 
-        $this->crud->addColumn(CrudColumnHelper::id());
-        $this->crud->addColumn(CrudColumnHelper::name());
-        $this->crud->addColumn(CrudColumnHelper::address());
-        $this->crud->addColumn(CrudColumnHelper::zipCode());
-        $this->crud->addColumn(CrudColumnHelper::city());
-        $this->crud->addColumn(CrudColumnHelper::country());
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(CrudColumnGenerator::id());
+        $this->crud->addColumn(CrudColumnGenerator::name());
+        $this->crud->addColumn(CrudColumnGenerator::address());
+        $this->crud->addColumn(CrudColumnGenerator::zipCode());
+        $this->crud->addColumn(CrudColumnGenerator::city());
+        $this->crud->addColumn(CrudColumnGenerator::country());
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
     }
 
     /**
@@ -112,6 +112,6 @@ class CatLocationCrudController extends CrudController
             ]
         ]);
 
-        CrudFieldHelper::addAddressFields($this->crud);
+        CrudFieldGenerator::addAddressFields($this->crud);
     }
 }

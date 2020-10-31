@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Admin\CrudColumnHelper;
+use App\Helpers\Admin\CrudColumnGenerator;
 use App\Http\Requests\Admin\AdminCatRequest;
 use App\Models\Cat;
 use App\Models\CatLocation;
@@ -125,16 +125,16 @@ class CatCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn(self::PHOTO_COLUMN_DEFINITION);
-        $this->crud->addColumn(CrudColumnHelper::name());
-        $this->crud->addColumn(CrudColumnHelper::genderLabel());
+        $this->crud->addColumn(CrudColumnGenerator::name());
+        $this->crud->addColumn(CrudColumnGenerator::genderLabel());
         $this->crud->addColumn(self::DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION);
         $this->crud->addColumn(self::DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION);
         $this->crud->addColumn(self::getLocationColumnDefinition());
-        $this->crud->addColumn(CrudColumnHelper::isActive(['label' => 'Objavljena']));
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => 'Objavljena']));
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
         $this->crud->orderBy('updated_at', 'DESC');
 
@@ -287,10 +287,10 @@ class CatCrudController extends CrudController
     {
         $this->crud->set('show.setFromDb', false);
 
-        $this->crud->addColumn(CrudColumnHelper::id());
+        $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn(self::PHOTO_COLUMN_DEFINITION);
-        $this->crud->addColumn(CrudColumnHelper::name());
-        $this->crud->addColumn(CrudColumnHelper::genderLabel());
+        $this->crud->addColumn(CrudColumnGenerator::name());
+        $this->crud->addColumn(CrudColumnGenerator::genderLabel());
         $this->crud->addColumn([
             'name' => 'story',
             'label' => 'Zgodba',
@@ -298,11 +298,11 @@ class CatCrudController extends CrudController
         ]);
         $this->crud->addColumn(self::DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION);
         $this->crud->addColumn(self::DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION);
-        $this->crud->addColumn(CrudColumnHelper::dateOfBirth());
+        $this->crud->addColumn(CrudColumnGenerator::dateOfBirth());
         $this->crud->addColumn(self::getLocationColumnDefinition());
-        $this->crud->addColumn(CrudColumnHelper::isActive(['label' => 'Objavljena']));
-        $this->crud->addColumn(CrudColumnHelper::createdAt());
-        $this->crud->addColumn(CrudColumnHelper::updatedAt());
+        $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => 'Objavljena']));
+        $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
     }
 
     /**

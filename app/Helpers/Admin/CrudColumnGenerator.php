@@ -9,7 +9,7 @@ use App\Helpers\CountryList;
  *
  * @package App\Helpers\Admin
  */
-class CrudColumnHelper
+class CrudColumnGenerator
 {
     /**
      * @return string[]
@@ -201,6 +201,21 @@ class CrudColumnHelper
             'name' => 'email',
             'label' => trans('user.email'),
             'type' => 'text',
+        ], $additions);
+    }
+
+    /**
+     * @param array $additions
+     * @return array
+     */
+    public static function moneyColumn($additions = [])
+    {
+        return array_merge([
+            'type' => 'number',
+            'suffix' => ' €',
+            'decimals' => 2,
+            'dec_point' => ',',
+            'thousands_sep' => '.',
         ], $additions);
     }
 }

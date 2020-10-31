@@ -12,7 +12,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
  * Class CrudFieldHelper
  * @package App\Helpers\Admin
  */
-class CrudFieldHelper
+class CrudFieldGenerator
 {
     public static function addAddressFields(CrudPanel $crudPanel, string $namePrefix = '')
     {
@@ -82,5 +82,24 @@ class CrudFieldHelper
         ]);
 
         self::addAddressFields($crudPanel, $namePrefix);
+    }
+
+    /**
+     * @param array $additions
+     * @return array
+     */
+    public static function moneyField($additions = [])
+    {
+        return array_merge([
+            'type' => 'number',
+            'prefix' => '€',
+            'hint' => 'Decimalne vrednosti naj bodo ločene s piko. Dovoljeni sta največ 2 decimalki.',
+            'attributes' => [
+                'min' => '0.00',
+                'max' => '999999.99',
+                'step' => '0.01',
+                'placeholder' => '0.00'
+            ]
+        ], $additions);
     }
 }
