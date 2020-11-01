@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -142,7 +143,7 @@ class User extends Authenticatable
             'is_active' => ['boolean'],
         ];
 
-        foreach (PersonData::getSharedValidationRules() as $fieldName => $ruleDef) {
+        foreach (Arr::except(PersonData::getSharedValidationRules(), ['email']) as $fieldName => $ruleDef) {
             $rules['personData.' . $fieldName] = $ruleDef;
         }
 

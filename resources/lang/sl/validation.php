@@ -118,6 +118,11 @@ return [
     */
 
     'custom' => [
+        'personData' => [
+            'email' => [
+                'unique' => 'Ta email naslov je že v uporabi.',
+            ],
+        ],
         'email' => [
             'unique' => 'Ta email naslov je že v uporabi.',
         ],

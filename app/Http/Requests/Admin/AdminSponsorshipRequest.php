@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Sponsorship;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminSponsorshipRequest extends FormRequest
@@ -23,24 +24,13 @@ class AdminSponsorshipRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'cat' => ['required', 'integer', 'exists:cats,id'],
-            'personData' => ['required', 'integer', 'exists:person_data,id'],
-            'is_anonymous' => ['boolean'],
-            'monthly_amount' => ['required', 'numeric', 'between:0,' . config('money.decimal_max')],
-        ];
-    }
-
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
-        ];
+        return array_merge(
+            Sponsorship::getSharedValidationRules(),
+            [
+                'cat' => ['required', 'integer', 'exists:cats,id'],
+                'personData' => ['required', 'integer', 'exists:person_data,id'],
+            ]
+        );
     }
 
     /**
@@ -50,9 +40,12 @@ class AdminSponsorshipRequest extends FormRequest
      */
     public function messages()
     {
-        return [
-            'cat.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
-            'personData.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
-        ];
+        return array_merge(
+            Sponsorship::getSharedValidationMessages(),
+            [
+                'cat.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
+                'personData.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
+            ]
+        );
     }
 }

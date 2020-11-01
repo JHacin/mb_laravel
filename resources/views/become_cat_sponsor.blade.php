@@ -18,7 +18,7 @@
                 <x-person-data-phone-field />
                 <x-user-email-field name="personData[email]" />
 
-                <x-money-field name="amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
+                <x-money-field name="monthly_amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
                     <x-slot name="help">
                         Vpišite znesek v €, ki ga želite mesečno nakazovati za vašega posvojenca.
                     </x-slot>
@@ -27,7 +27,7 @@
                 <div class="field">
                     <div class="control">
                         <label class="checkbox" for="is_anonymous">
-                            <input type="checkbox" id="is_anonymous" name="is_anonymous">
+                            <input type="checkbox" id="is_anonymous" name="is_anonymous" value="1">
                             Botrovanje naj bo <strong>anonimno</strong>
                         </label>
                     </div>

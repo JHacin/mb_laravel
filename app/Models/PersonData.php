@@ -138,6 +138,7 @@ class PersonData extends Model
     public static function getSharedValidationRules()
     {
         return [
+            'email' => ['required', 'string', 'email', Rule::unique('users', 'email')],
             'first_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['nullable', 'string', 'max:255'],
             'gender' => [Rule::in(PersonData::GENDERS)],
@@ -156,7 +157,7 @@ class PersonData extends Model
     public static function getSharedValidationMessages()
     {
         return [
-            'date_of_birth' . '.before' => 'Datum rojstva mora biti v preteklosti.',
+            'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
         ];
     }
 

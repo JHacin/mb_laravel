@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CatSponsorshipRequest;
 use App\Models\Cat;
+use App\Models\PersonData;
+use App\Models\Sponsorship;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CatSponsorshipController extends Controller
@@ -21,8 +23,22 @@ class CatSponsorshipController extends Controller
         return view('become_cat_sponsor', ['cat' => $cat]);
     }
 
-    public function submit(Request $request)
+    /**
+     * @param Cat $cat
+     * @param CatSponsorshipRequest $request
+     */
+    public function submit(Cat $cat, CatSponsorshipRequest $request)
     {
+        $data = $request->all();
 
+        $personData = PersonData::firstOrCreate(['email' => $data['personData']['email']]);
+        $personData->update($data['personData']);
+
+        Sponsorship::create([
+            'person_data_id' => $personData->id,
+            'cat_id' => $cat->id,
+            'monthly_amount' => $data['monthly_amount'],
+            'is_anonymous' => $data['is_anonymous'] ?? false,
+        ]);
     }
 }

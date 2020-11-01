@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\PersonData;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class PersonDataRequest extends FormRequest
 {
@@ -25,17 +24,7 @@ class PersonDataRequest extends FormRequest
      */
     public function rules()
     {
-        return array_merge(
-            PersonData::getSharedValidationRules(),
-            [
-                'email' => [
-                    'required',
-                    'string',
-                    'email',
-                    Rule::unique('users', 'email'),
-                ]
-            ]
-        );
+        return PersonData::getSharedValidationRules();
     }
 
     /**
