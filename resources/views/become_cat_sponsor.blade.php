@@ -8,74 +8,21 @@
             <form method="POST" action="{{ route('become_cat_sponsor', $cat) }}">
                 @csrf
 
-                <div class="field">
-                    <label for="first_name" class="label is-sr-only">Ime*</label>
-                    <div class="control">
-                        <input id="first_name" name="first_name" type="text" class="input" placeholder="Ime*" required>
-                    </div>
-                </div>
+                <x-person-data-first-name-field />
+                <x-person-data-last-name-field />
+                <x-person-data-address-field />
+                <x-person-data-zip-code-field />
+                <x-person-data-city-field />
+                <x-person-data-country-field />
+                <x-person-data-date-of-birth-field />
+                <x-person-data-phone-field />
+                <x-user-email-field name="personData[email]" />
 
-                <div class="field">
-                    <label for="last_name" class="label is-sr-only">Priimek*</label>
-                    <div class="control">
-                        <input id="last_name" name="last_name" type="text" class="input" placeholder="Priimek*"
-                               required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="address" class="label is-sr-only">Ulica in hišna številka*</label>
-                    <div class="control">
-                        <input id="address" name="address" type="text" class="input"
-                               placeholder="Ulica in hišna številka*" required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="zip_code" class="label is-sr-only">Poštna št.*</label>
-                    <div class="control">
-                        <input id="zip_code" name="zip_code" type="text" class="input" placeholder="Poštna št.*"
-                               required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="city" class="label is-sr-only">Kraj*</label>
-                    <div class="control">
-                        <input id="city" name="city" type="text" class="input" placeholder="Kraj*" required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="date_of_birth" class="label is-sr-only">Datum rojstva</label>
-                    <div class="control">
-                        <input id="date_of_birth" name="date_of_birth" type="text" class="input"
-                               placeholder="Datum rojstva">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="phone" class="label is-sr-only">Telefon</label>
-                    <div class="control">
-                        <input id="phone" name="phone" type="text" class="input" placeholder="Telefon">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="email" class="label is-sr-only">E-mail*</label>
-                    <div class="control">
-                        <input id="email" name="email" type="email" class="input" placeholder="E-mail*" required>
-                    </div>
-                    <p class="help">Vpišite vaš pravi e-mail naslov, saj vas le tako lahko obveščamo.</p>
-                </div>
-
-                <div class="field">
-                    <label for="amount" class="label is-sr-only">Znesek v €*</label>
-                    <div class="control">
-                        <input id="amount" name="amount" type="text" class="input" placeholder="Znesek v €*" required>
-                    </div>
-                    <p class="help">Vpišite znesek v €, ki ga želite mesečno nakazovati za vašega posvojenca.</p>
-                </div>
+                <x-money-field name="amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
+                    <x-slot name="help">
+                        Vpišite znesek v €, ki ga želite mesečno nakazovati za vašega posvojenca.
+                    </x-slot>
+                </x-money-field>
 
                 <div class="field">
                     <div class="control">

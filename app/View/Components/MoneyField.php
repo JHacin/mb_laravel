@@ -5,7 +5,11 @@ namespace App\View\Components;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
-class UserEmailField extends Component
+/**
+ * Class MoneyField
+ * @package App\View\Components
+ */
+class MoneyField extends Component
 {
     /**
      * @var string
@@ -13,13 +17,20 @@ class UserEmailField extends Component
     public $name;
 
     /**
+     * @var string
+     */
+    public $label;
+
+    /**
      * Create a new component instance.
      *
      * @param string $name
+     * @param string $label
      */
-    public function __construct(string $name = 'email')
+    public function __construct(string $name, string $label)
     {
         $this->name = $name;
+        $this->label = $label;
     }
 
     /**
@@ -29,6 +40,6 @@ class UserEmailField extends Component
      */
     public function render()
     {
-        return view('components.user-email-field');
+        return view('components.money-field');
     }
 }
