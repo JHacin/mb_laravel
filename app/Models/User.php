@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\SharedAttributes;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -64,10 +63,6 @@ class User extends Authenticatable
     | CONSTANTS
     |--------------------------------------------------------------------------
     */
-    public const TABLE_NAME = 'users';
-
-    public const ATTR__PERSON_DATA = 'personData';
-    public const ATTR__EMAIL = SharedAttributes::EMAIL;
 
     public const ROLE_SUPER_ADMIN = 'super-admin';
     public const ROLE_ADMIN = 'admin';
@@ -85,7 +80,7 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
 
-    protected $table = self::TABLE_NAME;
+    protected $table = 'users';
 
     /**
      * The relationships that should always be loaded.
@@ -148,7 +143,7 @@ class User extends Authenticatable
         ];
 
         foreach (PersonData::getSharedValidationRules() as $fieldName => $ruleDef) {
-            $rules[self::ATTR__PERSON_DATA . '.' . $fieldName] = $ruleDef;
+            $rules['personData.' . $fieldName] = $ruleDef;
         }
 
         return $rules;
@@ -162,7 +157,7 @@ class User extends Authenticatable
         $messages = [];
 
         foreach (PersonData::getSharedValidationMessages() as $validatorName => $message) {
-            $messages[self::ATTR__PERSON_DATA . '.' . $validatorName] = $message;
+            $messages['personData.' . $validatorName] = $message;
         }
 
         return $messages;

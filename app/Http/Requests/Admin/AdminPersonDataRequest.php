@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\PersonDataRequest;
-use App\Models\PersonData;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Unique;
 
@@ -22,7 +21,7 @@ class AdminPersonDataRequest extends PersonDataRequest
      */
     protected function getUniqueEmailRuleForPersonDataTable()
     {
-        $rule = Rule::unique(PersonData::TABLE_NAME, PersonData::ATTR__EMAIL);
+        $rule = Rule::unique('person_data', 'email');
 
         $currentEntry = $this->get('id');
         if ($currentEntry !== null) {
@@ -39,7 +38,7 @@ class AdminPersonDataRequest extends PersonDataRequest
     {
         $rules = parent::rules();
 
-        $rules[PersonData::ATTR__EMAIL][] = $this->getUniqueEmailRuleForPersonDataTable();
+        $rules['email'][] = $this->getUniqueEmailRuleForPersonDataTable();
 
         return $rules;
     }

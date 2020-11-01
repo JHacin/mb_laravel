@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Helpers\Admin;
+namespace App\Utilities\Admin;
 
-use App\Helpers\CountryList;
-use App\Helpers\SharedAttributes;
-use App\Models\PersonData;
+use App\Utilities\CountryList;
 
 /**
  * Contains helpers for CRUD columns.
@@ -56,7 +54,7 @@ class CrudColumnGenerator
     public static function isActive($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::IS_ACTIVE,
+            'name' => 'is_active',
             'label' => trans('user.is_active'),
             'type' => 'boolean',
         ], $additions);
@@ -69,7 +67,7 @@ class CrudColumnGenerator
     public static function address($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::ADDRESS,
+            'name' => 'address',
             'label' => trans('person_data.address'),
             'type' => 'text',
         ], $additions);
@@ -82,7 +80,7 @@ class CrudColumnGenerator
     public static function zipCode($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::ZIP_CODE,
+            'name' => 'zip_code',
             'label' => trans('person_data.zip_code'),
             'type' => 'text',
         ], $additions);
@@ -95,7 +93,7 @@ class CrudColumnGenerator
     public static function city($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::CITY,
+            'name' => 'city',
             'label' => trans('person_data.city'),
             'type' => 'text',
         ], $additions);
@@ -108,7 +106,7 @@ class CrudColumnGenerator
     public static function country($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::COUNTRY,
+            'name' => 'country',
             'label' => trans('person_data.country'),
             'type' => 'select_from_array',
             'options' => CountryList::COUNTRY_NAMES,
@@ -122,7 +120,7 @@ class CrudColumnGenerator
     public static function firstName($additions = [])
     {
         return array_merge([
-            'name' => PersonData::ATTR__FIRST_NAME,
+            'name' => 'first_name',
             'label' => trans('person_data.first_name'),
             'type' => 'text',
         ], $additions);
@@ -135,7 +133,7 @@ class CrudColumnGenerator
     public static function lastName($additions = [])
     {
         return array_merge([
-            'name' => PersonData::ATTR__LAST_NAME,
+            'name' => 'last_name',
             'label' => trans('person_data.last_name'),
             'type' => 'text',
         ], $additions);
@@ -148,7 +146,7 @@ class CrudColumnGenerator
     public static function genderLabel($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::GENDER_LABEL,
+            'name' => 'gender_label',
             'label' => trans('person_data.gender'),
             'type' => 'text',
         ], $additions);
@@ -161,7 +159,7 @@ class CrudColumnGenerator
     public static function dateOfBirth($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::DATE_OF_BIRTH,
+            'name' => 'date_of_birth',
             'label' => trans('person_data.date_of_birth'),
             'type' => 'date',
         ], $additions);
@@ -174,7 +172,7 @@ class CrudColumnGenerator
     public static function phone($additions = [])
     {
         return array_merge([
-            'name' => PersonData::ATTR__PHONE,
+            'name' => 'phone',
             'label' => trans('person_data.phone'),
             'type' => 'text',
         ], $additions);
@@ -187,7 +185,7 @@ class CrudColumnGenerator
     public static function name($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::NAME,
+            'name' => 'name',
             'label' => trans('model.name'),
             'type' => 'text',
         ], $additions);
@@ -200,7 +198,7 @@ class CrudColumnGenerator
     public static function email($additions = [])
     {
         return array_merge([
-            'name' => SharedAttributes::EMAIL,
+            'name' => 'email',
             'label' => trans('user.email'),
             'type' => 'text',
         ], $additions);

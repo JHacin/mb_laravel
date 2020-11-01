@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\SharedAttributes;
 use App\Rules\CountryCode;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
@@ -66,20 +65,6 @@ class PersonData extends Model
     | CONSTANTS
     |--------------------------------------------------------------------------
     */
-    public const TABLE_NAME = 'person_data';
-
-    public const ATTR__USER_ID = 'user_id';
-    public const ATTR__EMAIL_AND_USER_ID = 'email_and_user_id';
-    public const ATTR__FIRST_NAME = 'first_name';
-    public const ATTR__LAST_NAME = 'last_name';
-    public const ATTR__PHONE = 'phone';
-    public const ATTR__GENDER = SharedAttributes::GENDER;
-    public const ATTR__DATE_OF_BIRTH = SharedAttributes::DATE_OF_BIRTH;
-    public const ATTR__ADDRESS = SharedAttributes::ADDRESS;
-    public const ATTR__ZIP_CODE = SharedAttributes::ZIP_CODE;
-    public const ATTR__CITY = SharedAttributes::CITY;
-    public const ATTR__COUNTRY = SharedAttributes::COUNTRY;
-    public const ATTR__EMAIL = SharedAttributes::EMAIL;
 
     public const GENDER_UNKNOWN = 0;
     public const GENDER_MALE = 1;
@@ -103,7 +88,7 @@ class PersonData extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = self::TABLE_NAME;
+    protected $table = 'person_data';
     protected $guarded = ['id'];
 
     /**
@@ -113,16 +98,16 @@ class PersonData extends Model
      * Todo: user_id?
      */
     protected $fillable = [
-        self::ATTR__EMAIL,
-        self::ATTR__GENDER,
-        self::ATTR__FIRST_NAME,
-        self::ATTR__LAST_NAME,
-        self::ATTR__DATE_OF_BIRTH,
-        self::ATTR__PHONE,
-        self::ATTR__ADDRESS,
-        self::ATTR__ZIP_CODE,
-        self::ATTR__CITY,
-        self::ATTR__COUNTRY,
+        'email',
+        'gender',
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'phone',
+        'address',
+        'zip_code',
+        'city',
+        'country',
     ];
 
     /**
@@ -139,7 +124,7 @@ class PersonData extends Model
      *
      * @var string
      */
-    protected $identifiableAttribute = self::ATTR__EMAIL_AND_USER_ID;
+    protected $identifiableAttribute = 'email_and_user_id';
 
     /*
     |--------------------------------------------------------------------------
@@ -153,15 +138,15 @@ class PersonData extends Model
     public static function getSharedValidationRules()
     {
         return [
-            self::ATTR__FIRST_NAME => ['nullable', 'string', 'max:255'],
-            self::ATTR__LAST_NAME => ['nullable', 'string', 'max:255'],
-            self::ATTR__GENDER => [Rule::in(PersonData::GENDERS)],
-            self::ATTR__PHONE => ['nullable', 'string', 'max:255'],
-            self::ATTR__DATE_OF_BIRTH => ['nullable', 'date', 'before:now'],
-            self::ATTR__ADDRESS => ['nullable', 'string', 'max:255'],
-            self::ATTR__ZIP_CODE => ['nullable', 'string', 'max:255'],
-            self::ATTR__CITY => ['nullable', 'string', 'max:255'],
-            self::ATTR__COUNTRY => ['nullable', new CountryCode],
+            'first_name' => ['nullable', 'string', 'max:255'],
+            'last_name' => ['nullable', 'string', 'max:255'],
+            'gender' => [Rule::in(PersonData::GENDERS)],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'date_of_birth' => ['nullable', 'date', 'before:now'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'zip_code' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', new CountryCode],
         ];
     }
 
@@ -171,7 +156,7 @@ class PersonData extends Model
     public static function getSharedValidationMessages()
     {
         return [
-            self::ATTR__DATE_OF_BIRTH . '.before' => 'Datum rojstva mora biti v preteklosti.',
+            'date_of_birth' . '.before' => 'Datum rojstva mora biti v preteklosti.',
         ];
     }
 

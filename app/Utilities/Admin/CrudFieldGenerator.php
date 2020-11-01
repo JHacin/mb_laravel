@@ -1,13 +1,9 @@
 <?php
 
+namespace App\Utilities\Admin;
 
-namespace App\Helpers\Admin;
-
-
-use App\Helpers\CountryList;
-use App\Helpers\SharedAttributes;
 use App\Models\PersonData;
-use App\Models\Sponsorship;
+use App\Utilities\CountryList;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 
 /**
@@ -19,22 +15,22 @@ class CrudFieldGenerator
     public static function addAddressFields(CrudPanel $crudPanel, string $namePrefix = '')
     {
         $crudPanel->addField([
-            'name' => $namePrefix . SharedAttributes::ADDRESS,
+            'name' => $namePrefix . 'address',
             'label' => trans('person_data.address'),
             'type' => 'text',
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . SharedAttributes::ZIP_CODE,
+            'name' => $namePrefix . 'zip_code',
             'label' => trans('person_data.zip_code'),
             'type' => 'text',
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . SharedAttributes::CITY,
+            'name' => $namePrefix . 'city',
             'label' => trans('person_data.city'),
             'type' => 'text',
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . SharedAttributes::COUNTRY,
+            'name' => $namePrefix . 'country',
             'label' => trans('person_data.country'),
             'type' => 'select2_from_array',
             'options' => CountryList::COUNTRY_NAMES,
@@ -49,20 +45,20 @@ class CrudFieldGenerator
     public static function addPersonDataFields(CrudPanel $crudPanel)
     {
         $isNested = !($crudPanel->getModel() instanceof PersonData);
-        $namePrefix = $isNested ? Sponsorship::ATTR__PERSON_DATA . '.' : '';
+        $namePrefix = $isNested ? 'personData.' : '';
 
         $crudPanel->addField([
-            'name' => $namePrefix . PersonData::ATTR__FIRST_NAME,
+            'name' => $namePrefix . 'first_name',
             'label' => trans('person_data.first_name'),
             'type' => 'text',
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . PersonData::ATTR__LAST_NAME,
+            'name' => $namePrefix . 'last_name',
             'label' => trans('person_data.last_name'),
             'type' => 'text',
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . PersonData::ATTR__GENDER,
+            'name' => $namePrefix . 'gender',
             'label' => trans('person_data.gender'),
             'type' => 'radio',
             'options' => PersonData::GENDER_LABELS,
@@ -70,12 +66,12 @@ class CrudFieldGenerator
             'default' => PersonData::GENDER_UNKNOWN,
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . PersonData::ATTR__PHONE,
+            'name' => $namePrefix . 'phone',
             'label' => trans('person_data.phone'),
             'type' => 'text',
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . PersonData::ATTR__DATE_OF_BIRTH,
+            'name' => $namePrefix . 'date_of_birth',
             'label' => trans('person_data.date_of_birth'),
             'type' => 'date_picker',
             'date_picker_options' => [

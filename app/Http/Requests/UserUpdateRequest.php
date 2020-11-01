@@ -31,7 +31,7 @@ class UserUpdateRequest extends FormRequest
             User::getSharedValidationRules(),
             [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::TABLE_NAME)->ignore(Auth::id())],
+                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
                 'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             ]
         );

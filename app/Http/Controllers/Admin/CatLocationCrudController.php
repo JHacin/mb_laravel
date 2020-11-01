@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Admin\CrudColumnGenerator;
-use App\Helpers\Admin\CrudFieldGenerator;
 use App\Http\Requests\Admin\AdminCatLocationRequest;
 use App\Models\CatLocation;
+use App\Utilities\Admin\CrudColumnGenerator;
+use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;

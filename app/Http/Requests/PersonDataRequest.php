@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\PersonData;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,11 +28,11 @@ class PersonDataRequest extends FormRequest
         return array_merge(
             PersonData::getSharedValidationRules(),
             [
-                PersonData::ATTR__EMAIL => [
+                'email' => [
                     'required',
                     'string',
                     'email',
-                    Rule::unique(User::TABLE_NAME, User::ATTR__EMAIL),
+                    Rule::unique('users', 'email'),
                 ]
             ]
         );

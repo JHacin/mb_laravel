@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Admin\CrudColumnGenerator;
-use App\Helpers\Admin\CrudFieldGenerator;
 use App\Http\Requests\Admin\AdminPersonDataRequest;
 use App\Models\PersonData;
+use App\Utilities\Admin\CrudColumnGenerator;
+use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -33,7 +33,7 @@ class PersonDataCrudController extends CrudController
      */
     protected function hideDataForRegisteredUsers()
     {
-        $this->crud->addClause('where', PersonData::ATTR__USER_ID, null);
+        $this->crud->addClause('where', 'user_id', null);
     }
 
     /**
@@ -80,7 +80,7 @@ class PersonDataCrudController extends CrudController
         $this->crud->setValidation(AdminPersonDataRequest::class);
 
         $this->crud->addField([
-            'name' => PersonData::ATTR__EMAIL,
+            'name' => 'email',
             'type' => 'email',
             'label' => trans('user.email'),
             'attributes' => [

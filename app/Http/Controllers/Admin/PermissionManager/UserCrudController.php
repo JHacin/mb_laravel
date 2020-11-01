@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\PermissionManager;
 
-use App\Helpers\Admin\CrudColumnGenerator;
-use App\Helpers\Admin\CrudFieldGenerator;
 use App\Http\Requests\Admin\AdminUserCreateRequest;
 use App\Http\Requests\Admin\AdminUserUpdateRequest;
 use App\Models\User;
 use App\Services\UserMailService;
+use App\Utilities\Admin\CrudColumnGenerator;
+use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
 use Illuminate\Http\RedirectResponse;

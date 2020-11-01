@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    use App\Helpers\AgeFormat;
+    use App\Utilities\AgeFormat;
     use Carbon\Carbon;
 
     $fallback = '/';

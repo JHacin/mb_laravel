@@ -1,5 +1,5 @@
 @php
-    use App\Helpers\CountryList;
+    use App\Utilities\CountryList;
 
     $options = CountryList::COUNTRY_NAMES
 @endphp

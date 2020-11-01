@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Admin\CrudColumnGenerator;
 use App\Http\Requests\Admin\AdminCatRequest;
 use App\Models\Cat;
 use App\Models\CatLocation;
 use App\Services\CatPhotoService;
+use App\Utilities\Admin\CrudColumnGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;

@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Helpers\CountryList;
+use App\Utilities\CountryList;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 

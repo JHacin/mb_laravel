@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Helpers\CountryList;
+use App\Utilities\CountryList;
 use Illuminate\Contracts\Validation\Rule;
 
 class CountryCode implements Rule

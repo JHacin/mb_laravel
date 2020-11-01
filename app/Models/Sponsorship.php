@@ -40,13 +40,6 @@ class Sponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
-    public const ATTR__CAT = 'cat';
-    public const ATTR__CAT_ID = 'cat_id';
-    public const ATTR__PERSON_DATA = 'personData';
-    public const ATTR__PERSON_DATA_ID = 'person_data_id';
-    public const ATTR__MONTHLY_AMOUNT = 'monthly_amount';
-    public const ATTR__IS_ANONYMOUS = 'is_anonymous';
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
