@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Mail\UserWelcomeEmail;
 use App\Models\User;

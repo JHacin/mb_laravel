@@ -6,6 +6,7 @@ use App\Http\Requests\CatSponsorshipRequest;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
+use App\Services\CatSponsorshipMailService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
@@ -40,5 +41,7 @@ class CatSponsorshipController extends Controller
             'monthly_amount' => $data['monthly_amount'],
             'is_anonymous' => $data['is_anonymous'] ?? false,
         ]);
+
+        CatSponsorshipMailService::sendInitialInstructionsEmail($personData);
     }
 }
