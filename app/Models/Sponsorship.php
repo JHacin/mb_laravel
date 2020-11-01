@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
-
 /**
  * App\Models\Sponsorship
  *
@@ -18,6 +17,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int|null $person_data_id
+ * @property int $is_anonymous
+ * @property string|null $monthly_amount
  * @property-read Cat|null $cat
  * @property-read PersonData|null $personData
  * @method static Builder|Sponsorship newModelQuery()
@@ -26,6 +27,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Sponsorship whereCatId($value)
  * @method static Builder|Sponsorship whereCreatedAt($value)
  * @method static Builder|Sponsorship whereId($value)
+ * @method static Builder|Sponsorship whereIsAnonymous($value)
+ * @method static Builder|Sponsorship whereMonthlyAmount($value)
  * @method static Builder|Sponsorship wherePersonDataId($value)
  * @method static Builder|Sponsorship whereUpdatedAt($value)
  * @mixin Eloquent

@@ -22,8 +22,8 @@ return [
     'extra_permissions' => 'Dodatna dovoljenja',
     'password' => 'Geslo',
     'password_confirmation' => 'Potrditev gesla',
-    'user_role_permission'  => 'Vloge in dovoljenja',
-    'user'                  => 'Uporabnik',
-    'users'                 => 'Uporabniki',
-    'guard_type'            => 'Guard Type',
+    'user_role_permission' => 'Vloge in dovoljenja',
+    'user' => 'Uporabnik',
+    'users' => 'Uporabniki',
+    'guard_type' => 'Guard Type',
 ];

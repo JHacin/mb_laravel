@@ -1,14 +1,12 @@
 @php
-    use App\View\Components\SponsorDetails;
+    use App\Models\PersonData;
 
-    /** @var string $first_name */
-    $is_missing_first_name = $first_name === SponsorDetails::MISSING_FIRST_NAME_PLACEHOLDER;
-
-    /** @var string $city */
-    $is_missing_city = $city === SponsorDetails::MISSING_CITY_PLACEHOLDER
+    /** @var PersonData $sponsor */
+    $first_name = $sponsor->first_name ?? 'brez imena';
+    $city = $sponsor->city ?? 'neznan kraj'
 @endphp
 
 <div>
-    <span class="{{ $is_missing_first_name ? 'is-italic' : '' }}">{{ $first_name }}</span>,
-    <span class="{{ $is_missing_city ? 'is-italic' : '' }}">{{ $city }}</span>
+    <span class="{{ !$sponsor->first_name ? 'is-italic' : '' }}">{{ $first_name }}</span>,
+    <span class="{{ !$sponsor->city ? 'is-italic' : '' }}">{{ $city }}</span>
 </div>

@@ -42,7 +42,7 @@ class PagesController extends Controller
     public function catDetails(Cat $cat)
     {
         $viewData = [
-            'cat' => $cat,
+            'cat' => $cat->loadMissing('sponsorships.personData'),
             'sponsors' => SponsorList::prepareViewData($cat->sponsorships),
         ];
 

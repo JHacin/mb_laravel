@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Models\User;
+use App\Models\PersonData;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
@@ -12,16 +12,16 @@ class SponsorDetails extends Component
     const MISSING_CITY_PLACEHOLDER = 'neznan kraj';
 
     /**
-     * @var User
+     * @var PersonData
      */
     public $sponsor;
 
     /**
      * Create a new component instance.
      *
-     * @param User $sponsor
+     * @param PersonData $sponsor
      */
-    public function __construct(User $sponsor)
+    public function __construct(PersonData $sponsor)
     {
         $this->sponsor = $sponsor;
     }

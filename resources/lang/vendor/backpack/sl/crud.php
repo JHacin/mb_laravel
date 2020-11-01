@@ -14,71 +14,71 @@ return [
     */
 
     // Forms
-    'save_action_save_and_new'         => 'Shrani in dodaj nov vnos',
-    'save_action_save_and_edit'        => 'Shrani in ponovno uredi vnos',
-    'save_action_save_and_back'        => 'Shrani in pojdi nazaj',
-    'save_action_save_and_preview'     => 'Shrani in pojdi na predogled',
+    'save_action_save_and_new' => 'Shrani in dodaj nov vnos',
+    'save_action_save_and_edit' => 'Shrani in ponovno uredi vnos',
+    'save_action_save_and_back' => 'Shrani in pojdi nazaj',
+    'save_action_save_and_preview' => 'Shrani in pojdi na predogled',
     'save_action_changed_notification' => 'Privzeto dejanje po vnosu se je spremenilo.',
 
     // Create form
-    'add'                 => 'Dodaj vnos tipa',
-    'back_to_all'         => 'Nazaj na seznam ',
-    'cancel'              => 'Prekliči',
-    'add_a_new'           => 'Dodaj nov vnos tipa ',
+    'add' => 'Dodaj vnos tipa',
+    'back_to_all' => 'Nazaj na seznam ',
+    'cancel' => 'Prekliči',
+    'add_a_new' => 'Dodaj nov vnos tipa ',
 
     // Edit form
-    'edit'                 => 'Uredi',
-    'save'                 => 'Shrani',
+    'edit' => 'Uredi',
+    'save' => 'Shrani',
 
     // Translatable models
     'edit_translations' => 'Prevod',
-    'language'          => 'Jezik',
+    'language' => 'Jezik',
 
     // CRUD table view
-    'all'                       => 'All ',
-    'in_the_database'           => 'in the database',
-    'list'                      => 'Seznam',
-    'reset'                     => 'Ponastavi',
-    'actions'                   => 'Dejanja',
-    'preview'                   => 'Predogled',
-    'delete'                    => 'Izbriši',
-    'admin'                     => 'Admin',
-    'details_row'               => 'This is the details row. Modify as you please.',
+    'all' => 'All ',
+    'in_the_database' => 'in the database',
+    'list' => 'Seznam',
+    'reset' => 'Ponastavi',
+    'actions' => 'Dejanja',
+    'preview' => 'Predogled',
+    'delete' => 'Izbriši',
+    'admin' => 'Admin',
+    'details_row' => 'This is the details row. Modify as you please.',
     'details_row_loading_error' => 'There was an error loading the details. Please retry.',
-    'clone'                     => 'Kloniraj',
-    'clone_success'             => '<strong>Entry cloned</strong><br>A new entry has been added, with the same information as this one.',
-    'clone_failure'             => '<strong>Cloning failed</strong><br>The new entry could not be created. Please try again.',
+    'clone' => 'Kloniraj',
+    'clone_success' => '<strong>Entry cloned</strong><br>A new entry has been added, with the same information as this one.',
+    'clone_failure' => '<strong>Cloning failed</strong><br>The new entry could not be created. Please try again.',
 
     // Confirmation messages and bubbles
-    'delete_confirm'                              => 'Ali ste prepričani, da želite izbrisati ta vnos?',
-    'delete_confirmation_title'                   => 'Vnos izbrisan',
-    'delete_confirmation_message'                 => 'Vnos je bil uspešno izbrisan.',
-    'delete_confirmation_not_title'               => 'Brisanje neuspešno',
-    'delete_confirmation_not_message'             => 'Prišlo je do napake. Vnos najverjetneje ni bil izbrisan.',
-    'delete_confirmation_not_deleted_title'       => 'Brisanje preklicano',
-    'delete_confirmation_not_deleted_message'     => 'Vnos ni bil izbrisan.',
+    'delete_confirm' => 'Ali ste prepričani, da želite izbrisati ta vnos?',
+    'delete_confirmation_title' => 'Vnos izbrisan',
+    'delete_confirmation_message' => 'Vnos je bil uspešno izbrisan.',
+    'delete_confirmation_not_title' => 'Brisanje neuspešno',
+    'delete_confirmation_not_message' => 'Prišlo je do napake. Vnos najverjetneje ni bil izbrisan.',
+    'delete_confirmation_not_deleted_title' => 'Brisanje preklicano',
+    'delete_confirmation_not_deleted_message' => 'Vnos ni bil izbrisan.',
 
     // Bulk actions
-    'bulk_no_entries_selected_title'   => 'No entries selected',
+    'bulk_no_entries_selected_title' => 'No entries selected',
     'bulk_no_entries_selected_message' => 'Please select one or more items to perform a bulk action on them.',
 
     // Bulk delete
-    'bulk_delete_are_you_sure'   => 'Are you sure you want to delete these :number entries?',
-    'bulk_delete_sucess_title'   => 'Entries deleted',
+    'bulk_delete_are_you_sure' => 'Are you sure you want to delete these :number entries?',
+    'bulk_delete_sucess_title' => 'Entries deleted',
     'bulk_delete_sucess_message' => ' items have been deleted',
-    'bulk_delete_error_title'    => 'Delete failed',
-    'bulk_delete_error_message'  => 'One or more items could not be deleted',
+    'bulk_delete_error_title' => 'Delete failed',
+    'bulk_delete_error_message' => 'One or more items could not be deleted',
 
     // Bulk clone
-    'bulk_clone_are_you_sure'   => 'Are you sure you want to clone these :number entries?',
-    'bulk_clone_sucess_title'   => 'Entries cloned',
+    'bulk_clone_are_you_sure' => 'Are you sure you want to clone these :number entries?',
+    'bulk_clone_sucess_title' => 'Entries cloned',
     'bulk_clone_sucess_message' => ' items have been cloned.',
-    'bulk_clone_error_title'    => 'Cloning failed',
-    'bulk_clone_error_message'  => 'One or more entries could not be created. Please try again.',
+    'bulk_clone_error_title' => 'Cloning failed',
+    'bulk_clone_error_message' => 'One or more entries could not be created. Please try again.',
 
     // Ajax errors
     'ajax_error_title' => 'Error',
-    'ajax_error_text'  => 'Error loading page. Please refresh the page.',
+    'ajax_error_text' => 'Error loading page. Please refresh the page.',
 
     // DataTables translation
     'emptyTable' => 'Na voljo ni podatkov.',
@@ -103,34 +103,34 @@ return [
         'sortDescending' => ': activate to sort column descending',
     ],
     'export' => [
-        'export'            => 'Export',
-        'copy'              => 'Copy',
-        'excel'             => 'Excel',
-        'csv'               => 'CSV',
-        'pdf'               => 'PDF',
-        'print'             => 'Print',
+        'export' => 'Export',
+        'copy' => 'Copy',
+        'excel' => 'Excel',
+        'csv' => 'CSV',
+        'pdf' => 'PDF',
+        'print' => 'Print',
         'column_visibility' => 'Column visibility',
     ],
 
     // global crud - errors
     'unauthorized_access' => 'Unauthorized access - you do not have the necessary permissions to see this page.',
-    'please_fix'          => 'Please fix the following errors:',
+    'please_fix' => 'Please fix the following errors:',
 
     // global crud - success / error notification bubbles
     'insert_success' => 'Vnos uspešen.',
     'update_success' => 'Urejanje uspešno.',
 
     // CRUD reorder view
-    'reorder'                      => 'Reorder',
-    'reorder_text'                 => 'Use drag&drop to reorder.',
-    'reorder_success_title'        => 'Done',
-    'reorder_success_message'      => 'Your order has been saved.',
-    'reorder_error_title'          => 'Error',
-    'reorder_error_message'        => 'Your order has not been saved.',
+    'reorder' => 'Reorder',
+    'reorder_text' => 'Use drag&drop to reorder.',
+    'reorder_success_title' => 'Done',
+    'reorder_success_message' => 'Your order has been saved.',
+    'reorder_error_title' => 'Error',
+    'reorder_error_message' => 'Your order has not been saved.',
 
     // CRUD yes/no
     'yes' => 'Da',
-    'no'  => 'Ne',
+    'no' => 'Ne',
 
     // CRUD filters navbar view
     'filters' => 'Filters',
@@ -154,7 +154,7 @@ return [
     'select_entries' => 'Select entries',
 
     //Table field
-    'table_cant_add'    => 'Cannot add new :entity',
+    'table_cant_add' => 'Cannot add new :entity',
     'table_max_reached' => 'Maximum number of :max reached',
 
     // File manager
