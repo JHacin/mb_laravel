@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CatSponsorshipInitialInstructionsEmail extends Mailable
+class UserWelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,8 +27,6 @@ class CatSponsorshipInitialInstructionsEmail extends Mailable
      */
     public function build()
     {
-        return $this
-            ->subject('Navodila po izpolnitvi obrazca za pristop k botrstvu')
-            ->view('emails.cat_sponsorship_initial_instructions_email');
+        return $this->subject('Dobrodošli na strani Mačji boter')->view('emails.user_welcome_mail');
     }
 }

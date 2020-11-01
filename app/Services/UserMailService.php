@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Mail\UserWelcomeEmail;
+use App\Mail\UserWelcomeMail;
 use App\Models\User;
 use Exception;
 use Mail;
@@ -15,7 +15,7 @@ class UserMailService
     public static function sendWelcomeEMail(User $user)
     {
         try {
-            Mail::to($user)->send(new UserWelcomeEmail);
+            Mail::to($user)->send(new UserWelcomeMail);
         } catch (Exception $e) {
             // Todo: handle exception
         }
