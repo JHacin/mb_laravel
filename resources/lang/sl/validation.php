@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'accepted' => 'Polje mora biti sprejeto.',
+    'accepted' => 'Polje mora biti obkljukano.',
     'active_url' => 'Vrednost ni veljavna spletna povezava.',
     'after' => 'Vrednost mora biti datum po :date.',
     'after_or_equal' => 'Vrednost mora biti datum po ali enak kot :date.',

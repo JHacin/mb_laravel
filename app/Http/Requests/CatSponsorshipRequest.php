@@ -34,6 +34,7 @@ class CatSponsorshipRequest extends FormRequest
         return array_merge(
             $personDataRules,
             Sponsorship::getSharedValidationRules(),
+            ['is_agreed_to_terms' => 'accepted']
         );
     }
 

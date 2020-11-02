@@ -48,7 +48,7 @@
                     </p>
                 </div>
 
-                <x-inputs.base.checkbox name="is_agreed_to_terms">
+                <x-inputs.base.checkbox name="is_agreed_to_terms" required>
                     <x-slot name="label">
                         Potrjujem, da sem seznanjen/a s pravili posvojitve na daljavo in se z njimi strinjam ter
                         Mačji hiši dovoljujem rabo osebnih podatkov izključno za namene obveščanja.
