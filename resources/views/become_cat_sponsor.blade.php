@@ -9,20 +9,22 @@
         <div class="container">
             <h1 class="title">Dogovor o posvojitvi na daljavo</h1>
 
+            @if (session('success_message'))
+                <div class="notification is-success is-light">
+                    <button type="button" class="delete"></button>
+                    {{ session('success_message') }}
+                </div>
+            @else
+                @auth
+                    <div class="notification is-warning is-light">
+                        <button type="button" class="delete"></button>
+                        <strong>Pozor</strong>: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.
+                    </div>
+                @endauth
+            @endif
+
             <form method="POST" action="{{ route('become_cat_sponsor', $cat) }}">
                 @csrf
-
-                @if (session('success_message'))
-                    <div class="notification is-success is-light">
-                        {{ session('success_message') }}
-                    </div>
-                @else
-                    @auth
-                        <div class="notification is-warning is-light">
-                            <strong>Pozor</strong>: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.
-                        </div>
-                    @endauth
-                @endif
 
                 <x-inputs.email
                     name="personData[email]"
