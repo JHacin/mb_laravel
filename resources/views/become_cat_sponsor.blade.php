@@ -70,14 +70,3 @@
         </div>
     </section>
 @endsection
-
-@push('footer-scripts')
-    <script>
-        flatpickr(document.getElementById('date_of_birth'), {
-            altInput: true,
-            altFormat: 'j. n. Y',
-            dateFormat: 'Y-m-d',
-            maxDate: dayjs().toDate()
-        });
-    </script>
-@endpush
