@@ -43,5 +43,7 @@ class CatSponsorshipController extends Controller
         ]);
 
         CatSponsorshipMailService::sendInitialInstructionsEmail($personData);
+
+        return back()->with('success_message', 'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
     }
 }
