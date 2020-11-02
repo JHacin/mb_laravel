@@ -1,4 +1,4 @@
-@props(['selected'])
+@props(['selected' => \App\Utilities\CountryList::DEFAULT ])
 
 @php
     use App\Utilities\CountryList;

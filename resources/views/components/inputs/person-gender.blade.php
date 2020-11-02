@@ -1,4 +1,4 @@
-@props(['selected'])
+@props(['selected' => \App\Models\PersonData::GENDER_UNKNOWN ])
 
 @php
     use App\Models\PersonData;
