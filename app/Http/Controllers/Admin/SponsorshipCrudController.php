@@ -87,8 +87,32 @@ class SponsorshipCrudController extends CrudController
     {
         return [
             'name' => 'is_anonymous',
-            'label' => 'Anonimno',
+            'label' => trans('sponsorship.is_anonymous'),
             'type' => 'boolean',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getIsActiveColumnDefinition()
+    {
+        return [
+            'name' => 'is_active',
+            'label' => trans('sponsorship.is_active'),
+            'type' => 'boolean',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getEndedAtColumnDefinition()
+    {
+        return [
+            'name' => 'ended_at',
+            'label' => trans('sponsorship.ended_at'),
+            'type' => 'datetime',
         ];
     }
 
@@ -121,7 +145,9 @@ class SponsorshipCrudController extends CrudController
         $this->crud->addColumn(self::getPersonDataColumnDefinition());
         $this->crud->addColumn(self::getMonthlyAmountColumnDefinition());
         $this->crud->addColumn(self::getIsAnonymousColumnDefinition());
+        $this->crud->addColumn(self::getIsActiveColumnDefinition());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(self::getEndedAtColumnDefinition());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
         $this->crud->orderBy('created_at', 'DESC');
@@ -186,10 +212,14 @@ class SponsorshipCrudController extends CrudController
         ]));
         $this->crud->addField([
             'name' => 'is_anonymous',
-            'label' => 'Botrovanje naj bo anonimno',
+            'label' => 'Anonimno',
             'type' => 'checkbox',
         ]);
-
+        $this->crud->addField([
+            'name' => 'is_active',
+            'label' => 'Aktivno',
+            'type' => 'checkbox',
+        ]);
     }
 
     /**
@@ -201,6 +231,11 @@ class SponsorshipCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+
+        $this->crud->addField(CrudFieldGenerator::dateField([
+            'name' => 'ended_at',
+            'label' => 'Datum konca',
+        ]));
     }
 
     /**
@@ -217,7 +252,9 @@ class SponsorshipCrudController extends CrudController
         $this->crud->addColumn(self::getPersonDataColumnDefinition());
         $this->crud->addColumn(self::getMonthlyAmountColumnDefinition());
         $this->crud->addColumn(self::getIsAnonymousColumnDefinition());
+        $this->crud->addColumn(self::getIsActiveColumnDefinition());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn(self::getEndedAtColumnDefinition());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
     }
 }

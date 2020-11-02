@@ -7,6 +7,7 @@ use App\Models\Cat;
 use App\Models\CatLocation;
 use App\Services\CatPhotoService;
 use App\Utilities\Admin\CrudColumnGenerator;
+use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -206,30 +207,18 @@ class CatCrudController extends CrudController
             'inline' => true,
             'default' => Cat::GENDER_UNKNOWN,
         ]);
-        $this->crud->addField([
+        $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_birth',
             'label' => 'Datum rojstva',
-            'type' => 'date_picker',
-            'date_picker_options' => [
-                'format' => 'dd. mm. yyyy',
-            ],
-        ]);
-        $this->crud->addField([
+        ]));
+        $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_mh',
             'label' => 'Datum sprejema v zavetišče',
-            'type' => 'date_picker',
-            'date_picker_options' => [
-                'format' => 'dd. mm. yyyy',
-            ],
-        ]);
-        $this->crud->addField([
+        ]));
+        $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_boter',
             'label' => 'Datum vstopa v botrstvo',
-            'type' => 'date_picker',
-            'date_picker_options' => [
-                'format' => 'dd. mm. yyyy',
-            ],
-        ]);
+        ]));
         foreach ($this->catPhotoService::INDICES as $index) {
             $this->crud->addField([
                 'name' => 'photo_' . $index,

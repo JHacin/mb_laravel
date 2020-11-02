@@ -97,7 +97,21 @@ class CrudFieldGenerator
                 'max' => config('money.decimal_max'),
                 'step' => '0.01',
                 'placeholder' => '0.00'
-            ]
+            ],
+        ], $additions);
+    }
+
+    /**
+     * @param array $additions
+     * @return array
+     */
+    public static function dateField($additions = [])
+    {
+        return array_merge([
+            'type' => 'date_picker',
+            'date_picker_options' => [
+                'format' => 'dd. mm. yyyy',
+            ],
         ], $additions);
     }
 }
