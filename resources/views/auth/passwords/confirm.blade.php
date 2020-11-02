@@ -12,7 +12,7 @@
             <form method="POST" action="{{ route('password.confirm') }}">
                 @csrf
 
-                <x-user-password-field required autocomplete="current-password" />
+                <x-inputs.password required autocomplete="current-password" />
 
                 <div class="field">
                     <div class="control">

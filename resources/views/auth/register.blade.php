@@ -10,10 +10,10 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
-                <x-user-name-field autocomplete="name" autofocus />
-                <x-user-email-field autocomplete="email" autofocus />
-                <x-user-password-field required autocomplete="new-password" />
-                <x-user-password-confirm-field required autocomplete="new-password" />
+                <x-inputs.user-name autocomplete="name" autofocus required />
+                <x-inputs.email autocomplete="email" autofocus />
+                <x-inputs.password required autocomplete="new-password" />
+                <x-inputs.password-confirm required autocomplete="new-password" />
 
                 <div class="field">
                     <div class="control">

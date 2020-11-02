@@ -31,19 +31,19 @@
             <form method="POST" action="{{ route('user-profile') }}">
                 @csrf
 
-                <x-user-name-field value="{{ $user->name }}" />
-                <x-user-email-field value="{{ $user->email }}" />
-                <x-user-password-field />
-                <x-user-password-confirm-field />
-                <x-person-data-first-name-field value="{{ $user->personData->first_name }}" />
-                <x-person-data-last-name-field value="{{ $user->personData->last_name }}" />
-                <x-person-data-gender-field value="{{ $user->personData->gender }}" />
-                <x-person-data-phone-field value="{{ $user->personData->phone }}" />
-                <x-person-data-date-of-birth-field value="{{ $user->personData->date_of_birth }}" />
-                <x-person-data-address-field value="{{ $user->personData->address }}" />
-                <x-person-data-zip-code-field value="{{ $user->personData->zip_code }}" />
-                <x-person-data-city-field value="{{ $user->personData->city }}" />
-                <x-person-data-country-field value="{{ $user->personData->country }}" />
+                <x-inputs.user-name value="{{ $user->name }}" required />
+                <x-inputs.email value="{{ $user->email }}" />
+                <x-inputs.password autocomplete="new-password" />
+                <x-inputs.password-confirm autocomplete="new-password" />
+                <x-inputs.first-name value="{{ $user->personData->first_name }}" />
+                <x-inputs.last-name value="{{ $user->personData->last_name }}" />
+                <x-inputs.person-gender :selected="$user->personData->gender" />
+                <x-inputs.phone value="{{ $user->personData->phone }}" />
+                <x-inputs.date-of-birth value="{{ $user->personData->date_of_birth }}" />
+                <x-inputs.address value="{{ $user->personData->address }}" />
+                <x-inputs.zip-code value="{{ $user->personData->zip_code }}" />
+                <x-inputs.city value="{{ $user->personData->city }}" />
+                <x-inputs.country :selected="$user->personData->country" />
 
                 <div class="field">
                     <button type="submit" class="button is-primary">{{ trans('forms.confirm') }}</button>

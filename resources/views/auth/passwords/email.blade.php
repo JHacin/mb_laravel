@@ -16,7 +16,7 @@
                     </div>
                 @endif
 
-                <x-user-email-field autocomplete="email" autofocus />
+                <x-inputs.email autocomplete="email" autofocus />
 
                 <div class="field">
                     <div class="control">

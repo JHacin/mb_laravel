@@ -14,8 +14,8 @@
                 <div class="notification is-danger">{{ $message }}</div>
                 @enderror
 
-                <x-user-email-field autocomplete="email" autofocus />
-                <x-user-password-field required autocomplete="current-password" />
+                <x-inputs.email autocomplete="email" autofocus />
+                <x-inputs.password required autocomplete="current-password" />
 
                 <div class="field">
                     <div class="control">

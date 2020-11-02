@@ -12,9 +12,9 @@
 
                 <input type="hidden" name="token" value="{{ $token }}">
 
-                <x-user-email-field value="{{ $email }}" autocomplete="email" autofocus />
-                <x-user-password-field label="Novo geslo" required autocomplete="new-password" />
-                <x-user-password-confirm-field label="Potrditev novega gesla" required autocomplete="new-password" />
+                <x-inputs.email value="{{ $email }}" autocomplete="email" autofocus required />
+                <x-inputs.password label="Novo geslo" required autocomplete="new-password" />
+                <x-inputs.password-confirm label="Potrditev novega gesla" required autocomplete="new-password" />
 
                 <div class="field">
                     <div class="control">

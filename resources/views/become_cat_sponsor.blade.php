@@ -8,21 +8,23 @@
             <form method="POST" action="{{ route('become_cat_sponsor', $cat) }}">
                 @csrf
 
-                <x-person-data-first-name-field />
-                <x-person-data-last-name-field />
-                <x-person-data-address-field />
-                <x-person-data-zip-code-field />
-                <x-person-data-city-field />
-                <x-person-data-country-field />
-                <x-person-data-date-of-birth-field />
-                <x-person-data-phone-field />
-                <x-user-email-field name="personData[email]" />
+                <x-inputs.first-name />
+                <x-inputs.last-name />
+                <x-inputs.address />
+                <x-inputs.zip-code />
+                <x-inputs.city />
+                <x-inputs.country />
+                <x-inputs.date-of-birth />
+                <x-inputs.person-gender />
+                <x-inputs.phone />
+                <x-inputs.email name="personData[email]" required />
 
-                <x-money-field name="monthly_amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
+                <x-inputs.money name="monthly_amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
                     <x-slot name="help">
                         Vpišite znesek v €, ki ga želite mesečno nakazovati za vašega posvojenca.
                     </x-slot>
-                </x-money-field>
+                </x-inputs.money>
+
 
                 <div class="field">
                     <div class="control">
