@@ -14,22 +14,15 @@
                 <div class="notification is-danger">{{ $message }}</div>
                 @enderror
 
-                <x-inputs.email autocomplete="email" autofocus />
-                <x-inputs.password required autocomplete="current-password" />
+                <x-inputs.email name="email" label="{{ trans('user.email') }}" autofocus />
+                <x-inputs.password
+                    name="password"
+                    label="{{ trans('user.password') }}"
+                    required
+                    autocomplete="current-password"
+                />
 
-                <div class="field">
-                    <div class="control">
-                        <label class="checkbox">
-                            <input
-                                type="checkbox"
-                                name="remember"
-                                id="remember"
-                                {{ old('remember') ? 'checked' : '' }}
-                            >
-                            Zapomni si me
-                        </label>
-                    </div>
-                </div>
+                <x-inputs.base.checkbox name="remember" label="Zapomni si me" />
 
                 <div class="field">
                     <div class="control">

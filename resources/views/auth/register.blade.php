@@ -10,10 +10,21 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
-                <x-inputs.user-name autocomplete="name" autofocus required />
-                <x-inputs.email autocomplete="email" autofocus />
-                <x-inputs.password required autocomplete="new-password" />
-                <x-inputs.password-confirm required autocomplete="new-password" />
+                <x-inputs.base.input name="name" label="{{ trans('user.name') }}" autofocus required />
+                <x-inputs.email name="email" label="{{ trans('user.email') }}" autocomplete="email" required />
+
+                <x-inputs.password
+                    name="password"
+                    label="{{ trans('user.password') }}"
+                    required
+                    autocomplete="new-password"
+                />
+                <x-inputs.password
+                    name="password_confirmation"
+                    label="{{ trans('user.password_confirm') }}"
+                    required
+                    autocomplete="new-password"
+                />
 
                 <div class="field">
                     <div class="control">

@@ -1,7 +1,8 @@
-@props(['name' => 'email'])
+@php
+    use Illuminate\View\ComponentAttributeBag;
 
-<x-inputs.base.input
-    name="{{ $name }}"
-    label="{{ trans('user.email') }}"
-    {{ $attributes->merge(['type' => 'email']) }}
-/>
+    /** @var ComponentAttributeBag $attributes */
+    $attributes = $attributes->merge(['type' => 'email']);
+@endphp
+
+@include('components.inputs.base.input')

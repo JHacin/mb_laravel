@@ -1,7 +1,8 @@
-@props(['label' => trans('user.password')])
+@php
+    use Illuminate\View\ComponentAttributeBag;
 
-<x-inputs.base.input
-    name="password"
-    label="{{ $label }}"
-    {{ $attributes->merge(['type' => 'password']) }}
-/>
+    /** @var ComponentAttributeBag $attributes */
+    $attributes = $attributes->merge(['type' => 'password']);
+@endphp
+
+@include('components.inputs.base.input')

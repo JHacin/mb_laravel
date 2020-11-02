@@ -16,7 +16,7 @@
                     </div>
                 @endif
 
-                <x-inputs.email autocomplete="email" autofocus />
+                <x-inputs.email name="email" label="{{ trans('user.email') }}" autocomplete="email" autofocus required />
 
                 <div class="field">
                     <div class="control">

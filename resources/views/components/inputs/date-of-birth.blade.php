@@ -1,12 +1,8 @@
-<x-inputs.base.input
-    name="personData[date_of_birth]"
-    label="{{ trans('person_data.date_of_birth') }}"
-    {{ $attributes }}
-/>
+@include('components.inputs.base.input')
 
 @push('footer-scripts')
     <script>
-        flatpickr(document.getElementById('personData[date_of_birth]'), {
+        flatpickr(document.getElementById('{{ $name }}'), {
             altInput: true,
             altFormat: 'j. n. Y',
             dateFormat: 'Y-m-d',

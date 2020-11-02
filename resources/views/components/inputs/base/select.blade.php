@@ -1,22 +1,28 @@
 @props(['name', 'label', 'options', 'selected'])
 
-<x-inputs.inc.wrapper name="{{ $name }}" label="{{ $label }}" {{ $attributes }}>
-    <x-slot name="input">
+<div class="field">
+    @include('components.inputs.inc.label')
+    <div class="control">
         <div class="select">
+            <!--suppress HtmlFormInputWithoutLabel -->
             <select
                 id="{{ $name }}"
                 name="{{ $name }}"
-                {{ $attributes->except(['value']) }}
+                {{ $attributes }}
             >
-                @foreach($options as $optionValue => $label)
+                @foreach($options as $optionValue => $optionLabel)
                     <option
                         value="{{ $optionValue }}"
-                        {{ isset($selected) && $optionValue === $selected ? 'selected' : '' }}
+                        @isset($selected){{ $optionValue === $selected ? 'selected' : '' }}@endisset
                     >
-                        {{ $label }}
+                        {{ $optionLabel }}
                     </option>
                 @endforeach
             </select>
         </div>
-    </x-slot>
-</x-inputs.inc.wrapper>
+    </div>
+    @include('components.inputs.inc.error')
+    @include('components.inputs.inc.help')
+</div>
+
+

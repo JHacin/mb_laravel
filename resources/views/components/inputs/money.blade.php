@@ -1,16 +1,13 @@
-@props(['name', 'label'])
-
 @php
-    $defaultAttributes = [
+    use Illuminate\View\ComponentAttributeBag;
+
+    /** @var ComponentAttributeBag $attributes */
+    $attributes = $attributes->merge([
         'type' => 'number',
         'min' => '0.00',
         'max' => config('money.decimal_max'),
         'step' => '0.01',
-    ]
+    ]);
 @endphp
 
-<x-inputs.base.input
-    name="{{ $name }}"
-    label="{{ $label }}"
-    {{ $attributes->merge($defaultAttributes) }}
-/>
+@include('components.inputs.base.input')

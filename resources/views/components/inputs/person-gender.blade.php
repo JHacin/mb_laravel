@@ -1,14 +1,8 @@
-@props(['selected' => \App\Models\PersonData::GENDER_UNKNOWN ])
-
 @php
     use App\Models\PersonData;
-    $options = PersonData::GENDER_LABELS
+
+    $options = PersonData::GENDER_LABELS;
+    $selected = $selected ?? PersonData::GENDER_UNKNOWN;
 @endphp
 
-<x-inputs.base.select
-    name="personData[gender]"
-    label="{{ trans('person_data.gender') }}"
-    :options="$options"
-    :selected="$selected"
-/>
-
+@include('components.inputs.base.select', ['options' => $options, 'selected' => $selected])

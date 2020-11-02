@@ -1,13 +1,8 @@
-@props(['selected' => \App\Utilities\CountryList::DEFAULT ])
-
 @php
     use App\Utilities\CountryList;
-    $options = CountryList::COUNTRY_NAMES
+
+    $options = CountryList::COUNTRY_NAMES;
+    $selected = $selected ?? CountryList::DEFAULT;
 @endphp
 
-<x-inputs.base.select
-    name="personData[country]"
-    label="{{ trans('person_data.country') }}"
-    :options="$options"
-    :selected="$selected"
-/>
+@include('components.inputs.base.select', ['options' => $options, 'selected' => $selected])

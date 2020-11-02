@@ -2,12 +2,15 @@
 
 @php
     use Illuminate\Support\ViewErrorBag;
+    use Illuminate\View\ComponentAttributeBag;
 
     /** @var string $name */
     $cleanErrorKey = str_replace(['[', ']'], ['.', ''], $name);
     /** @var ViewErrorBag $errors */
     $hasError = $errors->has($cleanErrorKey);
 
+    /** @var string $label */
+    /** @var ComponentAttributeBag $attributes */
     $labelText = $label . ($attributes['required'] ? ' *' : '');
 
     $defaultAttributes = [
@@ -17,13 +20,17 @@
     ]
 @endphp
 
-<x-inputs.inc.wrapper name="{{ $name }}" label="{{ $label }}" {{ $attributes }}>
-    <x-slot name="input">
+<div class="field">
+    @include('components.inputs.inc.label')
+    <div class="control">
+        <!--suppress HtmlFormInputWithoutLabel -->
         <input
             id="{{ $name }}"
             name="{{ $name }}"
             value="{{ old($name) ?? $attributes['value'] ?? '' }}"
             {{ $attributes->merge($defaultAttributes) }}
         >
-    </x-slot>
-</x-inputs.inc.wrapper>
+    </div>
+    @include('components.inputs.inc.error')
+    @include('components.inputs.inc.help')
+</div>
