@@ -10,16 +10,18 @@
             <h1 class="title">Dogovor o posvojitvi na daljavo</h1>
 
             @if (session('success_message'))
-                <div class="notification is-success is-light">
-                    <button type="button" class="delete"></button>
-                    {{ session('success_message') }}
-                </div>
+                <x-notification type="success">
+                    <x-slot name="message">
+                        {{ session('success_message') }}
+                    </x-slot>
+                </x-notification>
             @else
                 @auth
-                    <div class="notification is-warning is-light">
-                        <button type="button" class="delete"></button>
-                        <strong>Pozor</strong>: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.
-                    </div>
+                    <x-notification type="warning">
+                        <x-slot name="message">
+                            <strong>Pozor</strong>: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.
+                        </x-slot>
+                    </x-notification>
                 @endauth
             @endif
 
