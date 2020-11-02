@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null;
+@endphp
+
 @section('content')
     <section class="section">
         <div class="container">
@@ -12,9 +16,20 @@
                     <div class="notification is-success is-light">
                         {{ session('success_message') }}
                     </div>
+                @else
+                    @auth
+                        <div class="notification is-warning is-light">
+                            <strong>Pozor</strong>: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.
+                        </div>
+                    @endauth
                 @endif
 
-                <x-inputs.email name="personData[email]" label="{{ trans('user.email') }}" required />
+                <x-inputs.email
+                    name="personData[email]"
+                    label="{{ trans('user.email') }}"
+                    required
+                    value="{{ $user->email ?? '' }}"
+                />
 
                 <x-inputs.money name="monthly_amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
                     <x-slot name="help">
@@ -22,15 +37,51 @@
                     </x-slot>
                 </x-inputs.money>
 
-                <x-inputs.base.input name="personData[first_name]" label="{{ trans('person_data.first_name') }}" />
-                <x-inputs.base.input name="personData[last_name]" label="{{ trans('person_data.last_name') }}" />
-                <x-inputs.base.input name="personData[address]" label="{{ trans('person_data.address') }}" />
-                <x-inputs.base.input name="personData[zip_code]" label="{{ trans('person_data.zip_code') }}" />
-                <x-inputs.base.input name="personData[city]" label="{{ trans('person_data.city') }}" />
-                <x-inputs.country name="personData[country]" label="{{ trans('person_data.country') }}" />
-                <x-inputs.date-of-birth name="personData[date_of_birth]" label="{{ trans('person_data.date_of_birth') }}" />
-                <x-inputs.person-gender name="personData[gender]" label="{{ trans('person_data.gender') }}" />
-                <x-inputs.base.input name="personData[phone]" label="{{ trans('person_data.phone') }}" />
+                <x-inputs.base.input
+                    name="personData[first_name]"
+                    label="{{ trans('person_data.first_name') }}"
+                    value="{{ $user->personData->first_name ?? '' }}"
+                />
+                <x-inputs.base.input
+                    name="personData[last_name]"
+                    label="{{ trans('person_data.last_name') }}"
+                    value="{{ $user->personData->last_name ?? '' }}"
+                />
+                <x-inputs.base.input
+                    name="personData[address]"
+                    label="{{ trans('person_data.address') }}"
+                    value="{{ $user->personData->address ?? '' }}"
+                />
+                <x-inputs.base.input
+                    name="personData[zip_code]"
+                    label="{{ trans('person_data.zip_code') }}"
+                    value="{{ $user->personData->zip_code ?? '' }}"
+                />
+                <x-inputs.base.input
+                    name="personData[city]"
+                    label="{{ trans('person_data.city') }}"
+                    value="{{ $user->personData->city ?? '' }}"
+                />
+                <x-inputs.country
+                    name="personData[country]"
+                    label="{{ trans('person_data.country') }}"
+                    :selected="$user->personData->country ?? null"
+                />
+                <x-inputs.date-of-birth
+                    name="personData[date_of_birth]"
+                    label="{{ trans('person_data.date_of_birth') }}"
+                    value="{{ $user->personData->date_of_birth ?? '' }}"
+                />
+                <x-inputs.person-gender
+                    name="personData[gender]"
+                    label="{{ trans('person_data.gender') }}"
+                    :selected="$user->personData->gender ?? null"
+                />
+                <x-inputs.base.input
+                    name="personData[phone]"
+                    label="{{ trans('person_data.phone') }}"
+                    value="{{ $user->personData->phone ?? '' }}"
+                />
 
                 <x-inputs.base.checkbox name="is_anonymous">
                     <x-slot name="label">

@@ -6,9 +6,13 @@ use App\Http\Requests\CatSponsorshipRequest;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
+use App\Models\User;
 use App\Services\CatSponsorshipMailService;
+use Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class CatSponsorshipController extends Controller
@@ -25,25 +29,76 @@ class CatSponsorshipController extends Controller
     }
 
     /**
-     * @param Cat $cat
-     * @param CatSponsorshipRequest $request
+     * @param array $updates
+     * @return PersonData|Model
      */
-    public function submit(Cat $cat, CatSponsorshipRequest $request)
+    protected function updateOrCreatePersonData(array $updates)
     {
-        $data = $request->all();
+        $personData = PersonData::firstOrCreate(['email' => $updates['email']]);
+        $personData->update($updates);
 
-        $personData = PersonData::firstOrCreate(['email' => $data['personData']['email']]);
-        $personData->update($data['personData']);
+        return $personData;
+    }
 
+    /**
+     * @param User $user
+     * @param string $inputEmail
+     */
+    protected function updateUserEmail(User $user, string $inputEmail)
+    {
+        if ($inputEmail === $user->email) {
+            return;
+        }
+
+        $user->update(['email' => $inputEmail]);
+    }
+
+    /**
+     * @param Cat $cat
+     * @param PersonData $personData
+     * @param array $input
+     */
+    protected function createSponsorship(Cat $cat, PersonData $personData, array $input)
+    {
         Sponsorship::create([
             'person_data_id' => $personData->id,
             'cat_id' => $cat->id,
-            'monthly_amount' => $data['monthly_amount'],
-            'is_anonymous' => $data['is_anonymous'] ?? false,
+            'monthly_amount' => $input['monthly_amount'],
+            'is_anonymous' => $input['is_anonymous'] ?? false,
         ]);
+    }
 
+    /**
+     * @param PersonData $personData
+     */
+    protected function sendMailNotification(PersonData $personData)
+    {
         CatSponsorshipMailService::sendInitialInstructionsEmail($personData);
+    }
 
-        return back()->with('success_message', 'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
+    /**
+     * Handle incoming cat sponsorship form request.
+     *
+     * @param Cat $cat
+     * @param CatSponsorshipRequest $request
+     * @return RedirectResponse
+     */
+    public function submit(Cat $cat, CatSponsorshipRequest $request)
+    {
+        $input = $request->all();
+
+        if (Auth::check()) {
+            $this->updateUserEmail(Auth::user(), $input['personData']['email']);
+        }
+
+        $personData = $this->updateOrCreatePersonData($request->input('personData'));
+
+        $this->createSponsorship($cat, $personData, $input);
+        $this->sendMailNotification($personData);
+
+        return back()->with(
+            'success_message',
+            'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.'
+        );
     }
 }
