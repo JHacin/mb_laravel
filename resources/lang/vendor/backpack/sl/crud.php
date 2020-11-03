@@ -35,7 +35,7 @@ return [
     'language' => 'Jezik',
 
     // CRUD table view
-    'all' => 'All ',
+    'all' => 'Vsi ',
     'in_the_database' => 'in the database',
     'list' => 'Seznam',
     'reset' => 'Ponastavi',

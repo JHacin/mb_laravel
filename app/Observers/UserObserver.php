@@ -2,18 +2,11 @@
 
 namespace App\Observers;
 
+use App\Models\PersonData;
 use App\Models\User;
 
 class UserObserver
 {
-    /**
-     * @param User $user
-     */
-    protected function initializePersonData(User $user)
-    {
-        $user->personData()->updateOrCreate([]);
-    }
-
     /**
      * Handle the user "created" event.
      *
@@ -22,16 +15,21 @@ class UserObserver
      */
     public function created(User $user)
     {
-        $this->initializePersonData($user);
+        $this->createOrAssociatePersonData($user);
     }
 
     /**
      * @param User $user
      */
-    protected function syncEmailWithPersonData(User $user)
+    protected function createOrAssociatePersonData(User $user)
     {
-        if ($user->personData->email !== $user->email) {
-            $user->personData->update(['email' => $user->email]);
+        $connectedPersonData = PersonData::firstWhere('email', $user->email);
+
+        if ($connectedPersonData instanceof PersonData) {
+            $connectedPersonData->user()->associate($user);
+            $connectedPersonData->save();
+        } else {
+            $user->personData()->updateOrCreate([]);
         }
     }
 
@@ -47,34 +45,22 @@ class UserObserver
     }
 
     /**
+     * @param User $user
+     */
+    protected function syncEmailWithPersonData(User $user)
+    {
+        if ($user->personData->email !== $user->email) {
+            $user->personData->update(['email' => $user->email]);
+        }
+    }
+
+    /**
      * Handle the user "deleted" event.
      *
      * @param User $user
      * @return void
      */
     public function deleted(User $user)
-    {
-        //
-    }
-
-    /**
-     * Handle the user "restored" event.
-     *
-     * @param User $user
-     * @return void
-     */
-    public function restored(User $user)
-    {
-        //
-    }
-
-    /**
-     * Handle the user "force deleted" event.
-     *
-     * @param User $user
-     * @return void
-     */
-    public function forceDeleted(User $user)
     {
         //
     }
