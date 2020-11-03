@@ -7,14 +7,19 @@ use App\Models\PersonData;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 
-class CatSponsorshipMailService
+class CatSponsorshipMailService extends MailService
 {
-    public static function sendInitialInstructionsEmail(PersonData $personData)
+    /**
+     * @param PersonData $personData
+     */
+    public function sendInitialInstructionsEmail(PersonData $personData)
     {
         try {
-            Mail::to($personData->email)->send(new CatSponsorshipInitialInstructionsMail);
+            Mail::to($personData->email)
+                ->bcc($this->bccCopyAddress)
+                ->send(new CatSponsorshipInitialInstructionsMail);
         } catch (Exception $e) {
-            // Todo: handle exception
+            $this->logException($e);
         }
     }
 }

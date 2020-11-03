@@ -33,13 +33,19 @@ class RegisterController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
+     * @var UserMailService
+     */
+    protected $userMailService;
+
+    /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param UserMailService $userMailService
      */
-    public function __construct()
+    public function __construct(UserMailService $userMailService)
     {
         $this->middleware('guest');
+        $this->userMailService = $userMailService;
     }
 
     /**
@@ -71,7 +77,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        UserMailService::sendWelcomeEMail($user);
+        $this->userMailService->sendWelcomeEMail($user);
 
         return $user;
     }

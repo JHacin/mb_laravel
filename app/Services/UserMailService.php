@@ -7,17 +7,17 @@ use App\Models\User;
 use Exception;
 use Mail;
 
-class UserMailService
+class UserMailService extends MailService
 {
     /**
      * @param User $user
      */
-    public static function sendWelcomeEMail(User $user)
+    public function sendWelcomeEMail(User $user)
     {
         try {
             Mail::to($user)->send(new UserWelcomeMail);
         } catch (Exception $e) {
-            // Todo: handle exception
+            $this->logException($e);
         }
     }
 }

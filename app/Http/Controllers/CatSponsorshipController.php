@@ -18,6 +18,19 @@ use Illuminate\View\View;
 class CatSponsorshipController extends Controller
 {
     /**
+     * @var CatSponsorshipMailService
+     */
+    protected $catSponsorshipMailService;
+
+    /**
+     * @param CatSponsorshipMailService $catSponsorshipMailService
+     */
+    public function __construct(CatSponsorshipMailService $catSponsorshipMailService)
+    {
+        $this->catSponsorshipMailService = $catSponsorshipMailService;
+    }
+
+    /**
      * Show the page with the form for sponsoring a cat.
      *
      * @param Cat $cat
@@ -69,14 +82,6 @@ class CatSponsorshipController extends Controller
     }
 
     /**
-     * @param PersonData $personData
-     */
-    protected function sendMailNotification(PersonData $personData)
-    {
-        CatSponsorshipMailService::sendInitialInstructionsEmail($personData);
-    }
-
-    /**
      * Handle incoming cat sponsorship form request.
      *
      * @param Cat $cat
@@ -94,7 +99,8 @@ class CatSponsorshipController extends Controller
         $personData = $this->updateOrCreatePersonData($request->input('personData'));
 
         $this->createSponsorship($cat, $personData, $input);
-        $this->sendMailNotification($personData);
+
+        $this->catSponsorshipMailService->sendInitialInstructionsEmail($personData);
 
         return back()->with(
             'success_message',
