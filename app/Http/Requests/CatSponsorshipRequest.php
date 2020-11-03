@@ -4,7 +4,10 @@ namespace App\Http\Requests;
 
 use App\Models\PersonData;
 use App\Models\Sponsorship;
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class CatSponsorshipRequest extends FormRequest
 {
@@ -27,14 +30,22 @@ class CatSponsorshipRequest extends FormRequest
     {
         $personDataRules = [];
 
-        foreach (PersonData::getSharedValidationRules() as $fieldName => $ruleDef) {
+        foreach (Arr::except(PersonData::getSharedValidationRules(), ['email']) as $fieldName => $ruleDef) {
             $personDataRules['personData.' . $fieldName] = $ruleDef;
         }
 
         return array_merge(
             $personDataRules,
             Sponsorship::getSharedValidationRules(),
-            ['is_agreed_to_terms' => 'accepted']
+            [
+                'personData.email' => [
+                    'required',
+                    'string',
+                    'email',
+                    Rule::unique('users', 'email')->ignore(Auth::id())
+                ],
+                'is_agreed_to_terms' => 'accepted'
+            ]
         );
     }
 
