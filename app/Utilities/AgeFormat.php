@@ -19,7 +19,7 @@ class AgeFormat
      */
     public static function formatToAgeString(DateInterval $age)
     {
-        $format = self::getFormat($age->y, $age->m, $age->d);
+        $format = self::getFormatBasedOnIntervalValues($age->y, $age->m, $age->d);
 
         return $age->format($format);
     }
@@ -32,26 +32,26 @@ class AgeFormat
      * @param int $days
      * @return string
      */
-    protected static function getFormat(int $years, int $months, int $days)
+    protected static function getFormatBasedOnIntervalValues(int $years, int $months, int $days)
     {
-        $yearsString = trans_choice('date.years', $years);
-        $monthsString = trans_choice('date.months', $months);
-        $daysString = trans_choice('date.days', $days);
+        $yearsTranslated = trans_choice('date.years', $years);
+        $monthsTranslated = trans_choice('date.months', $months);
+        $daysTranslated = trans_choice('date.days', $days);
 
         if ($years > 0 && $months > 0) {
-            return "%y {$yearsString} in %m {$monthsString}";
+            return "%y {$yearsTranslated} in %m {$monthsTranslated}";
         }
 
         if ($years > 0) {
-            return "%y {$yearsString}";
+            return "%y {$yearsTranslated}";
         }
 
         if ($months > 0) {
-            return "%m {$monthsString}";
+            return "%m {$monthsTranslated}";
         }
 
         if ($days > 0) {
-            return "%d {$daysString}";
+            return "%d {$daysTranslated}";
         }
 
         return '1 dan';

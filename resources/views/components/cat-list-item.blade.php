@@ -1,9 +1,11 @@
 @php
+    use App\Models\Cat;
     use App\Utilities\AgeFormat;
     use Carbon\Carbon;
 
     $fallback = '/';
 
+    /** @var Cat $cat */
     $dateOfArrivalBoter = $cat->date_of_arrival_boter
         ? $cat->date_of_arrival_boter->format(config('date.format.default'))
         : $fallback;
