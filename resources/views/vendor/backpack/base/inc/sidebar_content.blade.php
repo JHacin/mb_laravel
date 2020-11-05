@@ -19,15 +19,15 @@
     <a class='nav-link' href='{{ backpack_url(config('routes.admin.sponsorships')) }}'>
         <i class='nav-icon la la-hands-helping'></i> Botrovanja
     </a>
-    <a class='nav-link' href='{{ backpack_url(config('routes.admin.person_data')) }}'>
-        <i class='nav-icon la la-user-slash'></i> Neregistrirani botri
-    </a>
 </li>
 
 <li class="nav-item">
     <div class="nav-title">Uporabniki</div>
     <a class="nav-link" href="{{ backpack_url(config('routes.admin.users')) }}">
         <i class="la la-user nav-icon"></i> {{ trans('backpack::permissionmanager.users') }}
+    </a>
+    <a class='nav-link' href='{{ backpack_url(config('routes.admin.person_data')) }}'>
+        <i class='nav-icon la la-user-slash'></i> Neregistrirani botri
     </a>
     <a class="nav-link" href="{{ backpack_url(config('routes.admin.roles')) }}">
         <i class="la la-id-badge nav-icon"></i> {{ trans('backpack::permissionmanager.roles') }}
