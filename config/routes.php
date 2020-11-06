@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'home' => '/',
+    'login' => '/prijava',
     'admin' => [
         'dashboard' => 'dashboard',
         'users' => 'uporabniki',

@@ -65,7 +65,7 @@
                                 <a class="button is-primary" href="{{ route('register') }}">
                                     Registracija
                                 </a>
-                                <a class="button is-light" href="{{ route('login') }}">
+                                <a class="button is-light" href="{{ route('login') }}" data-testid="nav-login-button">
                                     Prijava
                                 </a>
                             @endguest

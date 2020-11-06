@@ -36,20 +36,29 @@ class UserSeeder extends Seeder
     protected function createOneAdmin()
     {
         /** @var User $user */
-        $user = User::factory()->createOne(['email' => TestUserAdmin::getEmail()]);
+        $user = User::factory()->createOne([
+            'email' => TestUserAdmin::getEmail(),
+            'password' => User::generateSecurePassword(TestUserAdmin::getPassword()),
+        ]);
         $user->assignRole(User::ROLE_ADMIN);
     }
 
     protected function createOneEditor()
     {
         /** @var User $user */
-        $user = User::factory()->createOne(['email' => TestUserEditor::getEmail()]);
+        $user = User::factory()->createOne([
+            'email' => TestUserEditor::getEmail(),
+            'password' => User::generateSecurePassword(TestUserEditor::getPassword()),
+        ]);
         $user->assignRole(User::ROLE_EDITOR);
     }
 
     protected function createOneAuthenticated()
     {
         /** @var User $user */
-        User::factory()->createOne(['email' => TestUserAuthenticated::getEmail()]);
+        User::factory()->createOne([
+            'email' => TestUserAuthenticated::getEmail(),
+            'password' => User::generateSecurePassword(TestUserAuthenticated::getPassword()),
+        ]);
     }
 }

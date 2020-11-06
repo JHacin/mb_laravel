@@ -14,7 +14,12 @@
                 <div class="notification is-danger">{{ $message }}</div>
                 @enderror
 
-                <x-inputs.email name="email" label="{{ trans('user.email') }}" autofocus />
+                <x-inputs.email
+                    name="email"
+                    label="{{ trans('user.email') }}"
+                    autofocus
+                    required
+                />
                 <x-inputs.password
                     name="password"
                     label="{{ trans('user.password') }}"
@@ -26,7 +31,7 @@
 
                 <div class="field">
                     <div class="control">
-                        <button type="submit" class="button is-link">Prijava</button>
+                        <button type="submit" class="button is-link" data-testid="login-form-submit">Prijava</button>
                     </div>
                 </div>
 
