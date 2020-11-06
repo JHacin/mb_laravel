@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class UserProfileController extends Controller
 {
@@ -47,7 +47,7 @@ class UserProfileController extends Controller
         ];
 
         if ($data['password']) {
-            $update['password'] = Hash::make($data['password']);
+            $update['password'] = User::generateSecurePassword($data['password']);
         }
 
 

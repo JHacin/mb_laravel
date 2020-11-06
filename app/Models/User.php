@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
+use Hash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -162,6 +163,15 @@ class User extends Authenticatable
         }
 
         return $messages;
+    }
+
+    /**
+     * @param string $password
+     * @return string
+     */
+    public static function generateSecurePassword(string $password)
+    {
+        return Hash::make($password);
     }
 
     /**

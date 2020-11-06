@@ -18,6 +18,22 @@ class UserCrudController extends BackpackUserCrudController
     use ShowOperation;
 
     /**
+     * @var UserMailService
+     */
+    protected $userMailService;
+
+    /**
+     * UserCrudController constructor.
+     * @param $userMailService
+     */
+    public function __construct(UserMailService $userMailService)
+    {
+        parent::__construct();
+        $this->userMailService = $userMailService;
+    }
+
+
+    /**
      * @inheritdoc
      */
     public function setup()
@@ -37,6 +53,8 @@ class UserCrudController extends BackpackUserCrudController
 
         $this->crud->removeColumn('permissions');
 
+        $this->crud->modifyColumn('name', ['label' => trans('user.name')]);
+
         $this->crud->addColumn(CrudColumnGenerator::firstName(['name' => 'personData.first_name']))->afterColumn('email');
         $this->crud->addColumn(CrudColumnGenerator::lastName(['name' => 'personData.last_name']))->afterColumn('personData.first_name');
         $this->crud->addColumn(CrudColumnGenerator::isActive());
@@ -52,6 +70,8 @@ class UserCrudController extends BackpackUserCrudController
     protected function addUserFields()
     {
         parent::addUserFields();
+
+        $this->crud->modifyField('name', ['label' => trans('user.name')]);
 
         CrudFieldGenerator::addPersonDataFields($this->crud);
 
@@ -143,7 +163,7 @@ class UserCrudController extends BackpackUserCrudController
             /** @var User $user */
             $user = $this->crud->getCurrentEntry();
 
-            UserMailService::sendWelcomeEMail($user);
+            $this->userMailService->sendWelcomeEMail($user);
         }
 
         return $response;

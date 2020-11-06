@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Services\UserMailService;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -74,7 +73,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => User::generateSecurePassword($data['password']),
         ]);
 
         $this->userMailService->sendWelcomeEMail($user);
