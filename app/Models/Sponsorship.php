@@ -20,6 +20,8 @@ use Illuminate\Support\Carbon;
  * @property int|null $person_data_id
  * @property int $is_anonymous
  * @property string|null $monthly_amount
+ * @property int $is_active
+ * @property string|null $ended_at
  * @property-read Cat|null $cat
  * @property-read PersonData|null $personData
  * @method static Builder|Sponsorship newModelQuery()
@@ -27,7 +29,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Sponsorship query()
  * @method static Builder|Sponsorship whereCatId($value)
  * @method static Builder|Sponsorship whereCreatedAt($value)
+ * @method static Builder|Sponsorship whereEndedAt($value)
  * @method static Builder|Sponsorship whereId($value)
+ * @method static Builder|Sponsorship whereIsActive($value)
  * @method static Builder|Sponsorship whereIsAnonymous($value)
  * @method static Builder|Sponsorship whereMonthlyAmount($value)
  * @method static Builder|Sponsorship wherePersonDataId($value)

@@ -13,8 +13,6 @@ abstract class Page extends BasePage
      */
     public static function siteElements()
     {
-        return [
-            '@nav-login-button' => '[data-testid="nav-login-button"]',
-        ];
+        return [];
     }
 }

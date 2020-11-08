@@ -5,6 +5,8 @@ namespace Tests\Browser;
 use App\Providers\RouteServiceProvider;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
+use Tests\Browser\Pages\Home;
+use Tests\Browser\Pages\Login;
 use Tests\DuskTestCase;
 use Tests\Utilities\TestData\TestUserAuthenticated;
 use Throwable;
@@ -22,7 +24,7 @@ class LoginTest extends DuskTestCase
     public function testLogin()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(config('routes.home'));
+            $browser->visit(new Home);
             $this->correctNavbarLinksAreShownForUnauthenticatedUser($browser);
             $this->goToLoginPage($browser);
             $this->missRequiredInputs($browser);
@@ -37,12 +39,8 @@ class LoginTest extends DuskTestCase
      */
     protected function correctNavbarLinksAreShownForUnauthenticatedUser(Browser $browser)
     {
-        $browser->within(new Navbar, function (Browser $browser) {
-            $browser
-                ->assertSee('Prijava')
-                ->assertSee('Registracija')
-                ->assertDontSee('Profil')
-                ->assertDontSee('Odjava');
+        $browser->within(new Navbar, function ($browser) {
+            $browser->assertIsShowingUnauthenticatedNav();
         });
     }
 
@@ -51,12 +49,8 @@ class LoginTest extends DuskTestCase
      */
     protected function correctNavbarLinksAreShownForAuthenticatedUser(Browser $browser)
     {
-        $browser->within(new Navbar, function (Browser $browser) {
-            $browser
-                ->assertDontSee('Prijava')
-                ->assertDontSee('Registracija')
-                ->assertSee('Profil')
-                ->assertSee('Odjava');
+        $browser->within(new Navbar, function ($browser) {
+            $browser->assertIsShowingAuthenticatedNav();
         });
     }
 
@@ -65,8 +59,8 @@ class LoginTest extends DuskTestCase
      */
     protected function goToLoginPage(Browser $browser)
     {
-        $browser->click('[data-testid="nav-login-button"]');
-        $browser->assertPathIs(config('routes.login'));
+        $browser->click('@nav-login-button');
+        $browser->on(new Login);
     }
 
     /**
@@ -74,13 +68,15 @@ class LoginTest extends DuskTestCase
      */
     protected function missRequiredInputs(Browser $browser)
     {
+        $browser->disableClientSideValidation();
         $browser->type('email', 'LoremIpsum');
         $this->clickLoginSubmitButton($browser);
-        $browser->assertPathIs(config('routes.login'));
+        $browser->on(new Login)->assertSee(trans('validation.required'));
 
         $browser->type('password', 'LoremIpsum');
         $this->clickLoginSubmitButton($browser);
-        $browser->assertPathIs(config('routes.login'));
+        $browser->on(new Login)->assertSee(trans('validation.required'));
+        $browser->enableClientSideValidation();
     }
 
     /**
@@ -110,6 +106,6 @@ class LoginTest extends DuskTestCase
      */
     protected function clickLoginSubmitButton(Browser $browser)
     {
-        $browser->click('[data-testid="login-form-submit"]');
+        $browser->click('@login-form-submit');
     }
 }

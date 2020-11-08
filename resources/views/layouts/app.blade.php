@@ -51,23 +51,27 @@
                     <div class="navbar-item">
                         <div class="buttons">
                             @auth
-                                <a class="button is-primary" href="{{ route('user-profile') }}">
+                                <a
+                                    class="button is-primary"
+                                    href="{{ route('user-profile') }}"
+                                    dusk="nav-profile-button"
+                                >
                                     Profil
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="button is-light" data-testid="nav-logout-button">
+                                    <button type="submit" class="button is-light" dusk="nav-logout-button">
                                         Odjava
                                     </button>
                                 </form>
                             @endauth
 
                             @guest
-                                <a class="button is-primary" href="{{ route('register') }}">
+                                <a class="button is-primary" href="{{ route('register') }}" dusk="nav-register-button">
                                     Registracija
                                 </a>
-                                <a class="button is-light" href="{{ route('login') }}" data-testid="nav-login-button">
+                                <a class="button is-light" href="{{ route('login') }}" dusk="nav-login-button">
                                     Prijava
                                 </a>
                             @endguest

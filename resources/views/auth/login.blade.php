@@ -31,7 +31,7 @@
 
                 <div class="field">
                     <div class="control">
-                        <button type="submit" class="button is-link" data-testid="login-form-submit">Prijava</button>
+                        <button type="submit" class="button is-link" dusk="login-form-submit">Prijava</button>
                     </div>
                 </div>
 

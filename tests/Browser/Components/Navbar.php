@@ -5,6 +5,10 @@ namespace Tests\Browser\Components;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Component as BaseComponent;
 
+/**
+ * Class Navbar
+ * @package Tests\Browser\Components
+ */
 class Navbar extends BaseComponent
 {
     /**
@@ -38,5 +42,29 @@ class Navbar extends BaseComponent
         return [
             '@element' => '#selector',
         ];
+    }
+
+    /**
+     * @param Browser $browser
+     */
+    public function assertIsShowingAuthenticatedNav(Browser $browser)
+    {
+        $browser
+            ->assertPresent('@nav-profile-button')
+            ->assertPresent('@nav-logout-button')
+            ->assertMissing('@nav-register-button')
+            ->assertMissing('@nav-login-button');
+    }
+
+    /**
+     * @param Browser $browser
+     */
+    public function assertIsShowingUnauthenticatedNav(Browser $browser)
+    {
+        $browser
+            ->assertPresent('@nav-register-button')
+            ->assertPresent('@nav-login-button')
+            ->assertMissing('@nav-profile-button')
+            ->assertMissing('@nav-logout-button');
     }
 }
