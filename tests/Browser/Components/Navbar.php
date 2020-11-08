@@ -39,9 +39,7 @@ class Navbar extends BaseComponent
      */
     public function elements()
     {
-        return [
-            '@element' => '#selector',
-        ];
+        return [];
     }
 
     /**

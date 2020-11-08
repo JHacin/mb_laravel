@@ -25,12 +25,10 @@ class LoginTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new Home);
-            $this->correctNavbarLinksAreShownForUnauthenticatedUser($browser);
             $this->goToLoginPage($browser);
             $this->missRequiredInputs($browser);
             $this->useIncorrectCredentials($browser);
             $this->useCorrectCredentials($browser);
-            $this->correctNavbarLinksAreShownForAuthenticatedUser($browser);
         });
     }
 
