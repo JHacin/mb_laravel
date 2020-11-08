@@ -4,7 +4,6 @@ namespace Tests\Utilities\TestData;
 
 class TestUserAuthenticated implements TestUser
 {
-
     /**
      * @inheritDoc
      */
