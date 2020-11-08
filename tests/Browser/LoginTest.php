@@ -4,10 +4,9 @@ namespace Tests\Browser;
 
 use App\Providers\RouteServiceProvider;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Components\Navbar;
-use Tests\Browser\Pages\Home;
-use Tests\Browser\Pages\Login;
+use Tests\Browser\Pages\LoginPage;
 use Tests\DuskTestCase;
+use Tests\Utilities\FormTestingUtils;
 use Tests\Utilities\TestData\TestUserAuthenticated;
 use Throwable;
 
@@ -24,66 +23,33 @@ class LoginTest extends DuskTestCase
     public function testLogin()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new Home);
-            $this->goToLoginPage($browser);
-            $this->missRequiredInputs($browser);
-            $this->useIncorrectCredentials($browser);
-            $this->useCorrectCredentials($browser);
+            $browser->visit(new LoginPage);
+            $this->shouldValidateRequiredFields($browser);
+            $this->shouldValidateCredentials($browser);
+            $this->shouldLogUserInOnSuccessfulAuthentication($browser);
         });
     }
 
     /**
      * @param Browser $browser
      */
-    protected function correctNavbarLinksAreShownForUnauthenticatedUser(Browser $browser)
-    {
-        $browser->within(new Navbar, function ($browser) {
-            $browser->assertIsShowingUnauthenticatedNav();
-        });
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function correctNavbarLinksAreShownForAuthenticatedUser(Browser $browser)
-    {
-        $browser->within(new Navbar, function ($browser) {
-            $browser->assertIsShowingAuthenticatedNav();
-        });
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function goToLoginPage(Browser $browser)
-    {
-        $browser->click('@nav-login-button');
-        $browser->on(new Login);
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function missRequiredInputs(Browser $browser)
+    protected function shouldValidateRequiredFields(Browser $browser)
     {
         $browser->disableClientSideValidation();
-        $browser->type('email', 'LoremIpsum');
         $this->clickLoginSubmitButton($browser);
-        $browser->on(new Login)->assertSee(trans('validation.required'));
-
-        $browser->type('password', 'LoremIpsum');
-        $this->clickLoginSubmitButton($browser);
-        $browser->on(new Login)->assertSee(trans('validation.required'));
-        $browser->enableClientSideValidation();
+        FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
+            '@login-form-email-input-wrapper',
+            '@login-form-password-input-wrapper'
+        ]);
     }
 
     /**
      * @param Browser $browser
      */
-    protected function useIncorrectCredentials(Browser $browser)
+    protected function shouldValidateCredentials(Browser $browser)
     {
-        $browser->type('email', TestUserAuthenticated::getEmail());
-        $browser->type('password', 'LoremIpsum');
+        $browser->type('@login-form-email-input', TestUserAuthenticated::getEmail());
+        $browser->type('@login-form-password-input', 'LoremIpsum');
         $this->clickLoginSubmitButton($browser);
         $browser->assertSee(trans('auth.failed'));
     }
@@ -91,10 +57,10 @@ class LoginTest extends DuskTestCase
     /**
      * @param Browser $browser
      */
-    protected function useCorrectCredentials(Browser $browser)
+    protected function shouldLogUserInOnSuccessfulAuthentication(Browser $browser)
     {
-        $browser->type('email', TestUserAuthenticated::getEmail());
-        $browser->type('password', TestUserAuthenticated::getPassword());
+        $browser->type('@login-form-email-input', TestUserAuthenticated::getEmail());
+        $browser->type('@login-form-password-input', TestUserAuthenticated::getPassword());
         $this->clickLoginSubmitButton($browser);
         $browser->assertPathIs(RouteServiceProvider::HOME);
     }

@@ -5,7 +5,8 @@ namespace Tests\Browser;
 use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
-use Tests\Browser\Pages\Home;
+use Tests\Browser\Pages\HomePage;
+use Tests\Browser\Pages\LoginPage;
 use Tests\DuskTestCase;
 use Tests\Utilities\TestData\TestUserAuthenticated;
 use Throwable;
@@ -16,33 +17,51 @@ use Throwable;
  */
 class NavbarTest extends DuskTestCase
 {
-
     /**
+     * @return void
      * @throws Throwable
      */
-    public function testAuthButtonsForAuthenticated()
+    public function testNavbar()
     {
         $this->browse(function (Browser $browser) {
-            $browser
-                ->visit(new Home)
-                ->within(new Navbar, function ($browser) {
-                    $browser->assertIsShowingUnauthenticatedNav();
-                });
+            $this->shouldShowCorrectButtonsForUnauthenticated($browser);
+            $this->shouldEnableAccessToLoginPage($browser);
+            $this->shouldShowCorrectButtonsForAuthenticated($browser);
         });
     }
 
     /**
-     * @throws Throwable
+     * @param Browser $browser
      */
-    public function testAuthButtonsForUnauthenticated()
+    protected function shouldShowCorrectButtonsForUnauthenticated(Browser $browser)
     {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs(User::firstWhere('email', TestUserAuthenticated::getEmail()))
-                ->visit(new Home)
-                ->within(new Navbar, function ($browser) {
-                    $browser->assertIsShowingAuthenticatedNav();
-                });
-        });
+        $browser
+            ->visit(new HomePage)
+            ->within(new Navbar, function ($browser) {
+                $browser->assertIsShowingUnauthenticatedNav();
+            });
+    }
+
+    /**
+     * @param Browser $browser
+     */
+    protected function shouldEnableAccessToLoginPage(Browser $browser)
+    {
+        $browser
+            ->click('@nav-login-button')
+            ->on(new LoginPage);
+    }
+
+    /**
+     * @param Browser $browser
+     */
+    protected function shouldShowCorrectButtonsForAuthenticated(Browser $browser)
+    {
+        $browser
+            ->loginAs(User::firstWhere('email', TestUserAuthenticated::getEmail()))
+            ->visit(new HomePage)
+            ->within(new Navbar, function ($browser) {
+                $browser->assertIsShowingAuthenticatedNav();
+            });
     }
 }

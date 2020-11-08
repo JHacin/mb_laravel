@@ -4,7 +4,7 @@ namespace Tests\Browser\Pages;
 
 use Laravel\Dusk\Browser;
 
-class Login extends Page
+class LoginPage extends Page
 {
     /**
      * Get the URL for the page.

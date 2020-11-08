@@ -3,6 +3,7 @@
 return [
     'home' => '/',
     'login' => '/prijava',
+    'register' => '/registracija',
     'admin' => [
         'dashboard' => 'dashboard',
         'users' => 'uporabniki',
