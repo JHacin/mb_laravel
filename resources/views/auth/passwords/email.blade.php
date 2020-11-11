@@ -16,11 +16,19 @@
                     </div>
                 @endif
 
-                <x-inputs.email name="email" label="{{ trans('user.email') }}" autocomplete="email" autofocus required />
+                <x-inputs.email
+                    name="email"
+                    label="{{ trans('user.email') }}"
+                    autocomplete="email"
+                    autofocus
+                    required
+                    dusk="forgot-password-form-email-input"
+                    wrapperDusk="forgot-password-form-email-input-wrapper"
+                />
 
                 <div class="field">
                     <div class="control">
-                        <button type="submit" class="button is-link">
+                        <button type="submit" class="button is-link" dusk="forgot-password-form-submit">
                             Pošlji navodila za ponastavitev
                         </button>
                     </div>
