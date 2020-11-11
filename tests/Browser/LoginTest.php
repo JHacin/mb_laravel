@@ -20,56 +20,47 @@ class LoginTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testLogin()
+    public function testRequiredFieldsValidation()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new LoginPage);
-            $this->shouldValidateRequiredFields($browser);
-            $this->shouldValidateCredentials($browser);
-            $this->shouldLogUserInOnSuccessfulAuthentication($browser);
+            $browser->visit(new LoginPage)->disableClientSideValidation();
+            $browser->click('@login-form-submit');
+            FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
+                '@login-form-email-input-wrapper',
+                '@login-form-password-input-wrapper'
+            ]);
         });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidateRequiredFields(Browser $browser)
+    public function testCredentialsValidation()
     {
-        $browser->disableClientSideValidation();
-        $this->clickLoginSubmitButton($browser);
-        FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
-            '@login-form-email-input-wrapper',
-            '@login-form-password-input-wrapper'
-        ]);
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->visit(new LoginPage)
+                ->type('@login-form-email-input', TestUserAuthenticated::getEmail())
+                ->type('@login-form-password-input', 'LoremIpsum')
+                ->click('@login-form-submit')
+                ->assertSee(trans('auth.failed'));
+        });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidateCredentials(Browser $browser)
+    public function testSuccess()
     {
-        $browser->type('@login-form-email-input', TestUserAuthenticated::getEmail());
-        $browser->type('@login-form-password-input', 'LoremIpsum');
-        $this->clickLoginSubmitButton($browser);
-        $browser->assertSee(trans('auth.failed'));
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function shouldLogUserInOnSuccessfulAuthentication(Browser $browser)
-    {
-        $browser->type('@login-form-email-input', TestUserAuthenticated::getEmail());
-        $browser->type('@login-form-password-input', TestUserAuthenticated::getPassword());
-        $this->clickLoginSubmitButton($browser);
-        $browser->assertPathIs(RouteServiceProvider::HOME);
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function clickLoginSubmitButton(Browser $browser)
-    {
-        $browser->click('@login-form-submit');
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->visit(new LoginPage)
+                ->type('@login-form-email-input', TestUserAuthenticated::getEmail())
+                ->type('@login-form-password-input', TestUserAuthenticated::getPassword())
+                ->click('@login-form-submit')
+                ->assertPathIs(RouteServiceProvider::HOME);
+        });
     }
 }

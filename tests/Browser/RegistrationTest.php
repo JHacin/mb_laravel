@@ -21,93 +21,89 @@ class RegistrationTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testRegistration()
+    public function testRequiredFieldsValidation()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new RegistrationPage);
-            $this->shouldValidateRequiredFields($browser);
-            $this->shouldDisallowUsingExistingEmail($browser);
-            $this->shouldValidatePasswordStrength($browser);
-            $this->shouldValidatePasswordConfirmation($browser);
-            $this->shouldHandleSuccessfulSubmission($browser);
+            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser->click('@register-form-submit');
+            FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
+                '@register-form-name-input-wrapper',
+                '@register-form-email-input-wrapper',
+                '@register-form-password-input-wrapper',
+            ]);
         });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidateRequiredFields(Browser $browser)
+    public function testUniqueEmailValidation()
     {
-        $browser->disableClientSideValidation();
-        $this->clickSubmitButton($browser);
-        FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
-            '@register-form-name-input-wrapper',
-            '@register-form-email-input-wrapper',
-            '@register-form-password-input-wrapper',
-        ]);
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function shouldDisallowUsingExistingEmail(Browser $browser)
-    {
-        $browser->disableClientSideValidation();
-        $browser->type('@register-form-email-input', TestUserEditor::getEmail());
-        $this->clickSubmitButton($browser);
-        $browser->with('@register-form-email-input-wrapper', function (Browser $wrapper) {
-            $wrapper->assertSee(trans('validation.custom.email.unique'));
+        $this->browse(function (Browser $browser) {
+            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser
+                ->type('@register-form-email-input', TestUserEditor::getEmail())
+                ->click('@register-form-submit')
+                ->with('@register-form-email-input-wrapper', function (Browser $wrapper) {
+                    $wrapper->assertSee(trans('validation.custom.email.unique'));
+                });
         });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidatePasswordStrength(Browser $browser)
+    public function testPasswordStrengthValidation()
     {
-        $browser->disableClientSideValidation();
-        $browser->type('@register-form-password-input', 'x');
-        $this->clickSubmitButton($browser);
-        $browser->with('@register-form-password-input-wrapper', function (Browser $wrapper) {
-            $wrapper->assertSee('Geslo mora biti dolgo vsaj 8 znakov.');
+        $this->browse(function (Browser $browser) {
+            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser
+                ->type('@register-form-password-input', 'x')
+                ->click('@register-form-submit')
+                ->with('@register-form-password-input-wrapper', function (Browser $wrapper) {
+                    $wrapper->assertSee('Geslo mora biti dolgo vsaj 8 znakov.');
+                });
         });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidatePasswordConfirmation(Browser $browser)
+    public function testPasswordConfirmationValidation()
     {
-        $browser->disableClientSideValidation();
-        $browser->type('@register-form-password-input', 'LoremIpsum');
-        $browser->type('@register-form-password-confirm-input', 'LoremIpsumDolorAmet');
-        $this->clickSubmitButton($browser);
-        $browser->with('@register-form-password-input-wrapper', function (Browser $wrapper) {
-            $wrapper->assertSee(trans('validation.custom.password.confirmed'));
+        $this->browse(function (Browser $browser) {
+            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser
+                ->type('@register-form-password-input', 'LoremIpsum')
+                ->type('@register-form-password-confirm-input', 'LoremIpsumDolorAmet')
+                ->click('@register-form-submit')
+                ->with('@register-form-password-input-wrapper', function (Browser $wrapper) {
+                    $wrapper->assertSee(trans('validation.custom.password.confirmed'));
+                });
         });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldHandleSuccessfulSubmission(Browser $browser)
+    public function testSuccess()
     {
-        $browser->type('@register-form-name-input', 'myusername');
-        $browser->type('@register-form-email-input', 'john.doe@example.com');
-        $browser->type('@register-form-password-input', 'asdf1234');
-        $browser->type('@register-form-password-confirm-input', 'asdf1234');
-        $this->clickSubmitButton($browser);
-        $browser->assertPathIs(RouteServiceProvider::HOME);
-        $browser->within(new Navbar, function ($browser) {
-            $browser->assertIsShowingAuthenticatedNav();
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->visit(new RegistrationPage)
+                ->type('@register-form-name-input', 'myusername')
+                ->type('@register-form-email-input', 'john.doe@example.com')
+                ->type('@register-form-password-input', 'asdf1234')
+                ->type('@register-form-password-confirm-input', 'asdf1234')
+                ->click('@register-form-submit')
+                ->assertPathIs(RouteServiceProvider::HOME)
+                ->within(new Navbar, function ($browser) {
+                    $browser->assertIsShowingAuthenticatedNav();
+                });
         });
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function clickSubmitButton(Browser $browser)
-    {
-        $browser->click('@register-form-submit');
     }
 }

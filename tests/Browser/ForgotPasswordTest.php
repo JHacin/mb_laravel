@@ -30,62 +30,57 @@ class ForgotPasswordTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testPage()
+    public function testRequiredFieldValidation()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new ForgotPasswordPage);
-            $this->shouldValidateRequiredField($browser);
-            $this->shouldValidateEmailFormat($browser);
-            $this->shouldValidateEmailExists($browser);
-            $this->shouldShowSuccessMessageIfEmailExists($browser);
+            $browser->visit(new ForgotPasswordPage)->disableClientSideValidation();
+            $browser->click('@forgot-password-form-submit');
+            FormTestingUtils::assertAllRequiredErrorsAreShown($browser, ['@forgot-password-form-email-input-wrapper']);
         });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidateRequiredField(Browser $browser)
+    public function testEmailFormatValidation()
     {
-        $browser->disableClientSideValidation();
-        $this->clickSubmitButton($browser);
-        FormTestingUtils::assertAllRequiredErrorsAreShown($browser, ['@forgot-password-form-email-input-wrapper']);
+        $this->browse(function (Browser $browser) {
+            $browser->visit(new ForgotPasswordPage)->disableClientSideValidation();
+            $browser
+                ->type('@forgot-password-form-email-input', 'asdf')
+                ->click('@forgot-password-form-submit')
+                ->assertSee(trans('validation.email'));
+        });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidateEmailFormat(Browser $browser)
+    public function testEmailExistsValidation()
     {
-        $browser->disableClientSideValidation();
-        $browser->type('@forgot-password-form-email-input', 'asdf');
-        $this->clickSubmitButton($browser);
-        $browser->assertSee(trans('validation.email'));
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->visit(new ForgotPasswordPage)
+                ->type('@forgot-password-form-email-input', 'asda@fake.com')
+                ->click('@forgot-password-form-submit')
+                ->assertSee(trans('passwords.user'));
+        });
     }
 
     /**
-     * @param Browser $browser
+     * @return void
+     * @throws Throwable
      */
-    protected function shouldValidateEmailExists(Browser $browser)
+    public function testSuccess()
     {
-        $browser->type('@forgot-password-form-email-input', 'asda@fake.com');
-        $this->clickSubmitButton($browser);
-        $browser->assertSee(trans('passwords.user'));
-    }
-    /**
-     * @param Browser $browser
-     */
-    protected function shouldShowSuccessMessageIfEmailExists(Browser $browser)
-    {
-        $browser->type('@forgot-password-form-email-input', TestUserSuperAdmin::getEmail());
-        $this->clickSubmitButton($browser);
-        $browser->assertSee(trans('passwords.sent'));
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function clickSubmitButton(Browser $browser)
-    {
-        $browser->click('@forgot-password-form-submit');
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->visit(new ForgotPasswordPage)
+                ->type('@forgot-password-form-email-input', TestUserSuperAdmin::getEmail())
+                ->click('@forgot-password-form-submit')
+                ->assertSee(trans('passwords.sent'));
+        });
     }
 }

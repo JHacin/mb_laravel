@@ -30,14 +30,12 @@ Route::post(config('routes.login'), [LoginController::class, 'login']);
 Route::post('/odjava', [LoginController::class, 'logout'])->name('logout');
 Route::get(config('routes.register'), [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post(config('routes.register'), [RegisterController::class, 'register']);
-Route::get('/geslo/ponastavitev', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::get(config('routes.forgot_password'), [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/geslo/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/geslo/ponastavitev/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('/geslo/ponastavitev', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::post(config('routes.forgot_password'), [ResetPasswordController::class, 'reset'])->name('password.update');
 Route::get('/geslo/potrditev', [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
 Route::post('/geslo/potrditev', [ConfirmPasswordController::class, 'confirm']);
 Route::get('/email/potrditev', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('/email/potrditev/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('/email/poslji-ponovno', [VerificationController::class, 'resend'])->name('verification.resend');
-
-

@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="field">
-                    <a href="{{ route('password.request') }}">Pozabil/-a sem geslo</a>
+                    <a href="{{ route('password.request') }}" dusk="login-form-forgot-password">Pozabil/-a sem geslo</a>
                 </div>
             </form>
         </div>
