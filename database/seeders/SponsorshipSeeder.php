@@ -19,7 +19,7 @@ class SponsorshipSeeder extends Seeder
 
     public function run()
     {
-        $this->cat = Cat::factory()->createOne(['name' => TestCatGarfield::getName()]);
+        $this->cat = Cat::factory()->createOne(['name' => (new TestCatGarfield())->name]);
         $this->createOneWithAuthenticatedUser();
         $this->createOneWithUnauthenticatedUser();
     }

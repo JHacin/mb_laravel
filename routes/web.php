@@ -17,8 +17,8 @@ Route::get('/muce', [PagesController::class, 'catList'])->name('cat_list');
 Route::get('/muce/{cat}', [PagesController::class, 'catDetails'])->name('cat_details');
 
 // Cat sponsorship
-Route::get('/muce/{cat}/postani-boter', [CatSponsorshipController::class, 'form'])->name('become_cat_sponsor');
-Route::post('/muce/{cat}/postani-boter', [CatSponsorshipController::class, 'submit']);
+Route::get(config('routes.cat_sponsorship_form'), [CatSponsorshipController::class, 'form'])->name('become_cat_sponsor');
+Route::post(config('routes.cat_sponsorship_form'), [CatSponsorshipController::class, 'submit']);
 
 // User pages
 Route::get('/profil', [UserProfileController::class, 'index'])->name('user-profile');

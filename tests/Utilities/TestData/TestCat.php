@@ -2,10 +2,28 @@
 
 namespace Tests\Utilities\TestData;
 
-interface TestCat
+use App\Models\Cat;
+
+class TestCat
 {
     /**
-     * @return string
+     * @var string
      */
-    static function getName();
+    public $name;
+
+    /**
+     * @param array $attributes
+     */
+    public function __construct(array $attributes)
+    {
+        $this->name = $attributes['name'];
+    }
+
+    /**
+     * @return Cat
+     */
+    public function get()
+    {
+        return Cat::firstWhere('name', $this->name);
+    }
 }

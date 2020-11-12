@@ -2,14 +2,12 @@
 
 namespace Tests\Utilities\TestData;
 
-class TestCatGarfield implements TestCat
+class TestCatGarfield extends TestCat
 {
-
-    /**
-     * @inheritDoc
-     */
-    static function getName()
+    public function __construct()
     {
-        return 'Garfield';
+        parent::__construct([
+            'name' => 'Garfield'
+        ]);
     }
 }
