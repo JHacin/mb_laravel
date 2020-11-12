@@ -17,11 +17,13 @@
                     label="{{ trans('user.password') }}"
                     required
                     autocomplete="current-password"
+                    dusk="password-confirm-form-input"
+                    wrapperDusk="password-confirm-form-input-wrapper"
                 />
 
                 <div class="field">
                     <div class="control">
-                        <button type="submit" class="button is-link">Potrdi</button>
+                        <button type="submit" class="button is-link" dusk="password-confirm-form-submit">Potrdi</button>
                     </div>
                 </div>
             </form>

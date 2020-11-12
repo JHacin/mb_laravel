@@ -5,6 +5,7 @@ return [
     'login' => '/prijava',
     'register' => '/registracija',
     'forgot_password' => '/geslo/ponastavitev',
+    'confirm_password' => '/geslo/potrditev',
     'admin' => [
         'dashboard' => 'dashboard',
         'users' => 'uporabniki',
