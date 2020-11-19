@@ -21,29 +21,6 @@ class CatObserver
         $this->catPhotoService = new CatPhotoService();
     }
 
-
-    /**
-     * Handle the cat "created" event.
-     *
-     * @param Cat $cat
-     * @return void
-     */
-    public function created(Cat $cat)
-    {
-        //
-    }
-
-    /**
-     * Handle the cat "updated" event.
-     *
-     * @param Cat $cat
-     * @return void
-     */
-    public function updated(Cat $cat)
-    {
-        //
-    }
-
     /**
      * Handle the cat "deleting" event.
      *
@@ -57,39 +34,5 @@ class CatObserver
             $this->catPhotoService->deleteFromDisk($photo->filename);
             $photo->delete();
         }
-    }
-
-    /**
-     * Handle the cat "deleted" event.
-     *
-     * @param Cat $cat
-     * @return void
-     * @throws Exception
-     */
-    public function deleted(Cat $cat)
-    {
-        //
-    }
-
-    /**
-     * Handle the cat "restored" event.
-     *
-     * @param Cat $cat
-     * @return void
-     */
-    public function restored(Cat $cat)
-    {
-        //
-    }
-
-    /**
-     * Handle the cat "force deleted" event.
-     *
-     * @param Cat $cat
-     * @return void
-     */
-    public function forceDeleted(Cat $cat)
-    {
-        //
     }
 }

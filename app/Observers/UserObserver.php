@@ -53,15 +53,4 @@ class UserObserver
             $user->personData->update(['email' => $user->email]);
         }
     }
-
-    /**
-     * Handle the user "deleted" event.
-     *
-     * @param User $user
-     * @return void
-     */
-    public function deleted(User $user)
-    {
-        //
-    }
 }
