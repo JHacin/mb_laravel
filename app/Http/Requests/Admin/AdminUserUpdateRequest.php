@@ -18,7 +18,7 @@ class AdminUserUpdateRequest extends UserUpdateCrudRequest
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function messages()
     {

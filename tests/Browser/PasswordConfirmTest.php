@@ -7,11 +7,30 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\LoginPage;
 use Tests\Browser\Pages\PasswordConfirmPage;
 use Tests\DuskTestCase;
-use Tests\Utilities\TestData\TestUserAuthenticated;
 use Throwable;
 
 class PasswordConfirmTest extends DuskTestCase
 {
+    /**
+     * @var User
+     */
+    protected $user;
+
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var User $user */
+        $user = User::factory()->createOne([
+            'password' => User::generateSecurePassword('asdf123456')
+        ]);
+        $this->user = $user;
+    }
+
+
     /**
      * @return void
      * @throws Throwable
@@ -33,7 +52,7 @@ class PasswordConfirmTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser
-                ->loginAs(User::firstWhere('email', TestUserAuthenticated::getEmail()))
+                ->loginAs($this->user)
                 ->visit(new PasswordConfirmPage)
                 ->disableClientSideValidation();
 
@@ -51,7 +70,7 @@ class PasswordConfirmTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser
-                ->loginAs(User::firstWhere('email', TestUserAuthenticated::getEmail()))
+                ->loginAs($this->user)
                 ->visit(new PasswordConfirmPage)
                 ->type('@password-confirm-form-input', 'LoremIpsum')
                 ->click('@password-confirm-form-submit')
@@ -67,9 +86,9 @@ class PasswordConfirmTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser
-                ->loginAs(User::firstWhere('email', TestUserAuthenticated::getEmail()))
+                ->loginAs($this->user)
                 ->visit(new PasswordConfirmPage)
-                ->type('@password-confirm-form-input', TestUserAuthenticated::getPassword())
+                ->type('@password-confirm-form-input', 'asdf123456')
                 ->click('@password-confirm-form-submit')
                 ->assertDontSee(trans('validation.password'));
         });

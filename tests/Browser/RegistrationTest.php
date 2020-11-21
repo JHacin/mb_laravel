@@ -2,13 +2,13 @@
 
 namespace Tests\Browser;
 
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
 use Tests\Browser\Pages\RegistrationPage;
 use Tests\DuskTestCase;
 use Tests\Utilities\FormTestingUtils;
-use Tests\Utilities\TestData\TestUserEditor;
 use Throwable;
 
 /**
@@ -41,9 +41,12 @@ class RegistrationTest extends DuskTestCase
     public function test_validates_unique_email()
     {
         $this->browse(function (Browser $browser) {
+            /** @var User $user */
+            $user = User::factory()->createOne();
+
             $browser->visit(new RegistrationPage)->disableClientSideValidation();
             $browser
-                ->type('@register-form-email-input', TestUserEditor::getEmail())
+                ->type('@register-form-email-input', $user->email)
                 ->click('@register-form-submit')
                 ->with('@register-form-email-input-wrapper', function (Browser $wrapper) {
                     $wrapper->assertSee(trans('validation.custom.email.unique'));

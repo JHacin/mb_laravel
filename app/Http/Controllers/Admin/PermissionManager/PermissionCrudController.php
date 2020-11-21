@@ -7,7 +7,7 @@ use Backpack\PermissionManager\app\Http\Controllers\PermissionCrudController as 
 class PermissionCrudController extends BackpackPermissionCrudController
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setup()
     {

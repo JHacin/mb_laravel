@@ -50,7 +50,7 @@ class CatSponsorshipRequest extends FormRequest
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function messages()
     {

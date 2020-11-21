@@ -7,7 +7,6 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
 use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
-use Tests\Utilities\TestData\TestUserAuthenticated;
 use Throwable;
 
 class LogoutTest extends DuskTestCase
@@ -19,8 +18,11 @@ class LogoutTest extends DuskTestCase
     public function test_handles_logout()
     {
         $this->browse(function (Browser $browser) {
+            /** @var User $user */
+            $user = User::factory()->createOne();
+
             $browser
-                ->loginAs(User::firstWhere('email', TestUserAuthenticated::getEmail()))
+                ->loginAs($user)
                 ->visit(new HomePage)
                 ->click('@nav-logout-button')
                 ->within(new Navbar, function ($browser) {

@@ -8,7 +8,7 @@ use Backpack\PermissionManager\app\Http\Requests\UserStoreCrudRequest;
 class AdminUserCreateRequest extends UserStoreCrudRequest
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function rules()
     {
@@ -20,7 +20,7 @@ class AdminUserCreateRequest extends UserStoreCrudRequest
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function messages()
     {

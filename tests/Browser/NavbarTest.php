@@ -7,7 +7,6 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
 use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
-use Tests\Utilities\TestData\TestUserAuthenticated;
 use Throwable;
 
 /**
@@ -38,8 +37,11 @@ class NavbarTest extends DuskTestCase
     public function test_shows_logged_in_buttons()
     {
         $this->browse(function (Browser $browser) {
+            /** @var User $user */
+            $user = User::factory()->createOne();
+
             $browser
-                ->loginAs(User::firstWhere('email', TestUserAuthenticated::getEmail()))
+                ->loginAs($user)
                 ->visit(new HomePage)
                 ->within(new Navbar, function ($browser) {
                     $browser->assertIsShowingAuthenticatedNav();

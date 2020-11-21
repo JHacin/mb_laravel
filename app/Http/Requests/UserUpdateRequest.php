@@ -38,7 +38,7 @@ class UserUpdateRequest extends FormRequest
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function messages()
     {

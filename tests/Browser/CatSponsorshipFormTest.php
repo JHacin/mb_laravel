@@ -6,7 +6,6 @@ use App\Models\Cat;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\CatSponsorshipFormPage;
 use Tests\DuskTestCase;
-use Tests\Utilities\TestData\TestCatGarfield;
 use Throwable;
 
 class CatSponsorshipFormTest extends DuskTestCase
@@ -16,10 +15,13 @@ class CatSponsorshipFormTest extends DuskTestCase
      */
     protected $cat;
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
         parent::setUp();
-        $this->cat = (new TestCatGarfield())->get();
+        $this->cat = Cat::factory()->createOne();
     }
 
     /**

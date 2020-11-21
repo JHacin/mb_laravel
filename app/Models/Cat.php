@@ -121,7 +121,7 @@ class Cat extends Model
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRouteKeyName()
     {
@@ -183,7 +183,7 @@ class Cat extends Model
     */
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function booted()
     {

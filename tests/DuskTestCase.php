@@ -13,6 +13,9 @@ abstract class DuskTestCase extends BaseTestCase
 
     protected static $migrationRun = false;
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
         parent::setUp();

@@ -34,7 +34,7 @@ class UserCrudController extends BackpackUserCrudController
 
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setup()
     {

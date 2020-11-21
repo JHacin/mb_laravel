@@ -9,7 +9,7 @@ use Illuminate\Validation\Rules\Unique;
 class AdminPersonDataRequest extends PersonDataRequest
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function authorize()
     {
@@ -32,7 +32,7 @@ class AdminPersonDataRequest extends PersonDataRequest
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function rules()
     {

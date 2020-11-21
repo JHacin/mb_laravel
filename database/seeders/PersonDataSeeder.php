@@ -4,17 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\PersonData;
 use Illuminate\Database\Seeder;
-use Tests\Utilities\TestData\TestPersonDataUnauthenticated;
 
 class PersonDataSeeder extends Seeder
 {
+    /**
+     * @return void
+     */
     public function run()
     {
-        $this->createOneUnauthenticated();
-    }
-
-    protected function createOneUnauthenticated()
-    {
-        PersonData::factory()->createOne(['email' => TestPersonDataUnauthenticated::getEmail()]);
+        PersonData::factory()->count(10)->create();
     }
 }

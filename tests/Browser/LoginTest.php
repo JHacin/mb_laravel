@@ -2,12 +2,12 @@
 
 namespace Tests\Browser;
 
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\LoginPage;
 use Tests\DuskTestCase;
 use Tests\Utilities\FormTestingUtils;
-use Tests\Utilities\TestData\TestUserAuthenticated;
 use Throwable;
 
 /**
@@ -41,7 +41,7 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new LoginPage)
-                ->type('@login-form-email-input', TestUserAuthenticated::getEmail())
+                ->type('@login-form-email-input', 'asd@example.com')
                 ->type('@login-form-password-input', 'LoremIpsum')
                 ->click('@login-form-submit')
                 ->assertSee(trans('auth.failed'));
@@ -55,10 +55,15 @@ class LoginTest extends DuskTestCase
     public function test_handles_successful_login()
     {
         $this->browse(function (Browser $browser) {
+            /** @var User $user */
+            $user = User::factory()->createOne([
+                'password' => User::generateSecurePassword('hello123456')
+            ]);
+
             $browser
                 ->visit(new LoginPage)
-                ->type('@login-form-email-input', TestUserAuthenticated::getEmail())
-                ->type('@login-form-password-input', TestUserAuthenticated::getPassword())
+                ->type('@login-form-email-input', $user->email)
+                ->type('@login-form-password-input', 'hello123456')
                 ->click('@login-form-submit')
                 ->assertPathIs(RouteServiceProvider::HOME);
         });
