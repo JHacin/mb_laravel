@@ -24,18 +24,7 @@ class LoginPage extends Page
      */
     public function assert(Browser $browser)
     {
-        $browser
-            ->assertPathIs($this->url())
-            ->assertSee(trans('backpack::base.forgot_your_password'));
-    }
-
-    /**
-     * Get the element shortcuts for the page.
-     *
-     * @return array
-     */
-    public function elements()
-    {
-        return [];
+        parent::assert($browser);
+        $browser->assertSee(trans('backpack::base.forgot_your_password'));
     }
 }

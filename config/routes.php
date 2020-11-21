@@ -9,6 +9,7 @@ return [
     'cat_sponsorship_form' => '/muce/{cat}/postani-boter',
     'admin' => [
         'dashboard' => 'dashboard',
+        'login' => 'login',
         'users' => 'uporabniki',
         'roles' => 'vloge',
         'permissions' => 'dovoljenja',

@@ -2,8 +2,6 @@
 
 namespace Tests\Browser\Pages;
 
-use Laravel\Dusk\Browser;
-
 class PasswordConfirmPage extends Page
 {
     /**
@@ -14,26 +12,5 @@ class PasswordConfirmPage extends Page
     public function url()
     {
         return config('routes.confirm_password');
-    }
-
-    /**
-     * Assert that the browser is on the page.
-     *
-     * @param  Browser  $browser
-     * @return void
-     */
-    public function assert(Browser $browser)
-    {
-        $browser->assertPathIs($this->url());
-    }
-
-    /**
-     * Get the element shortcuts for the page.
-     *
-     * @return array
-     */
-    public function elements()
-    {
-        return [];
     }
 }
