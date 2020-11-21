@@ -14,7 +14,7 @@ class PersonDataObserverTest extends TestCase
     /**
      * @return void
      */
-    public function testGetsEmailFromUserOnCreate()
+    public function test_gets_email_from_user_on_create()
     {
         /** @var User $user */
         $user = User::factory()->createOne();

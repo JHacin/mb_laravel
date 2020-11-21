@@ -15,7 +15,7 @@ class UserObserverTest extends TestCase
     /**
      * @return void
      */
-    public function testCreatesPersonDataOnCreate()
+    public function test_creates_person_data_on_create()
     {
         /** @var User $user */
         $user = User::factory()->createOne();
@@ -28,7 +28,7 @@ class UserObserverTest extends TestCase
     /**
      * @return void
      */
-    public function testAssociatesExistingPersonDataOnCreate()
+    public function test_associates_existing_person_data_on_create()
     {
         /** @var PersonData $personData */
         $personData = PersonData::factory()->createOne();
@@ -45,7 +45,7 @@ class UserObserverTest extends TestCase
     /**
      * @return void
      */
-    public function testSyncsEmailWithPersonDataOnUpdate()
+    public function test_syncs_email_with_person_data_on_update()
     {
         /** @var User $user */
         $user = User::factory()->createOne(['email' => $this->faker->unique()->safeEmail]);

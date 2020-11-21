@@ -18,7 +18,7 @@ class CatPhotoObserverTest extends TestCase
      * @return void
      * @throws Exception
      */
-    public function testDeletesFileFromDiskOnDelete()
+    public function test_deletes_file_from_disk_on_delete()
     {
         Storage::fake('public');
 

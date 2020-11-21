@@ -16,7 +16,7 @@ class ForgotPasswordTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testLink()
+    public function test_link_works()
     {
         $this->browse(function (Browser $browser) {
             $browser
@@ -30,7 +30,7 @@ class ForgotPasswordTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testRequiredFieldValidation()
+    public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new ForgotPasswordPage)->disableClientSideValidation();
@@ -43,7 +43,7 @@ class ForgotPasswordTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testEmailFormatValidation()
+    public function test_validates_email_format()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new ForgotPasswordPage)->disableClientSideValidation();
@@ -58,7 +58,7 @@ class ForgotPasswordTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testEmailExistsValidation()
+    public function test_validates_existing_email()
     {
         $this->browse(function (Browser $browser) {
             $browser

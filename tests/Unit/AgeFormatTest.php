@@ -11,7 +11,7 @@ class AgeFormatTest extends TestCase
     /**
      * @return void
      */
-    public function testAgeString()
+    public function test_formats_age_string_correctly()
     {
         $now = Carbon::now();
 

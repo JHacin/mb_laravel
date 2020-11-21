@@ -20,7 +20,7 @@ class LoginTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testRequiredFieldsValidation()
+    public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new LoginPage)->disableClientSideValidation();
@@ -36,7 +36,7 @@ class LoginTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testCredentialsValidation()
+    public function test_validates_credentials()
     {
         $this->browse(function (Browser $browser) {
             $browser
@@ -52,7 +52,7 @@ class LoginTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testSuccess()
+    public function test_handles_successful_login()
     {
         $this->browse(function (Browser $browser) {
             $browser

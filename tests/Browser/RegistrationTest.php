@@ -21,7 +21,7 @@ class RegistrationTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testRequiredFieldsValidation()
+    public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new RegistrationPage)->disableClientSideValidation();
@@ -38,7 +38,7 @@ class RegistrationTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testUniqueEmailValidation()
+    public function test_validates_unique_email()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new RegistrationPage)->disableClientSideValidation();
@@ -55,7 +55,7 @@ class RegistrationTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testPasswordStrengthValidation()
+    public function test_validates_password_strength()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new RegistrationPage)->disableClientSideValidation();
@@ -72,7 +72,7 @@ class RegistrationTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testPasswordConfirmationValidation()
+    public function test_validates_password_confirmation()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new RegistrationPage)->disableClientSideValidation();
@@ -90,7 +90,7 @@ class RegistrationTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testSuccess()
+    public function test_handles_successful_submission()
     {
         $this->browse(function (Browser $browser) {
             $browser

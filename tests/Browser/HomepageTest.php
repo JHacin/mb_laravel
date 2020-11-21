@@ -13,7 +13,7 @@ class HomepageTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testHomepageWorks()
+    public function test_it_works()
     {
         $this->browse(function (Browser $browser) {
             $browser

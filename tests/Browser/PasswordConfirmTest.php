@@ -16,7 +16,7 @@ class PasswordConfirmTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testRedirectForUnauthenticated()
+    public function test_redirects_not_logged_in_user()
     {
         $this->browse(function (Browser $browser) {
             $browser
@@ -29,7 +29,7 @@ class PasswordConfirmTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testRequiredFieldValidation()
+    public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
             $browser
@@ -47,7 +47,7 @@ class PasswordConfirmTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testIncorrectPassword()
+    public function test_validates_password()
     {
         $this->browse(function (Browser $browser) {
             $browser
@@ -63,7 +63,7 @@ class PasswordConfirmTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testSuccess()
+    public function test_validates_successful_submission()
     {
         $this->browse(function (Browser $browser) {
             $browser

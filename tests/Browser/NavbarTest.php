@@ -20,7 +20,7 @@ class NavbarTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testLoggedOutButtons()
+    public function test_shows_logged_out_buttons()
     {
         $this->browse(function (Browser $browser) {
             $browser
@@ -35,7 +35,7 @@ class NavbarTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testLoggedInButtons()
+    public function test_shows_logged_in_buttons()
     {
         $this->browse(function (Browser $browser) {
             $browser

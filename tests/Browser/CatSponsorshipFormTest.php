@@ -26,7 +26,7 @@ class CatSponsorshipFormTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testAssociation()
+    public function test_shows_association_to_correct_cat()
     {
         $this->browse(function (Browser $browser) {
             $associationText = sprintf(

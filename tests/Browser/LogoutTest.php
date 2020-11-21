@@ -16,7 +16,7 @@ class LogoutTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testLogout()
+    public function test_handles_logout()
     {
         $this->browse(function (Browser $browser) {
             $browser

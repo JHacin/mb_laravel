@@ -21,7 +21,7 @@ class CatObserverTest extends TestCase
      * @return void
      * @throws Exception
      */
-    public function testDeletesPhotosAndFilesOnDelete()
+    public function test_deletes_photos_and_files_on_delete()
     {
         Storage::fake('public');
         $storage = Storage::disk('public');
