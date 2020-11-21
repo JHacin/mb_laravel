@@ -2,7 +2,6 @@
 
 namespace Tests\Browser;
 
-use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ForgotPasswordPage;
 use Tests\Browser\Pages\LoginPage;
@@ -76,12 +75,9 @@ class ForgotPasswordTest extends DuskTestCase
     public function testSuccess()
     {
         $this->browse(function (Browser $browser) {
-            /** @var User $user */
-            $user = User::factory()->createOne();
-
             $browser
                 ->visit(new ForgotPasswordPage)
-                ->type('@forgot-password-form-email-input', $user->email)
+                ->type('@forgot-password-form-email-input', $this->createUser()->email)
                 ->click('@forgot-password-form-submit')
                 ->assertSee(trans('passwords.sent'));
         });

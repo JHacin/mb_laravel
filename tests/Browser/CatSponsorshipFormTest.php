@@ -21,7 +21,7 @@ class CatSponsorshipFormTest extends DuskTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->cat = Cat::factory()->createOne();
+        $this->cat = $this->createCat();
     }
 
     /**

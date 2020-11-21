@@ -22,12 +22,9 @@ class PasswordConfirmTest extends DuskTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        /** @var User $user */
-        $user = User::factory()->createOne([
+        $this->user = $this->createUser([
             'password' => User::generateSecurePassword('asdf123456')
         ]);
-        $this->user = $user;
     }
 
 

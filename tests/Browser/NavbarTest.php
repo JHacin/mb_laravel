@@ -2,7 +2,6 @@
 
 namespace Tests\Browser;
 
-use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
 use Tests\Browser\Pages\HomePage;
@@ -37,11 +36,8 @@ class NavbarTest extends DuskTestCase
     public function test_shows_logged_in_buttons()
     {
         $this->browse(function (Browser $browser) {
-            /** @var User $user */
-            $user = User::factory()->createOne();
-
             $browser
-                ->loginAs($user)
+                ->loginAs($this->createUser())
                 ->visit(new HomePage)
                 ->within(new Navbar, function ($browser) {
                     $browser->assertIsShowingAuthenticatedNav();

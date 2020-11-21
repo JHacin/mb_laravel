@@ -8,7 +8,6 @@ use App\Services\CatPhotoService;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CatObserverTest extends TestCase
@@ -23,8 +22,7 @@ class CatObserverTest extends TestCase
      */
     public function test_deletes_photos_and_files_on_delete()
     {
-        Storage::fake('public');
-        $storage = Storage::disk('public');
+        $storage = $this->createFakeStorage();
 
         /** @var Cat $cat */
         $cat = Cat::factory()

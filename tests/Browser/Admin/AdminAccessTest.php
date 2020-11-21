@@ -2,7 +2,6 @@
 
 namespace Tests\Browser\Admin;
 
-use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminDashboardPage;
 use Tests\Browser\Pages\Admin\AdminLoginPage;
@@ -32,11 +31,8 @@ class AdminAccessTest extends DuskTestCase
     public function test_disallows_access_to_unprivileged_users()
     {
         $this->browse(function (Browser $browser) {
-            /** @var User $user */
-            $user = User::factory()->createOne();
-
             $browser
-                ->loginAs($user)
+                ->loginAs($this->createUser())
                 ->visit((new AdminDashboardPage())->url())
                 ->on(new HomePage);
         });
@@ -49,12 +45,8 @@ class AdminAccessTest extends DuskTestCase
     public function test_allows_admins_through()
     {
         $this->browse(function (Browser $browser) {
-            /** @var User $user */
-            $user = User::factory()->createOne();
-            $user->assignRole(User::ROLE_EDITOR);
-
             $browser
-                ->loginAs($user)
+                ->loginAs($this->createAdminUser())
                 ->visit(new AdminDashboardPage)
                 ->assertSee('Dobrodošli.');
         });

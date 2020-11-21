@@ -55,8 +55,7 @@ class LoginTest extends DuskTestCase
     public function test_handles_successful_login()
     {
         $this->browse(function (Browser $browser) {
-            /** @var User $user */
-            $user = User::factory()->createOne([
+            $user = $this->createUser([
                 'password' => User::generateSecurePassword('hello123456')
             ]);
 

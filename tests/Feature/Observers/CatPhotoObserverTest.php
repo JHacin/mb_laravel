@@ -2,12 +2,10 @@
 
 namespace Tests\Feature\Observers;
 
-use App\Models\CatPhoto;
 use App\Services\CatPhotoService;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CatPhotoObserverTest extends TestCase
@@ -20,13 +18,11 @@ class CatPhotoObserverTest extends TestCase
      */
     public function test_deletes_file_from_disk_on_delete()
     {
-        Storage::fake('public');
-
-        /** @var CatPhoto $catPhoto */
-        $catPhoto = CatPhoto::factory()->createOne();
+        $catPhoto = $this->createCatPhoto();
         $fileName = $catPhoto->filename;
         $file = UploadedFile::fake()->image($fileName);
-        $storage = Storage::disk('public');
+
+        $storage = $this->createFakeStorage();
         $storage->putFileAs(CatPhotoService::PATH_ROOT, $file, $fileName);
         $path = CatPhotoService::getFullPath($fileName);
         $storage->assertExists($path);
