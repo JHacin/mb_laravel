@@ -3,9 +3,10 @@
 namespace Tests\Browser;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\LoginPage;
+use Tests\Browser\Pages\UserProfilePage;
 use Tests\DuskTestCase;
 use Tests\Utilities\FormTestingUtils;
 use Throwable;
@@ -17,13 +18,36 @@ use Throwable;
 class LoginTest extends DuskTestCase
 {
     /**
+     * @var User
+     */
+    protected $user;
+
+    /**
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->password = '12345678';
+        $this->user = $this->createUser([
+            'password' => User::generateSecurePassword($this->password),
+        ]);
+    }
+
+    /**
      * @return void
      * @throws Throwable
      */
     public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new LoginPage)->disableClientSideValidation();
+            $browser->visit(new LoginPage);
+            $this->disableHtmlFormValidation($browser);
             $browser->click('@login-form-submit');
             FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
                 '@login-form-email-input-wrapper',
@@ -55,16 +79,29 @@ class LoginTest extends DuskTestCase
     public function test_handles_successful_login()
     {
         $this->browse(function (Browser $browser) {
-            $user = $this->createUser([
-                'password' => User::generateSecurePassword('hello123456')
-            ]);
-
             $browser
                 ->visit(new LoginPage)
-                ->type('@login-form-email-input', $user->email)
-                ->type('@login-form-password-input', 'hello123456')
+                ->type('@login-form-email-input', $this->user->email)
+                ->type('@login-form-password-input', $this->password)
                 ->click('@login-form-submit')
-                ->assertPathIs(RouteServiceProvider::HOME);
+                ->on(new HomePage);
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_redirects_back_after_unauthenticated_access()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->visit((new UserProfilePage())->url())
+                ->on(new LoginPage)
+                ->type('@login-form-email-input', $this->user->email)
+                ->type('@login-form-password-input', $this->password)
+                ->click('@login-form-submit')
+                ->on(new UserProfilePage);
         });
     }
 }

@@ -50,9 +50,8 @@ class PasswordConfirmTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->loginAs($this->user)
-                ->visit(new PasswordConfirmPage)
-                ->disableClientSideValidation();
-
+                ->visit(new PasswordConfirmPage);
+            $this->disableHtmlFormValidation($browser);
             $browser
                 ->click('@password-confirm-form-submit')
                 ->assertSee(trans('validation.required'));

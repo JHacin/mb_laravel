@@ -5,6 +5,7 @@ namespace Tests;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Laravel\Dusk\Browser;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Tests\Traits\CreatesApplication;
 use Tests\Traits\CreatesMockData;
@@ -25,6 +26,18 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
+     * @inheritDoc
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        foreach (static::$browsers as $browser) {
+            $browser->driver->manage()->deleteAllCookies();
+        }
+    }
+
+    /**
      * @return void
      */
     protected function resetDatabaseBeforeFirstTest()
@@ -34,6 +47,14 @@ abstract class DuskTestCase extends BaseTestCase
             $this->artisan('db:seed');
             static::$migrationRun = true;
         }
+    }
+
+    /**
+     * @param Browser $browser
+     */
+    protected function disableHtmlFormValidation(Browser $browser)
+    {
+        $browser->disableClientSideValidation();
     }
 
     /**

@@ -2,9 +2,9 @@
 
 namespace Tests\Browser;
 
-use App\Providers\RouteServiceProvider;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
+use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\RegistrationPage;
 use Tests\DuskTestCase;
 use Tests\Utilities\FormTestingUtils;
@@ -23,7 +23,8 @@ class RegistrationTest extends DuskTestCase
     public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser->visit(new RegistrationPage);
+            $this->disableHtmlFormValidation($browser);
             $browser->click('@register-form-submit');
             FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
                 '@register-form-name-input-wrapper',
@@ -40,7 +41,8 @@ class RegistrationTest extends DuskTestCase
     public function test_validates_unique_email()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser->visit(new RegistrationPage);
+            $this->disableHtmlFormValidation($browser);
             $browser
                 ->type('@register-form-email-input', $this->createUser()->email)
                 ->click('@register-form-submit')
@@ -57,7 +59,8 @@ class RegistrationTest extends DuskTestCase
     public function test_validates_password_strength()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser->visit(new RegistrationPage);
+            $this->disableHtmlFormValidation($browser);
             $browser
                 ->type('@register-form-password-input', 'x')
                 ->click('@register-form-submit')
@@ -74,7 +77,8 @@ class RegistrationTest extends DuskTestCase
     public function test_validates_password_confirmation()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new RegistrationPage)->disableClientSideValidation();
+            $browser->visit(new RegistrationPage);
+            $this->disableHtmlFormValidation($browser);
             $browser
                 ->type('@register-form-password-input', 'LoremIpsum')
                 ->type('@register-form-password-confirm-input', 'LoremIpsumDolorAmet')
@@ -99,7 +103,7 @@ class RegistrationTest extends DuskTestCase
                 ->type('@register-form-password-input', 'asdf1234')
                 ->type('@register-form-password-confirm-input', 'asdf1234')
                 ->click('@register-form-submit')
-                ->assertPathIs(RouteServiceProvider::HOME)
+                ->on(new HomePage)
                 ->within(new Navbar, function ($browser) {
                     $browser->assertIsShowingAuthenticatedNav();
                 });

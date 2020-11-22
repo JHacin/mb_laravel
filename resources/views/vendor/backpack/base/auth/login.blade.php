@@ -9,12 +9,19 @@
                     <form class="col-md-12 p-t-10" role="form" method="POST" action="{{ route('backpack.auth.login') }}">
                         {!! csrf_field() !!}
 
-                        <div class="form-group">
-                            <label class="control-label" for="{{ $username }}">{{ config('backpack.base.authentication_column_name') }}</label>
-
+                        <div class="form-group" dusk="admin-login-email-input-wrapper">
+                            <label class="control-label" for="{{ $username }}">
+                                {{ config('backpack.base.authentication_column_name') }}
+                            </label>
                             <div>
-                                <input type="text" class="form-control{{ $errors->has($username) ? ' is-invalid' : '' }}" name="{{ $username }}" value="{{ old($username) }}" id="{{ $username }}">
-
+                                <input
+                                    type="email"
+                                    class="form-control{{ $errors->has($username) ? ' is-invalid' : '' }}"
+                                    name="{{ $username }}"
+                                    value="{{ old($username) }}"
+                                    id="{{ $username }}"
+                                    dusk="admin-login-email-input"
+                                >
                                 @if ($errors->has($username))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first($username) }}</strong>
@@ -23,12 +30,16 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" dusk="admin-login-password-input-wrapper">
                             <label class="control-label" for="password">{{ trans('backpack::base.password') }}</label>
-
                             <div>
-                                <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" id="password">
-
+                                <input
+                                    type="password"
+                                    class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                    name="password"
+                                    id="password"
+                                    dusk="admin-login-password-input"
+                                >
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -49,7 +60,7 @@
 
                         <div class="form-group">
                             <div>
-                                <button type="submit" class="btn btn-block btn-primary">
+                                <button type="submit" class="btn btn-block btn-primary" dusk="admin-login-submit">
                                     {{ trans('backpack::base.login') }}
                                 </button>
                             </div>

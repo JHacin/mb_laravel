@@ -32,7 +32,8 @@ class ForgotPasswordTest extends DuskTestCase
     public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new ForgotPasswordPage)->disableClientSideValidation();
+            $browser->visit(new ForgotPasswordPage);
+            $this->disableHtmlFormValidation($browser);
             $browser->click('@forgot-password-form-submit');
             FormTestingUtils::assertAllRequiredErrorsAreShown($browser, ['@forgot-password-form-email-input-wrapper']);
         });
@@ -45,7 +46,8 @@ class ForgotPasswordTest extends DuskTestCase
     public function test_validates_email_format()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new ForgotPasswordPage)->disableClientSideValidation();
+            $browser->visit(new ForgotPasswordPage);
+            $this->disableHtmlFormValidation($browser);
             $browser
                 ->type('@forgot-password-form-email-input', 'asdf')
                 ->click('@forgot-password-form-submit')

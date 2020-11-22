@@ -21,8 +21,8 @@ Route::get(config('routes.cat_sponsorship_form'), [CatSponsorshipController::cla
 Route::post(config('routes.cat_sponsorship_form'), [CatSponsorshipController::class, 'submit']);
 
 // User pages
-Route::get('/profil', [UserProfileController::class, 'index'])->name('user-profile');
-Route::post('/profil', [UserProfileController::class, 'update']);
+Route::get(config('routes.user_profile'), [UserProfileController::class, 'index'])->name('user-profile');
+Route::post(config('routes.user_profile'), [UserProfileController::class, 'update']);
 
 // Auth routes
 Route::get(config('routes.login'), [LoginController::class, 'showLoginForm'])->name('login');

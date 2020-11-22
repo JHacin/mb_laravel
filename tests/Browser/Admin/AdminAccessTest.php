@@ -47,8 +47,7 @@ class AdminAccessTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->loginAs($this->createAdminUser())
-                ->visit(new AdminDashboardPage)
-                ->assertSee('Dobrodošli.');
+                ->visit(new AdminDashboardPage);
         });
     }
 }
