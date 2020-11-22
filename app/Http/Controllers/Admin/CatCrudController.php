@@ -12,7 +12,6 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
@@ -35,25 +34,6 @@ class CatCrudController extends CrudController
         update as traitUpdate;
     }
     use DeleteOperation;
-    use ShowOperation;
-
-    const PHOTO_COLUMN_DEFINITION = [
-        'name' => 'photo',
-        'label' => 'Slika',
-        'type' => 'cat_photo',
-    ];
-
-    const DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION = [
-        'name' => 'date_of_arrival_mh',
-        'label' => 'Datum sprejema v Mačjo hišo',
-        'type' => 'date',
-    ];
-
-    const DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION = [
-        'name' => 'date_of_arrival_boter',
-        'label' => 'Datum vstopa v botrstvo',
-        'type' => 'date',
-    ];
 
     /**
      * @var CatPhotoService
@@ -62,7 +42,6 @@ class CatCrudController extends CrudController
 
     /**
      * CatCrudController constructor.
-     *
      */
     public function __construct()
     {
@@ -71,39 +50,6 @@ class CatCrudController extends CrudController
     }
 
     /**
-     * Since we have a global scope on the Cat model (queries will only return Cats with is_active=true),
-     * we need to manually clear it - Backpack doesn't yet provide a standard way of bypassing scopes.
-     */
-    public function clearGlobalScopes()
-    {
-        /** @var Cat $catQuery */
-        $catQuery = $this->crud->query;
-        $this->crud->query = $catQuery->withoutGlobalScopes();
-        /** @var Cat $catModel */
-        $catModel = $this->crud->model;
-        $catModel->clearGlobalScopes();
-    }
-
-    /**
-     * @return array
-     */
-    protected function getLocationColumnDefinition()
-    {
-        return [
-            'name' => 'location',
-            'label' => 'Lokacija',
-            'type' => 'relationship',
-            'wrapper' => [
-                'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'show']);
-                },
-            ]
-        ];
-    }
-
-    /**
-     * Configure the CrudPanel object. Apply settings to all operations.
-     *
      * @return void
      * @throws Exception
      */
@@ -115,24 +61,55 @@ class CatCrudController extends CrudController
         $this->crud->setSubheading('Dodaj novo muco', 'create');
         $this->crud->setSubheading('Uredi muco', 'edit');
         $this->crud->setSubheading('Podatki muce', 'show');
-        $this->clearGlobalScopes();
+        $this->clearModelGlobalScopes();
     }
 
     /**
-     * Define what happens when the List operation is loaded.
-     *
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
+     * @return void
+     */
+    public function clearModelGlobalScopes()
+    {
+        /** @var Cat $catQuery */
+        $catQuery = $this->crud->query;
+        $this->crud->query = $catQuery->withoutGlobalScopes();
+        /** @var Cat $catModel */
+        $catModel = $this->crud->model;
+        $catModel->clearGlobalScopes();
+    }
+
+    /**
      * @return void
      */
     protected function setupListOperation()
     {
         $this->crud->addColumn(CrudColumnGenerator::id());
-        $this->crud->addColumn(self::PHOTO_COLUMN_DEFINITION);
+        $this->crud->addColumn([
+            'name' => 'photo',
+            'label' => 'Slika',
+            'type' => 'cat_photo',
+        ]);
         $this->crud->addColumn(CrudColumnGenerator::name());
         $this->crud->addColumn(CrudColumnGenerator::genderLabel());
-        $this->crud->addColumn(self::DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION);
-        $this->crud->addColumn(self::DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION);
-        $this->crud->addColumn(self::getLocationColumnDefinition());
+        $this->crud->addColumn([
+            'name' => 'date_of_arrival_mh',
+            'label' => 'Datum sprejema v Mačjo hišo',
+            'type' => 'date',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'date_of_arrival_boter',
+            'label' => 'Datum vstopa v botrstvo',
+            'type' => 'date',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'location',
+            'label' => 'Lokacija',
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'show']);
+                },
+            ]
+        ]);
         $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => 'Objavljena']));
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
@@ -182,9 +159,6 @@ class CatCrudController extends CrudController
     }
 
     /**
-     * Define what happens when the Create operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
     protected function setupCreateOperation()
@@ -246,9 +220,6 @@ class CatCrudController extends CrudController
     }
 
     /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
     protected function setupUpdateOperation()
@@ -268,35 +239,6 @@ class CatCrudController extends CrudController
     }
 
     /**
-     * Define what is displayed in the Show view.
-     *
-     * @return void
-     */
-    protected function setupShowOperation()
-    {
-        $this->crud->set('show.setFromDb', false);
-
-        $this->crud->addColumn(CrudColumnGenerator::id());
-        $this->crud->addColumn(self::PHOTO_COLUMN_DEFINITION);
-        $this->crud->addColumn(CrudColumnGenerator::name());
-        $this->crud->addColumn(CrudColumnGenerator::genderLabel());
-        $this->crud->addColumn([
-            'name' => 'story',
-            'label' => 'Zgodba',
-            'type' => 'text',
-        ]);
-        $this->crud->addColumn(self::DATE_OF_ARRIVAL_MH_COLUMN_DEFINITION);
-        $this->crud->addColumn(self::DATE_OF_ARRIVAL_BOTER_COLUMN_DEFINITION);
-        $this->crud->addColumn(CrudColumnGenerator::dateOfBirth());
-        $this->crud->addColumn(self::getLocationColumnDefinition());
-        $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => 'Objavljena']));
-        $this->crud->addColumn(CrudColumnGenerator::createdAt());
-        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
-    }
-
-    /**
-     * Create cat photos & connect them to the created cat.
-     *
      * @return RedirectResponse
      */
     public function store()
@@ -322,8 +264,6 @@ class CatCrudController extends CrudController
     }
 
     /**
-     * Update cat photos.
-     *
      * @return Response
      */
     public function update()

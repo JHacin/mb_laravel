@@ -10,7 +10,6 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
@@ -26,10 +25,8 @@ class CatLocationCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
-    use ShowOperation;
+
     /**
-     * Configure the CrudPanel object. Apply settings to all operations.
-     *
      * @return void
      * @throws Exception
      */
@@ -44,9 +41,6 @@ class CatLocationCrudController extends CrudController
     }
 
     /**
-     * Define what happens when the List operation is loaded.
-     *
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
     protected function setupListOperation()
@@ -64,28 +58,6 @@ class CatLocationCrudController extends CrudController
     }
 
     /**
-     * Define what is displayed in the Show view.
-     *
-     * @return void
-     */
-    protected function setupShowOperation()
-    {
-        $this->crud->set('show.setFromDb', false);
-
-        $this->crud->addColumn(CrudColumnGenerator::id());
-        $this->crud->addColumn(CrudColumnGenerator::name());
-        $this->crud->addColumn(CrudColumnGenerator::address());
-        $this->crud->addColumn(CrudColumnGenerator::zipCode());
-        $this->crud->addColumn(CrudColumnGenerator::city());
-        $this->crud->addColumn(CrudColumnGenerator::country());
-        $this->crud->addColumn(CrudColumnGenerator::createdAt());
-        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
     protected function setupUpdateOperation()
@@ -94,9 +66,6 @@ class CatLocationCrudController extends CrudController
     }
 
     /**
-     * Define what happens when the Create operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
     protected function setupCreateOperation()

@@ -8,15 +8,12 @@ use App\Models\User;
 use App\Services\UserMailService;
 use App\Utilities\Admin\CrudColumnGenerator;
 use App\Utilities\Admin\CrudFieldGenerator;
-use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserCrudController extends BackpackUserCrudController
 {
-    use ShowOperation;
-
     /**
      * @var UserMailService
      */
@@ -111,40 +108,6 @@ class UserCrudController extends BackpackUserCrudController
     {
         parent::setupUpdateOperation();
         $this->crud->setValidation(AdminUserUpdateRequest::class);
-    }
-
-    /**
-     * Define what is displayed in the Show view.
-     *
-     * @return void
-     */
-    protected function setupShowOperation()
-    {
-        $this->crud->set('show.setFromDb', false);
-
-        $this->crud->addColumn(CrudColumnGenerator::id());
-        $this->crud->addColumn([
-            'name' => 'name',
-            'label' => trans('user.name'),
-            'type' => 'text',
-        ]);
-        $this->crud->addColumn([
-            'name' => 'email',
-            'label' => trans('user.email'),
-            'type' => 'text',
-        ]);
-        $this->crud->addColumn(CrudColumnGenerator::firstName(['name' => 'personData.first_name']));
-        $this->crud->addColumn(CrudColumnGenerator::lastName(['name' => 'personData.last_name']));
-        $this->crud->addColumn(CrudColumnGenerator::genderLabel(['name' => 'personData.gender_label']));
-        $this->crud->addColumn(CrudColumnGenerator::dateOfBirth(['name' => 'personData.date_of_birth']));
-        $this->crud->addColumn(CrudColumnGenerator::phone(['name' => 'personData.phone']));
-        $this->crud->addColumn(CrudColumnGenerator::address(['name' => 'personData.address']));
-        $this->crud->addColumn(CrudColumnGenerator::zipCode(['name' => 'personData.zip_code']));
-        $this->crud->addColumn(CrudColumnGenerator::city(['name' => 'personData.city']));
-        $this->crud->addColumn(CrudColumnGenerator::country(['name' => 'personData.country']));
-        $this->crud->addColumn(CrudColumnGenerator::isActive());
-        $this->crud->addColumn(CrudColumnGenerator::createdAt());
-        $this->crud->addColumn(CrudColumnGenerator::updatedAt());
     }
 
     /**
