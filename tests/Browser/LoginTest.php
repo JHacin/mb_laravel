@@ -8,7 +8,6 @@ use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\LoginPage;
 use Tests\Browser\Pages\UserProfilePage;
 use Tests\DuskTestCase;
-use Tests\Utilities\FormTestingUtils;
 use Throwable;
 
 /**
@@ -49,7 +48,7 @@ class LoginTest extends DuskTestCase
             $browser->visit(new LoginPage);
             $this->disableHtmlFormValidation($browser);
             $browser->click('@login-form-submit');
-            FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
+            $this->assertAllRequiredErrorsAreShown($browser, [
                 '@login-form-email-input-wrapper',
                 '@login-form-password-input-wrapper'
             ]);

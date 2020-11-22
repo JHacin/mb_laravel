@@ -18860,35 +18860,6 @@
      
 }
 
-    namespace Laravel\Dusk { 
-            /**
-     * 
-     *
-     */ 
-        class Browser {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function disableClientSideValidation()
-        {
-                        return \Laravel\Dusk\Browser::disableClientSideValidation();
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function enableClientSideValidation()
-        {
-                        return \Laravel\Dusk\Browser::enableClientSideValidation();
-        }
-         
-    }
-     
-}
-
 
 namespace  { 
             class App extends \Illuminate\Support\Facades\App {}

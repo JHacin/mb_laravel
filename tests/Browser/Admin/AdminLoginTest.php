@@ -9,7 +9,6 @@ use Tests\Browser\Pages\Admin\AdminDashboardPage;
 use Tests\Browser\Pages\Admin\AdminLoginPage;
 use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
-use Tests\Utilities\FormTestingUtils;
 use Throwable;
 
 /**
@@ -35,11 +34,9 @@ class AdminLoginTest extends DuskTestCase
     {
         parent::setUp();
         $this->adminPassword = '12345678';
-        $this->adminUser = $this
-            ->createUser([
-                'password' => User::generateSecurePassword($this->adminPassword),
-            ])
-            ->assignRole(User::ROLE_ADMIN);
+        $this->adminUser = $this->createAdminUser([
+            'password' => User::generateSecurePassword($this->adminPassword),
+        ]);
     }
 
     /**
@@ -52,7 +49,7 @@ class AdminLoginTest extends DuskTestCase
             $browser->visit(new AdminLoginPage);
             $this->disableHtmlFormValidation($browser);
             $browser->click('@admin-login-submit');
-            FormTestingUtils::assertAllRequiredErrorsAreShown(
+           $this->assertAllRequiredErrorsAreShown(
                 $browser,
                 ['@admin-login-email-input-wrapper', '@admin-login-password-input-wrapper']
             );

@@ -7,7 +7,6 @@ use Tests\Browser\Components\Navbar;
 use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\RegistrationPage;
 use Tests\DuskTestCase;
-use Tests\Utilities\FormTestingUtils;
 use Throwable;
 
 /**
@@ -26,7 +25,7 @@ class RegistrationTest extends DuskTestCase
             $browser->visit(new RegistrationPage);
             $this->disableHtmlFormValidation($browser);
             $browser->click('@register-form-submit');
-            FormTestingUtils::assertAllRequiredErrorsAreShown($browser, [
+            $this->assertAllRequiredErrorsAreShown($browser, [
                 '@register-form-name-input-wrapper',
                 '@register-form-email-input-wrapper',
                 '@register-form-password-input-wrapper',

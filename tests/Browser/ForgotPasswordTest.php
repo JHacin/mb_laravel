@@ -6,7 +6,6 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ForgotPasswordPage;
 use Tests\Browser\Pages\LoginPage;
 use Tests\DuskTestCase;
-use Tests\Utilities\FormTestingUtils;
 use Throwable;
 
 class ForgotPasswordTest extends DuskTestCase
@@ -35,7 +34,7 @@ class ForgotPasswordTest extends DuskTestCase
             $browser->visit(new ForgotPasswordPage);
             $this->disableHtmlFormValidation($browser);
             $browser->click('@forgot-password-form-submit');
-            FormTestingUtils::assertAllRequiredErrorsAreShown($browser, ['@forgot-password-form-email-input-wrapper']);
+            $this->assertAllRequiredErrorsAreShown($browser, ['@forgot-password-form-email-input-wrapper']);
         });
     }
 

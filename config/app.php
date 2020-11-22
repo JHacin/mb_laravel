@@ -1,7 +1,5 @@
 <?php
 
-use App\Providers\DuskServiceProvider;
-
 return [
 
     /*
@@ -176,8 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        DuskServiceProvider::class,
-
     ],
 
     /*

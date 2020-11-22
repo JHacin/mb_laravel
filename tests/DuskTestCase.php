@@ -5,14 +5,15 @@ namespace Tests;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Laravel\Dusk\Browser;
 use Laravel\Dusk\TestCase as BaseTestCase;
+use Tests\Browser\Traits\FormTestingHelpers;
+use Tests\Browser\Traits\RequestTestingHelpers;
 use Tests\Traits\CreatesApplication;
 use Tests\Traits\CreatesMockData;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication, CreatesMockData;
+    use CreatesApplication, CreatesMockData, FormTestingHelpers, RequestTestingHelpers;
 
     protected static $migrationRun = false;
 
@@ -47,14 +48,6 @@ abstract class DuskTestCase extends BaseTestCase
             $this->artisan('db:seed');
             static::$migrationRun = true;
         }
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function disableHtmlFormValidation(Browser $browser)
-    {
-        $browser->disableClientSideValidation();
     }
 
     /**
