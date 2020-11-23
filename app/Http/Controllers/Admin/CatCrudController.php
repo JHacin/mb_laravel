@@ -176,7 +176,10 @@ class CatCrudController extends CrudController
             'type' => 'text',
             'attributes' => [
                 'required' => 'required',
-            ]
+            ],
+            'wrapper' => [
+                'dusk' => 'add-cat-form-name-input-wrapper'
+            ],
         ]);
         $this->crud->addField([
             'name' => 'gender',
@@ -189,20 +192,32 @@ class CatCrudController extends CrudController
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_birth',
             'label' => 'Datum rojstva',
+            'wrapper' => [
+                'dusk' => 'add-cat-form-date-of-birth-input-wrapper'
+            ],
         ]));
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_mh',
             'label' => 'Datum sprejema v zavetišče',
+            'wrapper' => [
+                'dusk' => 'add-cat-form-date-of-arrival-mh-input-wrapper'
+            ],
         ]));
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_boter',
             'label' => 'Datum vstopa v botrstvo',
+            'wrapper' => [
+                'dusk' => 'add-cat-form-date-of-arrival-boter-input-wrapper'
+            ],
         ]));
         foreach ($this->catPhotoService::INDICES as $index) {
             $this->crud->addField([
                 'name' => 'photo_' . $index,
                 'label' => 'Slika ' . ($index + 1),
                 'type' => 'cat_photo',
+                'wrapper' => [
+                    'dusk' => "add-cat-form-photo-$index-input-wrapper"
+                ],
             ]);
         }
         $this->crud->addField([

@@ -15,6 +15,7 @@ return [
         'roles' => 'vloge',
         'permissions' => 'dovoljenja',
         'cats' => 'muce',
+        'cats_add' => 'muce/create',
         'cat_locations' => 'lokacije',
         'sponsorships' => 'botrovanja',
         'person_data' => 'neregistrirani-botri',

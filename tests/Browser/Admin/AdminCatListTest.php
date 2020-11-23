@@ -9,7 +9,7 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminCatListPage;
 use Throwable;
 
-class AdminCatsListTest extends AdminTestCase
+class AdminCatListTest extends AdminTestCase
 {
     /**
      * @var Cat

@@ -25,7 +25,8 @@ abstract class Page extends BasePage
             '@data-table-open-row-details' => 'td.dtr-control',
             '@data-table-row-details-modal' => '.dtr-bs-modal.show',
             '@data-table-filter-clear-visible' => '#remove_filters_button:not(.invisible)',
-            '@data-table-search-input' => '#crudTable_filter input[type="search"]'
+            '@data-table-search-input' => '#crudTable_filter input[type="search"]',
+            '@crud-form-submit-button' => '#saveActions button[type="submit"]',
         ];
     }
 }

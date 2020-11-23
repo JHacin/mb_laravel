@@ -27,7 +27,7 @@ class AdminCatRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => ['string', 'min:2', 'max:100'],
+            'name' => ['required', 'string', 'min:2', 'max:100'],
             'gender' => [
                 Rule::in([
                     Cat::GENDER_UNKNOWN,

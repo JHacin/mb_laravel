@@ -17,6 +17,7 @@ $value = old($field['name']) ?? $field['default'] ?? '';
                 type="file"
                 accept="image/*"
                 data-handle="uploadImage"
+                data-field-name="{{ $field['name'] }}"
                 @include('crud::fields.inc.attributes')
             >
             <input
