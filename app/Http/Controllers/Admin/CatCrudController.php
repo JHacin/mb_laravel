@@ -15,6 +15,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -107,7 +108,12 @@ class CatCrudController extends CrudController
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'edit']);
                 },
-            ]
+            ],
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhereHas('location', function (Builder $query) use ($searchTerm) {
+                    $query->where('name', 'like', "%$searchTerm%");
+                });
+            }
         ]);
         $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => 'Objavljena']));
         $this->crud->addColumn(CrudColumnGenerator::createdAt());

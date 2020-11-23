@@ -12,14 +12,36 @@ use Throwable;
 class AdminCatsListTest extends AdminTestCase
 {
     /**
+     * @var Cat
+     */
+    protected static $sampleCat_1;
+
+    /**
+     * @var Cat
+     */
+    protected static $sampleCat_2;
+
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (!static::$sampleCat_1 || !static::$sampleCat_2) {
+            static::$sampleCat_1 = $this->createCat();
+            static::$sampleCat_2 = $this->createCat();
+        }
+    }
+
+    /**
      * @return void
      * @throws Throwable
      */
     public function test_cat_details_are_shown_correctly()
     {
         $this->browse(function (Browser $browser) {
-            $cat = $this->createCat();
-
+            $cat = static::$sampleCat_2;
             $this->goToCatsListPage($browser);
 
             $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
@@ -62,24 +84,20 @@ class AdminCatsListTest extends AdminTestCase
     public function test_filters_by_location()
     {
         $this->browse(function (Browser $browser) {
-            $location = $this->createCatLocation();
-            $cat = $this->createCat(['location_id' => $location]);
-            $catWithoutLocation = $this->createCat();
-
             $this->goToCatsListPage($browser);
 
-            $browser->with('@cats-list-location-filter', function (Browser $browser) use ($location) {
+            $browser->with('@cats-list-location-filter', function (Browser $browser) {
                 $browser
                     ->click('a.dropdown-toggle')
-                    ->select('filter_locationId', $location->id);
+                    ->select('filter_locationId', static::$sampleCat_1->location_id);
             });
 
             $this->waitForRequestsToFinish($browser);
 
-            $browser->with('@crud-table-body', function (Browser $browser) use ($cat, $catWithoutLocation) {
+            $browser->with('@crud-table-body', function (Browser $browser) {
                 $browser
-                    ->assertSee($cat->name)
-                    ->assertDontSee($catWithoutLocation->name);
+                    ->assertSee(static::$sampleCat_1->name)
+                    ->assertDontSee(static::$sampleCat_2->name);
             });
         });
     }
@@ -110,13 +128,15 @@ class AdminCatsListTest extends AdminTestCase
     public function test_filters_by_gender()
     {
         $this->browse(function (Browser $browser) {
-            $maleCat = $this->createCat(['gender' => Cat::GENDER_MALE]);
-            $femaleCat = $this->createCat(['gender' => Cat::GENDER_FEMALE]);
+            static::$sampleCat_1->update(['gender' => Cat::GENDER_MALE]);
+            static::$sampleCat_1->refresh();
+            static::$sampleCat_2->update(['gender' => Cat::GENDER_FEMALE]);
+            static::$sampleCat_2->refresh();
 
             $this->goToCatsListPage($browser);
 
-            $browser->with('@cats-list-gender-filter', function (Browser $browser) use ($maleCat) {
-                $selectedOption = $maleCat->gender;
+            $browser->with('@cats-list-gender-filter', function (Browser $browser) {
+                $selectedOption = static::$sampleCat_1->gender;
 
                 $browser
                     ->click('a.dropdown-toggle')
@@ -125,10 +145,10 @@ class AdminCatsListTest extends AdminTestCase
 
             $this->waitForRequestsToFinish($browser);
 
-            $browser->with('@crud-table-body', function (Browser $browser) use ($maleCat, $femaleCat) {
+            $browser->with('@crud-table-body', function (Browser $browser) {
                 $browser
-                    ->assertSee($maleCat->name)
-                    ->assertDontSee($femaleCat->name);
+                    ->assertSee(static::$sampleCat_1->name)
+                    ->assertDontSee(static::$sampleCat_2->name);
             });
         });
     }
@@ -158,8 +178,10 @@ class AdminCatsListTest extends AdminTestCase
     public function test_filters_by_is_active()
     {
         $this->browse(function (Browser $browser) {
-            $activeCat = $this->createCat(['is_active' => true]);
-            $inactiveCat = $this->createCat(['is_active' => false]);
+            static::$sampleCat_1->update(['is_active' => true]);
+            static::$sampleCat_1->refresh();
+            static::$sampleCat_2->update(['is_active' => false]);
+            static::$sampleCat_2->refresh();
 
             $this->goToCatsListPage($browser);
 
@@ -171,10 +193,64 @@ class AdminCatsListTest extends AdminTestCase
 
             $this->waitForRequestsToFinish($browser);
 
-            $browser->with('@crud-table-body', function (Browser $browser) use ($activeCat, $inactiveCat) {
+            $browser->with('@crud-table-body', function (Browser $browser) {
                 $browser
-                    ->assertSee($activeCat->name)
-                    ->assertDontSee($inactiveCat->name);
+                    ->assertSee(static::$sampleCat_1->name)
+                    ->assertDontSee(static::$sampleCat_2->name);
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_searches_by_id()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToCatsListPage($browser);
+            $this->enterSearchInputValue($browser, static::$sampleCat_1->id);
+
+            $browser->with('@crud-table-body', function (Browser $browser) {
+                $browser
+                    ->assertSee(static::$sampleCat_1->name)
+                    ->assertDontSee(static::$sampleCat_2->name);
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_searches_by_name()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToCatsListPage($browser);
+            $this->enterSearchInputValue($browser, static::$sampleCat_1->name);
+
+            $browser->with('@crud-table-body', function (Browser $browser) {
+                $browser
+                    ->assertSee(static::$sampleCat_1->name)
+                    ->assertDontSee(static::$sampleCat_2->name);
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_searches_by_location_name()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToCatsListPage($browser);
+            $this->enterSearchInputValue($browser, static::$sampleCat_1->location->name);
+
+            $browser->with('@crud-table-body', function (Browser $browser) {
+                $browser
+                    ->assertSee(static::$sampleCat_1->name)
+                    ->assertDontSee(static::$sampleCat_2->name);
             });
         });
     }
@@ -205,5 +281,15 @@ class AdminCatsListTest extends AdminTestCase
             $filterClearButton->click();
             $this->waitForRequestsToFinish($browser);
         }
+    }
+
+    /**
+     * @param Browser $browser
+     * @param string|int $value
+     */
+    protected function enterSearchInputValue(Browser $browser, $value)
+    {
+        $browser->type('@data-table-search-input', $value);
+        $browser->pause(1000);
     }
 }

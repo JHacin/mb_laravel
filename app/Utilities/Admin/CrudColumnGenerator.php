@@ -3,6 +3,7 @@
 namespace App\Utilities\Admin;
 
 use App\Utilities\CountryList;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Contains helpers for CRUD columns.
@@ -20,6 +21,9 @@ class CrudColumnGenerator
             'name' => 'id',
             'label' => trans('model.id'),
             'type' => 'number',
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhere('id', '=', $searchTerm);
+            }
         ];
     }
 
