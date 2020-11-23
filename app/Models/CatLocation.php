@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -38,7 +39,7 @@ use Illuminate\Support\Carbon;
  */
 class CatLocation extends Model
 {
-    use CrudTrait;
+    use CrudTrait, HasFactory;
 
     /*
     |--------------------------------------------------------------------------

@@ -6,10 +6,9 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminDashboardPage;
 use Tests\Browser\Pages\Admin\AdminLoginPage;
 use Tests\Browser\Pages\HomePage;
-use Tests\DuskTestCase;
 use Throwable;
 
-class AdminAccessTest extends DuskTestCase
+class AdminAccessTest extends AdminTestCase
 {
     /**
      * @return void
@@ -46,7 +45,7 @@ class AdminAccessTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser
-                ->loginAs($this->createAdminUser())
+                ->loginAs(self::$defaultAdmin)
                 ->visit(new AdminDashboardPage);
         });
     }

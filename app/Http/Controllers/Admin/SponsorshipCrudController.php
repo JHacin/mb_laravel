@@ -39,7 +39,6 @@ class SponsorshipCrudController extends CrudController
         $this->crud->setEntityNameStrings('Botrovanje', 'Botrovanja');
         $this->crud->setSubheading('Dodaj novo botrovanje', 'create');
         $this->crud->setSubheading('Uredi botrovanje', 'edit');
-        $this->crud->setSubheading('Podatki botrovanja', 'show');
     }
 
     /**
@@ -54,7 +53,7 @@ class SponsorshipCrudController extends CrudController
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.cats'), [$related_key, 'show']);
+                    return backpack_url(config('routes.admin.cats'), [$related_key, 'edit']);
                 },
             ]
         ]);
@@ -69,7 +68,7 @@ class SponsorshipCrudController extends CrudController
                         ? config('routes.admin.users')
                         : config('routes.admin.person_data');
 
-                    return backpack_url($route, [$related_key, 'show']);
+                    return backpack_url($route, [$related_key, 'edit']);
                 },
             ]
         ]);

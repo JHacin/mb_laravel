@@ -37,7 +37,6 @@ class CatLocationCrudController extends CrudController
         $this->crud->setEntityNameStrings('Lokacija', 'Lokacije');
         $this->crud->setSubheading('Dodaj novo lokacijo', 'create');
         $this->crud->setSubheading('Uredi lokacijo', 'edit');
-        $this->crud->setSubheading('Podatki lokacije', 'show');
     }
 
     /**

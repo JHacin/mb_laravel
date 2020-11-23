@@ -8,14 +8,13 @@ use Tests\Browser\Pages\Admin\AdminCatListPage;
 use Tests\Browser\Pages\Admin\AdminDashboardPage;
 use Tests\Browser\Pages\Admin\AdminLoginPage;
 use Tests\Browser\Pages\HomePage;
-use Tests\DuskTestCase;
 use Throwable;
 
 /**
  * Class AdminLoginTest
  * @package Tests\Browser\Admin
  */
-class AdminLoginTest extends DuskTestCase
+class AdminLoginTest extends AdminTestCase
 {
     /**
      * @var User

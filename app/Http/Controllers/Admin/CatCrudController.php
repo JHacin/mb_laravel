@@ -60,7 +60,6 @@ class CatCrudController extends CrudController
         $this->crud->setEntityNameStrings('Muca', 'Muce');
         $this->crud->setSubheading('Dodaj novo muco', 'create');
         $this->crud->setSubheading('Uredi muco', 'edit');
-        $this->crud->setSubheading('Podatki muce', 'show');
         $this->clearModelGlobalScopes();
     }
 
@@ -106,7 +105,7 @@ class CatCrudController extends CrudController
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'show']);
+                    return backpack_url(config('routes.admin.cat_locations'), [$related_key, 'edit']);
                 },
             ]
         ]);

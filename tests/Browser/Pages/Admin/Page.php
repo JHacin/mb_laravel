@@ -14,4 +14,17 @@ abstract class Page extends BasePage
     {
         return '/' . config('backpack.base.route_prefix') . '/' . $url;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public static function siteElements()
+    {
+        return [
+            '@crud-table-body' => '#crudTable > tbody',
+            '@data-table-open-row-details' => 'td.dtr-control',
+            '@data-table-row-details-modal' => '.dtr-bs-modal.show',
+            '@data-table-filter-clear-visible' => '#remove_filters_button:not(.invisible)'
+        ];
+    }
 }

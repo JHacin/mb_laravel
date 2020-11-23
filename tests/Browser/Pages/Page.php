@@ -14,14 +14,4 @@ abstract class Page extends BasePage
     {
         $browser->assertPathIs($this->url());
     }
-
-    /**
-     * Get the global element shortcuts for the site.
-     *
-     * @return array
-     */
-    public static function siteElements()
-    {
-        return [];
-    }
 }

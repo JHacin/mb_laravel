@@ -7,14 +7,16 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Tests\Browser\Traits\FormTestingHelpers;
-use Tests\Browser\Traits\RequestTestingHelpers;
 use Tests\Traits\CreatesApplication;
 use Tests\Traits\CreatesMockData;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication, CreatesMockData, FormTestingHelpers, RequestTestingHelpers;
+    use CreatesApplication, CreatesMockData, FormTestingHelpers;
 
+    /**
+     * @var bool
+     */
     protected static $migrationRun = false;
 
     /**
