@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cat;
-use App\Utilities\SponsorList;
+use App\Utilities\SponsorListViewParser;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
@@ -43,7 +43,7 @@ class PagesController extends Controller
     {
         $viewData = [
             'cat' => $cat->loadMissing('sponsorships.personData'),
-            'sponsors' => SponsorList::prepareViewData($cat->sponsorships),
+            'sponsors' => SponsorListViewParser::prepareViewData($cat->sponsorships),
         ];
 
         return view('cat_details', $viewData);

@@ -4,5 +4,12 @@ namespace Tests\Traits;
 
 trait CreatesMockData
 {
-    use CreatesFakeStorage, CreatesUsers, CreatesPersonData, CreatesCats, CreatesCatPhotos, CreatesCatLocations;
+    use
+        CreatesFakeStorage,
+        CreatesUsers,
+        CreatesPersonData,
+        CreatesCats,
+        CreatesCatPhotos,
+        CreatesCatLocations,
+        CreatesSponsorships;
 }
