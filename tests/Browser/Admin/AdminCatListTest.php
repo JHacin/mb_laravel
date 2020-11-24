@@ -256,6 +256,29 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_deletes_cat()
+    {
+        $this->browse(function (Browser $browser) {
+            $cat = $this->createCat(['name' => 'DELETE_ME']);
+            $this->goToCatsListPage($browser);
+            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) use ($cat) {
+                $browser
+                    ->assertSee($cat->name)
+                    ->click('a[data-button-type="delete"]');
+            });
+            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
+                $browser->press('Izbriši');
+            });
+            $this->waitForRequestsToFinish($browser);
+            $browser->assertDontSee($cat->name);
+            $this->assertDatabaseMissing('cats', ['id' => $cat->id]);
+        });
+    }
+
+    /**
      * @param Browser $browser
      * @throws TimeoutException
      */
