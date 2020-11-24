@@ -188,6 +188,9 @@ class CatCrudController extends CrudController
             'options' => Cat::GENDER_LABELS,
             'inline' => true,
             'default' => Cat::GENDER_UNKNOWN,
+            'wrapper' => [
+                'dusk' => 'add-cat-form-gender-input-wrapper'
+            ],
         ]);
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_birth',
@@ -230,12 +233,18 @@ class CatCrudController extends CrudController
             'label' => 'Lokacija',
             'type' => 'relationship',
             'placeholder' => 'Izberi lokacijo',
+            'wrapper' => [
+                'dusk' => 'add-cat-form-location-input-wrapper'
+            ],
         ]);
         $this->crud->addField([
             'name' => 'is_active',
             'label' => 'Objavljena',
             'type' => 'checkbox',
             'hint' => 'Ali naj bo muca javno vidna (npr. na seznamu vseh muc).',
+            'wrapper' => [
+                'dusk' => 'add-cat-form-is-active-input-wrapper'
+            ],
         ]);
     }
 

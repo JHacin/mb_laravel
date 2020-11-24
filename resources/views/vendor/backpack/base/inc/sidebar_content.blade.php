@@ -1,5 +1,5 @@
 <li class='nav-item'>
-    <a class="nav-link" href="{{ backpack_url(config('routes.admin.dashboard')) }}">
+    <a id="goHome" class="nav-link" href="{{ backpack_url(config('routes.admin.dashboard')) }}">
         <i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}
     </a>
 </li>

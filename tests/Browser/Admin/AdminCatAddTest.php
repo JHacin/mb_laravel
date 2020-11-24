@@ -2,14 +2,17 @@
 
 namespace Tests\Browser\Admin;
 
+use Carbon\Carbon;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminCatAddPage;
+use Tests\Browser\Pages\Admin\AdminCatListPage;
 use Throwable;
 
 class AdminCatAddTest extends AdminTestCase
 {
+
     /**
      * @return void
      * @throws Throwable
@@ -37,7 +40,6 @@ class AdminCatAddTest extends AdminTestCase
             $browser
                 ->loginAs(static::$defaultAdmin)
                 ->visit(new AdminCatAddPage)
-                ->type('input[name="date_of_arrival_mh"]', '2022')
                 ->type('name', 'f')
                 ->click('@crud-form-submit-button')
                 ->assertSee('Ime mora biti dolgo vsaj 2 znaka.')
@@ -98,64 +100,119 @@ class AdminCatAddTest extends AdminTestCase
                 ->loginAs(static::$defaultAdmin)
                 ->visit(new AdminCatAddPage);
 
-            $this->assertCancelingImageModalWorks($browser);
-            $this->assertSelectingAndDeletingImageWorks($browser);
-            $this->assertSelectedImageIsKeptAfterValidation($browser);
+            // Cancelling the modal
+            $this->attachImage($browser);
+            $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
+                $browser->click('.modal-footer button[data-dismiss="modal"]');
+            });
+            $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
+            $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
+                $browser->assertMissing('img.preview-image');
+            });
+
+            // Selecting & deleting the image
+            $browser->refresh();
+            $this->attachImage($browser);
+            $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
+                $browser->click('.modal-footer button[data-handle="modalSubmit"]');
+            });
+            $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
+            $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
+                $browser
+                    ->assertVisible('img.preview-image')
+                    ->click('button.delete-button')
+                    ->assertMissing('img.preview-image');
+            });
+
+            // Image should be kept after validation errors
+            $browser->refresh();
+            $this->disableHtmlFormValidation($browser);
+            $this->attachImage($browser);
+            $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
+                $browser->click('.modal-footer button[data-handle="modalSubmit"]');
+            });
+            $browser->pause(1000);
+            $browser->click('@crud-form-submit-button');
+            $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
+                $browser->assertVisible('img.preview-image');
+            });
         });
     }
 
     /**
-     * @param Browser $browser
-     * @throws TimeOutException
+     * @return void
+     * @throws Throwable
      */
-    protected function assertCancelingImageModalWorks(Browser $browser)
+    public function test_adding_a_cat_works()
     {
-        $this->attachImage($browser);
-        $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
-            $browser->click('.modal-footer button[data-dismiss="modal"]');
-        });
-        $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
-        $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
-            $browser->assertMissing('img.preview-image');
-        });
-    }
+        $this->browse(function (Browser $browser) {
+            $location = $this->createCatLocation();
 
-    /**
-     * @param Browser $browser
-     * @throws TimeOutException
-     */
-    protected function assertSelectingAndDeletingImageWorks(Browser $browser)
-    {
-        $browser->refresh();
-        $this->attachImage($browser);
-        $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
-            $browser->click('.modal-footer button[data-handle="modalSubmit"]');
-        });
-        $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
-        $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
             $browser
-                ->assertVisible('img.preview-image')
-                ->click('button.delete-button')
-                ->assertMissing('img.preview-image');
-        });
-    }
+                ->loginAs(static::$defaultAdmin)
+                ->visit(new AdminCatListPage)
+                ->click('@crud-create-button')
+                ->on(new AdminCatAddPage);
 
-    /**
-     * @param Browser $browser
-     * @throws TimeOutException
-     */
-    protected function assertSelectedImageIsKeptAfterValidation(Browser $browser)
-    {
-        $browser->refresh();
-        $this->disableHtmlFormValidation($browser);
-        $this->attachImage($browser);
-        $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
-            $browser->click('.modal-footer button[data-handle="modalSubmit"]');
-        });
-        $browser->pause(1000);
-        $browser->click('@crud-form-submit-button');
-        $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
-            $browser->assertVisible('img.preview-image');
+            $browser->type('name', 'Garfield');
+
+            $browser->with('@add-cat-form-gender-input-wrapper', function (Browser $browser) {
+                $browser->click('input[value="1"]');
+            });
+
+            $dateInputWrappers = [
+                '@add-cat-form-date-of-birth-input-wrapper',
+                '@add-cat-form-date-of-arrival-mh-input-wrapper',
+                '@add-cat-form-date-of-arrival-boter-input-wrapper',
+            ];
+            foreach ($dateInputWrappers as $wrapper) {
+                $browser->with($wrapper, function (Browser $browser) {
+                    $browser->click('input[type="text"]');
+                });
+
+                $browser->with('.datepicker', function (Browser $browser) {
+                    $browser
+                        ->click('.datepicker-days thead th.prev')
+                        ->click('.datepicker-days thead th.prev')
+                        ->click('.datepicker-days tbody > tr > td');
+                });
+            }
+
+            $dateOfArrivalMhInputValue = $browser->value('input[name="date_of_arrival_mh"]');
+            $dateOfArrivalBoterInputValue = $browser->value('input[name="date_of_arrival_boter"]');
+
+            $browser->script("CKEDITOR.instances['story'].setData('hello')");
+
+            $browser->with('@add-cat-form-location-input-wrapper', function (Browser $browser) use ($location) {
+                $browser
+                    ->click('.select2')
+                    ->select('location_id', $location->id);
+            });
+
+            $browser->with('@add-cat-form-is-active-input-wrapper', function (Browser $browser) use ($location) {
+                $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
+            });
+
+            $browser
+                ->click('@crud-form-submit-button')
+                ->on(new AdminCatListPage);
+
+            $this->waitForRequestsToFinish($browser);
+
+            $browser->assertSee('Vnos uspešen.');
+
+            $browser->with(
+                $this->getTableRowSelectorForIndex(1),
+                function (Browser $browser) use ($location, $dateOfArrivalMhInputValue, $dateOfArrivalBoterInputValue) {
+                    $browser
+                        ->assertSee('Garfield')
+                        ->assertSee('samec')
+                        ->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalMhInputValue)))
+                        ->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalBoterInputValue)))
+                        ->assertSee($location->name)
+                        ->assertSee('Da');
+                }
+            );
         });
     }
 
