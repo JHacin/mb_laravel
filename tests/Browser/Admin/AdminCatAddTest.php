@@ -181,7 +181,7 @@ class AdminCatAddTest extends AdminTestCase
             $dateOfArrivalMhInputValue = $browser->value('input[name="date_of_arrival_mh"]');
             $dateOfArrivalBoterInputValue = $browser->value('input[name="date_of_arrival_boter"]');
 
-            $browser->script("CKEDITOR.instances['story'].setData('hello')");
+            $browser->script("CKEDITOR.instances.story.setData('hello')");
 
             $browser->with('@add-cat-form-location-input-wrapper', function (Browser $browser) use ($location) {
                 $browser

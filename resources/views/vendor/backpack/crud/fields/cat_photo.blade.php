@@ -1,5 +1,6 @@
 @php
-$value = old($field['name']) ?? $field['default'] ?? '';
+    /** @var mixed $field */
+    $value = old($field['name']) ?? $field['default'] ?? '';
 @endphp
 
 @include('crud::fields.inc.wrapper_start')
@@ -8,7 +9,13 @@ $value = old($field['name']) ?? $field['default'] ?? '';
         <label>{!! $field['label'] !!}</label>
     </div>
 
-    <img class="preview-image mb-2" data-handle="previewImage" src="{{ $value }}" alt="">
+    <img
+        class="preview-image mb-2"
+        data-handle="previewImage"
+        src="{{ $value }}"
+        alt="{{ $field['label'] }}"
+        data-field-name="{{ $field['name'] }}"
+    >
 
     <div class="btn-group align-items-center">
         <div class="btn btn-light btn-sm btn-file">
@@ -69,6 +76,10 @@ $value = old($field['name']) ?? $field['default'] ?? '';
 
 @if ($crud->fieldTypeNotLoaded($field))
     @php
+        use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
+
+        /** @var CrudPanel $crud */
+        /** @var mixed $field */
         $crud->markFieldTypeAsLoaded($field);
     @endphp
 

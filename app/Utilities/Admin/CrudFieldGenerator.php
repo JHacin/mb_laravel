@@ -110,7 +110,7 @@ class CrudFieldGenerator
         return array_merge([
             'type' => 'date_picker',
             'date_picker_options' => [
-                'format' => 'dd. mm. yyyy',
+                'format' => 'd. m. yyyy',
             ],
         ], $additions);
     }

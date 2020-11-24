@@ -14,6 +14,14 @@ trait CreatesFakeStorage
     protected function createFakeStorage()
     {
         Storage::fake('public');
+        return $this->getFakeStorage();
+    }
+
+    /**
+     * @return Filesystem|FilesystemAdapter
+     */
+    protected function getFakeStorage()
+    {
         return Storage::disk('public');
     }
 }

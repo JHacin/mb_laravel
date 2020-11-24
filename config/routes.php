@@ -16,6 +16,7 @@ return [
         'permissions' => 'dovoljenja',
         'cats' => 'muce',
         'cats_add' => 'muce/create',
+        'cats_edit' => 'muce/{id}/edit',
         'cat_locations' => 'lokacije',
         'sponsorships' => 'botrovanja',
         'person_data' => 'neregistrirani-botri',
