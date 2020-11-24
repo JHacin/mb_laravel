@@ -28,7 +28,10 @@ class CatPhotoFactory extends Factory
             'cat_id' => Cat::factory(),
             'filename' => $this->faker->word . '.jpg',
             'alt' => $this->faker->text,
-            'index' => $this->faker->numberBetween(Arr::first(CatPhotoService::INDICES), Arr::last(CatPhotoService::INDICES)),
+            'index' => $this->faker->unique()->numberBetween(
+                Arr::first(CatPhotoService::INDICES),
+                Arr::last(CatPhotoService::INDICES)
+            ),
         ];
     }
 }

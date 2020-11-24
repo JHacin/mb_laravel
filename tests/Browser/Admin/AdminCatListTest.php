@@ -298,12 +298,8 @@ class AdminCatListTest extends AdminTestCase
      */
     protected function clearActiveFilters(Browser $browser)
     {
-        $filterClearButton = $browser->element('@data-table-filter-clear-visible');
-
-        if ($filterClearButton) {
-            $filterClearButton->click();
-            $this->waitForRequestsToFinish($browser);
-        }
+        $browser->click('@crud-clear-filters-link');
+        $this->waitForRequestsToFinish($browser);
     }
 
     /**

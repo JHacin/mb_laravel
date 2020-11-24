@@ -27,7 +27,8 @@ abstract class Page extends BasePage
             '@data-table-filter-clear-visible' => '#remove_filters_button:not(.invisible)',
             '@data-table-search-input' => '#crudTable_filter input[type="search"]',
             '@crud-form-submit-button' => '#saveActions button[type="submit"]',
-            '@crud-create-button' => 'a.crud-create-button'
+            '@crud-create-button' => 'a.crud-create-button',
+            '@crud-clear-filters-link' => '#crudTable_reset_button'
         ];
     }
 }

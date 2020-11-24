@@ -1,5 +1,4 @@
 @php
-    /** @var mixed $field */
     $value = old($field['name']) ?? $field['default'] ?? '';
 @endphp
 
@@ -76,10 +75,6 @@
 
 @if ($crud->fieldTypeNotLoaded($field))
     @php
-        use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
-
-        /** @var CrudPanel $crud */
-        /** @var mixed $field */
         $crud->markFieldTypeAsLoaded($field);
     @endphp
 
