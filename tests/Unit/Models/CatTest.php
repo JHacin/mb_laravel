@@ -47,6 +47,15 @@ class CatTest extends TestCase
     /**
      * @return void
      */
+    public function test_returns_placeholder_image_if_photo_doesnt_exist()
+    {
+        $firstPhotoUrl = $this->createCat()->first_photo_url;
+        $this->assertEquals($firstPhotoUrl, CatPhotoService::getPlaceholderImage());
+    }
+
+    /**
+     * @return void
+     */
     public function test_filters_out_inactive_cats_by_default()
     {
         $this->cat->update(['is_active' => false ]);
