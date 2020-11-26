@@ -71,7 +71,7 @@ class CatPhotoService
      * @param Cat $cat
      * @param string $filename
      * @param int $index
-     * @return void
+     * @return CatPhoto
      */
     public function create(Cat $cat, string $filename, int $index)
     {
@@ -80,6 +80,7 @@ class CatPhotoService
         $photo->filename = $filename;
         $photo->index = $index;
         $photo->save();
+        return $photo;
     }
 
     /**
