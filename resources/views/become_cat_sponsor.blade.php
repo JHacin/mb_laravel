@@ -71,20 +71,10 @@
                     label="{{ trans('person_data.country') }}"
                     :selected="$user->personData->country ?? null"
                 />
-                <x-inputs.date-of-birth
-                    name="personData[date_of_birth]"
-                    label="{{ trans('person_data.date_of_birth') }}"
-                    value="{{ $user->personData->date_of_birth ?? '' }}"
-                />
                 <x-inputs.person-gender
                     name="personData[gender]"
                     label="{{ trans('person_data.gender') }}"
                     :selected="$user->personData->gender ?? null"
-                />
-                <x-inputs.base.input
-                    name="personData[phone]"
-                    label="{{ trans('person_data.phone') }}"
-                    value="{{ $user->personData->phone ?? '' }}"
                 />
 
                 <x-inputs.base.checkbox name="is_anonymous">

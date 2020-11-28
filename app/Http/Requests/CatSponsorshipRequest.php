@@ -12,25 +12,18 @@ use Illuminate\Validation\Rule;
 class CatSponsorshipRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
     public function rules()
     {
+        $personDataFields = Arr::except(
+            PersonData::getSharedValidationRules(),
+            ['email', 'phone', 'date_of_birth']
+        );
         $personDataRules = [];
-
-        foreach (Arr::except(PersonData::getSharedValidationRules(), ['email']) as $fieldName => $ruleDef) {
+        foreach ($personDataFields as $fieldName => $ruleDef) {
             $personDataRules['personData.' . $fieldName] = $ruleDef;
         }
 

@@ -31,26 +31,25 @@ class CatSponsorshipController extends Controller
     }
 
     /**
-     * Show the page with the form for sponsoring a cat.
+     * Handle incoming cat sponsorship form request.
      *
      * @param Cat $cat
-     * @return Application|Factory|View|void
+     * @param CatSponsorshipRequest $request
+     * @return RedirectResponse
      */
-    public function form(Cat $cat)
+    public function submit(Cat $cat, CatSponsorshipRequest $request)
     {
-        return view('become_cat_sponsor', ['cat' => $cat]);
-    }
-
-    /**
-     * @param array $updates
-     * @return PersonData|Model
-     */
-    protected function updateOrCreatePersonData(array $updates)
-    {
-        $personData = PersonData::firstOrCreate(['email' => $updates['email']]);
-        $personData->update($updates);
-
-        return $personData;
+        $input = $request->all();
+        if (Auth::check()) {
+            $this->updateUserEmail(Auth::user(), $input['personData']['email']);
+        }
+        $personData = $this->updateOrCreatePersonData($request->input('personData'));
+        $this->createSponsorship($cat, $personData, $input);
+        $this->catSponsorshipMailService->sendInitialInstructionsEmail($personData);
+        return back()->with(
+            'success_message',
+            'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.'
+        );
     }
 
     /**
@@ -62,8 +61,18 @@ class CatSponsorshipController extends Controller
         if ($inputEmail === $user->email) {
             return;
         }
-
         $user->update(['email' => $inputEmail]);
+    }
+
+    /**
+     * @param array $updates
+     * @return PersonData|Model
+     */
+    protected function updateOrCreatePersonData(array $updates)
+    {
+        $personData = PersonData::firstOrCreate(['email' => $updates['email']]);
+        $personData->update($updates);
+        return $personData;
     }
 
     /**
@@ -82,29 +91,13 @@ class CatSponsorshipController extends Controller
     }
 
     /**
-     * Handle incoming cat sponsorship form request.
+     * Show the page with the form for sponsoring a cat.
      *
      * @param Cat $cat
-     * @param CatSponsorshipRequest $request
-     * @return RedirectResponse
+     * @return Application|Factory|View|void
      */
-    public function submit(Cat $cat, CatSponsorshipRequest $request)
+    public function form(Cat $cat)
     {
-        $input = $request->all();
-
-        if (Auth::check()) {
-            $this->updateUserEmail(Auth::user(), $input['personData']['email']);
-        }
-
-        $personData = $this->updateOrCreatePersonData($request->input('personData'));
-
-        $this->createSponsorship($cat, $personData, $input);
-
-        $this->catSponsorshipMailService->sendInitialInstructionsEmail($personData);
-
-        return back()->with(
-            'success_message',
-            'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.'
-        );
+        return view('become_cat_sponsor', ['cat' => $cat]);
     }
 }
