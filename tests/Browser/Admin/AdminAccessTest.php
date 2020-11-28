@@ -45,7 +45,7 @@ class AdminAccessTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser
-                ->loginAs(self::$defaultAdmin)
+                ->loginAs(static::$defaultAdmin)
                 ->visit(new AdminDashboardPage);
         });
     }

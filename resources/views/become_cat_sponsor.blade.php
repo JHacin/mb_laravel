@@ -51,30 +51,34 @@
                     label="{{ trans('person_data.last_name') }}"
                     value="{{ $user->personData->last_name ?? '' }}"
                 />
+                <x-inputs.person-gender
+                    name="personData[gender]"
+                    label="{{ trans('person_data.gender') }}"
+                    :selected="$user->personData->gender ?? null"
+                />
                 <x-inputs.base.input
                     name="personData[address]"
                     label="{{ trans('person_data.address') }}"
                     value="{{ $user->personData->address ?? '' }}"
+                    required
                 />
                 <x-inputs.base.input
                     name="personData[zip_code]"
                     label="{{ trans('person_data.zip_code') }}"
                     value="{{ $user->personData->zip_code ?? '' }}"
+                    required
                 />
                 <x-inputs.base.input
                     name="personData[city]"
                     label="{{ trans('person_data.city') }}"
                     value="{{ $user->personData->city ?? '' }}"
+                    required
                 />
                 <x-inputs.country
                     name="personData[country]"
                     label="{{ trans('person_data.country') }}"
                     :selected="$user->personData->country ?? null"
-                />
-                <x-inputs.person-gender
-                    name="personData[gender]"
-                    label="{{ trans('person_data.gender') }}"
-                    :selected="$user->personData->gender ?? null"
+                    required
                 />
 
                 <x-inputs.base.checkbox name="is_anonymous">
@@ -108,7 +112,7 @@
                 </x-inputs.base.checkbox>
 
                 <div class="field">
-                    <button type="submit" class="button is-primary">
+                    <button type="submit" class="button is-primary" dusk="cat-sponsorship-submit">
                         Pošlji obrazec
                     </button>
                 </div>

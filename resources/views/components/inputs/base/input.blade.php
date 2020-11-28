@@ -1,4 +1,4 @@
-@props(['name', 'label', 'wrapperDusk' => ''])
+@props(['name', 'label'])
 
 @php
     use Illuminate\Support\ViewErrorBag;
@@ -20,10 +20,7 @@
     ]
 @endphp
 
-<div
-    class="field"
-    @if($wrapperDusk)dusk="{{ $wrapperDusk }}"@endif
->
+<div class="field" dusk="{{ $name }}-input-wrapper">
     @include('components.inputs.inc.label')
     <div class="control">
         <!--suppress HtmlFormInputWithoutLabel -->
@@ -31,6 +28,7 @@
             id="{{ $name }}"
             name="{{ $name }}"
             value="{{ old($name) ?? $attributes['value'] ?? '' }}"
+            dusk="{{ $name }}-input"
             {{ $attributes->merge($defaultAttributes) }}
         >
     </div>

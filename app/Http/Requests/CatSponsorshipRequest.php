@@ -3,43 +3,31 @@
 namespace App\Http\Requests;
 
 use App\Models\PersonData;
-use App\Models\Sponsorship;
+use App\Rules\CountryCode;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class CatSponsorshipRequest extends FormRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
-        $personDataFields = Arr::except(
-            PersonData::getSharedValidationRules(),
-            ['email', 'phone', 'date_of_birth']
-        );
-        $personDataRules = [];
-        foreach ($personDataFields as $fieldName => $ruleDef) {
-            $personDataRules['personData.' . $fieldName] = $ruleDef;
-        }
-
-        return array_merge(
-            $personDataRules,
-            Sponsorship::getSharedValidationRules(),
-            [
-                'personData.email' => [
-                    'required',
-                    'string',
-                    'email',
-                    Rule::unique('users', 'email')->ignore(Auth::id())
-                ],
-                'is_agreed_to_terms' => 'accepted'
-            ]
-        );
+        return [
+            'personData.email' => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore(Auth::id())],
+            'personData.first_name' => ['nullable', 'string', 'max:255'],
+            'personData.last_name' => ['nullable', 'string', 'max:255'],
+            'personData.gender' => [Rule::in(PersonData::GENDERS)],
+            'personData.address' => ['required', 'string', 'max:255'],
+            'personData.zip_code' => ['required', 'string', 'max:255'],
+            'personData.city' => ['required', 'string', 'max:255'],
+            'personData.country' => ['required', new CountryCode],
+            'monthly_amount' => ['required', 'numeric', 'between:0,' . config('money.decimal_max')],
+            'is_anonymous' => ['boolean'],
+            'is_agreed_to_terms' => ['accepted'],
+        ];
     }
 
     /**
@@ -47,20 +35,9 @@ class CatSponsorshipRequest extends FormRequest
      */
     public function messages()
     {
-        $personDataMessages = [];
-
-        foreach (PersonData::getSharedValidationMessages() as $validatorName => $message) {
-            $personDataMessages['personData.' . $validatorName] = $message;
-        }
-
-        return array_merge(
-            $personDataMessages,
-            Sponsorship::getSharedValidationMessages(),
-            [
-                'personData.email.unique' =>
-                    'Ta email naslov že uporablja registriran uporabnik.' .
-                    ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.'
-            ]
-        );
+        return [
+            'personData.email.unique' => 'Ta email naslov že uporablja registriran uporabnik. Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
+            'personData.date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
+        ];
     }
 }

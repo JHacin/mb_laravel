@@ -68,7 +68,7 @@ class PasswordConfirmTest extends DuskTestCase
             $browser
                 ->loginAs($this->user)
                 ->visit(new PasswordConfirmPage)
-                ->type('@password-confirm-form-input', 'LoremIpsum')
+                ->type('@password-input', 'LoremIpsum')
                 ->click('@password-confirm-form-submit')
                 ->assertSee(trans('validation.password'));
         });
@@ -84,7 +84,7 @@ class PasswordConfirmTest extends DuskTestCase
             $browser
                 ->loginAs($this->user)
                 ->visit(new PasswordConfirmPage)
-                ->type('@password-confirm-form-input', 'asdf123456')
+                ->type('@password-input', 'asdf123456')
                 ->click('@password-confirm-form-submit')
                 ->assertDontSee(trans('validation.password'));
         });

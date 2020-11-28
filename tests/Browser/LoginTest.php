@@ -49,8 +49,8 @@ class LoginTest extends DuskTestCase
             $this->disableHtmlFormValidation($browser);
             $browser->click('@login-form-submit');
             $this->assertAllRequiredErrorsAreShown($browser, [
-                '@login-form-email-input-wrapper',
-                '@login-form-password-input-wrapper'
+                '@email-input-wrapper',
+                '@password-input-wrapper'
             ]);
         });
     }
@@ -64,8 +64,8 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new LoginPage)
-                ->type('@login-form-email-input', 'asd@example.com')
-                ->type('@login-form-password-input', 'LoremIpsum')
+                ->type('@email-input', 'asd@example.com')
+                ->type('@password-input', 'LoremIpsum')
                 ->click('@login-form-submit')
                 ->assertSee(trans('auth.failed'));
         });
@@ -80,8 +80,8 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new LoginPage)
-                ->type('@login-form-email-input', $this->user->email)
-                ->type('@login-form-password-input', $this->password)
+                ->type('@email-input', $this->user->email)
+                ->type('@password-input', $this->password)
                 ->click('@login-form-submit')
                 ->on(new HomePage);
         });
@@ -97,8 +97,8 @@ class LoginTest extends DuskTestCase
             $browser
                 ->visit((new UserProfilePage())->url())
                 ->on(new LoginPage)
-                ->type('@login-form-email-input', $this->user->email)
-                ->type('@login-form-password-input', $this->password)
+                ->type('@email-input', $this->user->email)
+                ->type('@password-input', $this->password)
                 ->click('@login-form-submit')
                 ->on(new UserProfilePage);
         });

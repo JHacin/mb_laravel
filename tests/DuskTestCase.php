@@ -2,9 +2,12 @@
 
 namespace Tests;
 
+use App\Models\PersonData;
+use App\Models\User;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Illuminate\Support\Arr;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Tests\Browser\Traits\FormTestingHelpers;
 use Tests\Traits\CreatesApplication;
@@ -17,7 +20,12 @@ abstract class DuskTestCase extends BaseTestCase
     /**
      * @var bool
      */
-    protected static $migrationRun = false;
+    protected static bool $migrationRun = false;
+
+    /**
+     * @var User|null
+     */
+    protected static ?User $sampleUser = null;
 
     /**
      * @inheritDoc
@@ -26,6 +34,7 @@ abstract class DuskTestCase extends BaseTestCase
     {
         parent::setUp();
         $this->resetDatabaseBeforeFirstTest();
+        $this->createSampleUser();
     }
 
     /**
@@ -49,6 +58,15 @@ abstract class DuskTestCase extends BaseTestCase
             $this->artisan('migrate:fresh');
             $this->artisan('db:seed');
             static::$migrationRun = true;
+        }
+    }
+
+    protected function createSampleUser()
+    {
+        if (!static::$sampleUser) {
+            static::$sampleUser = $this->createUser();
+            $fakePersonData = Arr::except(PersonData::factory()->make()->toArray(), ['id', 'email']);
+            static::$sampleUser->personData->update($fakePersonData);
         }
     }
 

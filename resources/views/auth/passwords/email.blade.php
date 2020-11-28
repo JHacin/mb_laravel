@@ -22,8 +22,6 @@
                     autocomplete="email"
                     autofocus
                     required
-                    dusk="forgot-password-form-email-input"
-                    wrapperDusk="forgot-password-form-email-input-wrapper"
                 />
 
                 <div class="field">

@@ -15,32 +15,24 @@
                     label="{{ trans('user.name') }}"
                     autofocus
                     required
-                    dusk="register-form-name-input"
-                    wrapperDusk="register-form-name-input-wrapper"
                 />
                 <x-inputs.email
                     name="email"
                     label="{{ trans('user.email') }}"
                     autocomplete="email"
                     required
-                    dusk="register-form-email-input"
-                    wrapperDusk="register-form-email-input-wrapper"
                 />
                 <x-inputs.password
                     name="password"
                     label="{{ trans('user.password') }}"
                     required
                     autocomplete="new-password"
-                    dusk="register-form-password-input"
-                    wrapperDusk="register-form-password-input-wrapper"
                 />
                 <x-inputs.password
                     name="password_confirmation"
                     label="{{ trans('user.password_confirm') }}"
                     required
                     autocomplete="new-password"
-                    dusk="register-form-password-confirm-input"
-                    wrapperDusk="register-form-password-confirm-input-wrapper"
                 />
 
                 <div class="field">

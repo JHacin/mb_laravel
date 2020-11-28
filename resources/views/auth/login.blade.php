@@ -19,16 +19,12 @@
                     label="{{ trans('user.email') }}"
                     autofocus
                     required
-                    dusk="login-form-email-input"
-                    wrapperDusk="login-form-email-input-wrapper"
                 />
                 <x-inputs.password
                     name="password"
                     label="{{ trans('user.password') }}"
                     required
                     autocomplete="current-password"
-                    dusk="login-form-password-input"
-                    wrapperDusk="login-form-password-input-wrapper"
                 />
 
                 <x-inputs.base.checkbox name="remember" label="Zapomni si me" />

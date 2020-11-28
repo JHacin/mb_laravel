@@ -17,8 +17,6 @@
                     label="{{ trans('user.password') }}"
                     required
                     autocomplete="current-password"
-                    dusk="password-confirm-form-input"
-                    wrapperDusk="password-confirm-form-input-wrapper"
                 />
 
                 <div class="field">

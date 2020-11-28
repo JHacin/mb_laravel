@@ -178,7 +178,7 @@ class CatCrudController extends CrudController
                 'required' => 'required',
             ],
             'wrapper' => [
-                'dusk' => 'add-cat-form-name-input-wrapper'
+                'dusk' => 'name-input-wrapper'
             ],
         ]);
         $this->crud->addField([
@@ -189,28 +189,28 @@ class CatCrudController extends CrudController
             'inline' => true,
             'default' => Cat::GENDER_UNKNOWN,
             'wrapper' => [
-                'dusk' => 'add-cat-form-gender-input-wrapper'
+                'dusk' => 'gender-input-wrapper'
             ],
         ]);
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_birth',
             'label' => 'Datum rojstva',
             'wrapper' => [
-                'dusk' => 'add-cat-form-date-of-birth-input-wrapper'
+                'dusk' => 'date-of-birth-input-wrapper'
             ],
         ]));
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_mh',
             'label' => 'Datum sprejema v zavetišče',
             'wrapper' => [
-                'dusk' => 'add-cat-form-date-of-arrival-mh-input-wrapper'
+                'dusk' => 'date-of-arrival-mh-input-wrapper'
             ],
         ]));
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_boter',
             'label' => 'Datum vstopa v botrstvo',
             'wrapper' => [
-                'dusk' => 'add-cat-form-date-of-arrival-boter-input-wrapper'
+                'dusk' => 'date-of-arrival-boter-input-wrapper'
             ],
         ]));
         foreach ($this->catPhotoService::INDICES as $index) {
@@ -219,7 +219,7 @@ class CatCrudController extends CrudController
                 'label' => 'Slika ' . ($index + 1),
                 'type' => 'cat_photo',
                 'wrapper' => [
-                    'dusk' => "add-cat-form-photo-$index-input-wrapper"
+                    'dusk' => "photo-$index-input-wrapper"
                 ],
             ]);
         }
@@ -234,7 +234,7 @@ class CatCrudController extends CrudController
             'type' => 'relationship',
             'placeholder' => 'Izberi lokacijo',
             'wrapper' => [
-                'dusk' => 'add-cat-form-location-input-wrapper'
+                'dusk' => 'location-input-wrapper'
             ],
         ]);
         $this->crud->addField([
@@ -243,7 +243,7 @@ class CatCrudController extends CrudController
             'type' => 'checkbox',
             'hint' => 'Ali naj bo muca javno vidna (npr. na seznamu vseh muc).',
             'wrapper' => [
-                'dusk' => 'add-cat-form-is-active-input-wrapper'
+                'dusk' => 'is-active-input-wrapper'
             ],
         ]);
     }

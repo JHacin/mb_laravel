@@ -285,7 +285,7 @@ class AdminCatListTest extends AdminTestCase
     protected function goToCatsListPage(Browser $browser)
     {
         $browser
-            ->loginAs(self::$defaultAdmin)
+            ->loginAs(static::$defaultAdmin)
             ->visit(new AdminCatListPage);
 
         $this->waitForRequestsToFinish($browser);

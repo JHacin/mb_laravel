@@ -50,7 +50,7 @@ class AdminLoginTest extends AdminTestCase
             $browser->click('@admin-login-submit');
            $this->assertAllRequiredErrorsAreShown(
                 $browser,
-                ['@admin-login-email-input-wrapper', '@admin-login-password-input-wrapper']
+                ['@email-input-wrapper', '@password-input-wrapper']
             );
         });
     }
@@ -67,8 +67,8 @@ class AdminLoginTest extends AdminTestCase
             ]);
             $browser
                 ->visit(new AdminLoginPage)
-                ->type('@admin-login-email-input', $user->email)
-                ->type('@admin-login-password-input', '1234567812345678')
+                ->type('@email-input', $user->email)
+                ->type('@password-input', '1234567812345678')
                 ->click('@admin-login-submit')
                 ->assertSee(trans('auth.failed'));
         });
@@ -87,8 +87,8 @@ class AdminLoginTest extends AdminTestCase
             ]);
             $browser
                 ->visit(new AdminLoginPage)
-                ->type('@admin-login-email-input', $user->email)
-                ->type('@admin-login-password-input', $password)
+                ->type('@email-input', $user->email)
+                ->type('@password-input', $password)
                 ->click('@admin-login-submit')
                 ->on(new HomePage);
         });
@@ -103,8 +103,8 @@ class AdminLoginTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new AdminLoginPage)
-                ->type('@admin-login-email-input', $this->adminUser->email)
-                ->type('@admin-login-password-input', $this->adminPassword)
+                ->type('@email-input', $this->adminUser->email)
+                ->type('@password-input', $this->adminPassword)
                 ->click('@admin-login-submit')
                 ->on(new AdminDashboardPage);
         });
@@ -120,8 +120,8 @@ class AdminLoginTest extends AdminTestCase
             $browser
                 ->visit((new AdminCatListPage())->url())
                 ->on(new AdminLoginPage)
-                ->type('@admin-login-email-input', $this->adminUser->email)
-                ->type('@admin-login-password-input', $this->adminPassword)
+                ->type('@email-input', $this->adminUser->email)
+                ->type('@password-input', $this->adminPassword)
                 ->click('@admin-login-submit')
                 ->on(new AdminCatListPage);
         });

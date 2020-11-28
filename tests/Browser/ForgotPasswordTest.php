@@ -34,7 +34,7 @@ class ForgotPasswordTest extends DuskTestCase
             $browser->visit(new ForgotPasswordPage);
             $this->disableHtmlFormValidation($browser);
             $browser->click('@forgot-password-form-submit');
-            $this->assertAllRequiredErrorsAreShown($browser, ['@forgot-password-form-email-input-wrapper']);
+            $this->assertAllRequiredErrorsAreShown($browser, ['@email-input-wrapper']);
         });
     }
 
@@ -48,7 +48,7 @@ class ForgotPasswordTest extends DuskTestCase
             $browser->visit(new ForgotPasswordPage);
             $this->disableHtmlFormValidation($browser);
             $browser
-                ->type('@forgot-password-form-email-input', 'asdf')
+                ->type('@email-input', 'asdf')
                 ->click('@forgot-password-form-submit')
                 ->assertSee(trans('validation.email'));
         });
@@ -63,7 +63,7 @@ class ForgotPasswordTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new ForgotPasswordPage)
-                ->type('@forgot-password-form-email-input', 'asda@fake.com')
+                ->type('@email-input', 'asda@fake.com')
                 ->click('@forgot-password-form-submit')
                 ->assertSee(trans('passwords.user'));
         });
@@ -78,7 +78,7 @@ class ForgotPasswordTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new ForgotPasswordPage)
-                ->type('@forgot-password-form-email-input', $this->createUser()->email)
+                ->type('@email-input', $this->createUser()->email)
                 ->click('@forgot-password-form-submit')
                 ->assertSee(trans('passwords.sent'));
         });

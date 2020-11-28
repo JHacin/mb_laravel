@@ -1,6 +1,6 @@
 @props(['name', 'label', 'options', 'selected'])
 
-<div class="field">
+<div class="field" dusk="{{ $name }}-input-wrapper">
     @include('components.inputs.inc.label')
     <div class="control">
         <div class="select">
@@ -8,6 +8,7 @@
             <select
                 id="{{ $name }}"
                 name="{{ $name }}"
+                dusk="{{ $name }}-input"
                 {{ $attributes }}
             >
                 @foreach($options as $optionValue => $optionLabel)

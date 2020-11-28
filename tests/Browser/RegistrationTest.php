@@ -26,9 +26,9 @@ class RegistrationTest extends DuskTestCase
             $this->disableHtmlFormValidation($browser);
             $browser->click('@register-form-submit');
             $this->assertAllRequiredErrorsAreShown($browser, [
-                '@register-form-name-input-wrapper',
-                '@register-form-email-input-wrapper',
-                '@register-form-password-input-wrapper',
+                '@name-input-wrapper',
+                '@email-input-wrapper',
+                '@password-input-wrapper',
             ]);
         });
     }
@@ -43,9 +43,9 @@ class RegistrationTest extends DuskTestCase
             $browser->visit(new RegistrationPage);
             $this->disableHtmlFormValidation($browser);
             $browser
-                ->type('@register-form-email-input', $this->createUser()->email)
+                ->type('@email-input', $this->createUser()->email)
                 ->click('@register-form-submit')
-                ->with('@register-form-email-input-wrapper', function (Browser $wrapper) {
+                ->with('@email-input-wrapper', function (Browser $wrapper) {
                     $wrapper->assertSee(trans('validation.custom.email.unique'));
                 });
         });
@@ -61,9 +61,9 @@ class RegistrationTest extends DuskTestCase
             $browser->visit(new RegistrationPage);
             $this->disableHtmlFormValidation($browser);
             $browser
-                ->type('@register-form-password-input', 'x')
+                ->type('@password-input', 'x')
                 ->click('@register-form-submit')
-                ->with('@register-form-password-input-wrapper', function (Browser $wrapper) {
+                ->with('@password-input-wrapper', function (Browser $wrapper) {
                     $wrapper->assertSee('Geslo mora biti dolgo vsaj 8 znakov.');
                 });
         });
@@ -79,10 +79,10 @@ class RegistrationTest extends DuskTestCase
             $browser->visit(new RegistrationPage);
             $this->disableHtmlFormValidation($browser);
             $browser
-                ->type('@register-form-password-input', 'LoremIpsum')
-                ->type('@register-form-password-confirm-input', 'LoremIpsumDolorAmet')
+                ->type('@password-input', 'LoremIpsum')
+                ->type('@password_confirmation-input', 'LoremIpsumDolorAmet')
                 ->click('@register-form-submit')
-                ->with('@register-form-password-input-wrapper', function (Browser $wrapper) {
+                ->with('@password-input-wrapper', function (Browser $wrapper) {
                     $wrapper->assertSee(trans('validation.custom.password.confirmed'));
                 });
         });
@@ -97,10 +97,10 @@ class RegistrationTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new RegistrationPage)
-                ->type('@register-form-name-input', 'myusername')
-                ->type('@register-form-email-input', 'john.doe@example.com')
-                ->type('@register-form-password-input', 'asdf1234')
-                ->type('@register-form-password-confirm-input', 'asdf1234')
+                ->type('@name-input', 'myusername')
+                ->type('@email-input', 'john.doe@example.com')
+                ->type('@password-input', 'asdf1234')
+                ->type('@password_confirmation-input', 'asdf1234')
                 ->click('@register-form-submit')
                 ->on(new HomePage)
                 ->within(new Navbar, function ($browser) {

@@ -18,7 +18,7 @@ class AdminCatEditTest extends AdminTestCase
             $cat = $this->createCatWithPhotos(['story' => 'hello']);
 
             $browser
-                ->loginAs(self::$defaultAdmin)
+                ->loginAs(static::$defaultAdmin)
                 ->visit(new AdminCatEditPage($cat))
                 ->assertValue('input[name="name"]', $cat->name)
                 ->assertValue('input[name="gender"]', $cat->gender)

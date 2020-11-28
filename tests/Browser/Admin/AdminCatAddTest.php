@@ -26,7 +26,7 @@ class AdminCatAddTest extends AdminTestCase
 
             $this->disableHtmlFormValidation($browser);
             $browser->click('@crud-form-submit-button');
-            $this->assertAllRequiredErrorsAreShown($browser, ['@add-cat-form-name-input-wrapper']);
+            $this->assertAllRequiredErrorsAreShown($browser, ['@name-input-wrapper']);
         });
     }
 
@@ -63,9 +63,9 @@ class AdminCatAddTest extends AdminTestCase
             $this->disableHtmlFormValidation($browser);
 
             $dateInputWrappers = [
-                '@add-cat-form-date-of-birth-input-wrapper',
-                '@add-cat-form-date-of-arrival-mh-input-wrapper',
-                '@add-cat-form-date-of-arrival-boter-input-wrapper',
+                '@date-of-birth-input-wrapper',
+                '@date-of-arrival-mh-input-wrapper',
+                '@date-of-arrival-boter-input-wrapper',
             ];
 
             foreach ($dateInputWrappers as $wrapper) {
@@ -106,7 +106,7 @@ class AdminCatAddTest extends AdminTestCase
                 $browser->click('.modal-footer button[data-dismiss="modal"]');
             });
             $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
-            $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
+            $browser->with('@photo-0-input-wrapper', function (Browser $browser) {
                 $browser->assertMissing('img.preview-image');
             });
 
@@ -117,7 +117,7 @@ class AdminCatAddTest extends AdminTestCase
                 $browser->click('.modal-footer button[data-handle="modalSubmit"]');
             });
             $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
-            $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
+            $browser->with('@photo-0-input-wrapper', function (Browser $browser) {
                 $browser
                     ->assertVisible('img.preview-image')
                     ->click('button.delete-button')
@@ -133,7 +133,7 @@ class AdminCatAddTest extends AdminTestCase
             });
             $browser->pause(1000);
             $browser->click('@crud-form-submit-button');
-            $browser->with('@add-cat-form-photo-0-input-wrapper', function (Browser $browser) {
+            $browser->with('@photo-0-input-wrapper', function (Browser $browser) {
                 $browser->assertVisible('img.preview-image');
             });
         });
@@ -156,14 +156,14 @@ class AdminCatAddTest extends AdminTestCase
 
             $browser->type('name', 'Garfield');
 
-            $browser->with('@add-cat-form-gender-input-wrapper', function (Browser $browser) {
+            $browser->with('@gender-input-wrapper', function (Browser $browser) {
                 $browser->click('input[value="1"]');
             });
 
             $dateInputWrappers = [
-                '@add-cat-form-date-of-birth-input-wrapper',
-                '@add-cat-form-date-of-arrival-mh-input-wrapper',
-                '@add-cat-form-date-of-arrival-boter-input-wrapper',
+                '@date-of-birth-input-wrapper',
+                '@date-of-arrival-mh-input-wrapper',
+                '@date-of-arrival-boter-input-wrapper',
             ];
             foreach ($dateInputWrappers as $wrapper) {
                 $browser->with($wrapper, function (Browser $browser) {
@@ -183,13 +183,13 @@ class AdminCatAddTest extends AdminTestCase
 
             $browser->script("CKEDITOR.instances.story.setData('hello')");
 
-            $browser->with('@add-cat-form-location-input-wrapper', function (Browser $browser) use ($location) {
+            $browser->with('@location-input-wrapper', function (Browser $browser) use ($location) {
                 $browser
                     ->click('.select2')
                     ->select('location_id', $location->id);
             });
 
-            $browser->with('@add-cat-form-is-active-input-wrapper', function (Browser $browser) use ($location) {
+            $browser->with('@is-active-input-wrapper', function (Browser $browser) use ($location) {
                 $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
             });
 

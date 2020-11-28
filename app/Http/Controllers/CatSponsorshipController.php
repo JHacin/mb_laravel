@@ -15,12 +15,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
+/**
+ * Class CatSponsorshipController
+ * @package App\Http\Controllers
+ */
 class CatSponsorshipController extends Controller
 {
+
     /**
      * @var CatSponsorshipMailService
      */
-    protected $catSponsorshipMailService;
+    protected CatSponsorshipMailService $catSponsorshipMailService;
 
     /**
      * @param CatSponsorshipMailService $catSponsorshipMailService

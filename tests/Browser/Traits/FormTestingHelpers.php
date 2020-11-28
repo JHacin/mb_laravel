@@ -33,9 +33,19 @@ trait FormTestingHelpers
     protected function assertAllRequiredErrorsAreShown(Browser $browser, array $requiredInputWrapperSelectors)
     {
         foreach ($requiredInputWrapperSelectors as $selector) {
-            $browser->with($selector, function (Browser $wrapper) {
-                $wrapper->assertSee(trans('validation.required'));
-            });
+            $this->assertErrorIsShownWithin($browser, $selector, trans('validation.required'));
         }
+    }
+
+    /**
+     * @param Browser $browser
+     * @param string $selector
+     * @param string $message
+     */
+    protected function assertErrorIsShownWithin(Browser $browser, string $selector, string $message)
+    {
+        $browser->with($selector, function (Browser $wrapper) use ($message) {
+            $wrapper->assertSee($message);
+        });
     }
 }
