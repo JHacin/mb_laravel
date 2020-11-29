@@ -18,6 +18,8 @@ return [
         'cats_add' => 'muce/create',
         'cats_edit' => 'muce/{id}/edit',
         'cat_locations' => 'lokacije',
+        'cat_locations_add' => 'lokacije/create',
+        'cat_locations_edit' => 'lokacije/{id}/edit',
         'sponsorships' => 'botrovanja',
         'person_data' => 'neregistrirani-botri',
     ]

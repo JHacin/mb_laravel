@@ -4,7 +4,6 @@ namespace Tests\Browser;
 
 use App\Models\Cat;
 use App\Models\PersonData;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\CatSponsorshipFormPage;
 use Tests\DuskTestCase;
@@ -12,8 +11,6 @@ use Throwable;
 
 class CatSponsorshipFormTest extends DuskTestCase
 {
-    use WithFaker;
-
     /**
      * @var Cat|null
      */

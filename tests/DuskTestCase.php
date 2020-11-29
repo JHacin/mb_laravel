@@ -7,6 +7,7 @@ use App\Models\User;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Tests\Browser\Traits\FormTestingHelpers;
@@ -15,7 +16,7 @@ use Tests\Traits\CreatesMockData;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication, CreatesMockData, FormTestingHelpers;
+    use WithFaker, CreatesApplication, CreatesMockData, FormTestingHelpers;
 
     /**
      * @var bool

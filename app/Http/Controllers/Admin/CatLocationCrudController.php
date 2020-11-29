@@ -77,7 +77,10 @@ class CatLocationCrudController extends CrudController
             'type' => 'text',
             'attributes' => [
                 'required' => 'required',
-            ]
+            ],
+            'wrapper' => [
+                'dusk' => 'name-wrapper'
+            ],
         ]);
 
         CrudFieldGenerator::addAddressFields($this->crud);

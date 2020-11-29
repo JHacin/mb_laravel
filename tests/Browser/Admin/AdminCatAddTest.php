@@ -20,10 +20,7 @@ class AdminCatAddTest extends AdminTestCase
     public function test_validates_required_fields()
     {
         $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs(static::$defaultAdmin)
-                ->visit(new AdminCatAddPage);
-
+            $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
             $browser->click('@crud-form-submit-button');
             $this->assertAllRequiredErrorsAreShown($browser, ['@name-input-wrapper']);
@@ -56,9 +53,7 @@ class AdminCatAddTest extends AdminTestCase
     public function test_validates_date_fields_are_in_the_past()
     {
         $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs(static::$defaultAdmin)
-                ->visit(new AdminCatAddPage);
+            $this->goToPage($browser);
 
             $this->disableHtmlFormValidation($browser);
 
@@ -96,9 +91,7 @@ class AdminCatAddTest extends AdminTestCase
     public function test_handles_images_correctly()
     {
         $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs(static::$defaultAdmin)
-                ->visit(new AdminCatAddPage);
+            $this->goToPage($browser);
 
             // Cancelling the modal
             $this->attachImage($browser);
@@ -148,11 +141,7 @@ class AdminCatAddTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $location = $this->createCatLocation();
 
-            $browser
-                ->loginAs(static::$defaultAdmin)
-                ->visit(new AdminCatListPage)
-                ->click('@crud-create-button')
-                ->on(new AdminCatAddPage);
+            $this->goToPage($browser);
 
             $browser->type('name', 'Garfield');
 
@@ -225,5 +214,14 @@ class AdminCatAddTest extends AdminTestCase
         $browser
             ->attach('input[data-field-name="photo_0"]', __DIR__ . '/../../../resources/img/logo.png')
             ->waitFor('.modal.show[data-handle="crop-modal"] .cropper-crop-box');
+    }
+
+    protected function goToPage(Browser $browser)
+    {
+        $browser
+            ->loginAs(static::$defaultAdmin)
+            ->visit(new AdminCatListPage)
+            ->click('@crud-create-button')
+            ->on(new AdminCatAddPage);
     }
 }
