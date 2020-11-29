@@ -114,6 +114,13 @@ class CrudColumnGenerator
             'label' => trans('person_data.country'),
             'type' => 'select_from_array',
             'options' => CountryList::COUNTRY_NAMES,
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $code = CountryList::getCodeByName($searchTerm);
+                if (!$code) {
+                    return false;
+                }
+                return $query->orWhere('country', $code);
+            }
         ], $additions);
     }
 

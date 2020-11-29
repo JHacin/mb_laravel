@@ -12,6 +12,6 @@ class PermissionCrudController extends BackpackPermissionCrudController
     public function setup()
     {
         parent::setup();
-        $this->crud->setRoute(backpack_url(config('routes.admin.permissions')));
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.permissions'));
     }
 }

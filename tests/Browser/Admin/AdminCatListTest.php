@@ -12,14 +12,14 @@ use Throwable;
 class AdminCatListTest extends AdminTestCase
 {
     /**
-     * @var Cat
+     * @var Cat|null
      */
-    protected static $sampleCat_1;
+    protected static ?Cat $sampleCat_1 = null;
 
     /**
-     * @var Cat
+     * @var Cat|null
      */
-    protected static $sampleCat_2;
+    protected static ?Cat $sampleCat_2 = null;
 
     /**
      * @inheritDoc
@@ -43,11 +43,7 @@ class AdminCatListTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $cat = static::$sampleCat_2;
             $this->goToCatsListPage($browser);
-
-            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
-                $this->resizeToMediumScreen($browser);
-                $browser->click('@data-table-open-row-details');
-            });
+            $this->openFirstRowDetails($browser);
 
             $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($cat) {
                 $this->assertDetailsModalShowsValuesInOrder($browser, [
@@ -205,53 +201,26 @@ class AdminCatListTest extends AdminTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_searches_by_id()
+    public function test_search_works()
     {
         $this->browse(function (Browser $browser) {
             $this->goToCatsListPage($browser);
-            $this->enterSearchInputValue($browser, static::$sampleCat_1->id);
 
-            $browser->with('@crud-table-body', function (Browser $browser) {
-                $browser
-                    ->assertSee(static::$sampleCat_1->name)
-                    ->assertDontSee(static::$sampleCat_2->name);
-            });
-        });
-    }
+            $searches = [
+                static::$sampleCat_1->id,
+                static::$sampleCat_1->name,
+                static::$sampleCat_1->location->name
+            ];
 
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_searches_by_name()
-    {
-        $this->browse(function (Browser $browser) {
-            $this->goToCatsListPage($browser);
-            $this->enterSearchInputValue($browser, static::$sampleCat_1->name);
+            foreach ($searches as $value) {
+                $this->enterSearchInputValue($browser, $value);
 
-            $browser->with('@crud-table-body', function (Browser $browser) {
-                $browser
-                    ->assertSee(static::$sampleCat_1->name)
-                    ->assertDontSee(static::$sampleCat_2->name);
-            });
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_searches_by_location_name()
-    {
-        $this->browse(function (Browser $browser) {
-            $this->goToCatsListPage($browser);
-            $this->enterSearchInputValue($browser, static::$sampleCat_1->location->name);
-
-            $browser->with('@crud-table-body', function (Browser $browser) {
-                $browser
-                    ->assertSee(static::$sampleCat_1->name)
-                    ->assertDontSee(static::$sampleCat_2->name);
-            });
+                $browser->with('@crud-table-body', function (Browser $browser) {
+                    $browser
+                        ->assertSee(static::$sampleCat_1->name)
+                        ->assertDontSee(static::$sampleCat_2->name);
+                });
+            }
         });
     }
 
@@ -290,25 +259,5 @@ class AdminCatListTest extends AdminTestCase
 
         $this->waitForRequestsToFinish($browser);
         $this->clearActiveFilters($browser);
-    }
-
-    /**
-     * @param Browser $browser
-     * @throws TimeoutException
-     */
-    protected function clearActiveFilters(Browser $browser)
-    {
-        $browser->click('@crud-clear-filters-link');
-        $this->waitForRequestsToFinish($browser);
-    }
-
-    /**
-     * @param Browser $browser
-     * @param string|int $value
-     */
-    protected function enterSearchInputValue(Browser $browser, $value)
-    {
-        $browser->type('@data-table-search-input', $value);
-        $browser->pause(1000);
     }
 }

@@ -265,4 +265,13 @@ class CountryList
         'CV' => 'Zelenortski otoki',
         'ZW' => 'Zimbabve',
     ];
+
+    /**
+     * @param string $name
+     * @return false|int|string
+     */
+    public static function getCodeByName(string $name)
+    {
+        return array_search($name, self::COUNTRY_NAMES);
+    }
 }

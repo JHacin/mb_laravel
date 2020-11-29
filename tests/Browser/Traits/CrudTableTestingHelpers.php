@@ -65,6 +65,37 @@ trait CrudTableTestingHelpers
     }
 
     /**
+     * @param Browser $browser
+     */
+    protected function clearActiveFilters(Browser $browser)
+    {
+        $browser->click('@crud-clear-filters-link');
+        $this->waitForRequestsToFinish($browser);
+    }
+
+    /**
+     * @param Browser $browser
+     * @param string|int $value
+     */
+    protected function enterSearchInputValue(Browser $browser, $value)
+    {
+        $browser->clear('@data-table-search-input');
+        $browser->type('@data-table-search-input', $value);
+        $browser->pause(1000);
+    }
+
+    /**
+     * @param Browser $browser
+     */
+    protected function openFirstRowDetails(Browser $browser)
+    {
+        $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
+            $this->resizeToMediumScreen($browser);
+            $browser->click('@data-table-open-row-details');
+        });
+    }
+
+    /**
      * @param Carbon|null $date
      * @return string|void
      */

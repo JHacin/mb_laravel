@@ -12,7 +12,7 @@ class RoleCrudController extends BackpackRoleCrudController
     public function setup()
     {
         parent::setup();
-        $this->crud->setRoute(backpack_url(config('routes.admin.roles')));
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.roles'));
     }
 
     public function setupListOperation()
