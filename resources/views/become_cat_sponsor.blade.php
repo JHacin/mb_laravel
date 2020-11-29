@@ -38,6 +38,7 @@
                 <x-inputs.money name="monthly_amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
                     <x-slot name="help">
                         Vpišite znesek v €, ki ga želite mesečno nakazovati za vašega posvojenca.
+                        <strong>Minimalni znesek: 5€</strong>
                     </x-slot>
                 </x-inputs.money>
 

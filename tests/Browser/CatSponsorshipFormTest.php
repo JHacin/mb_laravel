@@ -148,12 +148,12 @@ class CatSponsorshipFormTest extends DuskTestCase
             $this->disableHtmlFormValidation($browser);
             $browser->type('@monthly_amount-input', '-1');
             $this->submit($browser);
-            $browser->assertSee('Vrednost mora biti med 0 in 999999.99.');
+            $browser->assertSee('Minimalni mesečni znesek je 5€.');
 
             $this->disableHtmlFormValidation($browser);
             $browser->type('@monthly_amount-input', '999999999999');
             $this->submit($browser);
-            $browser->assertSee('Vrednost mora biti med 0 in 999999.99.');
+            $browser->assertSee('Vrednost ne sme biti večja od 999999.99.');
 
             $this->disableHtmlFormValidation($browser);
             $browser->script("document.getElementById('monthly_amount').setAttribute('type', 'text')");

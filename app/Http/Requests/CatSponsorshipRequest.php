@@ -24,7 +24,12 @@ class CatSponsorshipRequest extends FormRequest
             'personData.zip_code' => ['required', 'string', 'max:255'],
             'personData.city' => ['required', 'string', 'max:255'],
             'personData.country' => ['required', new CountryCode],
-            'monthly_amount' => ['required', 'numeric', 'between:0,' . config('money.decimal_max')],
+            'monthly_amount' => [
+                'required',
+                'numeric',
+                'min:' . config('money.donation_minimum'),
+                'max:' . config('money.decimal_max'),
+            ],
             'is_anonymous' => ['boolean'],
             'is_agreed_to_terms' => ['accepted'],
         ];
@@ -38,6 +43,7 @@ class CatSponsorshipRequest extends FormRequest
         return [
             'personData.email.unique' => 'Ta email naslov že uporablja registriran uporabnik. Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
             'personData.date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
+            'monthly_amount.min' => 'Minimalni mesečni znesek je 5€.'
         ];
     }
 }

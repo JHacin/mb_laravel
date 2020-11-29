@@ -9,6 +9,7 @@ use App\Models\Sponsorship;
 use App\Models\User;
 use App\Services\CatSponsorshipMailService;
 use Auth;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -58,10 +59,10 @@ class CatSponsorshipController extends Controller
     }
 
     /**
-     * @param User $user
+     * @param User|Authenticatable $user
      * @param string $inputEmail
      */
-    protected function updateUserEmail(User $user, string $inputEmail)
+    protected function updateUserEmail($user, string $inputEmail)
     {
         if ($inputEmail === $user->email) {
             return;
