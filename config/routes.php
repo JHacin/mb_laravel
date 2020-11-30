@@ -12,6 +12,8 @@ return [
         'dashboard' => 'dashboard',
         'login' => 'login',
         'users' => 'uporabniki',
+        'users_add' => 'uporabniki/create',
+        'users_edit' => 'uporabniki/{id}/edit',
         'roles' => 'vloge',
         'permissions' => 'dovoljenja',
         'cats' => 'muce',
@@ -21,6 +23,10 @@ return [
         'cat_locations_add' => 'lokacije/create',
         'cat_locations_edit' => 'lokacije/{id}/edit',
         'sponsorships' => 'botrovanja',
+        'sponsorships_add' => 'botrovanja/create',
+        'sponsorships_edit' => 'botrovanja/{id}/edit',
         'person_data' => 'neregistrirani-botri',
+        'person_data_add' => 'neregistrirani-botri/create',
+        'person_data_edit' => 'neregistrirani-botri/{id}/edit',
     ]
 ];

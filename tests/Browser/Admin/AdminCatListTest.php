@@ -7,6 +7,7 @@ use App\Models\CatLocation;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminCatListPage;
+use Tests\Browser\Pages\Admin\AdminCatLocationEditPage;
 use Throwable;
 
 class AdminCatListTest extends AdminTestCase
@@ -57,6 +58,25 @@ class AdminCatListTest extends AdminTestCase
                     8 => $this->formatToDatetimeColumnString($cat->created_at),
                     9 => $this->formatToDatetimeColumnString($cat->updated_at),
                 ]);
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_clicking_on_location_opens_up_location_edit_form()
+    {
+        $this->browse(function (Browser $browser) {
+            $cat = static::$sampleCat_2;
+            $this->goToCatsListPage($browser);
+            $this->openFirstRowDetails($browser);
+
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($cat) {
+                $browser
+                    ->click('tr[data-dt-column="6"] a')
+                    ->on(new AdminCatLocationEditPage($cat->location));
             });
         });
     }

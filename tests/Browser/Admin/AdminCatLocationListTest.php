@@ -111,7 +111,6 @@ class AdminCatLocationListTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $location = $this->createCatLocation(['name' => 'DELETE_ME']);
             $this->goToCatLocationsListPage($browser);
-            $browser->screenshot('3');
             $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) use ($location) {
                 $browser
                     ->assertSee($location->name)

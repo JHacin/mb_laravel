@@ -21,7 +21,7 @@ use Illuminate\Support\Carbon;
  * @property int $is_anonymous
  * @property string|null $monthly_amount
  * @property int $is_active
- * @property string|null $ended_at
+ * @property Carbon|null $ended_at
  * @property-read Cat|null $cat
  * @property-read PersonData|null $personData
  * @method static Builder|Sponsorship newModelQuery()
@@ -56,6 +56,15 @@ class Sponsorship extends Model
 
     protected $table = 'sponsorships';
     protected $guarded = ['id'];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'ended_at' => 'date',
+    ];
 
     /*
     |--------------------------------------------------------------------------

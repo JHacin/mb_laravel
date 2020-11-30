@@ -15,6 +15,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class SponsorshipCrudController
@@ -55,7 +56,14 @@ class SponsorshipCrudController extends CrudController
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return backpack_url(config('routes.admin.cats'), [$related_key, 'edit']);
                 },
-            ]
+            ],
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhereHas('cat', function (Builder $query) use ($searchTerm) {
+                    $query
+                        ->where('name', 'like', "%$searchTerm%")
+                        ->orWhere('id', 'like', "%$searchTerm%");
+                });
+            }
         ]);
         $this->crud->addColumn([
             'name' => 'personData',
@@ -64,13 +72,20 @@ class SponsorshipCrudController extends CrudController
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
                     /** @var Sponsorship $entry */
-                    $route = $entry->personData->belongsToRegisteredUser()
-                        ? config('routes.admin.users')
-                        : config('routes.admin.person_data');
+                    $isUser = $entry->personData->belongsToRegisteredUser();
+                    $route = $isUser ? config('routes.admin.users') : config('routes.admin.person_data');
+                    $id = $isUser ? $entry->personData->user_id : $related_key;
 
-                    return backpack_url($route, [$related_key, 'edit']);
+                    return backpack_url($route, [$id, 'edit']);
                 },
-            ]
+            ],
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhereHas('personData', function (Builder $query) use ($searchTerm) {
+                    $query
+                        ->where('email', 'like', "%$searchTerm%")
+                        ->orWhere('id', 'like', "%$searchTerm%");
+                });
+            }
         ]);
         $this->crud->addColumn(CrudColumnGenerator::moneyColumn([
             'name' => 'monthly_amount',
