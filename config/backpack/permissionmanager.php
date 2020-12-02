@@ -12,9 +12,9 @@ return [
     */
 
     'models' => [
-        'user'       => App\Models\User::class,
+        'user' => App\Models\User::class,
         'permission' => Backpack\PermissionManager\app\Models\Permission::class,
-        'role'       => Backpack\PermissionManager\app\Models\Role::class,
+        'role' => Backpack\PermissionManager\app\Models\Role::class,
     ],
 
     /*
@@ -33,9 +33,9 @@ return [
     'allow_permission_create' => false,
     'allow_permission_update' => false,
     'allow_permission_delete' => false,
-    'allow_role_create'       => false,
-    'allow_role_update'       => false,
-    'allow_role_delete'       => false,
+    'allow_role_create' => false,
+    'allow_role_update' => false,
+    'allow_role_delete' => false,
 
     /*
     |--------------------------------------------------------------------------

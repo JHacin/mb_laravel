@@ -3,9 +3,9 @@
 use Backpack\CRUD\app\Http\Controllers\Auth\LoginController;
 
 Route::group([
-    'namespace'  => 'Backpack\CRUD\app\Http\Controllers',
+    'namespace' => 'Backpack\CRUD\app\Http\Controllers',
     'middleware' => config('backpack.base.web_middleware', 'web'),
-    'prefix'     => config('backpack.base.route_prefix'),
+    'prefix' => config('backpack.base.route_prefix'),
 ], function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('backpack.auth.login');
     Route::post('login', [LoginController::class, 'login']);

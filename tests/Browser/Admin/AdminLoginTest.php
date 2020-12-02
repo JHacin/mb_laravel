@@ -48,7 +48,7 @@ class AdminLoginTest extends AdminTestCase
             $browser->visit(new AdminLoginPage);
             $this->disableHtmlFormValidation($browser);
             $browser->click('@admin-login-submit');
-           $this->assertAllRequiredErrorsAreShown(
+            $this->assertAllRequiredErrorsAreShown(
                 $browser,
                 ['@email-input-wrapper', '@password-input-wrapper']
             );

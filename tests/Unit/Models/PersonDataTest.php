@@ -37,7 +37,7 @@ class PersonDataTest extends TestCase
      */
     public function test_returns_gender_label()
     {
-        $this->personData->update(['gender' => PersonData::GENDER_MALE ]);
+        $this->personData->update(['gender' => PersonData::GENDER_MALE]);
         $this->assertEquals('Moški', $this->personData->gender_label);
     }
 

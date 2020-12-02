@@ -1,8 +1,8 @@
 <?php
 
 Route::group([
-    'namespace'  => 'App\Http\Controllers\Admin\PermissionManager',
-    'prefix'     => config('backpack.base.route_prefix', 'admin'),
+    'namespace' => 'App\Http\Controllers\Admin\PermissionManager',
+    'prefix' => config('backpack.base.route_prefix', 'admin'),
     'middleware' => ['web', backpack_middleware()],
 ], function () {
     Route::crud(config('routes.admin.permissions'), 'PermissionCrudController');

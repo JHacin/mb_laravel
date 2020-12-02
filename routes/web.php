@@ -17,7 +17,8 @@ Route::get('/muce', [PagesController::class, 'catList'])->name('cat_list');
 Route::get('/muce/{cat}', [PagesController::class, 'catDetails'])->name('cat_details');
 
 // Cat sponsorship
-Route::get(config('routes.cat_sponsorship_form'), [CatSponsorshipController::class, 'form'])->name('become_cat_sponsor');
+Route::get(config('routes.cat_sponsorship_form'),
+    [CatSponsorshipController::class, 'form'])->name('become_cat_sponsor');
 Route::post(config('routes.cat_sponsorship_form'), [CatSponsorshipController::class, 'submit']);
 
 // User pages
@@ -30,11 +31,13 @@ Route::post(config('routes.login'), [LoginController::class, 'login']);
 Route::post('/odjava', [LoginController::class, 'logout'])->name('logout');
 Route::get(config('routes.register'), [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post(config('routes.register'), [RegisterController::class, 'register']);
-Route::get(config('routes.forgot_password'), [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::get(config('routes.forgot_password'),
+    [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/geslo/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/geslo/ponastavitev/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post(config('routes.forgot_password'), [ResetPasswordController::class, 'reset'])->name('password.update');
-Route::get(config('routes.confirm_password'), [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
+Route::get(config('routes.confirm_password'),
+    [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
 Route::post(config('routes.confirm_password'), [ConfirmPasswordController::class, 'confirm']);
 Route::get('/email/potrditev', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('/email/potrditev/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');

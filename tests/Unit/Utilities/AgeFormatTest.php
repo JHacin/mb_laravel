@@ -41,6 +41,7 @@ class AgeFormatTest extends TestCase
 
         $yearsAndMonths = $now->clone()->subYears(1)->subMonths(1)->subDays(4);
         $this->assertEquals('1 leto in 1 mesec', AgeFormat::formatToAgeString($yearsAndMonths->diff($now)));
-        $this->assertEquals('3 leta in 5 mesecev', AgeFormat::formatToAgeString($yearsAndMonths->subYears(2)->subMonths(4)->diff($now)));
+        $this->assertEquals('3 leta in 5 mesecev',
+            AgeFormat::formatToAgeString($yearsAndMonths->subYears(2)->subMonths(4)->diff($now)));
     }
 }

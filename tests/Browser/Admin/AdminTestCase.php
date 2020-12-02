@@ -3,9 +3,9 @@
 namespace Tests\Browser\Admin;
 
 use App\Models\User;
-use Tests\DuskTestCase;
 use Tests\Browser\Traits\CrudTableTestingHelpers;
 use Tests\Browser\Traits\RequestTestingHelpers;
+use Tests\DuskTestCase;
 
 class AdminTestCase extends DuskTestCase
 {

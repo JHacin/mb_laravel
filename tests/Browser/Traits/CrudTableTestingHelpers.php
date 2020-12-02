@@ -30,8 +30,7 @@ trait CrudTableTestingHelpers
      */
     protected function assertDetailsModalShowsValuesInOrder(Browser $browser, array $valueMap)
     {
-        foreach ($valueMap as $index => $expectedValue)
-        {
+        foreach ($valueMap as $index => $expectedValue) {
             $this->assertDetailsModalColumnShowsValue($browser, $index, $expectedValue);
         }
     }
@@ -45,7 +44,7 @@ trait CrudTableTestingHelpers
     {
         $browser->with(
             $this->getDetailsColumnValueSelectorByIndex($index),
-            function(Browser $browser) use ($expected) {
+            function (Browser $browser) use ($expected) {
                 if (!$expected) {
                     return;
                 }

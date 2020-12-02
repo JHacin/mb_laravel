@@ -58,11 +58,11 @@ class CatTest extends TestCase
      */
     public function test_filters_out_inactive_cats_by_default()
     {
-        $this->cat->update(['is_active' => false ]);
+        $this->cat->update(['is_active' => false]);
         $this->assertFalse(Cat::all()->contains($this->cat->id));
         $this->assertTrue(Cat::withoutGlobalScopes()->get()->contains($this->cat->id));
 
-        $this->cat->update(['is_active' => true ]);
+        $this->cat->update(['is_active' => true]);
         $this->assertTrue(Cat::all()->contains($this->cat->id));
     }
 
