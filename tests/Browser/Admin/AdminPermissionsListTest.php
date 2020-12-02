@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Admin\AdminTestCase;
 use Tests\Browser\Pages\Admin\AdminPermissionsListPage;
@@ -25,11 +26,14 @@ class AdminPermissionsListTest extends AdminTestCase
 
     /**
      * @param Browser $browser
+     * @throws TimeoutException
      */
     protected function goToPage(Browser $browser)
     {
         $browser
             ->loginAs(static::$defaultAdmin)
             ->visit(new AdminPermissionsListPage);
+
+        $this->waitForRequestsToFinish($browser);
     }
 }

@@ -19,7 +19,11 @@ class AdminCatEditTest extends AdminTestCase
 
             $browser
                 ->loginAs(static::$defaultAdmin)
-                ->visit(new AdminCatEditPage($cat))
+                ->visit(new AdminCatEditPage($cat));
+
+            $this->waitForRequestsToFinish($browser);
+
+            $browser
                 ->assertValue('input[name="name"]', $cat->name)
                 ->assertValue('input[name="gender"]', $cat->gender)
                 ->assertValue('input[name="date_of_birth"]', $cat->date_of_birth->toDateString())

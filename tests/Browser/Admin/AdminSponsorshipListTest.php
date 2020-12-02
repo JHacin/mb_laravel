@@ -33,8 +33,8 @@ class AdminSponsorshipListTest extends AdminTestCase
         parent::setUp();
 
         if (!static::$sampleSponsorship_1 || !static::$sampleSponsorship_2) {
-            static::$sampleSponsorship_1 = Sponsorship::latest('id')->skip(1)->first();
-            static::$sampleSponsorship_2 = Sponsorship::latest('id')->first();
+            static::$sampleSponsorship_1 = $this->createSponsorship();
+            static::$sampleSponsorship_2 = $this->createSponsorship();
         }
     }
 
@@ -92,6 +92,7 @@ class AdminSponsorshipListTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $sponsorship = static::$sampleSponsorship_2;
+
             $this->goToPage($browser);
             $this->openFirstRowDetails($browser);
 

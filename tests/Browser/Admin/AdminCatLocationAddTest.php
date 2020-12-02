@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\Utilities\CountryList;
+use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Admin\AdminTestCase;
 use Tests\Browser\Pages\Admin\AdminCatLocationAddPage;
@@ -73,6 +74,7 @@ class AdminCatLocationAddTest extends AdminTestCase
 
     /**
      * @param Browser $browser
+     * @throws TimeoutException
      */
     protected function goToPage(Browser $browser)
     {
@@ -81,5 +83,7 @@ class AdminCatLocationAddTest extends AdminTestCase
             ->visit(new AdminCatLocationListPage)
             ->click('@crud-create-button')
             ->on(new AdminCatLocationAddPage);
+
+        $this->waitForRequestsToFinish($browser);
     }
 }

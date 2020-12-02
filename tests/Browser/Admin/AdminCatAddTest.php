@@ -216,6 +216,10 @@ class AdminCatAddTest extends AdminTestCase
             ->waitFor('.modal.show[data-handle="crop-modal"] .cropper-crop-box');
     }
 
+    /**
+     * @param Browser $browser
+     * @throws TimeoutException
+     */
     protected function goToPage(Browser $browser)
     {
         $browser
@@ -223,5 +227,7 @@ class AdminCatAddTest extends AdminTestCase
             ->visit(new AdminCatListPage)
             ->click('@crud-create-button')
             ->on(new AdminCatAddPage);
+
+        $this->waitForRequestsToFinish($browser);
     }
 }
