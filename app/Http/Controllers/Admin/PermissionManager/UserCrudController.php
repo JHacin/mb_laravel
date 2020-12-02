@@ -9,6 +9,7 @@ use App\Services\UserMailService;
 use App\Utilities\Admin\CrudColumnGenerator;
 use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class UserCrudController extends BackpackUserCrudController
     /**
      * @var UserMailService
      */
-    protected $userMailService;
+    protected UserMailService $userMailService;
 
     /**
      * UserCrudController constructor.
@@ -47,13 +48,28 @@ class UserCrudController extends BackpackUserCrudController
     public function setupListOperation()
     {
         parent::setupListOperation();
+        $this->crud->addColumn(CrudColumnGenerator::id())->makeFirstColumn();
 
         $this->crud->removeColumn('permissions');
 
         $this->crud->modifyColumn('name', ['label' => trans('user.name')]);
 
-        $this->crud->addColumn(CrudColumnGenerator::firstName(['name' => 'personData.first_name']))->afterColumn('email');
-        $this->crud->addColumn(CrudColumnGenerator::lastName(['name' => 'personData.last_name']))->afterColumn('personData.first_name');
+        $this->crud->addColumn(CrudColumnGenerator::firstName([
+            'name' => 'personData.first_name',
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhereHas('personData', function (Builder $query) use ($searchTerm) {
+                    $query->where('first_name', 'like', "%$searchTerm%");
+                });
+            },
+        ]))->afterColumn('email');
+        $this->crud->addColumn(CrudColumnGenerator::lastName([
+            'name' => 'personData.last_name',
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhereHas('personData', function (Builder $query) use ($searchTerm) {
+                    $query->where('last_name', 'like', "%$searchTerm%");
+                });
+            },
+        ]))->afterColumn('personData.first_name');
         $this->crud->addColumn(CrudColumnGenerator::isActive());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
