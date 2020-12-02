@@ -2,14 +2,11 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Models\Sponsorship;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminSponsorshipRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -18,34 +15,32 @@ class AdminSponsorshipRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
-        return array_merge(
-            Sponsorship::getSharedValidationRules(),
-            [
-                'cat' => ['required', 'integer', 'exists:cats,id'],
-                'personData' => ['required', 'integer', 'exists:person_data,id'],
-            ]
-        );
+        return [
+            'is_anonymous' => ['boolean'],
+            'monthly_amount' => [
+                'required',
+                'numeric',
+                'min:' . config('money.donation_minimum'),
+                'max:' . config('money.decimal_max'),
+            ],
+            'cat' => ['required', 'integer', 'exists:cats,id'],
+            'personData' => ['required', 'integer', 'exists:person_data,id'],
+        ];
     }
 
     /**
-     * Get the validation messages that apply to the request.
-     *
      * @return array
      */
     public function messages()
     {
-        return array_merge(
-            Sponsorship::getSharedValidationMessages(),
-            [
-                'cat.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
-                'personData.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
-            ]
-        );
+        return [
+            'cat.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
+            'personData.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
+            'monthly_amount.min' => 'Minimalni mesečni znesek je 5€.'
+        ];
     }
 }

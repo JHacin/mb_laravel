@@ -9,7 +9,7 @@ class AdminCatEditPage extends Page
     /**
      * @var Cat
      */
-    protected $cat;
+    protected Cat $cat;
 
     /**
      * @param Cat $cat

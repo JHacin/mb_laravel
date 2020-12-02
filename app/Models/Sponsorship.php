@@ -72,25 +72,6 @@ class Sponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * @return string[][]
-     */
-    public static function getSharedValidationRules()
-    {
-        return [
-            'is_anonymous' => ['boolean'],
-            'monthly_amount' => ['required', 'numeric', 'between:0,' . config('money.decimal_max')],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function getSharedValidationMessages()
-    {
-        return [];
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

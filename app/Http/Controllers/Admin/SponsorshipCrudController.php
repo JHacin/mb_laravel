@@ -154,6 +154,9 @@ class SponsorshipCrudController extends CrudController
             'placeholder' => 'Izberi muco',
             'attributes' => [
                 'required' => 'required',
+            ],
+            'wrapper' => [
+                'dusk' => 'cat-wrapper'
             ]
         ]);
         $this->crud->addField([
@@ -161,15 +164,27 @@ class SponsorshipCrudController extends CrudController
             'label' => trans('sponsor.sponsor'),
             'type' => 'relationship',
             'placeholder' => 'Izberi botra',
+            'attributes' => [
+                'required' => 'required',
+            ],
+            'wrapper' => [
+                'dusk' => 'personData-wrapper'
+            ]
         ]);
         $this->crud->addField(CrudFieldGenerator::moneyField([
             'name' => 'monthly_amount',
             'label' => trans('admin.sponsorship_monthly_amount'),
+            'wrapper' => [
+                'dusk' => 'monthly_amount-wrapper'
+            ]
         ]));
         $this->crud->addField([
             'name' => 'is_anonymous',
             'label' => 'Anonimno',
             'type' => 'checkbox',
+            'wrapper' => [
+                'dusk' => 'is_anonymous-wrapper'
+            ]
         ]);
         $this->crud->addField([
             'name' => 'is_active',
@@ -188,6 +203,9 @@ class SponsorshipCrudController extends CrudController
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'ended_at',
             'label' => 'Datum konca',
+            'wrapper' => [
+                'dusk' => 'ended_at-wrapper'
+            ]
         ]));
     }
 }
