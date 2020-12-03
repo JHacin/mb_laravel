@@ -84,7 +84,22 @@ class UserCrudController extends BackpackUserCrudController
     {
         parent::addUserFields();
 
-        $this->crud->modifyField('name', ['label' => trans('user.name')]);
+        $this->crud->modifyField('name', [
+            'label' => trans('user.name'),
+            'wrapper' => [
+                'dusk' => 'name-input-wrapper'
+            ],
+        ]);
+        $this->crud->modifyField('email', [
+            'wrapper' => [
+                'dusk' => 'email-input-wrapper'
+            ],
+        ]);
+        $this->crud->modifyField('password', [
+            'wrapper' => [
+                'dusk' => 'password-input-wrapper'
+            ],
+        ]);
 
         CrudFieldGenerator::addPersonDataFields($this->crud);
 
@@ -93,6 +108,9 @@ class UserCrudController extends BackpackUserCrudController
             'label' => trans('user.is_active'),
             'type' => 'checkbox',
             'hint' => 'Uporabnik, ki ni aktiviran, se še ne more prijaviti v račun.',
+            'wrapper' => [
+                'dusk' => 'is_active-input-wrapper',
+            ],
         ]);
     }
 
@@ -112,6 +130,9 @@ class UserCrudController extends BackpackUserCrudController
             'label' => 'Pošlji obvestilo o ustvarjenem računu?',
             'type' => 'checkbox',
             'hint' => 'Uporabnik bo na svoj email naslov prejel sporočilo, v katerem se mu izreče dobrodošlica.',
+            'wrapper' => [
+                'dusk' => 'should_send_welcome_email-input-wrapper',
+            ],
         ]);
     }
 

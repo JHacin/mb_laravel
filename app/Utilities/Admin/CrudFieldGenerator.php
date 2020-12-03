@@ -64,6 +64,9 @@ class CrudFieldGenerator
             'options' => PersonData::GENDER_LABELS,
             'inline' => true,
             'default' => PersonData::GENDER_UNKNOWN,
+            'wrapper' => [
+                'dusk' => 'gender-input-wrapper',
+            ],
         ]);
         $crudPanel->addField([
             'name' => $namePrefix . 'phone',
@@ -76,6 +79,9 @@ class CrudFieldGenerator
             'type' => 'date_picker',
             'date_picker_options' => [
                 'format' => 'dd. mm. yyyy',
+            ],
+            'wrapper' => [
+                'dusk' => 'date_of_birth-input-wrapper',
             ],
         ]);
 

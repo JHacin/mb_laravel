@@ -2,10 +2,8 @@
 
 namespace Tests\Browser\Admin;
 
-use App\Models\PersonData;
 use App\Models\User;
 use Facebook\WebDriver\Exception\TimeoutException;
-use Illuminate\Support\Arr;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminUserListPage;
 use Throwable;
@@ -31,11 +29,8 @@ class AdminUserListTest extends AdminTestCase
 
         if (!static::$sampleUser_1 || !static::$sampleUser_2) {
             static::$sampleUser_1 = $this->createUser();
-            static::$sampleUser_2 = $this->createUser();
+            static::$sampleUser_2 = $this->createUserWithPersonData();
             static::$sampleUser_2->assignRole(User::ROLE_SUPER_ADMIN);
-            $fakePersonData = Arr::except(PersonData::factory()->make()->toArray(), ['id', 'email']);
-            static::$sampleUser_2->personData->update($fakePersonData);
-            static::$sampleUser_2->refresh();
         }
     }
 
