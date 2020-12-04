@@ -75,7 +75,10 @@ class PersonDataCrudController extends CrudController
             'label' => trans('user.email'),
             'attributes' => [
                 'required' => 'required'
-            ]
+            ],
+            'wrapper' => [
+                'dusk' => 'email-input-wrapper',
+            ],
         ]);
         CrudFieldGenerator::addPersonDataFields($this->crud);
     }

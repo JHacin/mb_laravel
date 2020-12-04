@@ -2,18 +2,45 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Http\Requests\PersonDataRequest;
+use App\Models\PersonData;
+use App\Rules\CountryCode;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Unique;
 
-class AdminPersonDataRequest extends PersonDataRequest
+class AdminPersonDataRequest extends FormRequest
 {
     /**
-     * @inheritDoc
+     * @return bool
      */
     public function authorize()
     {
         return backpack_auth()->check();
+    }
+
+    /**
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'email' => [
+                'required',
+                'string',
+                'email',
+                Rule::unique('users', 'email'),
+                $this->getUniqueEmailRuleForPersonDataTable(),
+            ],
+            'first_name' => ['nullable', 'string', 'max:255'],
+            'last_name' => ['nullable', 'string', 'max:255'],
+            'gender' => [Rule::in(PersonData::GENDERS)],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'date_of_birth' => ['nullable', 'date', 'before:now'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'zip_code' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', new CountryCode],
+        ];
     }
 
     /**
@@ -34,12 +61,8 @@ class AdminPersonDataRequest extends PersonDataRequest
     /**
      * @inheritDoc
      */
-    public function rules()
+    public function messages()
     {
-        $rules = parent::rules();
-
-        $rules['email'][] = $this->getUniqueEmailRuleForPersonDataTable();
-
-        return $rules;
+        return PersonData::getSharedValidationMessages();
     }
 }
