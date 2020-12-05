@@ -14,6 +14,6 @@ class CatListControllerTest extends TestCase
     {
         $response = $this->get(config('routes.cat_list'));
 
-        $response->assertViewHas('cats', Cat::withCount('sponsorships')->get());
+        $response->assertViewHas('cats', Cat::withCount('sponsorships')->latest()->get());
     }
 }

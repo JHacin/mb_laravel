@@ -16,7 +16,7 @@ class CatListController extends Controller
      */
     public function index()
     {
-        $cats = Cat::withCount('sponsorships')->get();
+        $cats = Cat::withCount('sponsorships')->latest()->get();
 
         return view('cat_list', ['cats' => $cats]);
     }
