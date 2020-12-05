@@ -7,6 +7,8 @@ return [
     'forgot_password' => '/geslo/ponastavitev',
     'confirm_password' => '/geslo/potrditev',
     'user_profile' => '/profil',
+    'cat_list' => '/muce',
+    'cat_details' => '/muce/{cat}',
     'cat_sponsorship_form' => '/muce/{cat}/postani-boter',
     'admin' => [
         'dashboard' => 'dashboard',

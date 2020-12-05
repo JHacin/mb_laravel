@@ -13,7 +13,7 @@ trait CreatesCats
      * @param array $attributes
      * @return Cat
      */
-    protected function createCat($attributes = [])
+    protected function createCat($attributes = []): Cat
     {
         /** @var Cat $cat */
         $cat = Cat::factory()->createOne($attributes);
@@ -24,7 +24,7 @@ trait CreatesCats
      * @param array $attributes
      * @return Cat
      */
-    protected function createCatWithPhotos($attributes = [])
+    protected function createCatWithPhotos($attributes = []): Cat
     {
         $storage = $this->createFakeStorage();
 

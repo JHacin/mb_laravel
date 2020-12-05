@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\CatListController;
 use App\Http\Controllers\CatSponsorshipController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserProfileController;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 // Publicly visible pages
 Route::get(config('routes.home'), [PagesController::class, 'index'])->name('home');
-Route::get('/muce', [PagesController::class, 'catList'])->name('cat_list');
+Route::get('/muce', [CatListController::class, 'index'])->name('cat_list');
 Route::get('/muce/{cat}', [PagesController::class, 'catDetails'])->name('cat_details');
 
 // Cat sponsorship

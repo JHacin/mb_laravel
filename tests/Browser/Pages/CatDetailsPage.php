@@ -4,7 +4,7 @@ namespace Tests\Browser\Pages;
 
 use App\Models\Cat;
 
-class CatSponsorshipFormPage extends Page
+class CatDetailsPage extends Page
 {
     /**
      * @var Cat
@@ -27,7 +27,7 @@ class CatSponsorshipFormPage extends Page
         return str_replace(
             '{cat}',
             $this->cat->slug,
-            config('routes.cat_sponsorship_form')
+            config('routes.cat_details')
         );
     }
 }

@@ -22,18 +22,6 @@ class PagesController extends Controller
     }
 
     /**
-     * Show the cat list.
-     *
-     * @return Application|Factory|View
-     */
-    public function catList()
-    {
-        $cats = Cat::withCount('sponsorships')->get();
-
-        return view('cat_list', ['cats' => $cats]);
-    }
-
-    /**
      * Show the cat details page.
      *
      * @param Cat $cat
