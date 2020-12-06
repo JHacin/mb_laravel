@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\Models\Cat;
+use App\Models\Sponsorship;
 use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\CatDetailsPage;
@@ -26,11 +27,16 @@ class CatListTest extends DuskTestCase
         parent::setUp();
 
         if (!static::$sampleCat) {
-            static::$sampleCat = $this->createCat([
-                'name' => 'Lojza',
-                'date_of_arrival_boter' => '1999-08-21',
-                'date_of_birth' => Carbon::now()->subYears(1)->subMonths(1)->subDays(4)
-            ]);
+            /** @var Cat $cat */
+            $cat = Cat::factory()
+                ->has(Sponsorship::factory()->count(6))
+                ->createOne([
+                    'name' => 'Lojza',
+                    'date_of_arrival_boter' => '1999-08-21',
+                    'date_of_birth' => Carbon::now()->subYears(1)->subMonths(1)->subDays(4)
+                ]);
+
+            static::$sampleCat = $cat;
         }
     }
 
@@ -44,7 +50,7 @@ class CatListTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
             $this->assertCatDetailsElementHasData($browser, 'name', 'Lojza');
-            $this->assertCatDetailsElementHasData($browser, 'sponsorship-count', '0');
+            $this->assertCatDetailsElementHasData($browser, 'sponsorship-count', '6');
             $this->assertCatDetailsElementHasData($browser, 'date-of-arrival-boter', '21. 8. 1999');
             $this->assertCatDetailsElementHasData($browser, 'current-age', '1 leto in 1 mesec');
 ;        });
