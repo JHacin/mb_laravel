@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Alert;
 use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminSponsorshipRequest;
 use App\Models\Cat;
@@ -15,8 +16,12 @@ use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class SponsorshipCrudController
@@ -42,6 +47,7 @@ class SponsorshipCrudController extends CrudController
         $this->crud->setEntityNameStrings('Botrovanje', 'Botrovanja');
         $this->crud->setSubheading('Dodaj novo botrovanje', 'create');
         $this->crud->setSubheading('Uredi botrovanje', 'edit');
+        $this->crud->addButtonFromView('line', 'sponsorship_cancel', 'sponsorship_cancel');
     }
 
     /**
@@ -152,6 +158,30 @@ class SponsorshipCrudController extends CrudController
     }
 
     /**
+     * @param string $id
+     * @return RedirectResponse
+     */
+    public function cancelSponsorship(string $id): RedirectResponse
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $sponsorship = Sponsorship::find($id);
+
+        if ($sponsorship->is_active) {
+            $sponsorship->update([
+                'is_active' => false,
+                'ended_at' => Carbon::now()->toIso8601String()
+            ]);
+
+            Alert::success('Botrovanje uspešno prekinjeno.')->flash();
+        } else {
+            Alert::error('Botrovanje je že prekinjeno.')->flash();
+        }
+
+        return Redirect::back();
+    }
+
+    /**
      * @return void
      */
     protected function setupCreateOperation()
@@ -201,6 +231,9 @@ class SponsorshipCrudController extends CrudController
             'name' => 'is_active',
             'label' => 'Aktivno',
             'type' => 'checkbox',
+            'hint' =>
+                'Botrovanje je v teku (redna plačila, muca še kar potrebuje botre itd.).' .
+                '<br>Neaktivna botrovanja ne bodo vključena na spletni strani (v seštevkih botrovanj, na seznamih botrov itd.)',
         ]);
     }
 
@@ -214,6 +247,10 @@ class SponsorshipCrudController extends CrudController
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'ended_at',
             'label' => 'Datum konca',
+            'hint' =>
+                'Če želite uradno prekiniti botrovanje, je treba tudi odkljukati polje \'Aktivno\'.' .
+                ' Datum konca se hrani samo za evidenco tega, koliko časa je trajalo določeno botrovanje.' .
+                ' Datum se lahko izbriše s pritiskom na polje > "Clear".',
             'wrapper' => [
                 'dusk' => 'ended_at-wrapper'
             ]

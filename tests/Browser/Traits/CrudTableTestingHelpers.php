@@ -58,7 +58,7 @@ trait CrudTableTestingHelpers
      * @param int $index
      * @return string
      */
-    protected function getDetailsColumnValueSelectorByIndex(int $index)
+    protected function getDetailsColumnValueSelectorByIndex(int $index): string
     {
         return ".modal-body > table > tbody > tr[data-dt-column='$index'] > td:nth-child(2) > span";
     }
@@ -111,7 +111,7 @@ trait CrudTableTestingHelpers
      * @param Carbon|null $date
      * @return string|void
      */
-    protected function formatToDatetimeColumnString(?Carbon $date)
+    protected function formatToDatetimeColumnString(?Carbon $date): string
     {
         if (!$date) {
             return '';

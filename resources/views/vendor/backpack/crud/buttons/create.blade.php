@@ -1,6 +1,6 @@
 @if ($crud->hasAccess('create'))
     <a
-        href="{{ url($crud->route.'/create') }}"
+        href="{{ url($crud->route . '/create') }}"
         class="btn btn-primary crud-create-button"
         data-style="zoom-in"
     >

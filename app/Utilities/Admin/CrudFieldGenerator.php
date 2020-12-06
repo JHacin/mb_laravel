@@ -92,7 +92,7 @@ class CrudFieldGenerator
      * @param array $additions
      * @return array
      */
-    public static function moneyField($additions = [])
+    public static function moneyField($additions = []): array
     {
         return array_merge([
             'type' => 'number',
@@ -111,12 +111,15 @@ class CrudFieldGenerator
      * @param array $additions
      * @return array
      */
-    public static function dateField($additions = [])
+    public static function dateField($additions = []): array
     {
         return array_merge([
             'type' => 'date_picker',
             'date_picker_options' => [
                 'format' => 'd. m. yyyy',
+                'clearBtn' => true,
+                'language' => 'sl',
+                'autoclose' => true,
             ],
         ], $additions);
     }

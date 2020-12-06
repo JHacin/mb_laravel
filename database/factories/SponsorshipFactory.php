@@ -17,11 +17,9 @@ class SponsorshipFactory extends Factory
     protected $model = Sponsorship::class;
 
     /**
-     * Define the model's default state.
-     *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'cat_id' => Cat::factory(),

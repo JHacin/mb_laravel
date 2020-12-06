@@ -23,6 +23,7 @@ Route::group([
 ], function () {
     Route::crud(config('routes.admin.cats'), 'CatCrudController');
     Route::crud(config('routes.admin.sponsorships'), 'SponsorshipCrudController');
+    Route::post(config('routes.admin.sponsorships_cancel'), 'SponsorshipCrudController@cancelSponsorship')->name('admin.sponsorship_cancel');
     Route::crud(config('routes.admin.cat_locations'), 'CatLocationCrudController');
     Route::crud(config('routes.admin.person_data'), 'PersonDataCrudController');
 });

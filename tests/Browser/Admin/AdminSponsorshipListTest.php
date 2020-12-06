@@ -5,6 +5,7 @@ namespace Tests\Browser\Admin;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
+use Carbon\Carbon;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminCatEditPage;
@@ -34,7 +35,7 @@ class AdminSponsorshipListTest extends AdminTestCase
 
         if (!static::$sampleSponsorship_1 || !static::$sampleSponsorship_2) {
             static::$sampleSponsorship_1 = $this->createSponsorship();
-            static::$sampleSponsorship_2 = $this->createSponsorship();
+            static::$sampleSponsorship_2 = $this->createSponsorship(['ended_at' => Carbon::now()->toIso8601String()]);
         }
     }
 
@@ -281,6 +282,85 @@ class AdminSponsorshipListTest extends AdminTestCase
                         ->assertDontSee(static::$sampleSponsorship_2->cat->name_and_id);
                 });
             }
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_shows_cancel_button_if_sponsorship_is_active()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->createSponsorship(['is_active' => true]);
+            $this->goToPage($browser);
+            $this->openFirstRowDetails($browser);
+
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) {
+                $browser->assertPresent('@sponsorship-cancel-link');
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_doesnt_show_cancel_button_if_sponsorship_is_not_active()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->createSponsorship(['is_active' => false]);
+            $this->goToPage($browser);
+            $this->openFirstRowDetails($browser);
+
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) {
+                $browser->assertMissing('@sponsorship-cancel-link');
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_cancels_sponsorship()
+    {
+        $this->browse(function (Browser $browser) {
+            $sponsorship = $this->createSponsorship(['is_active' => true]);
+            $this->assertTrue((bool) $sponsorship->is_active);
+            $this->goToPage($browser);
+
+            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
+                $browser->click('@sponsorship-cancel-form-button');
+            });
+
+            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
+                $browser->press('Prekliči');
+            });
+            $this->waitForRequestsToFinish($browser);
+            $sponsorship->refresh();
+            $this->assertTrue((bool) $sponsorship->is_active);
+
+            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
+                $browser->click('@sponsorship-cancel-form-button');
+            });
+            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
+                $browser->press('Potrdi');
+            });
+            $this->waitForRequestsToFinish($browser);
+
+            $sponsorship->refresh();
+            $this->assertFalse((bool) $sponsorship->is_active);
+            $this->assertNotNull($sponsorship->ended_at);
+
+            $browser->assertSee('Botrovanje uspešno prekinjeno.');
+
+            $this->openFirstRowDetails($browser);
+
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
+                $this->assertDetailsModalColumnShowsValue($browser, 5, 'Ne');
+                $this->assertDetailsModalColumnShowsValue($browser, 7, $this->formatToDatetimeColumnString($sponsorship->ended_at));
+            });
         });
     }
 
