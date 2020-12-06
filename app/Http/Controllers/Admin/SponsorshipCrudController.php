@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminSponsorshipRequest;
 use App\Models\Cat;
 use App\Models\PersonData;
@@ -28,6 +29,7 @@ class SponsorshipCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
+    use CrudFilterHelpers;
 
     /**
      * @return void
@@ -108,9 +110,16 @@ class SponsorshipCrudController extends CrudController
             'type' => 'datetime',
         ]);
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
-
         $this->crud->orderBy('created_at', 'DESC');
 
+        $this->addFilters();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFilters()
+    {
         $this->crud->addFilter(
             [
                 'name' => 'cat',
@@ -138,6 +147,8 @@ class SponsorshipCrudController extends CrudController
                 $this->crud->addClause('where', 'person_data_id', $value);
             }
         );
+
+        $this->addBooleanFilter('is_active', 'Aktivno');
     }
 
     /**

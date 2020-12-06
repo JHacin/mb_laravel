@@ -204,6 +204,60 @@ class AdminSponsorshipListTest extends AdminTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_shows_is_active_filter_options()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToPage($browser);
+
+            $browser->with('@sponsorship-list-is-active-filter', function (Browser $browser) {
+                $browser
+                    ->click('a.dropdown-toggle')
+                    ->assertSee('Da')
+                    ->assertSee('Ne');
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_filters_by_is_active()
+    {
+        $this->browse(function (Browser $browser) {
+            static::$sampleSponsorship_1->update([
+                'is_active' => true,
+                'monthly_amount' => 5432,
+            ]);
+            static::$sampleSponsorship_1->refresh();
+            static::$sampleSponsorship_2->update([
+                'is_active' => false,
+                'monthly_amount' => 9876,
+            ]);
+            static::$sampleSponsorship_2->refresh();
+
+            $this->goToPage($browser);
+
+            $browser->with('@sponsorship-list-is-active-filter', function (Browser $browser) {
+                $browser
+                    ->click('a.dropdown-toggle')
+                    ->click('.dropdown-item[dropdownkey="1"]');
+            });
+
+            $this->waitForRequestsToFinish($browser);
+
+            $browser->with('@crud-table-body', function (Browser $browser) {
+                $browser
+                    ->assertSee('5.432,00 €')
+                    ->assertDontSee('9.876,00 €');
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_search_works()
     {
         $this->browse(function (Browser $browser) {

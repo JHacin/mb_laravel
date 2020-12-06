@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminCatRequest;
 use App\Models\Cat;
 use App\Models\CatLocation;
@@ -28,18 +29,15 @@ use Illuminate\Http\Response;
 class CatCrudController extends CrudController
 {
     use ListOperation;
-    use CreateOperation {
-        store as traitStore;
-    }
-    use UpdateOperation {
-        update as traitUpdate;
-    }
+    use CreateOperation { store as traitStore; }
+    use UpdateOperation { update as traitUpdate; }
     use DeleteOperation;
+    use CrudFilterHelpers;
 
     /**
      * @var CatPhotoService
      */
-    private $catPhotoService;
+    private CatPhotoService $catPhotoService;
 
     /**
      * CatCrudController constructor.
@@ -147,20 +145,7 @@ class CatCrudController extends CrudController
             }
         );
 
-        $this->crud->addFilter(
-            [
-                'name' => 'is_active',
-                'type' => 'dropdown',
-                'label' => 'Objavljena',
-            ],
-            [
-                true => 'Da',
-                false => 'Ne'
-            ],
-            function ($value) {
-                $this->crud->addClause('where', 'is_active', $value);
-            }
-        );
+        $this->addBooleanFilter('is_active', 'Objavljena');
     }
 
     /**
