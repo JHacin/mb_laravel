@@ -114,7 +114,7 @@ class SponsorshipCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'ended_at',
             'label' => trans('sponsorship.ended_at'),
-            'type' => 'datetime',
+            'type' => 'date',
         ]);
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
         $this->crud->orderBy('created_at', 'DESC');
@@ -171,7 +171,7 @@ class SponsorshipCrudController extends CrudController
         if ($sponsorship->is_active) {
             $sponsorship->update([
                 'is_active' => false,
-                'ended_at' => Carbon::now()->toIso8601String()
+                'ended_at' => Carbon::now()->toDateString(),
             ]);
 
             Alert::success('Botrovanje uspešno prekinjeno.')->flash();

@@ -66,7 +66,7 @@ class AdminSponsorshipEditTest extends AdminTestCase
             $this->selectDatepickerDateInTheFuture($browser, '@ended_at-wrapper');
             $browser->click('@crud-form-submit-button');
             $this->waitForRequestsToFinish($browser);
-            $browser->assertSee('Datum konca mora biti v preteklosti.');
+            $browser->assertSee('Datum konca ne sme biti v prihodnosti.');
         });
     }
 

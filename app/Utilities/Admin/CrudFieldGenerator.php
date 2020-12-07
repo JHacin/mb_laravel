@@ -120,6 +120,7 @@ class CrudFieldGenerator
                 'clearBtn' => true,
                 'language' => 'sl',
                 'autoclose' => true,
+                'todayHighlight' => true,
             ],
         ], $additions);
     }

@@ -63,7 +63,7 @@ class Sponsorship extends Model
      * @var array
      */
     protected $casts = [
-        'ended_at' => 'datetime',
+        'ended_at' => 'date',
     ];
 
     /*

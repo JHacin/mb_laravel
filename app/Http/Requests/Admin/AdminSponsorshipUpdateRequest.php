@@ -12,7 +12,7 @@ class AdminSponsorshipUpdateRequest extends AdminSponsorshipRequest
         return array_merge(
             parent::rules(),
             [
-                'ended_at' => ['nullable', 'date', 'before:now'],
+                'ended_at' => ['nullable', 'date', 'before_or_equal:now'],
             ]
         );
     }
@@ -25,7 +25,7 @@ class AdminSponsorshipUpdateRequest extends AdminSponsorshipRequest
         return array_merge(
             parent::messages(),
             [
-                'ended_at.before' => 'Datum konca mora biti v preteklosti.',
+                'ended_at.before_or_equal' => 'Datum konca ne sme biti v prihodnosti.',
             ]
         );
     }

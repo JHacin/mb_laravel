@@ -15,7 +15,7 @@ class AddIsActiveAndEndedAtFieldsToSponsorshipsTable extends Migration
     {
         Schema::table('sponsorships', function (Blueprint $table) {
             $table->boolean('is_active')->default(false);
-            $table->timestamp('ended_at')->nullable();
+            $table->date('ended_at')->nullable();
         });
     }
 
