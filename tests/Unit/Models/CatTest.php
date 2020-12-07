@@ -13,7 +13,7 @@ class CatTest extends TestCase
     /**
      * @var Cat
      */
-    protected $cat;
+    protected Cat $cat;
 
     /**
      * @inheritDoc

@@ -53,7 +53,24 @@ class CatListTest extends DuskTestCase
             $this->assertCatDetailsElementHasData($browser, 'sponsorship-count', '6');
             $this->assertCatDetailsElementHasData($browser, 'date-of-arrival-boter', '21. 8. 1999');
             $this->assertCatDetailsElementHasData($browser, 'current-age', '1 leto in 1 mesec');
-;        });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_doesnt_count_inactive_sponsorships()
+    {
+        $this->browse(function (Browser $browser) {
+            Sponsorship::factory()->createOne([
+                'is_active' => false,
+                'cat_id' => static::$sampleCat->id,
+            ]);
+
+            $this->goToPage($browser);
+            $this->assertCatDetailsElementHasData($browser, 'sponsorship-count', '6');
+        });
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\ClearsGlobalScopes;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,7 +41,7 @@ use Illuminate\Support\Carbon;
  */
 class Sponsorship extends Model
 {
-    use HasFactory, CrudTrait;
+    use HasFactory, CrudTrait, ClearsGlobalScopes;
 
     /*
     |--------------------------------------------------------------------------
@@ -64,6 +65,8 @@ class Sponsorship extends Model
      */
     protected $casts = [
         'ended_at' => 'date',
+        'is_anonymous' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /*
@@ -83,7 +86,7 @@ class Sponsorship extends Model
      *
      * @return BelongsTo
      */
-    public function cat()
+    public function cat(): BelongsTo
     {
         return $this->belongsTo(Cat::class);
     }
@@ -93,7 +96,7 @@ class Sponsorship extends Model
      *
      * @return BelongsTo
      */
-    public function personData()
+    public function personData(): BelongsTo
     {
         return $this->belongsTo(PersonData::class);
     }
@@ -103,6 +106,16 @@ class Sponsorship extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * @inheritDoc
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope('is_active', function (Builder $builder) {
+            $builder->where('is_active', true);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------

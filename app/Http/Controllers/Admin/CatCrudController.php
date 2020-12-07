@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\ClearsModelGlobalScopes;
 use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminCatRequest;
 use App\Models\Cat;
@@ -32,7 +33,7 @@ class CatCrudController extends CrudController
     use CreateOperation { store as traitStore; }
     use UpdateOperation { update as traitUpdate; }
     use DeleteOperation;
-    use CrudFilterHelpers;
+    use CrudFilterHelpers, ClearsModelGlobalScopes;
 
     /**
      * @var CatPhotoService
@@ -60,19 +61,6 @@ class CatCrudController extends CrudController
         $this->crud->setSubheading('Dodaj novo muco', 'create');
         $this->crud->setSubheading('Uredi muco', 'edit');
         $this->clearModelGlobalScopes();
-    }
-
-    /**
-     * @return void
-     */
-    public function clearModelGlobalScopes()
-    {
-        /** @var Cat $catQuery */
-        $catQuery = $this->crud->query;
-        $this->crud->query = $catQuery->withoutGlobalScopes();
-        /** @var Cat $catModel */
-        $catModel = $this->crud->model;
-        $catModel->clearGlobalScopes();
     }
 
     /**

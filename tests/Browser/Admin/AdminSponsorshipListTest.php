@@ -70,6 +70,26 @@ class AdminSponsorshipListTest extends AdminTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_shows_inactive_sponsorships()
+    {
+        $this->browse(function (Browser $browser) {
+            static::$sampleSponsorship_2->update(['is_active' => false]);
+            static::$sampleSponsorship_2->refresh();
+
+            $this->goToPage($browser);
+            $this->openFirstRowDetails($browser);
+
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) {
+                $this->assertDetailsModalColumnShowsValue($browser, 0, static::$sampleSponsorship_2->id);
+                $this->assertDetailsModalColumnShowsValue($browser, 5, 'Ne');
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_clicking_on_cat_opens_up_cat_edit_form()
     {
         $this->browse(function (Browser $browser) {

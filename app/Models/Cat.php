@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\ClearsGlobalScopes;
 use App\Services\CatPhotoService;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
@@ -57,7 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Cat extends Model
 {
-    use HasFactory, CrudTrait, HasSlug;
+    use HasFactory, CrudTrait, HasSlug, ClearsGlobalScopes;
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +102,7 @@ class Cat extends Model
      *
      * @var string
      */
-    protected $identifiableAttribute = 'name_and_id';
+    protected string $identifiableAttribute = 'name_and_id';
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +124,7 @@ class Cat extends Model
     /**
      * @inheritDoc
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
@@ -132,7 +133,7 @@ class Cat extends Model
      * @param int $index
      * @return CatPhoto|null
      */
-    public function getPhotoByIndex(int $index)
+    public function getPhotoByIndex(int $index): ?CatPhoto
     {
         /** @var CatPhoto $photo */
         $photo = $this->photos()->where('index', $index)->first();
@@ -151,7 +152,7 @@ class Cat extends Model
      *
      * @return HasMany
      */
-    public function sponsorships()
+    public function sponsorships(): HasMany
     {
         return $this->hasMany(Sponsorship::class);
     }
@@ -161,7 +162,7 @@ class Cat extends Model
      *
      * @return BelongsTo
      */
-    public function location()
+    public function location(): BelongsTo
     {
         return $this->belongsTo(CatLocation::class);
     }
@@ -171,7 +172,7 @@ class Cat extends Model
      *
      * @return HasMany
      */
-    public function photos()
+    public function photos(): HasMany
     {
         return $this->hasMany(CatPhoto::class);
     }
@@ -187,18 +188,9 @@ class Cat extends Model
      */
     protected static function booted()
     {
-        // Only make active Cats visible to the public. This scope is manually cleared in admin.
         static::addGlobalScope('is_active', function (Builder $builder) {
             $builder->where('is_active', true);
         });
-    }
-
-    /**
-     * Remove global scopes such as only returning cats with is_active=1 (used in admin).
-     */
-    public function clearGlobalScopes()
-    {
-        static::$globalScopes = [];
     }
 
     /*
@@ -212,7 +204,7 @@ class Cat extends Model
      *
      * @return string
      */
-    public function getGenderLabelAttribute()
+    public function getGenderLabelAttribute(): string
     {
         return self::GENDER_LABELS[$this->gender];
     }
@@ -222,7 +214,7 @@ class Cat extends Model
      *
      * @return string
      */
-    public function getFirstPhotoUrlAttribute()
+    public function getFirstPhotoUrlAttribute(): string
     {
         foreach (CatPhotoService::INDICES as $index) {
             $photo = self::getPhotoByIndex($index);
@@ -240,7 +232,7 @@ class Cat extends Model
      *
      * @return string
      */
-    public function getNameAndIdAttribute()
+    public function getNameAndIdAttribute(): string
     {
         return sprintf('%s (%d)', $this->name, $this->id);
     }

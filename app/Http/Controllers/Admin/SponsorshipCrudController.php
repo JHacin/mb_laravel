@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Alert;
+use App\Http\Controllers\Admin\Traits\ClearsModelGlobalScopes;
 use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminSponsorshipRequest;
 use App\Http\Requests\Admin\AdminSponsorshipUpdateRequest;
@@ -35,7 +36,7 @@ class SponsorshipCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
-    use CrudFilterHelpers;
+    use CrudFilterHelpers, ClearsModelGlobalScopes;
 
     /**
      * @return void
@@ -49,6 +50,7 @@ class SponsorshipCrudController extends CrudController
         $this->crud->setSubheading('Dodaj novo botrovanje', 'create');
         $this->crud->setSubheading('Uredi botrovanje', 'edit');
         $this->crud->addButtonFromView('line', 'sponsorship_cancel', 'sponsorship_cancel');
+        $this->clearModelGlobalScopes();
     }
 
     /**
