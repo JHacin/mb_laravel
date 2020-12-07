@@ -64,16 +64,7 @@ class AdminCatAddTest extends AdminTestCase
             ];
 
             foreach ($dateInputWrappers as $wrapper) {
-                $browser->with($wrapper, function (Browser $browser) {
-                    $browser->click('input[type="text"]');
-                });
-
-                $browser->with('.datepicker', function (Browser $browser) {
-                    $browser
-                        ->click('.datepicker-days thead th.next')
-                        ->click('.datepicker-days thead th.next')
-                        ->click('.datepicker-days tbody > tr > td');
-                });
+                $this->selectDatepickerDateInTheFuture($browser, $wrapper);
             }
 
             $browser
@@ -155,16 +146,7 @@ class AdminCatAddTest extends AdminTestCase
                 '@date-of-arrival-boter-input-wrapper',
             ];
             foreach ($dateInputWrappers as $wrapper) {
-                $browser->with($wrapper, function (Browser $browser) {
-                    $browser->click('input[type="text"]');
-                });
-
-                $browser->with('.datepicker', function (Browser $browser) {
-                    $browser
-                        ->click('.datepicker-days thead th.prev')
-                        ->click('.datepicker-days thead th.prev')
-                        ->click('.datepicker-days tbody > tr > td');
-                });
+                $this->selectDatepickerDateInThePast($browser, $wrapper);
             }
 
             $dateOfArrivalMhInputValue = $browser->value('input[name="date_of_arrival_mh"]');

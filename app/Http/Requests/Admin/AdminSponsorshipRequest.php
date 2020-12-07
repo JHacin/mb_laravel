@@ -9,7 +9,7 @@ class AdminSponsorshipRequest extends FormRequest
     /**
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return backpack_auth()->check();
     }
@@ -17,7 +17,7 @@ class AdminSponsorshipRequest extends FormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'is_anonymous' => ['boolean'],
@@ -35,7 +35,7 @@ class AdminSponsorshipRequest extends FormRequest
     /**
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'cat.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Alert;
 use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminSponsorshipRequest;
+use App\Http\Requests\Admin\AdminSponsorshipUpdateRequest;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
@@ -243,7 +244,7 @@ class SponsorshipCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-
+        $this->crud->setValidation(AdminSponsorshipUpdateRequest::class);
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'ended_at',
             'label' => 'Datum konca',

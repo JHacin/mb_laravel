@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Traits;
+namespace Tests\Browser\Admin\Traits;
 
 use Carbon\Carbon;
 use Laravel\Dusk\Browser;

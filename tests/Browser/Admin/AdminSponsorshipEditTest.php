@@ -59,22 +59,26 @@ class AdminSponsorshipEditTest extends AdminTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_validates_ended_at_is_not_in_the_future()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToPage($browser);
+            $this->selectDatepickerDateInTheFuture($browser, '@ended_at-wrapper');
+            $browser->click('@crud-form-submit-button');
+            $this->waitForRequestsToFinish($browser);
+            $browser->assertSee('Datum konca mora biti v preteklosti.');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_setting_ended_at_date_works()
     {
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
-
-            $browser->with('@ended_at-wrapper', function (Browser $browser) {
-                $browser->click('input[type="text"]');
-            });
-
-            $browser->with('.datepicker', function (Browser $browser) {
-                $browser
-                    ->click('.datepicker-days thead th.prev')
-                    ->click('.datepicker-days thead th.prev')
-                    ->click('.datepicker-days tbody > tr > td');
-            });
-
+            $this->selectDatepickerDateInThePast($browser, '@ended_at-wrapper');
             $endedAtValue = $browser->value('input[name="ended_at"]');
 
             $browser

@@ -3,18 +3,19 @@
 namespace Tests\Browser\Admin;
 
 use App\Models\User;
-use Tests\Browser\Traits\CrudTableTestingHelpers;
-use Tests\Browser\Traits\RequestTestingHelpers;
+use Tests\Browser\Admin\Traits\CrudFormTestingHelpers;
+use Tests\Browser\Admin\Traits\CrudTableTestingHelpers;
+use Tests\Browser\Admin\Traits\RequestTestingHelpers;
 use Tests\DuskTestCase;
 
 class AdminTestCase extends DuskTestCase
 {
-    use RequestTestingHelpers, CrudTableTestingHelpers;
+    use RequestTestingHelpers, CrudTableTestingHelpers, CrudFormTestingHelpers;
 
     /**
-     * @var User
+     * @var User|null
      */
-    protected static $defaultAdmin;
+    protected static ?User $defaultAdmin = null;
 
     /**
      * @inheritDoc

@@ -89,20 +89,8 @@ class AdminUserAddTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
-
             $this->disableHtmlFormValidation($browser);
-
-            $browser->with('@date_of_birth-input-wrapper', function (Browser $browser) {
-                $browser->click('input[type="text"]');
-            });
-
-            $browser->with('.datepicker', function (Browser $browser) {
-                $browser
-                    ->click('.datepicker-days thead th.next')
-                    ->click('.datepicker-days thead th.next')
-                    ->click('.datepicker-days tbody > tr > td');
-            });
-
+            $this->selectDatepickerDateInTheFuture($browser, '@date_of_birth-input-wrapper');
             $this->submit($browser);
             $browser->assertSee('Datum rojstva mora biti v preteklosti.');
         });
@@ -137,16 +125,7 @@ class AdminUserAddTest extends AdminTestCase
 
             $browser->type('personData[phone]', $personData->phone);
 
-            $browser->with('@date_of_birth-input-wrapper', function (Browser $browser) {
-                $browser->click('input[type="text"]');
-            });
-
-            $browser->with('.datepicker', function (Browser $browser) {
-                $browser
-                    ->click('.datepicker-days thead th.prev')
-                    ->click('.datepicker-days thead th.prev')
-                    ->click('.datepicker-days tbody > tr > td');
-            });
+            $this->selectDatepickerDateInThePast($browser, '@date_of_birth-input-wrapper');
 
             $browser
                 ->type('personData[address]', $personData->address)
