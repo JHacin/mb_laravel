@@ -5,11 +5,11 @@ namespace Tests\Browser\Admin;
 use App\Models\PersonData;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminPersonDataAddPage;
-use Tests\Browser\Pages\Admin\AdminPersonDataListPage;
+use Tests\Browser\Pages\Admin\AdminSponsorAddPage;
+use Tests\Browser\Pages\Admin\AdminSponsorListPage;
 use Throwable;
 
-class AdminPersonDataAddTest extends AdminTestCase
+class AdminSponsorAddTest extends AdminTestCase
 {
 
     /**
@@ -91,7 +91,7 @@ class AdminPersonDataAddTest extends AdminTestCase
                 ->type('last_name', $personData->last_name);
 
             $browser->with('@gender-input-wrapper', function (Browser $browser) use ($personData) {
-                $browser->click('input[value="' . $personData->gender . '"]');
+                $browser->click('input[type="radio"][value="' . $personData->gender . '"]');
             });
 
             $browser->type('phone', $personData->phone);
@@ -132,9 +132,9 @@ class AdminPersonDataAddTest extends AdminTestCase
     {
         $browser
             ->loginAs(static::$defaultAdmin)
-            ->visit(new AdminPersonDataListPage)
+            ->visit(new AdminSponsorListPage)
             ->click('@crud-create-button')
-            ->on(new AdminPersonDataAddPage);
+            ->on(new AdminSponsorAddPage);
 
         $this->waitForRequestsToFinish($browser);
     }

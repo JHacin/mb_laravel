@@ -28,8 +28,8 @@ return [
         'sponsorships_add' => 'botrovanja/create',
         'sponsorships_edit' => 'botrovanja/{id}/edit',
         'sponsorships_cancel' => 'botrovanja/{id}/cancel',
-        'person_data' => 'neregistrirani-botri',
-        'person_data_add' => 'neregistrirani-botri/create',
-        'person_data_edit' => 'neregistrirani-botri/{id}/edit',
+        'sponsors' => 'botri',
+        'sponsors_add' => 'botri/create',
+        'sponsors_edit' => 'botri/{id}/edit',
     ]
 ];

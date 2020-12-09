@@ -5,11 +5,11 @@ namespace Tests\Browser\Admin;
 use App\Models\PersonData;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminPersonDataEditPage;
-use Tests\Browser\Pages\Admin\AdminPersonDataListPage;
+use Tests\Browser\Pages\Admin\AdminSponsorEditPage;
+use Tests\Browser\Pages\Admin\AdminSponsorListPage;
 use Throwable;
 
-class AdminPersonDataEditTest extends AdminTestCase
+class AdminSponsorEditTest extends AdminTestCase
 {
     /**
      * @var PersonData|null
@@ -95,8 +95,8 @@ class AdminPersonDataEditTest extends AdminTestCase
     {
         $browser
             ->loginAs(static::$defaultAdmin)
-            ->visit(new AdminPersonDataListPage)
-            ->visit(new AdminPersonDataEditPage(static::$testPersonData));
+            ->visit(new AdminSponsorListPage)
+            ->visit(new AdminSponsorEditPage(static::$testPersonData));
 
         $this->waitForRequestsToFinish($browser);
     }

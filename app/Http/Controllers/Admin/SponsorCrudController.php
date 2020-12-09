@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Admin\AdminPersonDataRequest;
+use App\Http\Requests\Admin\AdminSponsorRequest;
 use App\Models\PersonData;
 use App\Utilities\Admin\CrudColumnGenerator;
 use App\Utilities\Admin\CrudFieldGenerator;
@@ -15,11 +15,11 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
 
 /**
- * Class PersonDataCrudController
+ * Class SponsorCrudController
  * @package App\Http\Controllers\Admin
  * @property-read CrudPanel $crud
  */
-class PersonDataCrudController extends CrudController
+class SponsorCrudController extends CrudController
 {
     use ListOperation;
     use CreateOperation;
@@ -33,8 +33,8 @@ class PersonDataCrudController extends CrudController
     public function setup()
     {
         $this->crud->setModel(PersonData::class);
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.person_data'));
-        $this->crud->setEntityNameStrings('Neregistiran boter', 'Neregistrirani botri');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsors'));
+        $this->crud->setEntityNameStrings('Boter', 'Botri');
         $this->hideDataForRegisteredUsers();
     }
 
@@ -67,7 +67,7 @@ class PersonDataCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        $this->crud->setValidation(AdminPersonDataRequest::class);
+        $this->crud->setValidation(AdminSponsorRequest::class);
 
         $this->crud->addField([
             'name' => 'email',

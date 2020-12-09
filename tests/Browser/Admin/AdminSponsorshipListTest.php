@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminCatEditPage;
-use Tests\Browser\Pages\Admin\AdminPersonDataEditPage;
+use Tests\Browser\Pages\Admin\AdminSponsorEditPage;
 use Tests\Browser\Pages\Admin\AdminSponsorshipListPage;
 use Tests\Browser\Pages\Admin\AdminUserEditPage;
 use Throwable;
@@ -120,7 +120,7 @@ class AdminSponsorshipListTest extends AdminTestCase
             $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
                 $browser
                     ->click('tr[data-dt-column="2"] a')
-                    ->on(new AdminPersonDataEditPage($sponsorship->personData));
+                    ->on(new AdminSponsorEditPage($sponsorship->personData));
             });
         });
     }

@@ -4,7 +4,7 @@ namespace Tests\Browser\Pages\Admin;
 
 use App\Models\PersonData;
 
-class AdminPersonDataEditPage extends Page
+class AdminSponsorEditPage extends Page
 {
     /**
      * @var PersonData|null
@@ -26,6 +26,6 @@ class AdminPersonDataEditPage extends Page
      */
     public function url()
     {
-        return str_replace('{id}', $this->personData->id, $this->prefixUrl(config('routes.admin.person_data_edit')));
+        return str_replace('{id}', $this->personData->id, $this->prefixUrl(config('routes.admin.sponsors_edit')));
     }
 }
