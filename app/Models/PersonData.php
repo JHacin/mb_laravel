@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
-
 /**
  * App\Models\PersonData
  *
@@ -36,6 +35,8 @@ use Illuminate\Validation\Rule;
  * @property-read string $gender_label
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
+ * @property-read Collection|Sponsorship[] $unscopedSponsorships
+ * @property-read int|null $unscoped_sponsorships_count
  * @property-read User|null $user
  * @method static Builder|PersonData newModelQuery()
  * @method static Builder|PersonData newQuery()
@@ -135,7 +136,7 @@ class PersonData extends Model
     /**
      * @return array
      */
-    public static function getSharedValidationRules()
+    public static function getSharedValidationRules(): array
     {
         return [
             'email' => ['required', 'string', 'email', Rule::unique('users', 'email')],
@@ -154,7 +155,7 @@ class PersonData extends Model
     /**
      * @return string[]
      */
-    public static function getSharedValidationMessages()
+    public static function getSharedValidationMessages(): array
     {
         return [
             'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
@@ -164,7 +165,7 @@ class PersonData extends Model
     /**
      * @return bool
      */
-    public function belongsToRegisteredUser()
+    public function belongsToRegisteredUser(): bool
     {
         return $this->user()->exists();
     }
@@ -176,21 +177,25 @@ class PersonData extends Model
     */
 
     /**
-     * Get the user that owns this data.
-     *
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-     * Get the sponsorships that include this user.
-     *
      * @return HasMany
      */
-    public function sponsorships()
+    public function unscopedSponsorships(): HasMany
+    {
+        return $this->sponsorships()->withoutGlobalScopes();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function sponsorships(): HasMany
     {
         return $this->hasMany(Sponsorship::class);
     }
@@ -212,7 +217,7 @@ class PersonData extends Model
      *
      * @return string
      */
-    public function getGenderLabelAttribute()
+    public function getGenderLabelAttribute(): string
     {
         return self::GENDER_LABELS[$this->gender];
     }
@@ -222,7 +227,7 @@ class PersonData extends Model
      *
      * @return string
      */
-    public function getEmailAndUserIdAttribute()
+    public function getEmailAndUserIdAttribute(): string
     {
         return sprintf('%s (%s)', $this->email, $this->user_id ?? 'ni registriran');
     }

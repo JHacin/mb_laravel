@@ -48,6 +48,35 @@ class SponsorCrudController extends CrudController
         $this->crud->addColumn(CrudColumnGenerator::lastName());
         $this->crud->addColumn(CrudColumnGenerator::city());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn([
+            'label' => 'Aktivna botrovanja',
+            'type' => 'relationship_count',
+            'name' => 'sponsorships',
+            'suffix' => ' botrovanj',
+            'wrapper' => [
+                'dusk' => 'related-sponsorships-link',
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(
+                        config('routes.admin.sponsorships') .
+                        '?personData=' .
+                        $entry->getKey() .
+                        '&is_active=1'
+                    );
+                },
+            ],
+        ]);
+        $this->crud->addColumn([
+            'label' => 'Vsa botrovanja',
+            'type' => 'relationship_count',
+            'name' => 'unscopedSponsorships',
+            'suffix' => ' botrovanj',
+            'wrapper' => [
+                'dusk' => 'related-unscopedSponsorships-link',
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.sponsorships') . '?personData=' . $entry->getKey());
+                },
+            ],
+        ]);
     }
 
     /**

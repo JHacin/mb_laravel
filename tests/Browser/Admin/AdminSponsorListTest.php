@@ -2,36 +2,14 @@
 
 namespace Tests\Browser\Admin;
 
-use App\Models\PersonData;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminSponsorListPage;
+use Tests\Browser\Pages\Admin\AdminSponsorshipListPage;
 use Throwable;
 
 class AdminSponsorListTest extends AdminTestCase
 {
-    /**
-     * @var PersonData|null
-     */
-    protected static ?PersonData $samplePersonData_1 = null;
-
-    /**
-     * @var PersonData|null
-     */
-    protected static ?PersonData $samplePersonData_2 = null;
-
-    /**
-     * @inheritDoc
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        if (!static::$samplePersonData_1 || !static::$samplePersonData_2) {
-            static::$samplePersonData_1 = $this->createPersonData();
-            static::$samplePersonData_2 = $this->createPersonData();
-        }
-    }
 
     /**
      * @return void
@@ -40,7 +18,7 @@ class AdminSponsorListTest extends AdminTestCase
     public function test_person_data_details_are_shown_correctly()
     {
         $this->browse(function (Browser $browser) {
-            $personData = static::$samplePersonData_2;
+            $personData = $this->createPersonDataWithSponsorships();
             $this->goToPage($browser);
             $this->openFirstRowDetails($browser);
 
@@ -52,6 +30,8 @@ class AdminSponsorListTest extends AdminTestCase
                     3 => $personData->last_name,
                     4 => $personData->city,
                     5 => $this->formatToDateColumnString($personData->created_at),
+                    6 => $personData->sponsorships()->count() . ' botrovanj',
+                    7 => $personData->unscopedSponsorships()->count() . ' botrovanj',
                 ]);
             });
         });
@@ -64,25 +44,91 @@ class AdminSponsorListTest extends AdminTestCase
     public function test_search_works()
     {
         $this->browse(function (Browser $browser) {
+            $searched = $this->createPersonData();
+            $ignored = $this->createPersonData();
+
             $this->goToPage($browser);
 
             $searches = [
-                static::$samplePersonData_2->id,
-                static::$samplePersonData_2->email,
-                static::$samplePersonData_2->first_name,
-                static::$samplePersonData_2->last_name,
-                static::$samplePersonData_2->city,
+                $searched->id,
+                $searched->email,
+                $searched->first_name,
+                $searched->last_name,
+                $searched->city,
             ];
 
             foreach ($searches as $value) {
                 $this->enterSearchInputValue($browser, $value);
 
-                $browser->with('@crud-table-body', function (Browser $browser) {
+                $browser->with('@crud-table-body', function (Browser $browser) use ($searched, $ignored) {
                     $browser
-                        ->assertSee(static::$samplePersonData_2->email)
-                        ->assertDontSee(static::$samplePersonData_1->email);
+                        ->assertSee($searched->email)
+                        ->assertDontSee($ignored->email);
                 });
             }
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_clicking_active_sponsorships_links_works()
+    {
+        $this->browse(function (Browser $browser) {
+            $personData = $this->createPersonDataWithSponsorships();
+            $this->goToPage($browser);
+            $this->openFirstRowDetails($browser);
+
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) {
+                $browser
+                    ->click('@related-sponsorships-link')
+                    ->on(new AdminSponsorshipListPage);
+            });
+
+            $this->waitForRequestsToFinish($browser);
+
+            $browser
+                ->assertQueryStringHas('personData', $personData->id)
+                ->assertQueryStringHas('is_active', 1)
+                ->assertSee(
+                    'Prikazanih 1 do ' .
+                    $personData->sponsorships()->count() .
+                    ' od ' .
+                    $personData->sponsorships()->count() .
+                    ' vnosov'
+                );
+        });
+    }
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_clicking_all_sponsorships_links_works()
+    {
+        $this->browse(function (Browser $browser) {
+            $personData = $this->createPersonDataWithSponsorships();
+            $this->goToPage($browser);
+            $this->openFirstRowDetails($browser);
+
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) {
+                $browser
+                    ->click('@related-unscopedSponsorships-link')
+                    ->on(new AdminSponsorshipListPage);
+            });
+
+            $this->waitForRequestsToFinish($browser);
+
+            $browser
+                ->assertQueryStringHas('personData', $personData->id)
+                ->assertQueryStringMissing('is_active')
+                ->assertSee(
+                    'Prikazanih 1 do ' .
+                    $personData->unscopedSponsorships()->count() .
+                    ' od ' .
+                    $personData->unscopedSponsorships()->count() .
+                    ' vnosov'
+                );
         });
     }
 
