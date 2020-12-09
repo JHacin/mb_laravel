@@ -10,9 +10,9 @@ trait CrudTableTestingHelpers
     /**
      * @param Browser $browser
      */
-    protected function resizeToMediumScreen(Browser $browser)
+    protected function resizeToMobileScreen(Browser $browser)
     {
-        $browser->resize(1600, 900);
+        $browser->resize(767, 900);
     }
 
     /**
@@ -89,7 +89,7 @@ trait CrudTableTestingHelpers
     protected function openFirstRowDetails(Browser $browser)
     {
         $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
-            $this->resizeToMediumScreen($browser);
+            $this->resizeToMobileScreen($browser);
             $browser->click('@data-table-open-row-details');
         });
     }

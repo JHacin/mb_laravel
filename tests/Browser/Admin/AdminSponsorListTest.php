@@ -50,11 +50,8 @@ class AdminSponsorListTest extends AdminTestCase
                     1 => $personData->email,
                     2 => $personData->first_name,
                     3 => $personData->last_name,
-                    4 => $personData->gender_label,
-                    5 => $personData->address,
-                    6 => $personData->city,
-                    7 => $this->formatToDateColumnString($personData->created_at),
-                    8 => $this->formatToDatetimeColumnString($personData->updated_at),
+                    4 => $personData->city,
+                    5 => $this->formatToDateColumnString($personData->created_at),
                 ]);
             });
         });
@@ -74,7 +71,6 @@ class AdminSponsorListTest extends AdminTestCase
                 static::$samplePersonData_2->email,
                 static::$samplePersonData_2->first_name,
                 static::$samplePersonData_2->last_name,
-                static::$samplePersonData_2->address,
                 static::$samplePersonData_2->city,
             ];
 
