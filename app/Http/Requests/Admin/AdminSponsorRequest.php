@@ -11,9 +11,14 @@ use Illuminate\Validation\Rules\Unique;
 class AdminSponsorRequest extends FormRequest
 {
     /**
+     * @var PersonData|null
+     */
+    protected ?PersonData $existingPersonData = null;
+
+    /**
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return backpack_auth()->check();
     }
@@ -21,14 +26,16 @@ class AdminSponsorRequest extends FormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
+        $this->checkIfExistingPersonData();
+
         return [
             'email' => [
                 'required',
                 'string',
                 'email',
-                Rule::unique('users', 'email'),
+                $this->getUniqueEmailRuleForUsersTable(),
                 $this->getUniqueEmailRuleForPersonDataTable(),
             ],
             'first_name' => ['nullable', 'string', 'max:255'],
@@ -44,15 +51,39 @@ class AdminSponsorRequest extends FormRequest
     }
 
     /**
+     * @return void
+     */
+    protected function checkIfExistingPersonData()
+    {
+        $currentEntryId = $this->get('id');
+        if ($currentEntryId) {
+            $this->existingPersonData = PersonData::find($currentEntryId);
+        }
+    }
+
+    /**
      * @return Unique
      */
-    protected function getUniqueEmailRuleForPersonDataTable()
+    protected function getUniqueEmailRuleForUsersTable(): Unique
+    {
+        $rule = Rule::unique('users', 'email');
+
+        if ($this->existingPersonData && $this->existingPersonData->user_id) {
+            return $rule->ignore($this->existingPersonData->user_id);
+        }
+
+        return $rule;
+    }
+
+    /**
+     * @return Unique
+     */
+    protected function getUniqueEmailRuleForPersonDataTable(): Unique
     {
         $rule = Rule::unique('person_data', 'email');
 
-        $currentEntry = $this->get('id');
-        if ($currentEntry !== null) {
-            return $rule->ignore($currentEntry);
+        if ($this->existingPersonData) {
+            return $rule->ignore($this->existingPersonData);
         }
 
         return $rule;
@@ -61,7 +92,7 @@ class AdminSponsorRequest extends FormRequest
     /**
      * @inheritDoc
      */
-    public function messages()
+    public function messages(): array
     {
         return PersonData::getSharedValidationMessages();
     }

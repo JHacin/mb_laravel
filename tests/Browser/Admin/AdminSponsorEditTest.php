@@ -7,6 +7,7 @@ use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminSponsorEditPage;
 use Tests\Browser\Pages\Admin\AdminSponsorListPage;
+use Tests\Browser\Pages\Admin\AdminUserEditPage;
 use Throwable;
 
 class AdminSponsorEditTest extends AdminTestCase
@@ -14,7 +15,12 @@ class AdminSponsorEditTest extends AdminTestCase
     /**
      * @var PersonData|null
      */
-    protected static ?PersonData $testPersonData = null;
+    protected static ?PersonData $testAnonSponsor = null;
+
+    /**
+     * @var PersonData|null
+     */
+    protected static ?PersonData $testRegisteredSponsor = null;
 
     /**
      * @inheritDoc
@@ -23,8 +29,9 @@ class AdminSponsorEditTest extends AdminTestCase
     {
         parent::setUp();
 
-        if (!static::$testPersonData) {
-            static::$testPersonData = $this->createPersonData();
+        if (!static::$testAnonSponsor || !static::$testRegisteredSponsor) {
+            static::$testAnonSponsor = $this->createPersonData();
+            static::$testRegisteredSponsor = $this->createUserWithPersonData()->personData;
         }
     }
 
@@ -35,8 +42,8 @@ class AdminSponsorEditTest extends AdminTestCase
     public function test_shows_person_data_details()
     {
         $this->browse(function (Browser $browser) {
-            $personData = static::$testPersonData;
-            $this->goToPage($browser);
+            $personData = static::$testAnonSponsor;
+            $this->goToPage($browser, static::$testAnonSponsor);
 
             $browser
                 ->assertValue('input[name="email"]', $personData->email)
@@ -56,47 +63,116 @@ class AdminSponsorEditTest extends AdminTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_validates_email()
+    public function test_validates_email_format()
     {
         $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
+            $this->goToPage($browser, static::$testAnonSponsor);
             $this->disableHtmlFormValidation($browser);
             $browser->type('email', 'sdfdsfds');
             $this->submit($browser);
             $browser->assertSee('Vrednost mora biti veljaven email naslov.');
+        });
+    }
 
-            $this->goToPage($browser);
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_validates_existing_user_unique_email()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToPage($browser, static::$testAnonSponsor);
             $browser->type('email', static::$sampleUser->email);
             $this->submit($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
+        });
+    }
 
-            $existingPersonData = $this->createPersonData();
-            $this->goToPage($browser);
-            $browser->type('email', $existingPersonData->email);
-            $this->submit($browser);
-            $browser->assertSee('Ta email naslov je že v uporabi.');
-
-            $this->goToPage($browser);
-            $browser->type('email', $this->faker->unique()->safeEmail);
-            $this->submit($browser);
-            $browser->assertSee('Urejanje uspešno.');
-
-            $this->goToPage($browser);
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_accepts_related_user_email_for_registered_sponsor()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToPage($browser, static::$testRegisteredSponsor);
+            $browser->type('email', static::$testRegisteredSponsor->email);
             $this->submit($browser);
             $browser->assertSee('Urejanje uspešno.');
         });
     }
 
     /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_validates_existing_person_data_unique_email()
+    {
+        $this->browse(function (Browser $browser) {
+            $existingPersonData = $this->createPersonData();
+            $this->goToPage($browser, static::$testAnonSponsor);
+            $browser->type('email', $existingPersonData->email);
+            $this->submit($browser);
+            $browser->assertSee('Ta email naslov je že v uporabi.');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_accepts_valid_email()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToPage($browser, static::$testAnonSponsor);
+            $browser->type('email', $this->faker->unique()->safeEmail);
+            $this->submit($browser);
+            $browser->assertSee('Urejanje uspešno.');
+
+            $this->goToPage($browser, static::$testAnonSponsor);
+            $this->submit($browser);
+            $browser->assertSee('Urejanje uspešno.');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_updates_related_user_email()
+    {
+        $this->browse(function (Browser $browser) {
+            $newEmail = $this->faker->unique()->safeEmail;
+            $this->goToPage($browser, static::$testRegisteredSponsor);
+            $browser->type('email', $newEmail);
+            $this->submit($browser);
+            $browser->assertSee('Urejanje uspešno.');
+
+            $this->assertDatabaseHas('users', [
+                'id' => static::$testRegisteredSponsor->user_id,
+                'email' => $newEmail
+            ]);
+            $this->assertDatabaseHas('person_data', [
+                'id' => static::$testRegisteredSponsor->id,
+                'email' => $newEmail
+            ]);
+            $browser
+                ->visit(new AdminUserEditPage(static::$testRegisteredSponsor->user))
+                ->assertValue('input[name="email"]', $newEmail);
+        });
+    }
+
+    /**
      * @param Browser $browser
+     * @param PersonData $sponsor
      * @throws TimeoutException
      */
-    protected function goToPage(Browser $browser)
+    protected function goToPage(Browser $browser, PersonData $sponsor)
     {
         $browser
             ->loginAs(static::$defaultAdmin)
             ->visit(new AdminSponsorListPage)
-            ->visit(new AdminSponsorEditPage(static::$testPersonData));
+            ->visit(new AdminSponsorEditPage($sponsor));
 
         $this->waitForRequestsToFinish($browser);
     }

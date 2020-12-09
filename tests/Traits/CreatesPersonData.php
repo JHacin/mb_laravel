@@ -10,7 +10,7 @@ trait CreatesPersonData
      * @param array $attributes
      * @return PersonData
      */
-    protected function createPersonData($attributes = [])
+    protected function createPersonData($attributes = []): PersonData
     {
         /** @var PersonData $personData */
         $personData = PersonData::factory()->createOne($attributes);

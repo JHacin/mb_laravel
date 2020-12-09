@@ -35,15 +35,6 @@ class SponsorCrudController extends CrudController
         $this->crud->setModel(PersonData::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsors'));
         $this->crud->setEntityNameStrings('Boter', 'Botri');
-        $this->hideDataForRegisteredUsers();
-    }
-
-    /**
-     * @return void
-     */
-    protected function hideDataForRegisteredUsers()
-    {
-        $this->crud->addClause('where', 'user_id', null);
     }
 
     /**

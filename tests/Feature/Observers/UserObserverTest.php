@@ -3,14 +3,10 @@
 namespace Tests\Feature\Observers;
 
 use App\Models\PersonData;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserObserverTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * @return void
      */
