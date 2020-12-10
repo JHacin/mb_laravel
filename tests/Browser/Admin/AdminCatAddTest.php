@@ -163,10 +163,7 @@ class AdminCatAddTest extends AdminTestCase
                     ->select('location_id', $location->id);
             });
 
-            $browser->with('@is-active-input-wrapper', function (Browser $browser) {
-                $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
-            });
-
+            $this->clickCheckbox($browser, '@is-active-input-wrapper');
             $this->clickSubmitButton($browser);
             $browser->on(new AdminCatListPage);
             $browser->assertSee('Vnos uspešen.');

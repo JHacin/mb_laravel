@@ -92,11 +92,9 @@ class AdminSponsorshipAddTest extends AdminTestCase
             $browser
                 ->select('cat', $cat->id)
                 ->select('personData', $personData->id)
-                ->type('monthly_amount', $data['monthly_amount'])
-                ->with('@is_anonymous-wrapper', function (Browser $browser) {
-                    $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
-                });
+                ->type('monthly_amount', $data['monthly_amount']);
 
+            $this->clickCheckbox($browser, '@is_anonymous-wrapper');
             $this->clickSubmitButton($browser);
             $browser->on(new AdminSponsorshipListPage);
             $browser->assertSee('Vnos uspešen.');

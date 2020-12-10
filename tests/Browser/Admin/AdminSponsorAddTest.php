@@ -103,10 +103,7 @@ class AdminSponsorAddTest extends AdminTestCase
                 ->type('city', $personData->city)
                 ->select('country', $personData->country);
 
-            $browser->with('@is-confirmed-input-wrapper', function (Browser $browser) {
-                $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
-            });
-
+            $this->clickCheckbox($browser, '@is-confirmed-input-wrapper');
             $this->clickSubmitButton($browser);
             $browser->assertSee('Vnos uspešen.');
             $this->openFirstRowDetails($browser);

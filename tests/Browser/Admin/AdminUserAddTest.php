@@ -131,13 +131,8 @@ class AdminUserAddTest extends AdminTestCase
                 ->type('personData[city]', $personData->city)
                 ->select('personData[country]', $personData->country);
 
-            $browser->with('@is_active-input-wrapper', function (Browser $browser) {
-                $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
-            });
-
-            $browser->with('@should_send_welcome_email-input-wrapper', function (Browser $browser) {
-                $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
-            });
+            $this->clickCheckbox($browser, '@is_active-input-wrapper');
+            $this->clickCheckbox($browser, '@should_send_welcome_email-input-wrapper');
 
             $this->clickSubmitButton($browser);
             $browser->assertSee('Vnos uspešen.');

@@ -19,6 +19,17 @@ trait CrudFormTestingHelpers
      * @param Browser $browser
      * @param string $wrapperSelector
      */
+    protected function clickCheckbox(Browser $browser, string $wrapperSelector)
+    {
+        $browser->with($wrapperSelector, function (Browser $browser) {
+            $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
+        });
+    }
+
+    /**
+     * @param Browser $browser
+     * @param string $wrapperSelector
+     */
     protected function selectDatepickerDateInThePast(Browser $browser, string $wrapperSelector)
     {
         $browser->with($wrapperSelector, function (Browser $browser) {
