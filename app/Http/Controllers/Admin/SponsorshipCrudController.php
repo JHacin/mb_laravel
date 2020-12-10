@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Alert;
 use App\Http\Controllers\Admin\Traits\ClearsModelGlobalScopes;
 use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminSponsorshipRequest;
@@ -18,12 +17,11 @@ use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Prologue\Alerts\Facades\Alert;
 
 /**
  * Class SponsorshipCrudController
@@ -161,30 +159,6 @@ class SponsorshipCrudController extends CrudController
     }
 
     /**
-     * @param string $id
-     * @return RedirectResponse
-     */
-    public function cancelSponsorship(string $id): RedirectResponse
-    {
-        $this->crud->hasAccessOrFail('update');
-
-        $sponsorship = Sponsorship::find($id);
-
-        if ($sponsorship->is_active) {
-            $sponsorship->update([
-                'is_active' => false,
-                'ended_at' => Carbon::now()->toDateString(),
-            ]);
-
-            Alert::success('Botrovanje uspešno prekinjeno.')->flash();
-        } else {
-            Alert::error('Botrovanje je že prekinjeno.')->flash();
-        }
-
-        return Redirect::back();
-    }
-
-    /**
      * @return void
      */
     protected function setupCreateOperation()
@@ -258,5 +232,19 @@ class SponsorshipCrudController extends CrudController
                 'dusk' => 'ended_at-wrapper'
             ]
         ]));
+    }
+
+    /**
+     * @param Sponsorship $sponsorship
+     * @return RedirectResponse
+     */
+    public function cancelSponsorship(Sponsorship $sponsorship): RedirectResponse
+    {
+        $this->crud->hasAccessOrFail('update');
+        if ($sponsorship->is_active) {
+            $sponsorship->cancel();
+            Alert::success('Botrovanje uspešno prekinjeno.')->flash();
+        }
+        return Redirect::back();
     }
 }

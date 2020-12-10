@@ -1,27 +1,27 @@
-@if ($crud->hasAccess('update') && $entry->is_active)
+@if ($crud->hasAccess('update') && $entry->sponsorships()->count() > 0)
     <form
         class="d-inline"
-        action="{{ route('admin.sponsorship_cancel', $entry) }}"
+        action="{{ route('admin.sponsor_cancel_all_sponsorships', $entry) }}"
         method="POST"
-        dusk="sponsorship-cancel-form"
+        dusk="sponsor-cancel-all-sponsorships-form"
     >
         @csrf
-        <button type="submit" class="btn btn-sm btn-link" dusk="sponsorship-cancel-form-button">
+        <button type="submit" class="btn btn-sm btn-link" dusk="sponsor-cancel-all-sponsorships-form-button">
             <i class="la la-times"></i>
-            Prekini
+            Prekini vsa botrovanja
         </button>
     </form>
 
     <script>
-        if (typeof handleSponsorshipCancel !== 'function') {
-            function handleSponsorshipCancel() {
-                $('form[dusk="sponsorship-cancel-form"]').on('submit', function (event) {
+        if (typeof handleCancelAllSponsorships !== 'function') {
+            function handleCancelAllSponsorships() {
+                $('form[dusk="sponsor-cancel-all-sponsorships-form"]').on('submit', function (event) {
                     event.preventDefault();
                     const form = $(this)[0];
 
                     swal({
                         title: "{!! trans('backpack::base.warning') !!}",
-                        text: 'Ali res želite prekiniti botrovanje?',
+                        text: 'Ali res želite prekiniti vsa aktivna botrovanja, povezana s to osebo?',
                         icon: 'warning',
                         buttons: {
                             cancel: {
@@ -46,7 +46,7 @@
                 });
             }
 
-            handleSponsorshipCancel();
+            handleCancelAllSponsorships();
         }
     </script>
 @endif

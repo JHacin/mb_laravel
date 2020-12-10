@@ -27,9 +27,10 @@ return [
         'sponsorships' => 'botrovanja',
         'sponsorships_add' => 'botrovanja/create',
         'sponsorships_edit' => 'botrovanja/{id}/edit',
-        'sponsorships_cancel' => 'botrovanja/{id}/cancel',
+        'sponsorships_cancel' => 'botrovanja/{sponsorship}/cancel',
         'sponsors' => 'botri',
         'sponsors_add' => 'botri/create',
         'sponsors_edit' => 'botri/{id}/edit',
+        'sponsor_cancel_all_sponsorships' => 'botri/{personData}/cancel-all-sponsorships',
     ]
 ];

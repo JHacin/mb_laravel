@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\AdminSponsorRequest;
 use App\Models\PersonData;
+use App\Models\Sponsorship;
 use App\Utilities\Admin\CrudColumnGenerator;
 use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -13,6 +14,9 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use Prologue\Alerts\Facades\Alert;
 
 /**
  * Class SponsorCrudController
@@ -35,6 +39,7 @@ class SponsorCrudController extends CrudController
         $this->crud->setModel(PersonData::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsors'));
         $this->crud->setEntityNameStrings('Boter', 'Botri');
+        $this->crud->addButtonFromView('line', 'sponsor_cancel_all_sponsorships', 'sponsor_cancel_all_sponsorships');
     }
 
     /**
@@ -106,5 +111,21 @@ class SponsorCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    /**
+     * @param PersonData $personData
+     * @return RedirectResponse
+     */
+    public function cancelAllSponsorships(PersonData $personData): RedirectResponse
+    {
+        $this->crud->hasAccessOrFail('update');
+        $personData->sponsorships->each(function (Sponsorship $sponsorship) {
+           if ($sponsorship->is_active) {
+               $sponsorship->cancel();
+           }
+        });
+        Alert::success('Vsa aktivna botrovanja so bila uspešno prekinjena.')->flash();
+        return Redirect::back();
     }
 }

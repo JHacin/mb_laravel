@@ -10,6 +10,14 @@ trait CrudTableTestingHelpers
     /**
      * @param Browser $browser
      */
+    protected function resizeToDesktopScreen(Browser $browser)
+    {
+        $browser->resize(1920, 1080);
+    }
+
+    /**
+     * @param Browser $browser
+     */
     protected function resizeToMobileScreen(Browser $browser)
     {
         $browser->resize(767, 900);
@@ -19,7 +27,7 @@ trait CrudTableTestingHelpers
      * @param int $index
      * @return string
      */
-    protected function getTableRowSelectorForIndex(int $index)
+    protected function getTableRowSelectorForIndex(int $index): string
     {
         return "#crudTable > tbody > tr:nth-child($index)";
     }
@@ -91,6 +99,7 @@ trait CrudTableTestingHelpers
         $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
             $this->resizeToMobileScreen($browser);
             $browser->click('@data-table-open-row-details');
+            $this->resizeToDesktopScreen($browser);
         });
     }
 
@@ -98,7 +107,7 @@ trait CrudTableTestingHelpers
      * @param Carbon|null $date
      * @return string|void
      */
-    protected function formatToDateColumnString(?Carbon $date)
+    protected function formatToDateColumnString(?Carbon $date): string
     {
         if (!$date) {
             return '';

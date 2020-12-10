@@ -75,6 +75,17 @@ class Sponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * @return void
+     */
+    public function cancel()
+    {
+        $this->update([
+            'is_active' => false,
+            'ended_at' => Carbon::now()->toDateString(),
+        ]);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
