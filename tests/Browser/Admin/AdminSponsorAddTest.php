@@ -112,12 +112,14 @@ class AdminSponsorAddTest extends AdminTestCase
             $browser->whenAvailable('@data-table-row-details-modal',
                 function (Browser $browser) use ($personData) {
                     $this->assertDetailsModalShowsValuesInOrder($browser, [
+                        0 => $personData->id,
                         1 => $personData->email,
                         2 => $personData->first_name,
                         3 => $personData->last_name,
-                        4 => $personData->gender_label,
-                        5 => $personData->address,
-                        6 => $personData->city,
+                        4 => $personData->city,
+                        5 => $this->formatToDatetimeColumnString($personData->created_at),
+                        6 => '0 botrovanj',
+                        7 => '0 botrovanj',
                     ]);
                 }
             );

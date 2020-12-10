@@ -8,22 +8,6 @@ use Laravel\Dusk\Browser;
 trait CrudTableTestingHelpers
 {
     /**
-     * @param Browser $browser
-     */
-    protected function resizeToDesktopScreen(Browser $browser)
-    {
-        $browser->resize(1920, 1080);
-    }
-
-    /**
-     * @param Browser $browser
-     */
-    protected function resizeToMobileScreen(Browser $browser)
-    {
-        $browser->resize(767, 900);
-    }
-
-    /**
      * @param int $index
      * @return string
      */
@@ -89,6 +73,7 @@ trait CrudTableTestingHelpers
         $browser->clear('@data-table-search-input');
         $browser->type('@data-table-search-input', $value);
         $browser->pause(1000);
+        $this->waitForRequestsToFinish($browser);
     }
 
     /**
@@ -97,9 +82,8 @@ trait CrudTableTestingHelpers
     protected function openFirstRowDetails(Browser $browser)
     {
         $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
-            $this->resizeToMobileScreen($browser);
+            $browser->script("$('#crudTable').addClass('dtr-inline collapsed')");
             $browser->click('@data-table-open-row-details');
-            $this->resizeToDesktopScreen($browser);
         });
     }
 
