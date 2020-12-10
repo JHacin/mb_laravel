@@ -70,7 +70,7 @@ class AdminSponsorEditTest extends AdminTestCase
             $this->goToPage($browser, static::$testAnonSponsor);
             $this->disableHtmlFormValidation($browser);
             $browser->type('email', 'sdfdsfds');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vrednost mora biti veljaven email naslov.');
         });
     }
@@ -84,7 +84,7 @@ class AdminSponsorEditTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser, static::$testAnonSponsor);
             $browser->type('email', static::$sampleUser->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
         });
     }
@@ -98,7 +98,7 @@ class AdminSponsorEditTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser, static::$testRegisteredSponsor);
             $browser->type('email', static::$testRegisteredSponsor->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Urejanje uspešno.');
         });
     }
@@ -113,7 +113,7 @@ class AdminSponsorEditTest extends AdminTestCase
             $existingPersonData = $this->createPersonData();
             $this->goToPage($browser, static::$testAnonSponsor);
             $browser->type('email', $existingPersonData->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
         });
     }
@@ -127,11 +127,11 @@ class AdminSponsorEditTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser, static::$testAnonSponsor);
             $browser->type('email', $this->faker->unique()->safeEmail);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Urejanje uspešno.');
 
             $this->goToPage($browser, static::$testAnonSponsor);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Urejanje uspešno.');
         });
     }
@@ -146,7 +146,7 @@ class AdminSponsorEditTest extends AdminTestCase
             $newEmail = $this->faker->unique()->safeEmail;
             $this->goToPage($browser, static::$testRegisteredSponsor);
             $browser->type('email', $newEmail);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Urejanje uspešno.');
 
             $this->assertDatabaseHas('users', [
@@ -175,16 +175,6 @@ class AdminSponsorEditTest extends AdminTestCase
             ->visit(new AdminSponsorListPage)
             ->visit(new AdminSponsorEditPage($sponsor));
 
-        $this->waitForRequestsToFinish($browser);
-    }
-
-    /**
-     * @param Browser $browser
-     * @throws TimeoutException
-     */
-    protected function submit(Browser $browser)
-    {
-        $browser->click('@crud-form-submit-button');
         $this->waitForRequestsToFinish($browser);
     }
 }

@@ -21,7 +21,7 @@ class AdminCatLocationAddTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
-            $browser->click('@crud-form-submit-button');
+            $this->clickSubmitButton($browser);
             $this->assertAllRequiredErrorsAreShown($browser, ['@name-wrapper']);
         });
     }
@@ -50,12 +50,8 @@ class AdminCatLocationAddTest extends AdminTestCase
                 ->type('city', $data['city'])
                 ->select('country', $data['country']);
 
-            $browser
-                ->click('@crud-form-submit-button')
-                ->on(new AdminCatLocationListPage);
-
-            $this->waitForRequestsToFinish($browser);
-
+            $this->clickSubmitButton($browser);
+            $browser->on(new AdminCatLocationListPage);
             $browser->assertSee('Vnos uspešen.');
 
             $browser->with(

@@ -234,8 +234,8 @@ class AdminSponsorListTest extends AdminTestCase
             $browser->assertSee('Vsa aktivna botrovanja so bila uspešno prekinjena.');
             $this->openFirstRowDetails($browser);
             $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsor) {
-                $this->assertDetailsModalColumnShowsValue($browser, 6, '0 botrovanj');
-                $this->assertDetailsModalColumnShowsValue($browser, 7, $sponsor->unscopedSponsorships()->count() . ' botrovanj');
+                $this->assertDetailsModalColumnShowsValue($browser, 7, '0 botrovanj');
+                $this->assertDetailsModalColumnShowsValue($browser, 8, $sponsor->unscopedSponsorships()->count() . ' botrovanj');
             });
         });
     }

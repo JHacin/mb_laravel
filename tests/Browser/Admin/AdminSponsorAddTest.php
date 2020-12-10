@@ -11,7 +11,6 @@ use Throwable;
 
 class AdminSponsorAddTest extends AdminTestCase
 {
-
     /**
      * @return void
      * @throws Throwable
@@ -21,7 +20,7 @@ class AdminSponsorAddTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $this->assertAllRequiredErrorsAreShown($browser, ['@email-input-wrapper']);
         });
     }
@@ -36,24 +35,24 @@ class AdminSponsorAddTest extends AdminTestCase
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
             $browser->type('email', 'sdfdsfds');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vrednost mora biti veljaven email naslov.');
 
             $this->goToPage($browser);
             $browser->type('email', static::$sampleUser->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
 
             /** @var PersonData $existingPersonData */
             $existingPersonData = PersonData::inRandomOrder()->first();
             $this->goToPage($browser);
             $browser->type('email', $existingPersonData->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
 
             $this->goToPage($browser);
             $browser->type('email', $this->faker->unique()->safeEmail);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vnos uspešen.');
         });
     }
@@ -68,7 +67,7 @@ class AdminSponsorAddTest extends AdminTestCase
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
             $this->selectDatepickerDateInTheFuture($browser, '@date_of_birth-input-wrapper');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Datum rojstva mora biti v preteklosti.');
         });
     }
@@ -108,10 +107,8 @@ class AdminSponsorAddTest extends AdminTestCase
                 $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
             });
 
-            $this->submit($browser);
-
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vnos uspešen.');
-
             $this->openFirstRowDetails($browser);
             $browser->whenAvailable('@data-table-row-details-modal',
                 function (Browser $browser) use ($personData) {
@@ -143,16 +140,6 @@ class AdminSponsorAddTest extends AdminTestCase
             ->click('@crud-create-button')
             ->on(new AdminSponsorAddPage);
 
-        $this->waitForRequestsToFinish($browser);
-    }
-
-    /**
-     * @param Browser $browser
-     * @throws TimeoutException
-     */
-    protected function submit(Browser $browser)
-    {
-        $browser->click('@crud-form-submit-button');
         $this->waitForRequestsToFinish($browser);
     }
 }

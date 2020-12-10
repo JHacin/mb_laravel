@@ -69,22 +69,22 @@ class AdminUserEditTest extends AdminTestCase
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
             $browser->type('email', 'sdfdsfds');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vrednost mora biti veljaven email naslov.');
 
             $this->goToPage($browser);
             $browser->type('email', static::$sampleUser->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
 
             $this->goToPage($browser);
             $browser->type('email', $this->faker->unique()->safeEmail);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Urejanje uspešno.');
 
             $this->goToPage($browser);
             $browser->type('email', static::$testUser->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Urejanje uspešno.');
         });
     }
@@ -99,13 +99,13 @@ class AdminUserEditTest extends AdminTestCase
             $this->goToPage($browser);
             $browser->type('password', 'a');
             $browser->type('password_confirmation', 'b');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Gesli se ne ujemata.');
 
             $this->goToPage($browser);
             $browser->type('password', 'a');
             $browser->type('password_confirmation', 'a');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Urejanje uspešno.');
         });
     }
@@ -121,16 +121,6 @@ class AdminUserEditTest extends AdminTestCase
             ->visit(new AdminUserListPage)
             ->visit(new AdminUserEditPage(static::$testUser));
 
-        $this->waitForRequestsToFinish($browser);
-    }
-
-    /**
-     * @param Browser $browser
-     * @throws TimeoutException
-     */
-    protected function submit(Browser $browser)
-    {
-        $browser->click('@crud-form-submit-button');
         $this->waitForRequestsToFinish($browser);
     }
 }

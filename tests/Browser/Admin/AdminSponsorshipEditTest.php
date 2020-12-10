@@ -46,8 +46,7 @@ class AdminSponsorshipEditTest extends AdminTestCase
             $sponsorship = $this->createSponsorship();
             $this->goToPage($browser, $sponsorship);
             $this->selectDatepickerDateInTheFuture($browser, '@ended_at-wrapper');
-            $browser->click('@crud-form-submit-button');
-            $this->waitForRequestsToFinish($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Datum konca ne sme biti v prihodnosti.');
         });
     }
@@ -64,11 +63,8 @@ class AdminSponsorshipEditTest extends AdminTestCase
             $this->selectDatepickerDateInThePast($browser, '@ended_at-wrapper');
             $endedAtValue = $browser->value('input[name="ended_at"]');
 
-            $browser
-                ->click('@crud-form-submit-button')
-                ->on(new AdminSponsorshipListPage);
-
-            $this->waitForRequestsToFinish($browser);
+            $this->clickSubmitButton($browser);
+            $browser->on(new AdminSponsorshipListPage);
             $this->openFirstRowDetails($browser);
 
             $browser->whenAvailable(

@@ -8,6 +8,15 @@ trait CrudFormTestingHelpers
 {
     /**
      * @param Browser $browser
+     */
+    protected function clickSubmitButton(Browser $browser)
+    {
+        $browser->click('@crud-form-submit-button');
+        $this->waitForRequestsToFinish($browser);
+    }
+
+    /**
+     * @param Browser $browser
      * @param string $wrapperSelector
      */
     protected function selectDatepickerDateInThePast(Browser $browser, string $wrapperSelector)

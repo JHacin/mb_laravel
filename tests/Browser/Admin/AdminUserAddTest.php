@@ -4,10 +4,8 @@ namespace Tests\Browser\Admin;
 
 use App\Models\PersonData;
 use App\Models\User;
-use Carbon\Carbon;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminCatListPage;
 use Tests\Browser\Pages\Admin\AdminUserAddPage;
 use Tests\Browser\Pages\Admin\AdminUserListPage;
 use Throwable;
@@ -24,7 +22,7 @@ class AdminUserAddTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $this->assertAllRequiredErrorsAreShown($browser, [
                 '@name-input-wrapper',
                 '@email-input-wrapper',
@@ -43,17 +41,17 @@ class AdminUserAddTest extends AdminTestCase
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
             $browser->type('email', 'sdfdsfds');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vrednost mora biti veljaven email naslov.');
 
             $this->goToPage($browser);
             $browser->type('email', static::$sampleUser->email);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
 
             $this->goToPage($browser);
             $browser->type('email', $this->faker->unique()->safeEmail);
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertDontSee('Ta email naslov je že v uporabi.');
         });
     }
@@ -69,14 +67,14 @@ class AdminUserAddTest extends AdminTestCase
             $this->disableHtmlFormValidation($browser);
             $browser->type('password', 'a');
             $browser->type('password_confirmation', 'b');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Gesli se ne ujemata.');
 
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
             $browser->type('password', 'a');
             $browser->type('password_confirmation', 'a');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertDontSee('Gesli se ne ujemata.');
         });
     }
@@ -91,7 +89,7 @@ class AdminUserAddTest extends AdminTestCase
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
             $this->selectDatepickerDateInTheFuture($browser, '@date_of_birth-input-wrapper');
-            $this->submit($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Datum rojstva mora biti v preteklosti.');
         });
     }
@@ -141,8 +139,7 @@ class AdminUserAddTest extends AdminTestCase
                 $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
             });
 
-            $this->submit($browser);
-
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vnos uspešen.');
 
             $this->openFirstRowDetails($browser);
@@ -173,16 +170,6 @@ class AdminUserAddTest extends AdminTestCase
             ->click('@crud-create-button')
             ->on(new AdminUserAddPage);
 
-        $this->waitForRequestsToFinish($browser);
-    }
-
-    /**
-     * @param Browser $browser
-     * @throws TimeoutException
-     */
-    protected function submit(Browser $browser)
-    {
-        $browser->click('@crud-form-submit-button');
         $this->waitForRequestsToFinish($browser);
     }
 }

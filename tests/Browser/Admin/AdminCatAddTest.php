@@ -22,7 +22,7 @@ class AdminCatAddTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
-            $browser->click('@crud-form-submit-button');
+            $this->clickSubmitButton($browser);
             $this->assertAllRequiredErrorsAreShown($browser, ['@name-input-wrapper']);
         });
     }
@@ -37,12 +37,15 @@ class AdminCatAddTest extends AdminTestCase
             $browser
                 ->loginAs(static::$defaultAdmin)
                 ->visit(new AdminCatAddPage)
-                ->type('name', 'f')
-                ->click('@crud-form-submit-button')
+                ->type('name', 'f');
+            $this->clickSubmitButton($browser);
+
+            $browser
                 ->assertSee('Ime mora biti dolgo vsaj 2 znaka.')
-                ->type('name', Str::random(101))
-                ->click('@crud-form-submit-button')
-                ->assertSee('Polje ne sme imeti več kot 100 znakov.');
+                ->type('name', Str::random(101));
+
+            $this->clickSubmitButton($browser);
+            $browser->assertSee('Polje ne sme imeti več kot 100 znakov.');
         });
     }
 
@@ -67,8 +70,8 @@ class AdminCatAddTest extends AdminTestCase
                 $this->selectDatepickerDateInTheFuture($browser, $wrapper);
             }
 
+            $this->clickSubmitButton($browser);
             $browser
-                ->click('@crud-form-submit-button')
                 ->assertSee('Datum rojstva mora biti v preteklosti.')
                 ->assertSee('Datum sprejema v zavetišče mora biti v preteklosti.')
                 ->assertSee('Datum vstopa v botrstvo mora biti v preteklosti.');
@@ -116,7 +119,7 @@ class AdminCatAddTest extends AdminTestCase
                 $browser->click('.modal-footer button[data-handle="modalSubmit"]');
             });
             $browser->pause(1000);
-            $browser->click('@crud-form-submit-button');
+            $this->clickSubmitButton($browser);
             $browser->with('@photo-0-input-wrapper', function (Browser $browser) {
                 $browser->assertVisible('img.preview-image');
             });
@@ -164,12 +167,8 @@ class AdminCatAddTest extends AdminTestCase
                 $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
             });
 
-            $browser
-                ->click('@crud-form-submit-button')
-                ->on(new AdminCatListPage);
-
-            $this->waitForRequestsToFinish($browser);
-
+            $this->clickSubmitButton($browser);
+            $browser->on(new AdminCatListPage);
             $browser->assertSee('Vnos uspešen.');
 
             $browser->with(

@@ -22,8 +22,7 @@ class AdminSponsorshipAddTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
-            $browser->click('@crud-form-submit-button');
-            $this->waitForRequestsToFinish($browser);
+            $this->clickSubmitButton($browser);
             $this->assertAllRequiredErrorsAreShown($browser, ['@cat-wrapper', '@personData-wrapper']);
             $monthlyAmountWithError = $browser->element('div[dusk="monthly_amount-wrapper"].text-danger');
             $this->assertNotNull($monthlyAmountWithError);
@@ -41,21 +40,18 @@ class AdminSponsorshipAddTest extends AdminTestCase
 
             $this->disableHtmlFormValidation($browser);
             $browser->type('monthly_amount', '4.99');
-            $browser->click('@crud-form-submit-button');
-            $this->waitForRequestsToFinish($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Minimalni mesečni znesek je 5€.');
 
             $this->disableHtmlFormValidation($browser);
             $browser->type('monthly_amount', '1000000');
-            $browser->click('@crud-form-submit-button');
-            $this->waitForRequestsToFinish($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vrednost ne sme biti večja od 999999.99.');
 
             $this->disableHtmlFormValidation($browser);
             $browser->script("document.querySelector('input[name=\"monthly_amount\"]').setAttribute('type', 'text')");
             $browser->type('monthly_amount', '4f');
-            $browser->click('@crud-form-submit-button');
-            $this->waitForRequestsToFinish($browser);
+            $this->clickSubmitButton($browser);
             $browser->assertSee('Vrednost mora biti številka');
         });
     }
@@ -101,12 +97,8 @@ class AdminSponsorshipAddTest extends AdminTestCase
                     $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
                 });
 
-            $browser
-                ->click('@crud-form-submit-button')
-                ->on(new AdminSponsorshipListPage);
-
-            $this->waitForRequestsToFinish($browser);
-
+            $this->clickSubmitButton($browser);
+            $browser->on(new AdminSponsorshipListPage);
             $browser->assertSee('Vnos uspešen.');
 
             $this->openFirstRowDetails($browser);

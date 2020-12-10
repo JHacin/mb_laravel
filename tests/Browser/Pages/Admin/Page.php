@@ -10,7 +10,7 @@ abstract class Page extends BasePage
      * @param string $url
      * @return string
      */
-    protected function prefixUrl(string $url)
+    protected function prefixUrl(string $url): string
     {
         return '/' . config('backpack.base.route_prefix') . '/' . $url;
     }
@@ -18,7 +18,7 @@ abstract class Page extends BasePage
     /**
      * @inheritDoc
      */
-    public static function siteElements()
+    public static function siteElements(): array
     {
         return [
             '@crud-table-body' => '#crudTable > tbody',
