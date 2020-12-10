@@ -24,7 +24,7 @@ class AddFieldsToUsersTable extends Migration
             $table->string('zip_code')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(false);
         });
     }
 

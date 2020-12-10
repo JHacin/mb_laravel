@@ -88,15 +88,7 @@ class AdminUserListTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
-
-            $browser->with('@user-list-role-filter', function (Browser $browser) {
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->click('.dropdown-item[dropdownkey="1"]');
-            });
-
-            $this->waitForRequestsToFinish($browser);
-
+            $this->clickBooleanTypeFilterValue($browser, '@user-list-role-filter', true);
             $browser->with('@crud-table-body', function (Browser $browser) {
                 $browser
                     ->assertSee(static::$sampleUser_2->name)

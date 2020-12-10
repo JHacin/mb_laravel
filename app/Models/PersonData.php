@@ -31,6 +31,7 @@ use Illuminate\Validation\Rule;
  * @property string|null $country
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int $is_confirmed
  * @property-read string $email_and_user_id
  * @property-read string $gender_label
  * @property-read Collection|Sponsorship[] $sponsorships
@@ -50,6 +51,7 @@ use Illuminate\Validation\Rule;
  * @method static Builder|PersonData whereFirstName($value)
  * @method static Builder|PersonData whereGender($value)
  * @method static Builder|PersonData whereId($value)
+ * @method static Builder|PersonData whereIsConfirmed($value)
  * @method static Builder|PersonData whereLastName($value)
  * @method static Builder|PersonData wherePhone($value)
  * @method static Builder|PersonData whereUpdatedAt($value)
@@ -109,6 +111,7 @@ class PersonData extends Model
         'zip_code',
         'city',
         'country',
+        'is_confirmed',
     ];
 
     /**
@@ -118,6 +121,7 @@ class PersonData extends Model
      */
     protected $casts = [
         'date_of_birth' => 'date',
+        'is_confirmed' => 'boolean',
     ];
 
     /**

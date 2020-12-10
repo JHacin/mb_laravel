@@ -19,7 +19,7 @@ class AddFieldsToCatsTable extends Migration
             $table->text('story')->nullable();
             $table->date('date_of_arrival')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(false);
         });
     }
 

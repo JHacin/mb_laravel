@@ -199,12 +199,7 @@ class AdminSponsorshipListTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
-            $browser->with('@sponsorship-list-is-active-filter', function (Browser $browser) {
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->assertSee('Da')
-                    ->assertSee('Ne');
-            });
+            $this->assertSeeBooleanTypeFilter($browser, '@sponsorship-list-is-active-filter');
         });
     }
 
@@ -224,12 +219,7 @@ class AdminSponsorshipListTest extends AdminTestCase
                 'monthly_amount' => 9876,
             ]);
             $this->goToPage($browser);
-            $browser->with('@sponsorship-list-is-active-filter', function (Browser $browser) {
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->click('.dropdown-item[dropdownkey="1"]');
-            });
-            $this->waitForRequestsToFinish($browser);
+            $this->clickBooleanTypeFilterValue($browser, '@sponsorship-list-is-active-filter', true);
 
             $browser->with('@crud-table-body', function (Browser $browser) {
                 $browser

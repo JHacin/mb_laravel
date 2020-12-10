@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminSponsorRequest;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
@@ -29,6 +30,7 @@ class SponsorCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
+    use CrudFilterHelpers;
 
     /**
      * @return void
@@ -53,6 +55,11 @@ class SponsorCrudController extends CrudController
         $this->crud->addColumn(CrudColumnGenerator::lastName());
         $this->crud->addColumn(CrudColumnGenerator::city());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
+        $this->crud->addColumn([
+            'name' => 'is_confirmed',
+            'label' => trans('person_data.is_confirmed'),
+            'type' => 'boolean',
+        ]);
         $this->crud->addColumn([
             'label' => 'Aktivna botrovanja',
             'type' => 'relationship_count',
@@ -82,6 +89,16 @@ class SponsorCrudController extends CrudController
                 },
             ],
         ]);
+
+        $this->addFilters();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFilters()
+    {
+        $this->addBooleanFilter('is_confirmed', trans('person_data.is_confirmed'));
     }
 
     /**
@@ -100,6 +117,15 @@ class SponsorCrudController extends CrudController
             ],
             'wrapper' => [
                 'dusk' => 'email-input-wrapper',
+            ],
+        ]);
+        $this->crud->addField([
+            'name' => 'is_confirmed',
+            'label' => trans('person_data.is_confirmed'),
+            'type' => 'checkbox',
+            'hint' => 'Potrjeno je, da boter plačuje. Pri potrjenih botrih bodo na novo ustvarjena botrovanja samodejno aktivirana.',
+            'wrapper' => [
+                'dusk' => 'is-confirmed-input-wrapper'
             ],
         ]);
         CrudFieldGenerator::addPersonDataFields($this->crud);

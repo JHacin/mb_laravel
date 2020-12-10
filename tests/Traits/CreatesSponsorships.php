@@ -16,4 +16,5 @@ trait CreatesSponsorships
         $sponsorship = Sponsorship::factory()->createOne($attributes);
         return $sponsorship;
     }
+
 }

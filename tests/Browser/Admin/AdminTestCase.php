@@ -3,6 +3,7 @@
 namespace Tests\Browser\Admin;
 
 use App\Models\User;
+use Tests\Browser\Admin\Traits\CrudFilterTestingHelpers;
 use Tests\Browser\Admin\Traits\CrudFormTestingHelpers;
 use Tests\Browser\Admin\Traits\CrudTableTestingHelpers;
 use Tests\Browser\Admin\Traits\RequestTestingHelpers;
@@ -10,7 +11,7 @@ use Tests\DuskTestCase;
 
 class AdminTestCase extends DuskTestCase
 {
-    use RequestTestingHelpers, CrudTableTestingHelpers, CrudFormTestingHelpers;
+    use RequestTestingHelpers, CrudTableTestingHelpers, CrudFormTestingHelpers, CrudFilterTestingHelpers;
 
     /**
      * @var User|null

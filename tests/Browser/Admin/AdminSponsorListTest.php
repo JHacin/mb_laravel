@@ -31,9 +31,41 @@ class AdminSponsorListTest extends AdminTestCase
                     3 => $personData->last_name,
                     4 => $personData->city,
                     5 => $this->formatToDateColumnString($personData->created_at),
-                    6 => $personData->sponsorships()->count() . ' botrovanj',
-                    7 => $personData->unscopedSponsorships()->count() . ' botrovanj',
+                    6 => $personData->is_confirmed ? 'Da' : 'Ne',
+                    7 => $personData->sponsorships()->count() . ' botrovanj',
+                    8 => $personData->unscopedSponsorships()->count() . ' botrovanj',
                 ]);
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_shows_is_confirmed_filter()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->goToPage($browser);
+            $this->assertSeeBooleanTypeFilter($browser, '@sponsors-list-is-confirmed-filter');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_filters_by_confirmed()
+    {
+        $this->browse(function (Browser $browser) {
+            $confirmed = $this->createPersonData(['is_confirmed' => true]);
+            $unconfirmed = $this->createPersonData(['is_confirmed' => false]);
+            $this->goToPage($browser);
+            $this->clickBooleanTypeFilterValue($browser, '@sponsors-list-is-confirmed-filter', true);
+            $browser->with('@crud-table-body', function (Browser $browser) use ($confirmed, $unconfirmed) {
+                $browser
+                    ->assertSee($confirmed->email)
+                    ->assertDontSee($unconfirmed->email);
             });
         });
     }

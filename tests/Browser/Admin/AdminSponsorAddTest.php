@@ -104,6 +104,10 @@ class AdminSponsorAddTest extends AdminTestCase
                 ->type('city', $personData->city)
                 ->select('country', $personData->country);
 
+            $browser->with('@is-confirmed-input-wrapper', function (Browser $browser) {
+                $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
+            });
+
             $this->submit($browser);
 
             $browser->assertSee('Vnos uspešen.');
@@ -118,8 +122,9 @@ class AdminSponsorAddTest extends AdminTestCase
                         3 => $personData->last_name,
                         4 => $personData->city,
                         5 => $this->formatToDatetimeColumnString($personData->created_at),
-                        6 => '0 botrovanj',
+                        6 => 'Da',
                         7 => '0 botrovanj',
+                        8 => '0 botrovanj',
                     ]);
                 }
             );

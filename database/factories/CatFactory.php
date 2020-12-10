@@ -20,7 +20,7 @@ class CatFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->unique()->name,

@@ -33,6 +33,7 @@ class PersonDataFactory extends Factory
             'zip_code' => $this->faker->postcode,
             'city' => $this->faker->city,
             'country' => array_rand(CountryList::COUNTRY_NAMES),
+            'is_confirmed' => $this->faker->boolean(),
         ];
     }
 }

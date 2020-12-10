@@ -177,13 +177,7 @@ class AdminCatListTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $this->goToCatsListPage($browser);
-
-            $browser->with('@cats-list-is-active-filter', function (Browser $browser) {
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->assertSee('Da')
-                    ->assertSee('Ne');
-            });
+            $this->assertSeeBooleanTypeFilter($browser, '@cats-list-is-active-filter');
         });
     }
 
@@ -200,14 +194,7 @@ class AdminCatListTest extends AdminTestCase
             static::$sampleCat_2->refresh();
 
             $this->goToCatsListPage($browser);
-
-            $browser->with('@cats-list-is-active-filter', function (Browser $browser) {
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->click('.dropdown-item[dropdownkey="1"]');
-            });
-
-            $this->waitForRequestsToFinish($browser);
+            $this->clickBooleanTypeFilterValue($browser, '@cats-list-is-active-filter', true);
 
             $browser->with('@crud-table-body', function (Browser $browser) {
                 $browser

@@ -15,7 +15,7 @@ class CrudColumnGenerator
     /**
      * @return string[]
      */
-    public static function id()
+    public static function id(): array
     {
         return [
             'name' => 'id',
@@ -30,7 +30,7 @@ class CrudColumnGenerator
     /**
      * @return string[]
      */
-    public static function createdAt()
+    public static function createdAt(): array
     {
         return [
             'name' => 'created_at',
@@ -42,7 +42,7 @@ class CrudColumnGenerator
     /**
      * @return string[]
      */
-    public static function updatedAt()
+    public static function updatedAt(): array
     {
         return [
             'name' => 'updated_at',
@@ -55,7 +55,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function isActive($additions = [])
+    public static function isActive($additions = []): array
     {
         return array_merge([
             'name' => 'is_active',
@@ -68,7 +68,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function address($additions = [])
+    public static function address($additions = []): array
     {
         return array_merge([
             'name' => 'address',
@@ -81,7 +81,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function zipCode($additions = [])
+    public static function zipCode($additions = []): array
     {
         return array_merge([
             'name' => 'zip_code',
@@ -94,7 +94,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function city($additions = [])
+    public static function city($additions = []): array
     {
         return array_merge([
             'name' => 'city',
@@ -107,7 +107,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function country($additions = [])
+    public static function country($additions = []): array
     {
         return array_merge([
             'name' => 'country',
@@ -128,7 +128,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function firstName($additions = [])
+    public static function firstName($additions = []): array
     {
         return array_merge([
             'name' => 'first_name',
@@ -141,7 +141,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function lastName($additions = [])
+    public static function lastName($additions = []): array
     {
         return array_merge([
             'name' => 'last_name',
@@ -154,7 +154,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function genderLabel($additions = [])
+    public static function genderLabel($additions = []): array
     {
         return array_merge([
             'name' => 'gender_label',
@@ -167,7 +167,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function dateOfBirth($additions = [])
+    public static function dateOfBirth($additions = []): array
     {
         return array_merge([
             'name' => 'date_of_birth',
@@ -180,7 +180,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function phone($additions = [])
+    public static function phone($additions = []): array
     {
         return array_merge([
             'name' => 'phone',
@@ -193,7 +193,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function name($additions = [])
+    public static function name($additions = []): array
     {
         return array_merge([
             'name' => 'name',
@@ -206,7 +206,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function email($additions = [])
+    public static function email($additions = []): array
     {
         return array_merge([
             'name' => 'email',
@@ -219,7 +219,7 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function moneyColumn($additions = [])
+    public static function moneyColumn($additions = []): array
     {
         return array_merge([
             'type' => 'number',

@@ -160,7 +160,7 @@ class AdminCatAddTest extends AdminTestCase
                     ->select('location_id', $location->id);
             });
 
-            $browser->with('@is-active-input-wrapper', function (Browser $browser) use ($location) {
+            $browser->with('@is-active-input-wrapper', function (Browser $browser) {
                 $browser->click('input[data-init-function="bpFieldInitCheckbox"]');
             });
 
