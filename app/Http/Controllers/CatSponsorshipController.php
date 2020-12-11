@@ -82,6 +82,7 @@ class CatSponsorshipController extends Controller
     {
         $personData = PersonData::firstOrCreate(['email' => $personDataFormInput['email']]);
         $personData->update($personDataFormInput);
+        $personData->refresh();
 
         return $personData;
     }

@@ -22,6 +22,7 @@ class CatSponsorshipFormTest extends DuskTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         if (!static::$cat) {
             static::$cat = $this->createCat();
         }
@@ -238,11 +239,9 @@ class CatSponsorshipFormTest extends DuskTestCase
                 'gender' => PersonData::GENDER_UNKNOWN,
                 'country' => 'BE',
             ]);
-            $browser->loginAs(self::$sampleUser);
-            $this->goToPage($browser);
-            $this->fillOutNonPersonDataFields($browser);
 
-            $newData = [
+            /** @var PersonData $newPersonData */
+            $newPersonData = PersonData::factory()->makeOne([
                 'email' => 'changed_test@example.com',
                 'first_name' => 'changed_first_name',
                 'last_name' => 'changed_last_name',
@@ -251,23 +250,17 @@ class CatSponsorshipFormTest extends DuskTestCase
                 'zip_code' => 'changed_zip_code',
                 'city' => 'changed_city',
                 'country' => 'SE',
-            ];
+            ]);
+            $formData = $this->getPersonDataFieldValueArray($newPersonData);
 
-            $browser
-                ->type('@personData[email]-input', $newData['email'])
-                ->type('@personData[first_name]-input', $newData['first_name'])
-                ->type('@personData[last_name]-input', $newData['last_name'])
-                ->select('@personData[gender]-input', $newData['gender'])
-                ->type('@personData[address]-input', $newData['address'])
-                ->type('@personData[zip_code]-input', $newData['zip_code'])
-                ->type('@personData[city]-input', $newData['city'])
-                ->select('@personData[country]-input', $newData['country']);
-
+            $browser->loginAs(self::$sampleUser);
+            $this->goToPage($browser);
+            $this->fillOutAllFields($browser, $formData);
             $this->submit($browser);
 
             $this->assertDatabaseHas(
                 'person_data',
-                array_merge($newData, ['id' => self::$sampleUser->personData->id])
+                array_merge(['id' => self::$sampleUser->personData->id], $formData)
             );
         });
     }
@@ -280,43 +273,23 @@ class CatSponsorshipFormTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             self::$cat->sponsorships()->delete();
+            /** @var PersonData $personData */
+            $personData = PersonData::factory()->makeOne();
+            $formData = $this->getPersonDataFieldValueArray($personData);
+
             $this->goToPage($browser);
-            $this->fillOutNonPersonDataFields($browser);
-
-            $data = [
-                'email' => 'new_anon@example.com',
-                'first_name' => 'new_anon_first_name',
-                'last_name' => 'new_anon_last_name',
-                'gender' => PersonData::GENDER_MALE,
-                'address' => 'new_anon_address',
-                'zip_code' => 'new_anon_zip_code',
-                'city' => 'new_anon_city',
-                'country' => 'SE',
-            ];
-
-            $browser
-                ->type('@personData[email]-input', $data['email'])
-                ->type('@personData[first_name]-input', $data['first_name'])
-                ->type('@personData[last_name]-input', $data['last_name'])
-                ->select('@personData[gender]-input', $data['gender'])
-                ->type('@personData[address]-input', $data['address'])
-                ->type('@personData[zip_code]-input', $data['zip_code'])
-                ->type('@personData[city]-input', $data['city'])
-                ->select('@personData[country]-input', $data['country']);
-
+            $this->fillOutAllFields($browser, $formData);
             $this->submit($browser);
             $browser->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
 
-            /** @var PersonData $personDataId */
-            $personDataId = PersonData::firstWhere('email', $data['email'])->id;
-
+            /** @var PersonData $createdPersonData */
+            $createdPersonData = PersonData::firstWhere('email', $personData->email);
             $this->assertDatabaseHas(
                 'person_data',
-                array_merge($data, ['id' => $personDataId])
+                array_merge(['id' => $createdPersonData->id], $formData)
             );
-
             $this->assertDatabaseHas('sponsorships', [
-                'person_data_id' => $personDataId,
+                'person_data_id' => $createdPersonData->id,
                 'cat_id' => self::$cat->id,
                 'monthly_amount' => 5,
                 'is_anonymous' => 1,
@@ -334,31 +307,8 @@ class CatSponsorshipFormTest extends DuskTestCase
             $confirmed = $this->createPersonData(['is_confirmed' => true]);
 
             $this->goToPage($browser);
-            $this->fillOutNonPersonDataFields($browser);
-
-            $data = [
-                'email' => $confirmed->email,
-                'first_name' => $confirmed->first_name,
-                'last_name' => $confirmed->last_name,
-                'gender' => $confirmed->gender,
-                'address' => $confirmed->address,
-                'zip_code' => $confirmed->zip_code,
-                'city' => $confirmed->city,
-                'country' => $confirmed->country,
-            ];
-
-            $browser
-                ->type('@personData[email]-input', $data['email'])
-                ->type('@personData[first_name]-input', $data['first_name'])
-                ->type('@personData[last_name]-input', $data['last_name'])
-                ->select('@personData[gender]-input', $data['gender'])
-                ->type('@personData[address]-input', $data['address'])
-                ->type('@personData[zip_code]-input', $data['zip_code'])
-                ->type('@personData[city]-input', $data['city'])
-                ->select('@personData[country]-input', $data['country']);
-
+            $this->fillOutAllFields($browser, $this->getPersonDataFieldValueArray($confirmed));
             $this->submit($browser);
-            $browser->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
 
             $this->assertDatabaseHas('sponsorships', [
                 'person_data_id' => $confirmed->id,
@@ -374,37 +324,14 @@ class CatSponsorshipFormTest extends DuskTestCase
     public function test_sets_is_active_field_to_false_if_sponsor_is_not_confirmed()
     {
         $this->browse(function (Browser $browser) {
-            $confirmed = $this->createPersonData(['is_confirmed' => false]);
+            $unconfirmed = $this->createPersonData(['is_confirmed' => false]);
 
             $this->goToPage($browser);
-            $this->fillOutNonPersonDataFields($browser);
-
-            $data = [
-                'email' => $confirmed->email,
-                'first_name' => $confirmed->first_name,
-                'last_name' => $confirmed->last_name,
-                'gender' => $confirmed->gender,
-                'address' => $confirmed->address,
-                'zip_code' => $confirmed->zip_code,
-                'city' => $confirmed->city,
-                'country' => $confirmed->country,
-            ];
-
-            $browser
-                ->type('@personData[email]-input', $data['email'])
-                ->type('@personData[first_name]-input', $data['first_name'])
-                ->type('@personData[last_name]-input', $data['last_name'])
-                ->select('@personData[gender]-input', $data['gender'])
-                ->type('@personData[address]-input', $data['address'])
-                ->type('@personData[zip_code]-input', $data['zip_code'])
-                ->type('@personData[city]-input', $data['city'])
-                ->select('@personData[country]-input', $data['country']);
-
+            $this->fillOutAllFields($browser, $this->getPersonDataFieldValueArray($unconfirmed));
             $this->submit($browser);
-            $browser->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
 
             $this->assertDatabaseHas('sponsorships', [
-                'person_data_id' => $confirmed->id,
+                'person_data_id' => $unconfirmed->id,
                 'is_active' => false,
             ]);
         });
@@ -414,16 +341,61 @@ class CatSponsorshipFormTest extends DuskTestCase
      * @param Browser $browser
      * @return Browser
      */
-    protected function goToPage(Browser $browser)
+    protected function goToPage(Browser $browser): Browser
     {
         return $browser->visit(new CatSponsorshipFormPage(self::$cat));
     }
 
     /**
      * @param Browser $browser
+     * @param array $formData
+     */
+    protected function fillOutAllFields(Browser $browser, array $formData)
+    {
+        $this->fillOutNonPersonDataFields($browser);
+        $this->fillOutPersonDataFields($browser, $formData);
+    }
+
+    /**
+     * @param PersonData $personData
+     * @return array
+     */
+    protected function getPersonDataFieldValueArray(PersonData $personData): array
+    {
+        return [
+            'email' => $personData->email,
+            'first_name' => $personData->first_name,
+            'last_name' => $personData->last_name,
+            'gender' => $personData->gender,
+            'address' => $personData->address,
+            'zip_code' => $personData->zip_code,
+            'city' => $personData->city,
+            'country' => $personData->country,
+        ];
+    }
+
+    /**
+     * @param Browser $browser
+     * @param array $formData
+     */
+    protected function fillOutPersonDataFields(Browser $browser, array $formData)
+    {
+        $browser
+            ->type('@personData[email]-input', $formData['email'])
+            ->type('@personData[first_name]-input', $formData['first_name'])
+            ->type('@personData[last_name]-input', $formData['last_name'])
+            ->select('@personData[gender]-input', $formData['gender'])
+            ->type('@personData[address]-input', $formData['address'])
+            ->type('@personData[zip_code]-input', $formData['zip_code'])
+            ->type('@personData[city]-input', $formData['city'])
+            ->select('@personData[country]-input', $formData['country']);
+    }
+
+    /**
+     * @param Browser $browser
      * @return Browser
      */
-    protected function fillOutNonPersonDataFields(Browser $browser)
+    protected function fillOutNonPersonDataFields(Browser $browser): Browser
     {
         return $browser
             ->type('@monthly_amount-input', '5')
@@ -431,7 +403,11 @@ class CatSponsorshipFormTest extends DuskTestCase
             ->check('@is_agreed_to_terms-input');
     }
 
-    protected function submit(Browser $browser)
+    /**
+     * @param Browser $browser
+     * @return Browser
+     */
+    protected function submit(Browser $browser): Browser
     {
         return $browser->click('@cat-sponsorship-submit');
     }

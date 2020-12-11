@@ -31,7 +31,7 @@ use Illuminate\Validation\Rule;
  * @property string|null $country
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property int $is_confirmed
+ * @property bool $is_confirmed
  * @property-read string $email_and_user_id
  * @property-read string $gender_label
  * @property-read Collection|Sponsorship[] $sponsorships
