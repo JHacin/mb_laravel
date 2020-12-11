@@ -43,7 +43,7 @@
     </div>
 
     <div data-handle="crop-modal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Priprava slike</h5>
@@ -141,6 +141,7 @@
                 $mainImage.attr('src', $hiddenImage.val());
 
                 $uploadImage.on('change', function(event) {
+                    $mainImage.cropper('destroy').attr('src', '');
                     $cropModal.appendTo('body').modal('show');
 
                     $cropModal.on('shown.bs.modal', function() {
@@ -171,6 +172,7 @@
                 $deleteBtn.on('click', function () {
                     $hiddenImage.val('');
                     $previewImage.hide();
+                    $mainImage.cropper('destroy').attr('src', '');
                     $previewImage.attr('src', '');
                     $deleteBtn.hide();
                 });
