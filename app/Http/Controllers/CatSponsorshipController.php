@@ -43,15 +43,18 @@ class CatSponsorshipController extends Controller
      * @param CatSponsorshipRequest $request
      * @return RedirectResponse
      */
-    public function submit(Cat $cat, CatSponsorshipRequest $request)
+    public function submit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
     {
         $input = $request->all();
+
         if (Auth::check()) {
             $this->updateUserEmail(Auth::user(), $input['personData']['email']);
         }
+
         $personData = $this->updateOrCreatePersonData($request->input('personData'));
         $this->createSponsorship($cat, $personData, $input);
         $this->catSponsorshipMailService->sendInitialInstructionsEmail($personData);
+
         return back()->with(
             'success_message',
             'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.'
@@ -67,32 +70,35 @@ class CatSponsorshipController extends Controller
         if ($inputEmail === $user->email) {
             return;
         }
+
         $user->update(['email' => $inputEmail]);
     }
 
     /**
-     * @param array $updates
+     * @param array $personDataFormInput
      * @return PersonData|Model
      */
-    protected function updateOrCreatePersonData(array $updates)
+    protected function updateOrCreatePersonData(array $personDataFormInput)
     {
-        $personData = PersonData::firstOrCreate(['email' => $updates['email']]);
-        $personData->update($updates);
+        $personData = PersonData::firstOrCreate(['email' => $personDataFormInput['email']]);
+        $personData->update($personDataFormInput);
+
         return $personData;
     }
 
     /**
      * @param Cat $cat
      * @param PersonData $personData
-     * @param array $input
+     * @param array $formInput
      */
-    protected function createSponsorship(Cat $cat, PersonData $personData, array $input)
+    protected function createSponsorship(Cat $cat, PersonData $personData, array $formInput)
     {
         Sponsorship::create([
             'person_data_id' => $personData->id,
             'cat_id' => $cat->id,
-            'monthly_amount' => $input['monthly_amount'],
-            'is_anonymous' => $input['is_anonymous'] ?? false,
+            'monthly_amount' => $formInput['monthly_amount'],
+            'is_anonymous' => $formInput['is_anonymous'] ?? false,
+            'is_active' => $personData->is_confirmed,
         ]);
     }
 

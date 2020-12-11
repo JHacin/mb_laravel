@@ -325,6 +325,92 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_sets_is_active_field_to_true_if_sponsor_is_confirmed()
+    {
+        $this->browse(function (Browser $browser) {
+            $confirmed = $this->createPersonData(['is_confirmed' => true]);
+
+            $this->goToPage($browser);
+            $this->fillOutNonPersonDataFields($browser);
+
+            $data = [
+                'email' => $confirmed->email,
+                'first_name' => $confirmed->first_name,
+                'last_name' => $confirmed->last_name,
+                'gender' => $confirmed->gender,
+                'address' => $confirmed->address,
+                'zip_code' => $confirmed->zip_code,
+                'city' => $confirmed->city,
+                'country' => $confirmed->country,
+            ];
+
+            $browser
+                ->type('@personData[email]-input', $data['email'])
+                ->type('@personData[first_name]-input', $data['first_name'])
+                ->type('@personData[last_name]-input', $data['last_name'])
+                ->select('@personData[gender]-input', $data['gender'])
+                ->type('@personData[address]-input', $data['address'])
+                ->type('@personData[zip_code]-input', $data['zip_code'])
+                ->type('@personData[city]-input', $data['city'])
+                ->select('@personData[country]-input', $data['country']);
+
+            $this->submit($browser);
+            $browser->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
+
+            $this->assertDatabaseHas('sponsorships', [
+                'person_data_id' => $confirmed->id,
+                'is_active' => true,
+            ]);
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_sets_is_active_field_to_false_if_sponsor_is_not_confirmed()
+    {
+        $this->browse(function (Browser $browser) {
+            $confirmed = $this->createPersonData(['is_confirmed' => false]);
+
+            $this->goToPage($browser);
+            $this->fillOutNonPersonDataFields($browser);
+
+            $data = [
+                'email' => $confirmed->email,
+                'first_name' => $confirmed->first_name,
+                'last_name' => $confirmed->last_name,
+                'gender' => $confirmed->gender,
+                'address' => $confirmed->address,
+                'zip_code' => $confirmed->zip_code,
+                'city' => $confirmed->city,
+                'country' => $confirmed->country,
+            ];
+
+            $browser
+                ->type('@personData[email]-input', $data['email'])
+                ->type('@personData[first_name]-input', $data['first_name'])
+                ->type('@personData[last_name]-input', $data['last_name'])
+                ->select('@personData[gender]-input', $data['gender'])
+                ->type('@personData[address]-input', $data['address'])
+                ->type('@personData[zip_code]-input', $data['zip_code'])
+                ->type('@personData[city]-input', $data['city'])
+                ->select('@personData[country]-input', $data['country']);
+
+            $this->submit($browser);
+            $browser->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
+
+            $this->assertDatabaseHas('sponsorships', [
+                'person_data_id' => $confirmed->id,
+                'is_active' => false,
+            ]);
+        });
+    }
+
+    /**
      * @param Browser $browser
      * @return Browser
      */
