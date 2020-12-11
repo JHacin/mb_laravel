@@ -10,7 +10,7 @@ class AdminCatLocationRequest extends FormRequest
     /**
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return backpack_auth()->check();
     }
@@ -18,7 +18,7 @@ class AdminCatLocationRequest extends FormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'min:2', 'max:255'],

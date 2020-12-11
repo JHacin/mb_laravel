@@ -12,7 +12,7 @@ class AdminCatRequest extends FormRequest
     /**
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return backpack_auth()->check();
     }
@@ -20,7 +20,7 @@ class AdminCatRequest extends FormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = [
             'name' => ['required', 'string', 'min:2', 'max:100'],
@@ -48,7 +48,7 @@ class AdminCatRequest extends FormRequest
     /**
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.min' => 'Ime mora biti dolgo vsaj 2 znaka.',

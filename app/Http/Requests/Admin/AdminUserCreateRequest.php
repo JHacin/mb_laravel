@@ -13,7 +13,7 @@ class AdminUserCreateRequest extends FormRequest
     /**
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return backpack_auth()->check();
     }
@@ -21,7 +21,7 @@ class AdminUserCreateRequest extends FormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'email' => [
@@ -49,7 +49,7 @@ class AdminUserCreateRequest extends FormRequest
     /**
      * @inheritDoc
      */
-    public function messages()
+    public function messages(): array
     {
         return User::getSharedValidationMessages();
     }

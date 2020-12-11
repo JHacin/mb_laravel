@@ -47,6 +47,7 @@ class AdminSponsorRequest extends FormRequest
             'zip_code' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:255'],
             'country' => ['nullable', new CountryCode],
+            'is_active' => ['boolean'],
         ];
     }
 

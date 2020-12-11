@@ -7,13 +7,14 @@ use App\Models\User;
 use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Request;
 
 class AdminUserUpdateRequest extends FormRequest
 {
     /**
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return backpack_auth()->check();
     }
@@ -21,13 +22,13 @@ class AdminUserUpdateRequest extends FormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $userModel = config('backpack.permissionmanager.models.user');
         $userModel = new $userModel();
         $routeSegmentWithId = empty(config('backpack.base.route_prefix')) ? '2' : '3';
 
-        $userId = $this->get('id') ?? \Request::instance()->segment($routeSegmentWithId);
+        $userId = $this->get('id') ?? Request::instance()->segment($routeSegmentWithId);
 
         if (!$userModel->find($userId)) {
             abort(400, 'Could not find that entry in the database.');
@@ -58,7 +59,7 @@ class AdminUserUpdateRequest extends FormRequest
     /**
      * @inheritDoc
      */
-    public function messages()
+    public function messages(): array
     {
         return User::getSharedValidationMessages();
     }

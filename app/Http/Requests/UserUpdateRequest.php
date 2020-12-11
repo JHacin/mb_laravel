@@ -11,11 +11,9 @@ class UserUpdateRequest extends FormRequest
 {
 
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return Auth::check();
     }
@@ -25,7 +23,7 @@ class UserUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return array_merge(
             User::getSharedValidationRules(),
@@ -40,7 +38,7 @@ class UserUpdateRequest extends FormRequest
     /**
      * @inheritDoc
      */
-    public function messages()
+    public function messages(): array
     {
         return User::getSharedValidationMessages();
     }

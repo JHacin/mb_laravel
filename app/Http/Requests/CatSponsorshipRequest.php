@@ -13,7 +13,7 @@ class CatSponsorshipRequest extends FormRequest
     /**
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'personData.email' => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore(Auth::id())],
@@ -38,7 +38,7 @@ class CatSponsorshipRequest extends FormRequest
     /**
      * @inheritDoc
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'personData.email.unique' => 'Ta email naslov že uporablja registriran uporabnik. Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
