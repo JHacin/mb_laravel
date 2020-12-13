@@ -16,7 +16,12 @@ class CatSponsorshipRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'personData.email' => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore(Auth::id())],
+            'personData.email' => [
+                'required',
+                'string',
+                'email',
+                Rule::unique('users', 'email')->ignore(Auth::id())
+            ],
             'personData.first_name' => ['nullable', 'string', 'max:255'],
             'personData.last_name' => ['nullable', 'string', 'max:255'],
             'personData.gender' => [Rule::in(PersonData::GENDERS)],
@@ -41,9 +46,9 @@ class CatSponsorshipRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'personData.email.unique' => 'Ta email naslov že uporablja registriran uporabnik. Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
-            'personData.date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
-            'monthly_amount.min' => 'Minimalni mesečni znesek je 5€.'
+            'personData.email.unique' =>
+                'Ta email naslov že uporablja registriran uporabnik.' .
+                ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
         ];
     }
 }

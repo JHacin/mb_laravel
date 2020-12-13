@@ -89,12 +89,4 @@ class AdminSponsorRequest extends FormRequest
 
         return $rule;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function messages(): array
-    {
-        return PersonData::getSharedValidationMessages();
-    }
 }

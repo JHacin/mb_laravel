@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\PersonData;
-use App\Models\User;
 use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -54,13 +53,5 @@ class AdminUserUpdateRequest extends FormRequest
             'personData.country' => ['nullable', new CountryCode],
             'is_active' => ['boolean'],
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function messages(): array
-    {
-        return User::getSharedValidationMessages();
     }
 }

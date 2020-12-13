@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Rules\CountryCode;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
-use Illuminate\Validation\Rule;
 
 /**
  * App\Models\PersonData
@@ -136,35 +134,6 @@ class PersonData extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * @return array
-     */
-    public static function getSharedValidationRules(): array
-    {
-        return [
-            'email' => ['required', 'string', 'email', Rule::unique('users', 'email')],
-            'first_name' => ['nullable', 'string', 'max:255'],
-            'last_name' => ['nullable', 'string', 'max:255'],
-            'gender' => [Rule::in(PersonData::GENDERS)],
-            'phone' => ['nullable', 'string', 'max:255'],
-            'date_of_birth' => ['nullable', 'date', 'before:now'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'zip_code' => ['nullable', 'string', 'max:255'],
-            'city' => ['nullable', 'string', 'max:255'],
-            'country' => ['nullable', new CountryCode],
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSharedValidationMessages(): array
-    {
-        return [
-            'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
-        ];
-    }
 
     /**
      * @return bool

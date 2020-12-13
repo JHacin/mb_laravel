@@ -122,6 +122,13 @@ return [
             'email' => [
                 'unique' => 'Ta email naslov je že v uporabi.',
             ],
+            'date_of_birth' => [
+                'before' => 'Datum rojstva mora biti v preteklosti.',
+            ],
+            'exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.'
+        ],
+        'name' => [
+            'min' => 'Ime mora biti dolgo vsaj 2 znaka.',
         ],
         'email' => [
             'unique' => 'Ta email naslov je že v uporabi.',
@@ -129,7 +136,25 @@ return [
         'password' => [
             'min' => 'Geslo mora biti dolgo vsaj :min znakov.',
             'confirmed' => 'Gesli se ne ujemata.',
-        ]
+        ],
+        'date_of_birth' => [
+            'before' => 'Datum rojstva mora biti v preteklosti.',
+        ],
+        'date_of_arrival_mh' => [
+            'before' => 'Datum sprejema v zavetišče mora biti v preteklosti.',
+        ],
+        'date_of_arrival_boter' => [
+            'before' => 'Datum vstopa v botrstvo mora biti v preteklosti.',
+        ],
+        'monthly_amount' => [
+            'min' => 'Minimalni mesečni znesek je 5€.',
+        ],
+        'cat' => [
+            'exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
+        ],
+        'ended_at' => [
+            'before_or_equal' => 'Datum konca ne sme biti v prihodnosti.',
+        ],
     ],
 
     /*

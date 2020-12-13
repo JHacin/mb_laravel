@@ -13,7 +13,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -137,24 +136,10 @@ class User extends Authenticatable
     */
 
     /**
-     * @return string[]
-     */
-    public static function getSharedValidationMessages()
-    {
-        $messages = [];
-
-        foreach (PersonData::getSharedValidationMessages() as $validatorName => $message) {
-            $messages['personData.' . $validatorName] = $message;
-        }
-
-        return $messages;
-    }
-
-    /**
      * @param string $password
      * @return string
      */
-    public static function generateSecurePassword(string $password)
+    public static function generateSecurePassword(string $password): string
     {
         return Hash::make($password);
     }
@@ -164,7 +149,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->hasRole(self::ADMIN_ROLES);
     }
@@ -180,7 +165,7 @@ class User extends Authenticatable
      *
      * @return HasOne
      */
-    public function personData()
+    public function personData(): HasOne
     {
         return $this->hasOne(PersonData::class);
     }
@@ -202,7 +187,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getEmailAndIdAttribute()
+    public function getEmailAndIdAttribute(): string
     {
         return sprintf('%s (%d)', $this->email, $this->id);
     }

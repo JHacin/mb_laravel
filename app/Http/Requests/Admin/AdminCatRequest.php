@@ -44,17 +44,4 @@ class AdminCatRequest extends FormRequest
 
         return $rules;
     }
-
-    /**
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'name.min' => 'Ime mora biti dolgo vsaj 2 znaka.',
-            'date_of_birth.before' => 'Datum rojstva mora biti v preteklosti.',
-            'date_of_arrival_mh.before' => 'Datum sprejema v zavetišče mora biti v preteklosti.',
-            'date_of_arrival_boter.before' => 'Datum vstopa v botrstvo mora biti v preteklosti.',
-        ];
-    }
 }

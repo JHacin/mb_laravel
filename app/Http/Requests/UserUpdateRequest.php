@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\PersonData;
-use App\Models\User;
 use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -40,13 +39,5 @@ class UserUpdateRequest extends FormRequest
             'personData.city' => ['nullable', 'string', 'max:255'],
             'personData.country' => ['nullable', new CountryCode],
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function messages(): array
-    {
-        return User::getSharedValidationMessages();
     }
 }

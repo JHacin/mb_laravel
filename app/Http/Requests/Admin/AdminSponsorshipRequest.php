@@ -31,16 +31,4 @@ class AdminSponsorshipRequest extends FormRequest
             'personData' => ['required', 'integer', 'exists:person_data,id'],
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'cat.exists' => 'Muca s to šifro ne obstaja v bazi podatkov.',
-            'personData.exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.',
-            'monthly_amount.min' => 'Minimalni mesečni znesek je 5€.'
-        ];
-    }
 }

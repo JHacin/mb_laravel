@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\PersonData;
-use App\Models\User;
 use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -44,13 +43,5 @@ class AdminUserCreateRequest extends FormRequest
             'is_active' => ['boolean'],
             'should_send_welcome_email' => ['boolean']
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function messages(): array
-    {
-        return User::getSharedValidationMessages();
     }
 }

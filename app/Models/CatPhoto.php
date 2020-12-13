@@ -65,7 +65,7 @@ class CatPhoto extends Model
      *
      * @return BelongsTo
      */
-    public function cat()
+    public function cat(): BelongsTo
     {
         return $this->belongsTo(Cat::class);
     }
@@ -87,7 +87,7 @@ class CatPhoto extends Model
      *
      * @return string
      */
-    public function getUrlAttribute()
+    public function getUrlAttribute(): string
     {
         return Storage::url(CatPhotoService::getFullPath($this->filename));
     }
