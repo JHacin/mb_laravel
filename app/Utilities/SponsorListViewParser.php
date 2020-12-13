@@ -14,7 +14,7 @@ class SponsorListViewParser
      * @param Collection|Sponsorship[] $sponsorships
      * @return array[]
      */
-    public static function prepareViewData($sponsorships)
+    public static function prepareViewData($sponsorships): array
     {
         $separated = self::separateAnonymousSponsors($sponsorships);
 
@@ -29,7 +29,7 @@ class SponsorListViewParser
      * @param Collection|Sponsorship[] $sponsorships
      * @return array[]
      */
-    protected static function separateAnonymousSponsors($sponsorships)
+    protected static function separateAnonymousSponsors($sponsorships): array
     {
         $result = [
             'anonymous' => [],
@@ -51,7 +51,7 @@ class SponsorListViewParser
      * @param Sponsorship $sponsorship
      * @return bool
      */
-    protected static function isConsideredAnonymous(Sponsorship $sponsorship)
+    protected static function isConsideredAnonymous(Sponsorship $sponsorship): bool
     {
         return $sponsorship->is_anonymous || self::isMissingAllDisplayableProperties($sponsorship->personData);
     }
@@ -60,7 +60,7 @@ class SponsorListViewParser
      * @param PersonData $personData
      * @return bool
      */
-    protected static function isMissingAllDisplayableProperties(PersonData $personData)
+    protected static function isMissingAllDisplayableProperties(PersonData $personData): bool
     {
         return !$personData->first_name && !$personData->city;
     }

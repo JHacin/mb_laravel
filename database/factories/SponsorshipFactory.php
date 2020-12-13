@@ -26,6 +26,7 @@ class SponsorshipFactory extends Factory
             'person_data_id' => PersonData::factory(),
             'monthly_amount' => 5,
             'is_active' => true,
+            'is_anonymous' => false,
         ];
     }
 }

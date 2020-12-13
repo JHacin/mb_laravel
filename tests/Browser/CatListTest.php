@@ -27,16 +27,11 @@ class CatListTest extends DuskTestCase
         parent::setUp();
 
         if (!static::$sampleCat) {
-            /** @var Cat $cat */
-            $cat = Cat::factory()
-                ->has(Sponsorship::factory()->count(6))
-                ->createOne([
-                    'name' => 'Lojza',
-                    'date_of_arrival_boter' => '1999-08-21',
-                    'date_of_birth' => Carbon::now()->subYears(1)->subMonths(1)->subDays(4)
-                ]);
-
-            static::$sampleCat = $cat;
+            static::$sampleCat = $this->createCatWithSponsorships([
+                'name' => 'Lojza',
+                'date_of_arrival_boter' => '1999-08-21',
+                'date_of_birth' => Carbon::now()->subYears(1)->subMonths(1)->subDays(4)
+            ]);
         }
     }
 

@@ -25,6 +25,7 @@ class CatFactory extends Factory
         return [
             'name' => $this->faker->unique()->name,
             'gender' => array_rand(Cat::GENDER_LABELS),
+            'story' => $this->faker->text,
             'date_of_birth' => $this->faker->date(),
             'date_of_arrival_mh' => $this->faker->date(),
             'date_of_arrival_boter' => $this->faker->date(),
