@@ -13,18 +13,28 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <h1 class="title">Moja botrovanja</h1>
-            @if($sponsorships->count() === 0)
-                <div>Nimate še botrovanj.</div>
-            @else
-                @foreach($sponsorships as $sponsorship)
-                    <div>
-                        <a href="{{ route('cat_details', $sponsorship->cat) }}">
-                            {{ $sponsorship->cat->name }}
-                        </a>
-                    </div>
-                @endforeach
+            @if (session('success_message'))
+                <x-notification type="success">
+                    <x-slot name="message">
+                        {{ session('success_message') }}
+                    </x-slot>
+                </x-notification>
             @endif
+
+            <h1 class="title">Moja botrovanja</h1>
+            <div dusk="sponsorship-list">
+                @if($sponsorships->count() === 0)
+                    <div>Nimate še botrovanj.</div>
+                @else
+                    @foreach($sponsorships as $sponsorship)
+                        <div>
+                            <a href="{{ route('cat_details', $sponsorship->cat) }}">
+                                {{ $sponsorship->cat->name }}
+                            </a>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
 
             <h1 class="title">Moj profil</h1>
 
@@ -102,7 +112,9 @@
                 />
 
                 <div class="field">
-                    <button type="submit" class="button is-primary">{{ trans('forms.confirm') }}</button>
+                    <button type="submit" class="button is-primary" dusk="user-profile-form-submit">
+                        {{ trans('forms.confirm') }}
+                    </button>
                 </div>
             </form>
         </div>

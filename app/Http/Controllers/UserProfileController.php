@@ -25,7 +25,7 @@ class UserProfileController extends Controller
      *
      * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
         return view('user-profile.index');
     }
@@ -50,7 +50,6 @@ class UserProfileController extends Controller
             $update['password'] = User::generateSecurePassword($data['password']);
         }
 
-
         $user->update($update);
         $user->personData()->update(
             array_merge(
@@ -59,6 +58,9 @@ class UserProfileController extends Controller
             )
         );
 
-        return redirect()->back();
+        return back()->with(
+            'success_message',
+            'Vaši podatki so bili posodobljeni.'
+        );
     }
 }
