@@ -137,22 +137,6 @@ class User extends Authenticatable
     */
 
     /**
-     * @return array
-     */
-    public static function getSharedValidationRules()
-    {
-        $rules = [
-            'is_active' => ['boolean'],
-        ];
-
-        foreach (Arr::except(PersonData::getSharedValidationRules(), ['email']) as $fieldName => $ruleDef) {
-            $rules['personData.' . $fieldName] = $ruleDef;
-        }
-
-        return $rules;
-    }
-
-    /**
      * @return string[]
      */
     public static function getSharedValidationMessages()

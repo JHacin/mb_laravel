@@ -5,11 +5,9 @@ namespace Tests\Browser\Pages;
 class UserProfilePage extends Page
 {
     /**
-     * Get the URL for the page.
-     *
-     * @return string
+     * @inheritDoc
      */
-    public function url()
+    public function url(): string
     {
         return config('routes.user_profile');
     }

@@ -2,14 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Models\PersonData;
 use App\Models\User;
+use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends FormRequest
 {
-
     /**
      * @return bool
      */
@@ -25,14 +26,20 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return array_merge(
-            User::getSharedValidationRules(),
-            [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
-                'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            ]
-        );
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255', 'email', Rule::unique('users')->ignore(Auth::id())],
+            'password' => ['nullable', 'string', 'min:8', 'max:255', 'confirmed'],
+            'personData.first_name' => ['nullable', 'string', 'max:255'],
+            'personData.last_name' => ['nullable', 'string', 'max:255'],
+            'personData.gender' => [Rule::in(PersonData::GENDERS)],
+            'personData.phone' => ['nullable', 'string', 'max:255'],
+            'personData.date_of_birth' => ['nullable', 'date', 'before:now'],
+            'personData.address' => ['nullable', 'string', 'max:255'],
+            'personData.zip_code' => ['nullable', 'string', 'max:255'],
+            'personData.city' => ['nullable', 'string', 'max:255'],
+            'personData.country' => ['nullable', new CountryCode],
+        ];
     }
 
     /**
