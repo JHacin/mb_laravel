@@ -142,9 +142,11 @@ return [
         ],
         'date_of_arrival_mh' => [
             'before' => 'Datum sprejema v zavetišče mora biti v preteklosti.',
+            'after_or_equal' => 'Datum sprejema v zavetišče mora biti kasnejši ali enak datumu rojstva.',
         ],
         'date_of_arrival_boter' => [
             'before' => 'Datum vstopa v botrstvo mora biti v preteklosti.',
+            'after_or_equal' => 'Datum vstopa v botrstvo mora biti kasnejši ali enak datumu rojstva.',
         ],
         'monthly_amount' => [
             'min' => 'Minimalni mesečni znesek je 5€.',

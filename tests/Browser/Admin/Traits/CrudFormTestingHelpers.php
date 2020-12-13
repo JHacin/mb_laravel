@@ -29,18 +29,20 @@ trait CrudFormTestingHelpers
     /**
      * @param Browser $browser
      * @param string $wrapperSelector
+     * @param int $monthsAgo
      */
-    protected function selectDatepickerDateInThePast(Browser $browser, string $wrapperSelector)
+    protected function selectDatepickerDateInThePast(Browser $browser, string $wrapperSelector, int $monthsAgo = 2)
     {
         $browser->with($wrapperSelector, function (Browser $browser) {
             $browser->click('input[type="text"]');
         });
 
-        $browser->with('.datepicker', function (Browser $browser) {
-            $browser
-                ->click('.datepicker-days thead th.prev')
-                ->click('.datepicker-days thead th.prev')
-                ->click('.datepicker-days tbody > tr > td');
+        $browser->with('.datepicker', function (Browser $browser) use ($monthsAgo) {
+            for ($i = 0; $i < $monthsAgo; $i++) {
+                $browser->click('.datepicker-days thead th.prev');
+            }
+
+            $browser->click('.datepicker-days tbody > tr > td');
         });
     }
 

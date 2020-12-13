@@ -57,7 +57,6 @@ class AdminCatAddTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
-
             $this->disableHtmlFormValidation($browser);
 
             $dateInputWrappers = [
@@ -75,6 +74,33 @@ class AdminCatAddTest extends AdminTestCase
                 ->assertSee('Datum rojstva mora biti v preteklosti.')
                 ->assertSee('Datum sprejema v zavetišče mora biti v preteklosti.')
                 ->assertSee('Datum vstopa v botrstvo mora biti v preteklosti.');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_validates_dates_of_arrival_are_after_or_equal_to_date_of_birth()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+
+            $this->disableHtmlFormValidation($b);
+            $this->selectDatepickerDateInThePast($b, '@date-of-birth-input-wrapper', 4);
+            $this->selectDatepickerDateInThePast($b, '@date-of-arrival-mh-input-wrapper', 5);
+            $this->selectDatepickerDateInThePast($b, '@date-of-arrival-boter-input-wrapper', 5);
+            $this->clickSubmitButton($b);
+            $b->assertSee('Datum sprejema v zavetišče mora biti kasnejši ali enak datumu rojstva.');
+            $b->assertSee('Datum vstopa v botrstvo mora biti kasnejši ali enak datumu rojstva.');
+
+            $b->refresh();
+            $this->disableHtmlFormValidation($b);
+            $this->selectDatepickerDateInThePast($b, '@date-of-birth-input-wrapper', 4);
+            $this->selectDatepickerDateInThePast($b, '@date-of-arrival-mh-input-wrapper', 4);
+            $this->selectDatepickerDateInThePast($b, '@date-of-arrival-boter-input-wrapper', 4);
+            $b->assertDontSee('Datum sprejema v zavetišče mora biti kasnejši ali enak datumu rojstva.');
+            $b->assertDontSee('Datum vstopa v botrstvo mora biti kasnejši ali enak datumu rojstva.');
         });
     }
 
