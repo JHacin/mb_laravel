@@ -3,12 +3,20 @@
 namespace Tests\Unit\Http\Controllers;
 
 use App\Models\Cat;
-use Illuminate\Support\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class CatListControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * @var bool
+     */
+    protected bool $seed = true;
+
     /**
      * @return void
      */
@@ -25,10 +33,10 @@ class CatListControllerTest extends TestCase
     {
         $lastAddedCat = $this->createCat();
         $response = $this->getResponse();
-        $catCollection = $this->getCatCollectionVariable($response);
+        $cats = $this->getCatsInResponse($response);
 
         /** @var Cat $firstCatInList */
-        $firstCatInList = $catCollection->first();
+        $firstCatInList = $cats->first();
         $this->assertEquals($firstCatInList->id, $lastAddedCat->id);
     }
 
@@ -39,9 +47,22 @@ class CatListControllerTest extends TestCase
     {
         $inactiveCat = $this->createCat(['is_active' => false]);
         $response = $this->getResponse();
-        $catCollection = $this->getCatCollectionVariable($response);
+        $cats = $this->getCatsInResponse($response);
 
-        $this->assertFalse($catCollection->contains($inactiveCat->id));
+        $this->assertFalse($cats->contains($inactiveCat->id));
+    }
+
+    /**
+     * @return void
+     */
+    public function test_returns_25_cats_per_page_by_default()
+    {
+        Cat::factory()->count(100)->create();
+
+        $response = $this->getResponse();
+        $cats = $this->getCatsInResponse($response);
+
+        $this->assertCount(25, $cats);
     }
 
     /**
@@ -54,9 +75,9 @@ class CatListControllerTest extends TestCase
 
     /**
      * @param TestResponse $response
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    protected function getCatCollectionVariable(TestResponse $response): Collection
+    protected function getCatsInResponse(TestResponse $response): LengthAwarePaginator
     {
         return $response->getOriginalContent()->getData()['cats'];
     }

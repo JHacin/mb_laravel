@@ -88,6 +88,18 @@ class CatListTest extends DuskTestCase
     }
 
     /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_shows_first_25_cats_by_default()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $this->assertCount(25, $b->elements('@cat-list-item'));
+        });
+    }
+
+    /**
      * @param Browser $browser
      * @param string $element
      * @param string $data

@@ -15,7 +15,7 @@
         : $fallback
 @endphp
 
-<div class="card" dusk="cat-list-item-{{ $cat->id }}">
+<div class="card" dusk="cat-list-item">
     <div class="card-image">
         <figure class="image is-1by1">
             <img src="{{ $cat->first_photo_url }}" alt="{{ $cat->name }}">
