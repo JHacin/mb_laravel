@@ -100,6 +100,35 @@ class CatListTest extends DuskTestCase
     }
 
     /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_pagination_page_links_work()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+
+            // Page 1 link is active by default, back button is disabled
+            $b->assertAriaAttribute('@pagination-link-page-1', 'current', 'page');
+            $b->assertAriaAttribute('@pagination-previous', 'disabled', 'true');
+
+            // Clicking other links works
+            $b->click('@pagination-link-page-2');
+            $b->assertQueryStringHas('page', '2');
+            $b->assertAriaAttribute('@pagination-link-page-2', 'current', 'page');
+
+            // Prev/Next buttons work
+            $b->click('@pagination-previous');
+            $b->assertQueryStringHas('page', '1');
+            $b->assertAriaAttribute('@pagination-link-page-1', 'current', 'page');
+
+            $b->click('@pagination-next');
+            $b->assertQueryStringHas('page', '2');
+            $b->assertAriaAttribute('@pagination-link-page-2', 'current', 'page');
+        });
+    }
+
+    /**
      * @param Browser $browser
      * @param string $element
      * @param string $data

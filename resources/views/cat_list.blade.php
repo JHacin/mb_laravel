@@ -5,6 +5,8 @@
         <div class="container">
             <h1 class="title">Muce, ki iščejo botra</h1>
 
+            {{ $cats->links() }}
+
             <div class="columns is-multiline">
                 @foreach($cats as $cat)
                     <div class="column is-one-third">

@@ -22,8 +22,8 @@ class SponsorshipFactory extends Factory
     public function definition(): array
     {
         return [
-            'cat_id' => Cat::factory(),
-            'person_data_id' => PersonData::factory(),
+            'cat_id' => Cat::inRandomOrder()->first(),
+            'person_data_id' => PersonData::inRandomOrder()->first(),
             'monthly_amount' => 5,
             'is_active' => true,
             'is_anonymous' => false,

@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cat;
+use App\Models\CatLocation;
 use Illuminate\Database\Seeder;
 
-class CatSeeder extends Seeder
+class CatLocationSeeder extends Seeder
 {
     /**
      * @return void
      */
     public function run()
     {
-        Cat::factory()->count(100)->create();
+        CatLocation::factory()->count(25)->create();
     }
 }
