@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cat;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CatListController extends Controller
@@ -12,13 +13,18 @@ class CatListController extends Controller
     /**
      * Show the cat list.
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
+        $per_page = $request->input('per_page') ? (int)$request->input('per_page') : 15;
+
         $cats = Cat::withCount('sponsorships')
             ->latest('id')
-            ->paginate(15);
+            ->paginate($per_page);
+
+        $cats->appends(['per_page' => $per_page]);
 
         return view('cat_list', ['cats' => $cats]);
     }

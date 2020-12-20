@@ -6,11 +6,11 @@
             aria-label="@lang('pagination.previous')"
             dusk="pagination-previous"
             @if ($paginator->onFirstPage())
-            aria-disabled="true"
-            disabled
+                aria-disabled="true"
+                disabled
             @else
-            href="{{ $paginator->previousPageUrl() }}"
-            rel="prev"
+                href="{{ $paginator->previousPageUrl() }}"
+                rel="prev"
             @endif
         >
             @lang('pagination.previous')
@@ -22,11 +22,11 @@
             aria-label="@lang('pagination.next')"
             dusk="pagination-next"
             @if ($paginator->hasMorePages())
-            href="{{ $paginator->nextPageUrl() }}"
-            rel="next"
+                href="{{ $paginator->nextPageUrl() }}"
+                rel="next"
             @else
-            aria-disabled="true"
-            disabled
+                aria-disabled="true"
+                disabled
             @endif
         >
             @lang('pagination.next')
@@ -50,11 +50,11 @@
                                 class="pagination-link {{ $page == $paginator->currentPage() ? 'is-current' : '' }}"
                                 dusk="pagination-link-page-{{ $page }}"
                                 @if ($page == $paginator->currentPage())
-                                aria-label="Stran {{ $page }}"
-                                aria-current="page"
+                                    aria-label="Stran {{ $page }}"
+                                    aria-current="page"
                                 @else
-                                href="{{ $url }}"
-                                aria-label="Pojdi na stran {{ $page }}"
+                                    href="{{ $url }}"
+                                    aria-label="Pojdi na stran {{ $page }}"
                                 @endif
                             >
                                 {{ $page }}

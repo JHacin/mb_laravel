@@ -1,11 +1,33 @@
 @extends('layouts.app')
 
+@php
+    use Illuminate\Pagination\LengthAwarePaginator;
+
+    /** @var LengthAwarePaginator $cats */
+    $totalCats = $cats->total();
+
+    $perPageOptions = [15, 30, $totalCats]
+@endphp
+
 @section('content')
     <section class="section">
         <div class="container">
             <h1 class="title">Muce, ki iščejo botra</h1>
 
             {{ $cats->links() }}
+
+            <div class="block">
+                <h6>Prikaži na stran:</h6>
+                @foreach($perPageOptions as $option)
+                    <a
+                        href="{{ route('cat_list', ['per_page' => $option]) }}"
+                        dusk="per_page_{{ $option }}"
+                        class="{{ $cats->perPage() === $option ? ' has-text-weight-semibold' : '' }}"
+                    >
+                        {{ $option }}
+                    </a>
+                @endforeach
+            </div>
 
             <div class="columns is-multiline">
                 @foreach($cats as $cat)

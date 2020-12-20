@@ -114,17 +114,84 @@ class CatListTest extends DuskTestCase
 
             // Clicking other links works
             $b->click('@pagination-link-page-2');
-            $b->assertQueryStringHas('page', '2');
+            $b->assertQueryStringHas('page', 2);
             $b->assertAriaAttribute('@pagination-link-page-2', 'current', 'page');
 
             // Prev/Next buttons work
             $b->click('@pagination-previous');
-            $b->assertQueryStringHas('page', '1');
+            $b->assertQueryStringHas('page', 1);
             $b->assertAriaAttribute('@pagination-link-page-1', 'current', 'page');
 
             $b->click('@pagination-next');
-            $b->assertQueryStringHas('page', '2');
+            $b->assertQueryStringHas('page', 2);
             $b->assertAriaAttribute('@pagination-link-page-2', 'current', 'page');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_shows_per_page_options()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+
+            $perPageOptions = [15, 30, Cat::count()];
+
+            foreach ($perPageOptions as $option) {
+                $selector = '@per_page_' . $option;
+                $b->assertVisible($selector);
+                $b->assertAttribute($selector, 'href', route('cat_list', ['per_page' => $option]));
+            }
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_clicking_per_page_link_sets_query_parameter()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $b->assertQueryStringMissing('per_page');
+            $b->click('@per_page_30');
+            $b->assertQueryStringHas('per_page', 30);
+            $b->click('@per_page_15');
+            $b->assertQueryStringHas('per_page', 15);
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_active_per_page_link_is_highlighted()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $this->assertStringContainsString('has-text-weight-semibold', $b->attribute('@per_page_15', 'class'));
+
+            $b->click('@per_page_30');
+            $this->assertStringNotContainsString('has-text-weight-semibold', $b->attribute('@per_page_15', 'class'));
+            $this->assertStringContainsString('has-text-weight-semibold', $b->attribute('@per_page_30', 'class'));
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_clicking_per_page_link_resets_to_page_1()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $b->click('@pagination-link-page-2');
+            $b->assertQueryStringHas('page', 2);
+            $b->click('@per_page_30');
+            $b->assertQueryStringHas('per_page', 30);
+            $b->assertQueryStringMissing('page');
         });
     }
 
