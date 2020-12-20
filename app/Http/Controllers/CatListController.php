@@ -18,7 +18,7 @@ class CatListController extends Controller
     {
         $cats = Cat::withCount('sponsorships')
             ->latest('id')
-            ->paginate(25);
+            ->paginate(15);
 
         return view('cat_list', ['cats' => $cats]);
     }

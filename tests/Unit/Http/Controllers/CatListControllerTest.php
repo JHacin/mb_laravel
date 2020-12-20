@@ -55,14 +55,14 @@ class CatListControllerTest extends TestCase
     /**
      * @return void
      */
-    public function test_returns_25_cats_per_page_by_default()
+    public function test_returns_15_cats_per_page_by_default()
     {
         Cat::factory()->count(100)->create();
 
         $response = $this->getResponse();
         $cats = $this->getCatsInResponse($response);
 
-        $this->assertCount(25, $cats);
+        $this->assertCount(15, $cats);
     }
 
     /**
