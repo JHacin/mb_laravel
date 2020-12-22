@@ -17,7 +17,7 @@
             {{ $cats->links() }}
 
             <div class="block">
-                <h6>Prikaži na stran:</h6>
+                <h6 class="has-text-weight-semibold">Prikaži na stran:</h6>
                 @foreach($perPageOptions as $option)
                     <a
                         href="{{ route('cat_list', ['per_page' => $option]) }}"
@@ -29,9 +29,28 @@
                 @endforeach
             </div>
 
-            <div class="columns is-multiline">
+            <div class="block">
+                <h6 class="has-text-weight-semibold">Razvrsti po:</h6>
+                <div class="is-flex">
+                    <span>številu botrov</span>
+                    <a
+                        href="{{ route('cat_list', ['sponsorship_count' => 'asc']) }}"
+                        dusk="sponsorship_count_sort_asc"
+                    >
+                        ▲
+                    </a>
+                    <a
+                        href="{{ route('cat_list', ['sponsorship_count' => 'desc']) }}"
+                        dusk="sponsorship_count_sort_desc"
+                    >
+                        ▼
+                    </a>
+                </div>
+            </div>
+
+            <div class="columns is-multiline" dusk="cat-list-items">
                 @foreach($cats as $cat)
-                    <div class="column is-one-third">
+                    <div class="column is-one-third" dusk="cat-list-item-wrapper">
                         <x-cat-list-item :cat="$cat"/>
                     </div>
                 @endforeach

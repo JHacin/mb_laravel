@@ -32,11 +32,10 @@ class CatListControllerTest extends TestCase
     public function test_orders_by_created_at_descending()
     {
         $lastAddedCat = $this->createCat();
-        $response = $this->getResponse();
-        $cats = $this->getCatsInResponse($response);
-
+        $cats = $this->getCatsInResponse();
         /** @var Cat $firstCatInList */
         $firstCatInList = $cats->first();
+
         $this->assertEquals($firstCatInList->id, $lastAddedCat->id);
     }
 
@@ -46,8 +45,7 @@ class CatListControllerTest extends TestCase
     public function test_doesnt_show_inactive_cats()
     {
         $inactiveCat = $this->createCat(['is_active' => false]);
-        $response = $this->getResponse();
-        $cats = $this->getCatsInResponse($response);
+        $cats = $this->getCatsInResponse();
 
         $this->assertFalse($cats->contains($inactiveCat->id));
     }
@@ -57,28 +55,54 @@ class CatListControllerTest extends TestCase
      */
     public function test_returns_15_cats_per_page_by_default()
     {
-        Cat::factory()->count(100)->create();
+        $cats = $this->getCatsInResponse();
 
-        $response = $this->getResponse();
-        $cats = $this->getCatsInResponse($response);
-
-        $this->assertCount(15, $cats);
+        $this->assertEquals(15, $cats->perPage());
     }
 
     /**
+     * @return void
+     */
+    public function test_per_page_query_param_works()
+    {
+        $options = [15, 30, Cat::count()];
+
+        foreach ($options as $option) {
+            $cats = $this->getCatsInResponse(['per_page' => $option]);
+            $this->assertEquals($option, $cats->perPage());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sponsorship_count_query_param_works()
+    {
+        $this->createCatWithSponsorships([], 0);
+        $this->createCatWithSponsorships([], 99);
+
+        $catsAsc = $this->getCatsInResponse(['sponsorship_count' => 'asc']);
+        $catsDesc = $this->getCatsInResponse(['sponsorship_count' => 'desc']);
+
+        $this->assertEquals(0, $catsAsc->first()->sponsorships()->count());
+        $this->assertEquals(99, $catsDesc->first()->sponsorships()->count());
+    }
+
+    /**
+     * @param array $params
      * @return TestResponse
      */
-    protected function getResponse(): TestResponse
+    protected function getResponse(array $params = []): TestResponse
     {
-        return $this->get(config('routes.cat_list'));
+        return $this->get(route('cat_list', $params));
     }
 
     /**
-     * @param TestResponse $response
+     * @param array $params
      * @return LengthAwarePaginator
      */
-    protected function getCatsInResponse(TestResponse $response): LengthAwarePaginator
+    protected function getCatsInResponse(array $params = []): LengthAwarePaginator
     {
-        return $response->getOriginalContent()->getData()['cats'];
+        return $this->getResponse($params)->getOriginalContent()->getData()['cats'];
     }
 }

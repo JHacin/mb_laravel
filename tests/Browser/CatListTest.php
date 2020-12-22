@@ -30,7 +30,7 @@ class CatListTest extends DuskTestCase
             static::$sampleCat = $this->createCatWithSponsorships([
                 'name' => 'Lojza',
                 'date_of_arrival_boter' => '1999-08-21',
-                'date_of_birth' => Carbon::now()->subYears(1)->subMonths(1)->subDays(4)
+                'date_of_birth' => Carbon::now()->subYear()->subMonth()->subDays(4)
             ]);
         }
     }
@@ -42,12 +42,19 @@ class CatListTest extends DuskTestCase
      */
     public function test_shows_cat_details()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $this->assertCatDetailsElementHasData($browser, 'name', 'Lojza');
-            $this->assertCatDetailsElementHasData($browser, 'sponsorship-count', '6');
-            $this->assertCatDetailsElementHasData($browser, 'date-of-arrival-boter', '21. 8. 1999');
-            $this->assertCatDetailsElementHasData($browser, 'current-age', '1 leto in 1 mesec');
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+
+            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+               $b->assertSeeIn('@cat-list-item-name', 'Lojza');
+               $this->assertEquals(
+                   static::$sampleCat->sponsorships()->count(),
+                   $b->text('@cat-list-item-sponsorship-count'),
+
+               );
+               $b->assertSeeIn('@cat-list-item-date-of-arrival-boter', '21. 8. 1999');
+               $b->assertSeeIn('@cat-list-item-current-age', '1 leto in 1 mesec');
+            });
         });
     }
 
@@ -57,14 +64,19 @@ class CatListTest extends DuskTestCase
      */
     public function test_doesnt_count_inactive_sponsorships()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             Sponsorship::factory()->createOne([
                 'is_active' => false,
                 'cat_id' => static::$sampleCat->id,
             ]);
 
-            $this->goToPage($browser);
-            $this->assertCatDetailsElementHasData($browser, 'sponsorship-count', '6');
+            $this->goToPage($b);
+            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+                $this->assertEquals(
+                    static::$sampleCat->sponsorships()->count(),
+                    $b->text('@cat-list-item-sponsorship-count'),
+                );
+            });
         });
     }
 
@@ -74,16 +86,18 @@ class CatListTest extends DuskTestCase
      */
     public function test_links_work()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $browser
-                ->click($this->getCatDetailsSelector() . '-details-link')
-                ->on(new CatDetailsPage(static::$sampleCat));
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+                $b->click('@cat-list-item-details-link');
+                $b->on(new CatDetailsPage(static::$sampleCat));
+            });
 
-            $this->goToPage($browser);
-            $browser
-                ->click($this->getCatDetailsSelector() . '-sponsorship-form-link')
-                ->on(new CatSponsorshipFormPage(static::$sampleCat));
+            $this->goToPage($b);
+            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+                $b->click('@cat-list-item-sponsorship-form-link');
+                $b->on(new CatSponsorshipFormPage(static::$sampleCat));
+            });
         });
     }
 
@@ -136,7 +150,6 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
-
             $perPageOptions = [15, 30, Cat::count()];
 
             foreach ($perPageOptions as $option) {
@@ -151,14 +164,17 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_clicking_per_page_link_sets_query_parameter()
+    public function test_clicking_per_page_links_works()
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
+            $this->assertCount(15, $b->elements('@cat-list-item'));
             $b->assertQueryStringMissing('per_page');
             $b->click('@per_page_30');
+            $this->assertCount(30, $b->elements('@cat-list-item'));
             $b->assertQueryStringHas('per_page', 30);
             $b->click('@per_page_15');
+            $this->assertCount(15, $b->elements('@cat-list-item'));
             $b->assertQueryStringHas('per_page', 15);
         });
     }
@@ -196,26 +212,37 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @param Browser $browser
-     * @param string $element
-     * @param string $data
+     * @return void
+     * @throws Throwable
      */
-    protected function assertCatDetailsElementHasData(Browser $browser, string $element, string $data)
+    public function test_sponsorship_count_sort_links_work()
     {
-        $browser->with(
-            $this->getCatDetailsSelector() . '-' . $element,
-            function (Browser $browser) use ($data) {
-                $browser->assertSee($data);
-            }
-        );
+        $this->browse(function (Browser $b) {
+            $this->createCatWithSponsorships([], 0);
+            $this->createCatWithSponsorships([], 99);
+            $this->goToPage($b);
+
+            $b->assertQueryStringMissing('sponsorship_count');
+            $b->click('@sponsorship_count_sort_asc');
+            $b->assertQueryStringHas('sponsorship_count', 'asc');
+            $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) {
+                $this->assertEquals(0, $b->text('@cat-list-item-sponsorship-count'));
+            });
+
+            $b->click('@sponsorship_count_sort_desc');
+            $b->assertQueryStringHas('sponsorship_count', 'desc');
+            $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) {
+                $this->assertEquals(99, $b->text('@cat-list-item-sponsorship-count'));
+            });
+        });
     }
 
     /**
      * @return string
      */
-    protected function getCatDetailsSelector(): string
+    protected function getSampleCatCardSelector(): string
     {
-        return '@cat-list-item-' . static::$sampleCat->id;
+        return '[dusk="cat-list-item"][data-cat-id="' . static::$sampleCat->id . '"]';
     }
 
     /**

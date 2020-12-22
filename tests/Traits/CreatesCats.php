@@ -45,13 +45,14 @@ trait CreatesCats
 
     /**
      * @param array $attributes
+     * @param int $sponsorshipCount
      * @return Cat
      */
-    protected function createCatWithSponsorships($attributes = []): Cat
+    protected function createCatWithSponsorships($attributes = [], int $sponsorshipCount = 12): Cat
     {
         /** @var Cat $cat */
         $cat = Cat::factory()
-            ->has(Sponsorship::factory()->count(12))
+            ->has(Sponsorship::factory()->count($sponsorshipCount))
             ->createOne($attributes);
 
         return $cat;
