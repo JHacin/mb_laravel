@@ -187,11 +187,11 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
-            $this->assertStringContainsString('has-text-weight-semibold', $b->attribute('@per_page_15', 'class'));
+            $this->assertHasClass($b, '@per_page_15', 'has-text-weight-semibold');
 
             $b->click('@per_page_30');
-            $this->assertStringNotContainsString('has-text-weight-semibold', $b->attribute('@per_page_15', 'class'));
-            $this->assertStringContainsString('has-text-weight-semibold', $b->attribute('@per_page_30', 'class'));
+            $this->assertNotHasClass($b, '@per_page_15', 'has-text-weight-semibold');
+            $this->assertHasClass($b, '@per_page_30', 'has-text-weight-semibold');
         });
     }
 
@@ -234,6 +234,28 @@ class CatListTest extends DuskTestCase
             $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) {
                 $this->assertEquals(99, $b->text('@cat-list-item-sponsorship-count'));
             });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_highlights_active_sort_links()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+
+            $this->assertHasClass($b, '@sponsorship_count_sort_asc', 'has-text-grey-darker');
+            $this->assertHasClass($b, '@sponsorship_count_sort_desc', 'has-text-grey-darker');
+
+            $b->click('@sponsorship_count_sort_asc');
+            $this->assertNotHasClass($b, '@sponsorship_count_sort_asc', 'has-text-grey-darker');
+            $this->assertHasClass($b, '@sponsorship_count_sort_desc', 'has-text-grey-darker');
+
+            $b->click('@sponsorship_count_sort_desc');
+            $this->assertHasClass($b, '@sponsorship_count_sort_asc', 'has-text-grey-darker');
+            $this->assertNotHasClass($b, '@sponsorship_count_sort_desc', 'has-text-grey-darker');
         });
     }
 

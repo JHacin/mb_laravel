@@ -36,12 +36,14 @@
                     <a
                         href="{{ route('cat_list', ['sponsorship_count' => 'asc']) }}"
                         dusk="sponsorship_count_sort_asc"
+                        class="{{ request('sponsorship_count') !== 'asc' ? 'has-text-grey-darker' : '' }}"
                     >
                         ▲
                     </a>
                     <a
                         href="{{ route('cat_list', ['sponsorship_count' => 'desc']) }}"
                         dusk="sponsorship_count_sort_desc"
+                        class="{{ request('sponsorship_count') !== 'desc' ? 'has-text-grey-darker' : '' }}"
                     >
                         ▼
                     </a>
