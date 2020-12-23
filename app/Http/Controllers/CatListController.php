@@ -23,11 +23,14 @@ class CatListController extends Controller
         $per_page = $request->input('per_page') ? (int)$request->input('per_page') : 15;
         $sponsorship_count_sort = $request->input('sponsorship_count');
         $age_sort = $request->input('age');
+        $id_sort = $request->input('id');
 
         if ($sponsorship_count_sort) {
             $cats = $cats->orderBy('sponsorships_count', $sponsorship_count_sort);
         } else if ($age_sort) {
             $cats = $cats->orderBy('date_of_birth', $age_sort === 'asc' ? 'desc' : 'asc');
+        } else if ($id_sort) {
+            $cats = $cats->orderBy('id', $id_sort);
         } else {
             $cats = $cats->latest('id');
         }
@@ -40,6 +43,8 @@ class CatListController extends Controller
             $cats->appends(['sponsorship_count' => $sponsorship_count_sort]);
         } else if ($age_sort) {
             $cats->appends(['age' => $age_sort]);
+        } else if ($id_sort) {
+            $cats->appends(['id' => $id_sort]);
         }
 
         return view('cat_list', ['cats' => $cats]);

@@ -113,6 +113,26 @@ class CatListControllerTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function test_id_sort_query_param_works()
+    {
+        /** @var Cat $first */
+        $first = Cat::orderBy('id')->first();
+        /** @var Cat $latest */
+        $latest = Cat::orderBy('id', 'desc')->first();
+
+        $catsAsc = $this->getCatsInResponse(['id' => 'asc']);
+        $catsDesc = $this->getCatsInResponse(['id' => 'desc']);
+
+        $this->assertEquals($first->id, $catsAsc->first()->id);
+        $this->assertStringContainsString('id=asc', $catsAsc->url(1));
+
+        $this->assertEquals($latest->id, $catsDesc->first()->id);
+        $this->assertStringContainsString('id=desc', $catsDesc->url(1));
+    }
+
+    /**
      * @param array $params
      * @return TestResponse
      */

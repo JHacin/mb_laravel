@@ -65,6 +65,23 @@
                         ▼
                     </a>
                 </div>
+                <div class="is-flex">
+                    <span>datumu objave</span>
+                    <a
+                        href="{{ route('cat_list', ['id' => 'asc']) }}"
+                        dusk="id_sort_asc"
+                        class="{{ request('id') !== 'asc' ? 'has-text-grey-darker' : '' }}"
+                    >
+                        ▲
+                    </a>
+                    <a
+                        href="{{ route('cat_list', ['id' => 'desc']) }}"
+                        dusk="id_sort_desc"
+                        class="{{ request('id') === 'asc' || request('age') || request('sponsorship_count') ? 'has-text-grey-darker' : '' }}"
+                    >
+                        ▼
+                    </a>
+                </div>
             </div>
 
             <div class="columns is-multiline" dusk="cat-list-items">

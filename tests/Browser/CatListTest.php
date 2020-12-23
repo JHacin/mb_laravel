@@ -267,6 +267,46 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_id_sort_links_work()
+    {
+        $this->browse(function (Browser $b) {
+            /** @var Cat $first */
+            $first = Cat::orderBy('id')->first();
+            /** @var Cat $latest */
+            $latest = Cat::orderBy('id', 'desc')->first();
+            $this->goToPage($b);
+
+            $b->assertQueryStringMissing('id');
+            $b->click('@id_sort_asc');
+            $b->assertQueryStringHas('id', 'asc');
+            $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($first) {
+                $this->assertEquals($first->name, $b->text('@cat-list-item-name'));
+            });
+
+            $b->click('@id_sort_desc');
+            $b->assertQueryStringHas('id', 'desc');
+            $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($latest) {
+                $this->assertEquals($latest->name, $b->text('@cat-list-item-name'));
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_highlights_id_desc_sort_link_by_default()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $this->assertNotHasClass($b, '@id_sort_desc', 'has-text-grey-darker');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_highlights_active_sort_links()
     {
         $this->browse(function (Browser $b) {
@@ -290,6 +330,14 @@ class CatListTest extends DuskTestCase
             $b->click('@age_sort_desc');
             $this->assertHasClass($b, '@age_sort_asc', 'has-text-grey-darker');
             $this->assertNotHasClass($b, '@age_sort_desc', 'has-text-grey-darker');
+
+            $b->click('@id_sort_asc');
+            $this->assertNotHasClass($b, '@id_sort_asc', 'has-text-grey-darker');
+            $this->assertHasClass($b, '@id_sort_desc', 'has-text-grey-darker');
+
+            $b->click('@id_sort_desc');
+            $this->assertHasClass($b, '@id_sort_asc', 'has-text-grey-darker');
+            $this->assertNotHasClass($b, '@id_sort_desc', 'has-text-grey-darker');
         });
     }
 
