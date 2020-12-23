@@ -18,13 +18,16 @@ class CatListController extends Controller
      */
     public function index(Request $request)
     {
+        $cats = Cat::withCount('sponsorships');
+
         $per_page = $request->input('per_page') ? (int)$request->input('per_page') : 15;
         $sponsorship_count_sort = $request->input('sponsorship_count');
-
-        $cats = Cat::withCount('sponsorships');
+        $age_sort = $request->input('age');
 
         if ($sponsorship_count_sort) {
             $cats = $cats->orderBy('sponsorships_count', $sponsorship_count_sort);
+        } else if ($age_sort) {
+            $cats = $cats->orderBy('date_of_birth', $age_sort === 'asc' ? 'desc' : 'asc');
         } else {
             $cats = $cats->latest('id');
         }
@@ -35,6 +38,8 @@ class CatListController extends Controller
 
         if ($sponsorship_count_sort) {
             $cats->appends(['sponsorship_count' => $sponsorship_count_sort]);
+        } else if ($age_sort) {
+            $cats->appends(['age' => $age_sort]);
         }
 
         return view('cat_list', ['cats' => $cats]);

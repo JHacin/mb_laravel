@@ -21,39 +21,39 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $name
- * @property string $slug
- * @property int $gender
- * @property string|null $story
- * @property Carbon|null $date_of_birth
- * @property Carbon|null $date_of_arrival_mh
- * @property Carbon|null $date_of_arrival_boter
- * @property boolean $is_active
- * @property int|null $location_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|Sponsorship[] $sponsorships
- * @property-read int|null $sponsorships_count
+ * @property int $gender
+ * @property string|null $story
+ * @property Carbon|null $date_of_arrival_mh
+ * @property Carbon|null $date_of_birth
+ * @property bool $is_active
+ * @property int|null $location_id
+ * @property string $slug
+ * @property Carbon|null $date_of_arrival_boter
+ * @property-read string $first_photo_url
+ * @property-read string $gender_label
  * @property-read string $name_and_id
  * @property-read CatLocation|null $location
  * @property-read Collection|CatPhoto[] $photos
  * @property-read int|null $photos_count
- * @property-read string $first_photo_url
- * @property-read string $gender_label
+ * @property-read Collection|Sponsorship[] $sponsorships
+ * @property-read int|null $sponsorships_count
  * @method static Builder|Cat newModelQuery()
  * @method static Builder|Cat newQuery()
  * @method static Builder|Cat query()
  * @method static Builder|Cat whereCreatedAt($value)
+ * @method static Builder|Cat whereDateOfArrivalBoter($value)
+ * @method static Builder|Cat whereDateOfArrivalMh($value)
+ * @method static Builder|Cat whereDateOfBirth($value)
+ * @method static Builder|Cat whereGender($value)
  * @method static Builder|Cat whereId($value)
+ * @method static Builder|Cat whereIsActive($value)
+ * @method static Builder|Cat whereLocationId($value)
  * @method static Builder|Cat whereName($value)
  * @method static Builder|Cat whereSlug($value)
- * @method static Builder|Cat whereUpdatedAt($value)
- * @method static Builder|Cat whereDateOfBirth($value)
- * @method static Builder|Cat whereDateOfArrivalMh($value)
- * @method static Builder|Cat whereDateOfArrivalBoter($value)
- * @method static Builder|Cat whereGender($value)
- * @method static Builder|Cat whereIsActive($value)
  * @method static Builder|Cat whereStory($value)
- * @method static Builder|Cat whereLocationId($value)
+ * @method static Builder|Cat whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class Cat extends Model

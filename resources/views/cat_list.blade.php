@@ -48,6 +48,23 @@
                         ▼
                     </a>
                 </div>
+                <div class="is-flex">
+                    <span>starosti</span>
+                    <a
+                        href="{{ route('cat_list', ['age' => 'asc']) }}"
+                        dusk="age_sort_asc"
+                        class="{{ request('age') !== 'asc' ? 'has-text-grey-darker' : '' }}"
+                    >
+                        ▲
+                    </a>
+                    <a
+                        href="{{ route('cat_list', ['age' => 'desc']) }}"
+                        dusk="age_sort_desc"
+                        class="{{ request('age') !== 'desc' ? 'has-text-grey-darker' : '' }}"
+                    >
+                        ▼
+                    </a>
+                </div>
             </div>
 
             <div class="columns is-multiline" dusk="cat-list-items">

@@ -241,6 +241,32 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_date_of_birth_sort_links_work()
+    {
+        $this->browse(function (Browser $b) {
+            $oldest = $this->createCat(['date_of_birth' => Carbon::now()->subYears(300)]);
+            $youngest = $this->createCat(['date_of_birth' => Carbon::now()]);
+            $this->goToPage($b);
+
+            $b->assertQueryStringMissing('age');
+            $b->click('@age_sort_asc');
+            $b->assertQueryStringHas('age', 'asc');
+            $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($youngest) {
+                $this->assertEquals($youngest->name, $b->text('@cat-list-item-name'));
+            });
+
+            $b->click('@age_sort_desc');
+            $b->assertQueryStringHas('age', 'desc');
+            $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($oldest) {
+                $this->assertEquals($oldest->name, $b->text('@cat-list-item-name'));
+            });
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_highlights_active_sort_links()
     {
         $this->browse(function (Browser $b) {
@@ -256,6 +282,14 @@ class CatListTest extends DuskTestCase
             $b->click('@sponsorship_count_sort_desc');
             $this->assertHasClass($b, '@sponsorship_count_sort_asc', 'has-text-grey-darker');
             $this->assertNotHasClass($b, '@sponsorship_count_sort_desc', 'has-text-grey-darker');
+
+            $b->click('@age_sort_asc');
+            $this->assertNotHasClass($b, '@age_sort_asc', 'has-text-grey-darker');
+            $this->assertHasClass($b, '@age_sort_desc', 'has-text-grey-darker');
+
+            $b->click('@age_sort_desc');
+            $this->assertHasClass($b, '@age_sort_asc', 'has-text-grey-darker');
+            $this->assertNotHasClass($b, '@age_sort_desc', 'has-text-grey-darker');
         });
     }
 
