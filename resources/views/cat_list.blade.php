@@ -20,7 +20,7 @@
                 <h6 class="has-text-weight-semibold">Prikaži na stran:</h6>
                 @foreach($perPageOptions as $option)
                     <a
-                        href="{{ route('cat_list', ['per_page' => $option]) }}"
+                        href="{{ route('cat_list', ['per_page' => $option, 'sponsorship_count' => request('sponsorship_count'), 'age' => request('age'), 'id' => request('id')]) }}"
                         dusk="per_page_{{ $option }}"
                         class="{{ $cats->perPage() === $option ? ' has-text-weight-semibold' : '' }}"
                     >
@@ -34,14 +34,14 @@
                 <div class="is-flex">
                     <span>številu botrov</span>
                     <a
-                        href="{{ route('cat_list', ['sponsorship_count' => 'asc']) }}"
+                        href="{{ route('cat_list', ['per_page' => $cats->perPage(), 'sponsorship_count' => 'asc']) }}"
                         dusk="sponsorship_count_sort_asc"
                         class="{{ request('sponsorship_count') !== 'asc' ? 'has-text-grey-darker' : '' }}"
                     >
                         ▲
                     </a>
                     <a
-                        href="{{ route('cat_list', ['sponsorship_count' => 'desc']) }}"
+                        href="{{ route('cat_list', ['per_page' => $cats->perPage(), 'sponsorship_count' => 'desc']) }}"
                         dusk="sponsorship_count_sort_desc"
                         class="{{ request('sponsorship_count') !== 'desc' ? 'has-text-grey-darker' : '' }}"
                     >
@@ -51,14 +51,14 @@
                 <div class="is-flex">
                     <span>starosti</span>
                     <a
-                        href="{{ route('cat_list', ['age' => 'asc']) }}"
+                        href="{{ route('cat_list', ['per_page' => $cats->perPage(), 'age' => 'asc']) }}"
                         dusk="age_sort_asc"
                         class="{{ request('age') !== 'asc' ? 'has-text-grey-darker' : '' }}"
                     >
                         ▲
                     </a>
                     <a
-                        href="{{ route('cat_list', ['age' => 'desc']) }}"
+                        href="{{ route('cat_list', ['per_page' => $cats->perPage(), 'age' => 'desc']) }}"
                         dusk="age_sort_desc"
                         class="{{ request('age') !== 'desc' ? 'has-text-grey-darker' : '' }}"
                     >
@@ -68,14 +68,14 @@
                 <div class="is-flex">
                     <span>datumu objave</span>
                     <a
-                        href="{{ route('cat_list', ['id' => 'asc']) }}"
+                        href="{{ route('cat_list', ['per_page' => $cats->perPage(), 'id' => 'asc']) }}"
                         dusk="id_sort_asc"
                         class="{{ request('id') !== 'asc' ? 'has-text-grey-darker' : '' }}"
                     >
                         ▲
                     </a>
                     <a
-                        href="{{ route('cat_list', ['id' => 'desc']) }}"
+                        href="{{ route('cat_list', ['per_page' => $cats->perPage(), 'id' => 'desc']) }}"
                         dusk="id_sort_desc"
                         class="{{ request('id') === 'asc' || request('age') || request('sponsorship_count') ? 'has-text-grey-darker' : '' }}"
                     >

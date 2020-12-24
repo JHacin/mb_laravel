@@ -342,6 +342,40 @@ class CatListTest extends DuskTestCase
     }
 
     /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_combines_query_string_for_per_page_and_sort_links()
+    {
+        $this->browse(function (Browser $b) {
+            $root = route('cat_list');
+            $sortFields = ['sponsorship_count', 'age', 'id'];
+            $perPageOptions = [15, 30, Cat::count()];
+
+            $this->goToPage($b);
+
+            $b->click('@per_page_30');
+            foreach ($sortFields as $sort) {
+                $b->assertAttribute("@{$sort}_sort_asc", 'href', "{$root}?per_page=30&{$sort}=asc");
+                $b->assertAttribute("@{$sort}_sort_desc", 'href', "{$root}?per_page=30&{$sort}=desc");
+            }
+
+            $this->goToPage($b);
+            foreach ($sortFields as $sort) {
+                $b->click("@{$sort}_sort_asc");
+                foreach ($perPageOptions as $option) {
+                    $b->assertAttribute("@per_page_{$option}", 'href', "{$root}?per_page=${option}&{$sort}=asc");
+                }
+
+                $b->click("@{$sort}_sort_desc");
+                foreach ($perPageOptions as $option) {
+                    $b->assertAttribute("@per_page_{$option}", 'href', "{$root}?per_page=${option}&{$sort}=desc");
+                }
+            }
+        });
+    }
+
+    /**
      * @return string
      */
     protected function getSampleCatCardSelector(): string
