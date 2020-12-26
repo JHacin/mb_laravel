@@ -58,8 +58,8 @@
                 </div>
             @endif
 
-            @if($cats->isNotEmpty())
-                <div class="block" dusk="per_page-sort-wrapper">
+            @if($cats->total() > 1)
+                <div class="block" dusk="sort-options-wrapper">
                     <h6 class="has-text-weight-semibold">Razvrsti po:</h6>
                     <div class="is-flex">
                         <span>številu botrov</span>

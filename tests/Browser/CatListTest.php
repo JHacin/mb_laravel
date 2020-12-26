@@ -513,6 +513,22 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_sort_links_arent_shown_if_there_are_fewer_than_2_results()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCat(['name' => 'sdfsdfsdfsdfsdfsdfsdf']);
+            $this->goToPage($b);
+            $b->assertVisible('@sort-options-wrapper');
+
+            $this->submitSearch($b, $cat->name);
+            $b->assertMissing('@sort-options-wrapper');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_shows_no_results_message()
     {
         $this->browse(function (Browser $b) {
@@ -534,11 +550,11 @@ class CatListTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
             $b->assertVisible('@per_page-options-wrapper');
-            $b->assertVisible('@per_page-sort-wrapper');
+            $b->assertVisible('@sort-options-wrapper');
 
             $this->submitSearch($b, 'xxxxxyxyxyxyxyxyxyxyxy');
             $b->assertMissing('@per_page-options-wrapper');
-            $b->assertMissing('@per_page-sort-wrapper');
+            $b->assertMissing('@sort-options-wrapper');
         });
     }
 
