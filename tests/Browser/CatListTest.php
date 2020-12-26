@@ -45,7 +45,7 @@ class CatListTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
 
-            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+            $b->with($this->getCatByIdCardSelector(static::$sampleCat), function (Browser $b) {
                $b->assertSeeIn('@cat-list-item-name', 'Lojza');
                $this->assertEquals(
                    static::$sampleCat->sponsorships()->count(),
@@ -71,7 +71,7 @@ class CatListTest extends DuskTestCase
             ]);
 
             $this->goToPage($b);
-            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+            $b->with($this->getCatByIdCardSelector(static::$sampleCat), function (Browser $b) {
                 $this->assertEquals(
                     static::$sampleCat->sponsorships()->count(),
                     $b->text('@cat-list-item-sponsorship-count'),
@@ -88,13 +88,13 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
-            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+            $b->with($this->getCatByIdCardSelector(static::$sampleCat), function (Browser $b) {
                 $b->click('@cat-list-item-details-link');
                 $b->on(new CatDetailsPage(static::$sampleCat));
             });
 
             $this->goToPage($b);
-            $b->with($this->getSampleCatCardSelector(), function (Browser $b) {
+            $b->with($this->getCatByIdCardSelector(static::$sampleCat), function (Browser $b) {
                 $b->click('@cat-list-item-sponsorship-form-link');
                 $b->on(new CatSponsorshipFormPage(static::$sampleCat));
             });
@@ -139,6 +139,60 @@ class CatListTest extends DuskTestCase
             $b->click('@pagination-next');
             $b->assertQueryStringHas('page', 2);
             $b->assertAriaAttribute('@pagination-link-page-2', 'current', 'page');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_searching_by_name_works()
+    {
+        $this->browse(function (Browser $b) {
+            $andrejcek = $this->createCat(['name' => 'Andrejček']);
+            $miha = $this->createCat(['name' => 'Miha']);
+            $this->goToPage($b);
+            $b->type('@search-input', 'drejč');
+            $b->click('@search-submit');
+            $b->on(new CatListPage);
+            $b->assertInputValue('@search-input', 'drejč');
+            $b->assertVisible($this->getCatByIdCardSelector($andrejcek));
+            $b->assertMissing($this->getCatByIdCardSelector($miha));
+
+            $b->type('@search-input', 'iha');
+            $b->click('@search-submit');
+            $b->assertMissing($this->getCatByIdCardSelector($andrejcek));
+            $b->assertVisible($this->getCatByIdCardSelector($miha));
+
+            $b->type('@search-input', 'xsdsaf');
+            $b->click('@search-submit');
+            $b->assertMissing($this->getCatByIdCardSelector($andrejcek));
+            $b->assertMissing($this->getCatByIdCardSelector($miha));
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_clearing_search_works()
+    {
+        $this->browse(function (Browser $b) {
+            $latestCat = $this->createCat();
+            $this->goToPage($b);
+            $b->assertQueryStringMissing('search');
+            $b->assertMissing('@clear-search-link');
+
+            $b->type('@search-input', 'test');
+            $b->click('@search-submit');
+            $b->assertQueryStringHas('search', 'test');
+            $b->assertMissing($this->getCatByIdCardSelector($latestCat));
+            $b->assertVisible('@clear-search-link');
+
+            $b->click('@clear-search-link');
+            $b->assertQueryStringMissing('search');
+            $b->assertMissing('@clear-search-link');
+            $b->assertVisible($this->getCatByIdCardSelector($latestCat));
         });
     }
 
@@ -345,42 +399,86 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_combines_query_string_for_per_page_and_sort_links()
+    public function test_combines_query_strings_for_pagination_sort_and_filters()
     {
         $this->browse(function (Browser $b) {
             $root = route('cat_list');
             $sortFields = ['sponsorship_count', 'age', 'id'];
-            $perPageOptions = [15, 30, Cat::count()];
 
             $this->goToPage($b);
-
             $b->click('@per_page_30');
+            // Sort fields get per_page query
             foreach ($sortFields as $sort) {
                 $b->assertAttribute("@{$sort}_sort_asc", 'href', "{$root}?per_page=30&{$sort}=asc");
                 $b->assertAttribute("@{$sort}_sort_desc", 'href', "{$root}?per_page=30&{$sort}=desc");
             }
 
-            $this->goToPage($b);
+            // Per page links get sort queries
             foreach ($sortFields as $sort) {
-                $b->click("@{$sort}_sort_asc");
-                foreach ($perPageOptions as $option) {
-                    $b->assertAttribute("@per_page_{$option}", 'href', "{$root}?per_page=${option}&{$sort}=asc");
-                }
-
-                $b->click("@{$sort}_sort_desc");
-                foreach ($perPageOptions as $option) {
-                    $b->assertAttribute("@per_page_{$option}", 'href', "{$root}?per_page=${option}&{$sort}=desc");
+                foreach (['asc', 'desc'] as $direction) {
+                    $b->click("@{$sort}_sort_{$direction}");
+                    foreach ([15, 30, Cat::count()] as $perPage) {
+                        $b->assertAttribute(
+                            "@per_page_{$perPage}",
+                            'href',
+                            "{$root}?per_page=${perPage}&{$sort}={$direction}"
+                        );
+                    }
                 }
             }
+
+            $this->goToPage($b);
+            $b->type('@search-input', 'test');
+            $b->click('@search-submit');
+            // Per page and sort links get search query
+            foreach ([15, 30, Cat::where('name', 'like', '%test%')->count()] as $perPage) {
+                $b->assertAttribute("@per_page_{$perPage}", 'href', "{$root}?per_page=${perPage}&search=test");
+            }
+            foreach ($sortFields as $sort) {
+                foreach (['asc', 'desc'] as $direction) {
+                    $b->assertAttribute(
+                        "@{$sort}_sort_${direction}",
+                        'href',
+                        "{$root}?{$sort}=${direction}&search=test"
+                    );
+                }
+            }
+
+            // Search input appends other active queries
+            foreach ([15, 30, Cat::where('name', 'like', '%muca%')->count()] as $perPage) {
+                foreach ($sortFields as $sort) {
+                    foreach (['asc', 'desc'] as $direction) {
+                        $b->click("@per_page_{$perPage}");
+                        $b->click("@{$sort}_sort_{$direction}");
+                        $b->type('@search-input', 'muca');
+                        $b->click('@search-submit');
+                        $b->assertQueryStringHas('per_page', $perPage);
+                        $b->assertQueryStringHas($sort, $direction);
+                        $b->assertQueryStringHas('search', 'muca');
+                    }
+                }
+            }
+
+            // Clear search input keeps other active queries
+            $b->click('@per_page_15');
+            $b->click('@id_sort_desc');
+            $b->type('@search-input', 'muca');
+            $b->click('@search-submit');
+            $b->assertQueryStringHas('search', 'muca');
+            $b->click('@clear-search-link');
+            $b->assertQueryStringHas('per_page', 15);
+            $b->assertQueryStringHas('id', 'desc');
+            $b->assertQueryStringMissing('search');
         });
     }
 
     /**
+     * @param Cat $cat
      * @return string
      */
-    protected function getSampleCatCardSelector(): string
+    protected function getCatByIdCardSelector(Cat $cat): string
     {
-        return '[dusk="cat-list-item"][data-cat-id="' . static::$sampleCat->id . '"]';
+        return '[dusk="cat-list-item"][data-cat-id="' . $cat->id . '"]';
     }
 
     /**

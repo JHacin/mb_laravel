@@ -83,6 +83,8 @@ class CatListControllerTest extends TestCase
         $this->createCatWithSponsorships([], 0);
         $this->createCatWithSponsorships([], 99);
 
+        $this->assertStringNotContainsString('sponsorship_count', $this->getCatsInResponse()->url(1));
+
         $catsAsc = $this->getCatsInResponse(['sponsorship_count' => 'asc']);
         $catsDesc = $this->getCatsInResponse(['sponsorship_count' => 'desc']);
 
@@ -101,6 +103,9 @@ class CatListControllerTest extends TestCase
         $oldest = $this->createCat(['date_of_birth' => Carbon::now()->subYears(300)]);
         $youngest = $this->createCat(['date_of_birth' => Carbon::now()]);
         Cat::factory()->createOne();
+
+        $this->assertStringNotContainsString('age=asc', $this->getCatsInResponse()->url(1));
+        $this->assertStringNotContainsString('age=desc', $this->getCatsInResponse()->url(1));
 
         $catsAsc = $this->getCatsInResponse(['age' => 'asc']);
         $catsDesc = $this->getCatsInResponse(['age' => 'desc']);
@@ -122,6 +127,8 @@ class CatListControllerTest extends TestCase
         /** @var Cat $latest */
         $latest = Cat::orderBy('id', 'desc')->first();
 
+        $this->assertStringNotContainsString('id', $this->getCatsInResponse()->url(1));
+
         $catsAsc = $this->getCatsInResponse(['id' => 'asc']);
         $catsDesc = $this->getCatsInResponse(['id' => 'desc']);
 
@@ -130,6 +137,35 @@ class CatListControllerTest extends TestCase
 
         $this->assertEquals($latest->id, $catsDesc->first()->id);
         $this->assertStringContainsString('id=desc', $catsDesc->url(1));
+    }
+
+    /**
+     * @return void
+     */
+    public function test_search_by_name_works()
+    {
+        $garfield = $this->createCat(['name' => 'Garfield']);
+        $arfieson = $this->createCat(['name' => 'Arfiešon']);
+
+        $results = $this->getCatsInResponse();
+        $this->assertTrue($results->contains('id', $garfield->id));
+        $this->assertTrue($results->contains('id', $arfieson->id));
+        $this->assertStringNotContainsString('search', $results->url(1));
+
+        $results = $this->getCatsInResponse(['search' => 'garf']);
+        $this->assertTrue($results->contains('id', $garfield->id));
+        $this->assertFalse($results->contains('id', $arfieson->id));
+        $this->assertStringContainsString('search=garf', $results->url(1));
+
+        $results = $this->getCatsInResponse(['search' => 'arfie']);
+        $this->assertTrue($results->contains('id', $garfield->id));
+        $this->assertTrue($results->contains('id', $arfieson->id));
+        $this->assertStringContainsString('search=arfie', $results->url(1));
+
+        $results = $this->getCatsInResponse(['search' => 'rfieš']);
+        $this->assertFalse($results->contains('id', $garfield->id));
+        $this->assertTrue($results->contains('id', $arfieson->id));
+        $this->assertStringContainsString('search=rfie%C5%A1', $results->url(1));
     }
 
     /**
