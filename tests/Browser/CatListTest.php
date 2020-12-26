@@ -152,20 +152,16 @@ class CatListTest extends DuskTestCase
             $andrejcek = $this->createCat(['name' => 'Andrejček']);
             $miha = $this->createCat(['name' => 'Miha']);
             $this->goToPage($b);
-            $b->type('@search-input', 'drejč');
-            $b->click('@search-submit');
-            $b->on(new CatListPage);
+            $this->submitSearch($b, 'drejč');
             $b->assertInputValue('@search-input', 'drejč');
             $b->assertVisible($this->getCatByIdCardSelector($andrejcek));
             $b->assertMissing($this->getCatByIdCardSelector($miha));
 
-            $b->type('@search-input', 'iha');
-            $b->click('@search-submit');
+            $this->submitSearch($b, 'iha');
             $b->assertMissing($this->getCatByIdCardSelector($andrejcek));
             $b->assertVisible($this->getCatByIdCardSelector($miha));
 
-            $b->type('@search-input', 'xsdsaf');
-            $b->click('@search-submit');
+            $this->submitSearch($b, 'dsfdsfdsfsaxsa');
             $b->assertMissing($this->getCatByIdCardSelector($andrejcek));
             $b->assertMissing($this->getCatByIdCardSelector($miha));
         });
@@ -183,8 +179,7 @@ class CatListTest extends DuskTestCase
             $b->assertQueryStringMissing('search');
             $b->assertMissing('@clear-search-link');
 
-            $b->type('@search-input', 'test');
-            $b->click('@search-submit');
+            $this->submitSearch($b, 'test');
             $b->assertQueryStringHas('search', 'test');
             $b->assertMissing($this->getCatByIdCardSelector($latestCat));
             $b->assertVisible('@clear-search-link');
@@ -402,6 +397,8 @@ class CatListTest extends DuskTestCase
     public function test_combines_query_strings_for_pagination_sort_and_filters()
     {
         $this->browse(function (Browser $b) {
+            $catName = 'test';
+            $this->createCat(['name' => $catName]);
             $root = route('cat_list');
             $sortFields = ['sponsorship_count', 'age', 'id'];
 
@@ -428,33 +425,31 @@ class CatListTest extends DuskTestCase
             }
 
             $this->goToPage($b);
-            $b->type('@search-input', 'test');
-            $b->click('@search-submit');
+            $this->submitSearch($b, $catName);
             // Per page and sort links get search query
             foreach ([15, 30, Cat::where('name', 'like', '%test%')->count()] as $perPage) {
-                $b->assertAttribute("@per_page_{$perPage}", 'href', "{$root}?per_page=${perPage}&search=test");
+                $b->assertAttribute("@per_page_{$perPage}", 'href', "{$root}?per_page=${perPage}&search=$catName");
             }
             foreach ($sortFields as $sort) {
                 foreach (['asc', 'desc'] as $direction) {
                     $b->assertAttribute(
                         "@{$sort}_sort_${direction}",
                         'href',
-                        "{$root}?{$sort}=${direction}&search=test"
+                        "{$root}?{$sort}=${direction}&search=$catName"
                     );
                 }
             }
 
             // Search input appends other active queries
-            foreach ([15, 30, Cat::where('name', 'like', '%muca%')->count()] as $perPage) {
+            foreach ([15, 30, Cat::where('name', 'like', "%$catName%")->count()] as $perPage) {
                 foreach ($sortFields as $sort) {
                     foreach (['asc', 'desc'] as $direction) {
                         $b->click("@per_page_{$perPage}");
                         $b->click("@{$sort}_sort_{$direction}");
-                        $b->type('@search-input', 'muca');
-                        $b->click('@search-submit');
+                        $this->submitSearch($b, $catName);
                         $b->assertQueryStringHas('per_page', $perPage);
                         $b->assertQueryStringHas($sort, $direction);
-                        $b->assertQueryStringHas('search', 'muca');
+                        $b->assertQueryStringHas('search', $catName);
                     }
                 }
             }
@@ -462,13 +457,45 @@ class CatListTest extends DuskTestCase
             // Clear search input keeps other active queries
             $b->click('@per_page_15');
             $b->click('@id_sort_desc');
-            $b->type('@search-input', 'muca');
-            $b->click('@search-submit');
-            $b->assertQueryStringHas('search', 'muca');
+            $this->submitSearch($b, $catName);
+            $b->assertQueryStringHas('search', $catName);
             $b->click('@clear-search-link');
             $b->assertQueryStringHas('per_page', 15);
             $b->assertQueryStringHas('id', 'desc');
             $b->assertQueryStringMissing('search');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_shows_no_results_message()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $b->assertVisible('@cat-list-items');
+
+            $this->submitSearch($b, 'xxxxxyxyxyxyxyxyxyxyxy');
+            $b->assertMissing('@cat-list-items');
+            $b->assertSee('Za vaše iskanje ni bilo najdenih rezultatov.');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_doesnt_show_per_page_or_sort_options_if_there_are_no_cats()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $b->assertVisible('@per_page-options-wrapper');
+            $b->assertVisible('@per_page-sort-wrapper');
+
+            $this->submitSearch($b, 'xxxxxyxyxyxyxyxyxyxyxy');
+            $b->assertMissing('@per_page-options-wrapper');
+            $b->assertMissing('@per_page-sort-wrapper');
         });
     }
 
@@ -479,6 +506,17 @@ class CatListTest extends DuskTestCase
     protected function getCatByIdCardSelector(Cat $cat): string
     {
         return '[dusk="cat-list-item"][data-cat-id="' . $cat->id . '"]';
+    }
+
+    /**
+     * @param Browser $browser
+     * @param string $search
+     */
+    protected function submitSearch(Browser $browser, string $search)
+    {
+        $browser->type('@search-input', $search);
+        $browser->click('@search-submit');
+        $browser->on(new CatListPage);
     }
 
     /**

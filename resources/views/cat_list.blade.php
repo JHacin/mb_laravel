@@ -41,81 +41,87 @@
                 @endif
             </div>
 
-            <div class="block">
-                <h6 class="has-text-weight-semibold">Prikaži na stran:</h6>
-                @foreach($perPageOptions as $option => $label)
-                    <a
-                        href="{{ route('cat_list', ['per_page' => $option, 'sponsorship_count' => request('sponsorship_count'), 'age' => request('age'), 'id' => request('id'), 'search' => request('search')]) }}"
-                        dusk="per_page_{{ $option }}"
-                        class="{{ $cats->perPage() === $option ? ' has-text-weight-semibold' : '' }}"
-                    >
-                        {{ $label }}
-                    </a>
-                @endforeach
-            </div>
+            @if($cats->count() > 0)
+                <div class="block" dusk="per_page-options-wrapper">
+                    <h6 class="has-text-weight-semibold">Prikaži na stran:</h6>
+                    @foreach($perPageOptions as $option => $label)
+                        <a
+                            href="{{ route('cat_list', ['per_page' => $option, 'sponsorship_count' => request('sponsorship_count'), 'age' => request('age'), 'id' => request('id'), 'search' => request('search')]) }}"
+                            dusk="per_page_{{ $option }}"
+                            class="{{ $cats->perPage() === $option ? ' has-text-weight-semibold' : '' }}"
+                        >
+                            {{ $label }}
+                        </a>
+                    @endforeach
+                </div>
 
-            <div class="block">
-                <h6 class="has-text-weight-semibold">Razvrsti po:</h6>
-                <div class="is-flex">
-                    <span>številu botrov</span>
-                    <a
-                        href="{{ route('cat_list', ['per_page' => request('per_page'), 'sponsorship_count' => 'asc', 'search' => request('search')]) }}"
-                        dusk="sponsorship_count_sort_asc"
-                        class="{{ request('sponsorship_count') !== 'asc' ? 'has-text-grey-darker' : '' }}"
-                    >
-                        ▲
-                    </a>
-                    <a
-                        href="{{ route('cat_list', ['per_page' => request('per_page'), 'sponsorship_count' => 'desc', 'search' => request('search')]) }}"
-                        dusk="sponsorship_count_sort_desc"
-                        class="{{ request('sponsorship_count') !== 'desc' ? 'has-text-grey-darker' : '' }}"
-                    >
-                        ▼
-                    </a>
-                </div>
-                <div class="is-flex">
-                    <span>starosti</span>
-                    <a
-                        href="{{ route('cat_list', ['per_page' => request('per_page'), 'age' => 'asc', 'search' => request('search')]) }}"
-                        dusk="age_sort_asc"
-                        class="{{ request('age') !== 'asc' ? 'has-text-grey-darker' : '' }}"
-                    >
-                        ▲
-                    </a>
-                    <a
-                        href="{{ route('cat_list', ['per_page' => request('per_page'), 'age' => 'desc', 'search' => request('search')]) }}"
-                        dusk="age_sort_desc"
-                        class="{{ request('age') !== 'desc' ? 'has-text-grey-darker' : '' }}"
-                    >
-                        ▼
-                    </a>
-                </div>
-                <div class="is-flex">
-                    <span>datumu objave</span>
-                    <a
-                        href="{{ route('cat_list', ['per_page' => request('per_page'), 'id' => 'asc', 'search' => request('search')]) }}"
-                        dusk="id_sort_asc"
-                        class="{{ request('id') !== 'asc' ? 'has-text-grey-darker' : '' }}"
-                    >
-                        ▲
-                    </a>
-                    <a
-                        href="{{ route('cat_list', ['per_page' => request('per_page'), 'id' => 'desc', 'search' => request('search')]) }}"
-                        dusk="id_sort_desc"
-                        class="{{ request('id') === 'asc' || request('age') || request('sponsorship_count') ? 'has-text-grey-darker' : '' }}"
-                    >
-                        ▼
-                    </a>
-                </div>
-            </div>
-
-            <div class="columns is-multiline" dusk="cat-list-items">
-                @foreach($cats as $cat)
-                    <div class="column is-one-third" dusk="cat-list-item-wrapper">
-                        <x-cat-list-item :cat="$cat"/>
+                <div class="block" dusk="per_page-sort-wrapper">
+                    <h6 class="has-text-weight-semibold">Razvrsti po:</h6>
+                    <div class="is-flex">
+                        <span>številu botrov</span>
+                        <a
+                            href="{{ route('cat_list', ['per_page' => request('per_page'), 'sponsorship_count' => 'asc', 'search' => request('search')]) }}"
+                            dusk="sponsorship_count_sort_asc"
+                            class="{{ request('sponsorship_count') !== 'asc' ? 'has-text-grey-darker' : '' }}"
+                        >
+                            ▲
+                        </a>
+                        <a
+                            href="{{ route('cat_list', ['per_page' => request('per_page'), 'sponsorship_count' => 'desc', 'search' => request('search')]) }}"
+                            dusk="sponsorship_count_sort_desc"
+                            class="{{ request('sponsorship_count') !== 'desc' ? 'has-text-grey-darker' : '' }}"
+                        >
+                            ▼
+                        </a>
                     </div>
-                @endforeach
-            </div>
+                    <div class="is-flex">
+                        <span>starosti</span>
+                        <a
+                            href="{{ route('cat_list', ['per_page' => request('per_page'), 'age' => 'asc', 'search' => request('search')]) }}"
+                            dusk="age_sort_asc"
+                            class="{{ request('age') !== 'asc' ? 'has-text-grey-darker' : '' }}"
+                        >
+                            ▲
+                        </a>
+                        <a
+                            href="{{ route('cat_list', ['per_page' => request('per_page'), 'age' => 'desc', 'search' => request('search')]) }}"
+                            dusk="age_sort_desc"
+                            class="{{ request('age') !== 'desc' ? 'has-text-grey-darker' : '' }}"
+                        >
+                            ▼
+                        </a>
+                    </div>
+                    <div class="is-flex">
+                        <span>datumu objave</span>
+                        <a
+                            href="{{ route('cat_list', ['per_page' => request('per_page'), 'id' => 'asc', 'search' => request('search')]) }}"
+                            dusk="id_sort_asc"
+                            class="{{ request('id') !== 'asc' ? 'has-text-grey-darker' : '' }}"
+                        >
+                            ▲
+                        </a>
+                        <a
+                            href="{{ route('cat_list', ['per_page' => request('per_page'), 'id' => 'desc', 'search' => request('search')]) }}"
+                            dusk="id_sort_desc"
+                            class="{{ request('id') === 'asc' || request('age') || request('sponsorship_count') ? 'has-text-grey-darker' : '' }}"
+                        >
+                            ▼
+                        </a>
+                    </div>
+                </div>
+            @endif
+
+            @if($cats->count() > 0)
+                <div class="columns is-multiline" dusk="cat-list-items">
+                    @foreach($cats as $cat)
+                        <div class="column is-one-third" dusk="cat-list-item-wrapper">
+                            <x-cat-list-item :cat="$cat"/>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div>Za vaše iskanje ni bilo najdenih rezultatov.</div>
+            @endif
 
         </div>
     </section>
