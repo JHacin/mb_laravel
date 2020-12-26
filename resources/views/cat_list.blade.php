@@ -41,7 +41,7 @@
                 @endif
             </div>
 
-            @if($cats->isNotEmpty() && $cats->hasPages())
+            @if($cats->isNotEmpty() && $cats->total() > 15)
                 <div class="block" dusk="per_page-options-wrapper">
                     <h6 class="has-text-weight-semibold">Prikaži na stran:</h6>
                     @foreach($perPageOptions as $option => $label)

@@ -262,15 +262,41 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_doesnt_show_per_page_options_if_there_are_fewer_than_15_results()
+    public function test_doesnt_show_per_page_options_if_there_are_fewer_than_16_results()
     {
         $this->browse(function (Browser $b) {
-            $this->createCat(['name' => 'hello123']);
+            Cat::factory()->count(15)->create(['name' => 'hello123']);
+            Cat::factory()->count(16)->create(['name' => 'hello456']);
+
             $this->goToPage($b);
             $b->assertVisible('@per_page-options-wrapper');
 
             $this->submitSearch($b, 'hello123');
             $b->assertMissing('@per_page-options-wrapper');
+
+            $this->submitSearch($b, 'hello456');
+            $b->assertVisible('@per_page-options-wrapper');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_doesnt_show_30_per_page_option_if_there_are_fewer_than_30_results()
+    {
+        $this->browse(function (Browser $b) {
+            Cat::factory()->count(29)->create(['name' => 'asdasdasd123']);
+            Cat::factory()->count(30)->create(['name' => 'asdasdasd456']);
+
+            $this->goToPage($b);
+            $b->assertVisible('@per_page_30');
+
+            $this->submitSearch($b, 'asdasdasd123');
+            $b->assertMissing('@per_page_30');
+
+            $this->submitSearch($b, 'asdasdasd456');
+            $b->assertVisible('@per_page_30');
         });
     }
 
