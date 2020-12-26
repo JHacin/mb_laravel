@@ -1,15 +1,10 @@
 @extends('layouts.app')
 
 @php
-    use Illuminate\Pagination\LengthAwarePaginator;
-
-    /** @var LengthAwarePaginator $cats */
-    $totalCats = $cats->total();
-
     $perPageOptions = [
         15 => 15,
         30 => 30,
-        $totalCats => 'vse',
+        'all' => 'vse',
     ]
 @endphp
 

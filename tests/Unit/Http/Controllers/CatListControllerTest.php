@@ -66,11 +66,11 @@ class CatListControllerTest extends TestCase
      */
     public function test_per_page_query_param_works()
     {
-        $options = [15, 30, Cat::count()];
+        $options = [15, 30, 'all'];
 
         foreach ($options as $option) {
             $cats = $this->getCatsInResponse(['per_page' => $option]);
-            $this->assertEquals($option, $cats->perPage());
+            $this->assertEquals($option === 'all' ? Cat::count() : $option, $cats->perPage());
             $this->assertStringContainsString('per_page=' . $option, $cats->url(1));
         }
     }

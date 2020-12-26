@@ -16,6 +16,7 @@ class CatListTest extends DuskTestCase
 {
     protected const SORT_FIELDS = ['sponsorship_count', 'age', 'id'];
     protected const SORT_DIRECTIONS = ['asc', 'desc'];
+    protected const PER_PAGE_OPTIONS = [15, 30, 'all'];
 
     /**
      * @var Cat|null
@@ -180,7 +181,7 @@ class CatListTest extends DuskTestCase
             $catName = 'test';
             Cat::factory()->count(31)->create(['name' => $catName]);
 
-            foreach ([15, 30, Cat::where('name', 'like', "%$catName%")->count()] as $perPage) {
+            foreach (static::PER_PAGE_OPTIONS as $perPage) {
                 foreach (static::SORT_FIELDS as $sort) {
                     foreach (static::SORT_DIRECTIONS as $direction) {
                         $b->visitRoute('cat_list', ['per_page' => $perPage, $sort => $direction]);
@@ -248,9 +249,8 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
-            $perPageOptions = [15, 30, Cat::count()];
 
-            foreach ($perPageOptions as $option) {
+            foreach (static::PER_PAGE_OPTIONS as $option) {
                 $selector = '@per_page_' . $option;
                 $b->assertVisible($selector);
                 $b->assertAttribute($selector, 'href', route('cat_list', ['per_page' => $option]));
@@ -335,7 +335,7 @@ class CatListTest extends DuskTestCase
                     $this->submitSearch($b, $catName);
                     $b->click("@{$sort}_sort_{$direction}");
 
-                    foreach ([15, 30, Cat::where('name', 'like', "%$catName%")->count()] as $perPage) {
+                    foreach (static::PER_PAGE_OPTIONS as $perPage) {
                         $b->assertAttribute(
                             "@per_page_{$perPage}",
                             'href',
@@ -519,7 +519,7 @@ class CatListTest extends DuskTestCase
             $catName = 'test';
             Cat::factory()->count(31)->create(['name' => $catName]);
 
-            foreach ([15, 30, Cat::count()] as $perPage) {
+            foreach (static::PER_PAGE_OPTIONS as $perPage) {
                 foreach (static::SORT_FIELDS as $sort) {
                     foreach (static::SORT_DIRECTIONS as $direction) {
                         $b->visitRoute('cat_list', ['per_page' => $perPage, 'search' => $catName]);

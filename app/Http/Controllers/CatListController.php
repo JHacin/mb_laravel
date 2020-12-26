@@ -20,7 +20,7 @@ class CatListController extends Controller
     {
         $cats = Cat::withCount('sponsorships');
 
-        $per_page = $request->input('per_page') ? (int)$request->input('per_page') : 15;
+        $per_page = $request->input('per_page') ?: 15;
         $search = $request->input('search');
         $sponsorship_count_sort = $request->input('sponsorship_count');
         $age_sort = $request->input('age');
@@ -40,9 +40,9 @@ class CatListController extends Controller
             $cats = $cats->latest('id');
         }
 
-        $cats = $cats->paginate($per_page);
+        $cats = $cats->paginate($per_page === 'all' ? $cats->count() : (int)$per_page);
 
-        $cats->appends(['per_page' => $per_page]);
+        $cats->appends(['per_page' => $per_page === 'all' ? 'all' : (int)$per_page]);
 
         if ($search) {
             $cats->appends(['search' => $search]);
