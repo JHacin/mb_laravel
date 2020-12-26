@@ -14,6 +14,9 @@ use Throwable;
 
 class CatListTest extends DuskTestCase
 {
+    protected const SORT_FIELDS = ['sponsorship_count', 'age', 'id'];
+    protected const SORT_DIRECTIONS = ['asc', 'desc'];
+
     /**
      * @var Cat|null
      */
@@ -171,6 +174,30 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_search_respects_other_active_queries()
+    {
+        $this->browse(function (Browser $b) {
+            $catName = 'test';
+            Cat::factory()->count(31)->create(['name' => $catName]);
+
+            foreach ([15, 30, Cat::where('name', 'like', "%$catName%")->count()] as $perPage) {
+                foreach (static::SORT_FIELDS as $sort) {
+                    foreach (static::SORT_DIRECTIONS as $direction) {
+                        $b->visitRoute('cat_list', ['per_page' => $perPage, $sort => $direction]);
+                        $this->submitSearch($b, $catName);
+                        $b->assertQueryStringHas('per_page', $perPage);
+                        $b->assertQueryStringHas($sort, $direction);
+                        $b->assertQueryStringHas('search', $catName);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_clearing_search_works()
     {
         $this->browse(function (Browser $b) {
@@ -188,6 +215,28 @@ class CatListTest extends DuskTestCase
             $b->assertQueryStringMissing('search');
             $b->assertMissing('@clear-search-link');
             $b->assertVisible($this->getCatByIdCardSelector($latestCat));
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_clearing_search_keeps_other_active_queries()
+    {
+        $this->browse(function (Browser $b) {
+            $catName = 'test';
+            $this->createCat(['name' => $catName]);
+
+            $this->goToPage($b);
+            $b->click('@per_page_15');
+            $b->click('@id_sort_desc');
+            $this->submitSearch($b, $catName);
+            $b->assertQueryStringHas('search', $catName);
+            $b->click('@clear-search-link');
+            $b->assertQueryStringHas('per_page', 15);
+            $b->assertQueryStringHas('id', 'desc');
+            $b->assertQueryStringMissing('search');
         });
     }
 
@@ -213,6 +262,22 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
+    public function test_doesnt_show_per_page_options_if_there_are_fewer_than_15_results()
+    {
+        $this->browse(function (Browser $b) {
+            $this->createCat(['name' => 'hello123']);
+            $this->goToPage($b);
+            $b->assertVisible('@per_page-options-wrapper');
+
+            $this->submitSearch($b, 'hello123');
+            $b->assertMissing('@per_page-options-wrapper');
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
     public function test_clicking_per_page_links_works()
     {
         $this->browse(function (Browser $b) {
@@ -225,6 +290,34 @@ class CatListTest extends DuskTestCase
             $b->click('@per_page_15');
             $this->assertCount(15, $b->elements('@cat-list-item'));
             $b->assertQueryStringHas('per_page', 15);
+        });
+    }
+
+    /**
+     * @return void
+     * @throws Throwable
+     */
+    public function test_per_page_links_respect_other_active_queries()
+    {
+        $this->browse(function (Browser $b) {
+            $catName = 'test';
+            Cat::factory()->count(31)->create(['name' => $catName]);
+
+            foreach (static::SORT_FIELDS as $sort) {
+                foreach (static::SORT_DIRECTIONS as $direction) {
+                    $this->goToPage($b);
+                    $this->submitSearch($b, $catName);
+                    $b->click("@{$sort}_sort_{$direction}");
+
+                    foreach ([15, 30, Cat::where('name', 'like', "%$catName%")->count()] as $perPage) {
+                        $b->assertAttribute(
+                            "@per_page_{$perPage}",
+                            'href',
+                            route('cat_list') . "?per_page=${perPage}&{$sort}={$direction}&search={$catName}"
+                        );
+                    }
+                }
+            }
         });
     }
 
@@ -394,75 +487,25 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_combines_query_strings_for_pagination_sort_and_filters()
+    public function test_sort_links_respect_other_active_queries()
     {
         $this->browse(function (Browser $b) {
             $catName = 'test';
-            $this->createCat(['name' => $catName]);
-            $root = route('cat_list');
-            $sortFields = ['sponsorship_count', 'age', 'id'];
+            Cat::factory()->count(31)->create(['name' => $catName]);
 
-            $this->goToPage($b);
-            $b->click('@per_page_30');
-            // Sort fields get per_page query
-            foreach ($sortFields as $sort) {
-                $b->assertAttribute("@{$sort}_sort_asc", 'href', "{$root}?per_page=30&{$sort}=asc");
-                $b->assertAttribute("@{$sort}_sort_desc", 'href', "{$root}?per_page=30&{$sort}=desc");
-            }
+            foreach ([15, 30, Cat::count()] as $perPage) {
+                foreach (static::SORT_FIELDS as $sort) {
+                    foreach (static::SORT_DIRECTIONS as $direction) {
+                        $b->visitRoute('cat_list', ['per_page' => $perPage, 'search' => $catName]);
 
-            // Per page links get sort queries
-            foreach ($sortFields as $sort) {
-                foreach (['asc', 'desc'] as $direction) {
-                    $b->click("@{$sort}_sort_{$direction}");
-                    foreach ([15, 30, Cat::count()] as $perPage) {
                         $b->assertAttribute(
-                            "@per_page_{$perPage}",
+                            "@{$sort}_sort_{$direction}",
                             'href',
-                            "{$root}?per_page=${perPage}&{$sort}={$direction}"
+                            route('cat_list') . "?per_page={$perPage}&{$sort}={$direction}&search={$catName}"
                         );
                     }
                 }
             }
-
-            $this->goToPage($b);
-            $this->submitSearch($b, $catName);
-            // Per page and sort links get search query
-            foreach ([15, 30, Cat::where('name', 'like', '%test%')->count()] as $perPage) {
-                $b->assertAttribute("@per_page_{$perPage}", 'href', "{$root}?per_page=${perPage}&search=$catName");
-            }
-            foreach ($sortFields as $sort) {
-                foreach (['asc', 'desc'] as $direction) {
-                    $b->assertAttribute(
-                        "@{$sort}_sort_${direction}",
-                        'href',
-                        "{$root}?{$sort}=${direction}&search=$catName"
-                    );
-                }
-            }
-
-            // Search input appends other active queries
-            foreach ([15, 30, Cat::where('name', 'like', "%$catName%")->count()] as $perPage) {
-                foreach ($sortFields as $sort) {
-                    foreach (['asc', 'desc'] as $direction) {
-                        $b->click("@per_page_{$perPage}");
-                        $b->click("@{$sort}_sort_{$direction}");
-                        $this->submitSearch($b, $catName);
-                        $b->assertQueryStringHas('per_page', $perPage);
-                        $b->assertQueryStringHas($sort, $direction);
-                        $b->assertQueryStringHas('search', $catName);
-                    }
-                }
-            }
-
-            // Clear search input keeps other active queries
-            $b->click('@per_page_15');
-            $b->click('@id_sort_desc');
-            $this->submitSearch($b, $catName);
-            $b->assertQueryStringHas('search', $catName);
-            $b->click('@clear-search-link');
-            $b->assertQueryStringHas('per_page', 15);
-            $b->assertQueryStringHas('id', 'desc');
-            $b->assertQueryStringMissing('search');
         });
     }
 

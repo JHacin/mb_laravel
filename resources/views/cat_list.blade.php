@@ -41,20 +41,24 @@
                 @endif
             </div>
 
-            @if($cats->count() > 0)
+            @if($cats->isNotEmpty() && $cats->hasPages())
                 <div class="block" dusk="per_page-options-wrapper">
                     <h6 class="has-text-weight-semibold">Prikaži na stran:</h6>
                     @foreach($perPageOptions as $option => $label)
-                        <a
-                            href="{{ route('cat_list', ['per_page' => $option, 'sponsorship_count' => request('sponsorship_count'), 'age' => request('age'), 'id' => request('id'), 'search' => request('search')]) }}"
-                            dusk="per_page_{{ $option }}"
-                            class="{{ $cats->perPage() === $option ? ' has-text-weight-semibold' : '' }}"
-                        >
-                            {{ $label }}
-                        </a>
+                        @if($cats->total() >= $option)
+                            <a
+                                href="{{ route('cat_list', ['per_page' => $option, 'sponsorship_count' => request('sponsorship_count'), 'age' => request('age'), 'id' => request('id'), 'search' => request('search')]) }}"
+                                dusk="per_page_{{ $option }}"
+                                class="{{ $cats->perPage() === $option ? ' has-text-weight-semibold' : '' }}"
+                            >
+                                {{ $label }}
+                            </a>
+                        @endif
                     @endforeach
                 </div>
+            @endif
 
+            @if($cats->isNotEmpty())
                 <div class="block" dusk="per_page-sort-wrapper">
                     <h6 class="has-text-weight-semibold">Razvrsti po:</h6>
                     <div class="is-flex">
@@ -111,7 +115,7 @@
                 </div>
             @endif
 
-            @if($cats->count() > 0)
+            @if($cats->isNotEmpty())
                 <div class="columns is-multiline" dusk="cat-list-items">
                     @foreach($cats as $cat)
                         <div class="column is-one-third" dusk="cat-list-item-wrapper">
