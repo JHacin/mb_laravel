@@ -39,7 +39,7 @@ class CatListController extends Controller
         $cats = $this->addPagination($cats, $params);
         $this->addPaginationLinkAdditions($cats, $params);
 
-        return view('cat_list', ['cats' => $cats]);
+        return view('cat-list', ['cats' => $cats]);
     }
 
     /**

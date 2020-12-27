@@ -527,7 +527,7 @@ class CatListTest extends DuskTestCase
                         $b->assertAttribute(
                             "@{$sort}_sort_{$direction}",
                             'href',
-                            route('cat_list') . "?per_page={$perPage}&{$sort}={$direction}&search={$catName}"
+                            route('cat_list') . "?per_page={$perPage}&search={$catName}&{$sort}={$direction}"
                         );
                     }
                 }
