@@ -1,20 +1,3 @@
-@php
-    use App\Models\Cat;
-    use App\Utilities\AgeFormat;
-    use Carbon\Carbon;
-
-    $fallback = '/';
-
-    /** @var Cat $cat */
-    $dateOfArrivalBoter = $cat->date_of_arrival_boter
-        ? $cat->date_of_arrival_boter->format(config('date.format.default'))
-        : $fallback;
-
-    $currentAge = $cat->date_of_birth
-        ? AgeFormat::formatToAgeString($cat->date_of_birth->diff(Carbon::now()))
-        : $fallback
-@endphp
-
 <div class="card" dusk="cat-list-item" data-cat-id="{{ $cat->id }}">
     <div class="card-image">
         <figure class="image is-1by1">
