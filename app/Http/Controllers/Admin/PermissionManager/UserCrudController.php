@@ -152,7 +152,7 @@ class UserCrudController extends BackpackUserCrudController
      *
      * @return RedirectResponse
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $response = parent::store();
 

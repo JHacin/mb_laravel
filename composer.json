@@ -16,10 +16,13 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
+        "kriswallsmith/buzz": "^1.2",
         "laravel/framework": "^8.0",
         "laravel/telescope": "^4.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "mailgun/mailgun-php": "^3.2",
+        "nyholm/psr7": "^1.3",
         "spatie/laravel-sluggable": "^2.5"
     },
     "require-dev": {

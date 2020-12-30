@@ -2,22 +2,33 @@
 
 namespace App\Services;
 
-use App\Mail\UserWelcomeMail;
+use App\Mail\MailClient;
 use App\Models\User;
-use Exception;
-use Mail;
 
-class UserMailService extends MailService
+class UserMailService
 {
+    /**
+     * @var MailClient
+     */
+    private MailClient $client;
+
+    /**
+     * @param MailClient|null $mailService
+     */
+    public function __construct($mailService = null)
+    {
+        $this->client = $mailService ?: new MailClient();
+    }
+
     /**
      * @param User $user
      */
-    public function sendWelcomeEMail(User $user)
+    public function sendWelcomeEmail(User $user)
     {
-        try {
-            Mail::to($user)->send(new UserWelcomeMail);
-        } catch (Exception $e) {
-            $this->logException($e);
-        }
+        $this->client->send([
+            'to' => $user->email,
+            'subject' => 'Dobrodošli na strani Mačji boter',
+            'text' => 'Dobrodošli na spletni strani Mačji boter!',
+        ]);
     }
 }

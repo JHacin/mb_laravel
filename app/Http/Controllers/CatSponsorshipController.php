@@ -7,7 +7,7 @@ use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
 use App\Models\User;
-use App\Services\CatSponsorshipMailService;
+use App\Services\SponsorshipMailService;
 use Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
@@ -24,16 +24,16 @@ class CatSponsorshipController extends Controller
 {
 
     /**
-     * @var CatSponsorshipMailService
+     * @var SponsorshipMailService
      */
-    protected CatSponsorshipMailService $catSponsorshipMailService;
+    protected SponsorshipMailService $sponsorshipMailService;
 
     /**
-     * @param CatSponsorshipMailService $catSponsorshipMailService
+     * @param SponsorshipMailService $sponsorshipMailService
      */
-    public function __construct(CatSponsorshipMailService $catSponsorshipMailService)
+    public function __construct(SponsorshipMailService $sponsorshipMailService)
     {
-        $this->catSponsorshipMailService = $catSponsorshipMailService;
+        $this->sponsorshipMailService = $sponsorshipMailService;
     }
 
     /**
@@ -53,7 +53,7 @@ class CatSponsorshipController extends Controller
 
         $personData = $this->updateOrCreatePersonData($request->input('personData'));
         $this->createSponsorship($cat, $personData, $input);
-        $this->catSponsorshipMailService->sendInitialInstructionsEmail($personData);
+        $this->sponsorshipMailService->sendInitialInstructionsEmail($personData);
 
         return back()->with(
             'success_message',
