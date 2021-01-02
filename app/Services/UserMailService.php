@@ -28,7 +28,7 @@ class UserMailService
         $this->client->send([
             'to' => $user->email,
             'subject' => 'Dobrodošli na strani Mačji boter',
-            'text' => 'Dobrodošli na spletni strani Mačji boter!',
+            'template' => 'user_welcome',
         ]);
     }
 }

@@ -23,7 +23,7 @@ class UserMailServiceTest extends TestCase
             ->with([
                 'to' => $user->email,
                 'subject' => 'Dobrodošli na strani Mačji boter',
-                'text' => 'Dobrodošli na spletni strani Mačji boter!',
+                'template' => 'user_welcome',
             ]);
 
         $service = new UserMailService($mailClientMock);

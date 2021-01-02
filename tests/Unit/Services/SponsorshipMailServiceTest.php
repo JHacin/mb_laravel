@@ -24,7 +24,7 @@ class SponsorshipMailServiceTest extends TestCase
                 'to' => $personData->email,
                 'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
                 'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
-                'text' => 'Tukaj so navodila, ki jih boter prejme po izpolnitvi obrazca za pristop k botrstvu za eno od muc.',
+                'template' => 'sponsorship_initial_instructions',
             ]);
 
         $service = new SponsorshipMailService($mailClientMock);
