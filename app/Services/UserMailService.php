@@ -13,11 +13,11 @@ class UserMailService
     private MailClient $client;
 
     /**
-     * @param MailClient|null $mailService
+     * @param MailClient $mailClient
      */
-    public function __construct($mailService = null)
+    public function __construct(MailClient $mailClient)
     {
-        $this->client = $mailService ?: new MailClient();
+        $this->client = $mailClient;
     }
 
     /**

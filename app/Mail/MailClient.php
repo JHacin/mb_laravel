@@ -17,11 +17,11 @@ class MailClient
     private string $domain;
 
     /**
-     * @param Mailgun|null $mailgun
+     * @param Mailgun $client
      */
-    public function __construct($mailgun = null)
+    public function __construct(Mailgun $client)
     {
-        $this->client = $mailgun ?: Mailgun::create(env('MAILGUN_SECRET'), 'https://' . env('MAILGUN_ENDPOINT'));
+        $this->client = $client;
         $this->domain = env('MAILGUN_DOMAIN');
     }
 
