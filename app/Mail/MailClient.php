@@ -30,6 +30,10 @@ class MailClient
      */
     public function send(array $params)
     {
+        if (env('APP_ENV') !== 'production') {
+            $params['to'] = env('MAIL_TEST_TO');
+        }
+
         $this->client->messages()->send(
             $this->domain,
             array_merge(['from' => env('MAIL_FROM_ADDRESS')], $params)

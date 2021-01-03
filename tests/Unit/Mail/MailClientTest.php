@@ -17,7 +17,7 @@ class MailClientTest extends TestCase
         $mock = Mockery::mock(Mailgun::class);
 
         $params = [
-            'to' => 'john.doe@example.com',
+            'to' => env('MAIL_TEST_TO'),
             'subject' => 'Hello',
             'text' => 'This is a message.',
         ];
