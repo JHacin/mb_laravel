@@ -4,12 +4,7 @@ namespace Tests\Browser\Pages;
 
 class ForgotPasswordPage extends Page
 {
-    /**
-     * Get the URL for the page.
-     *
-     * @return string
-     */
-    public function url()
+    public function url(): string
     {
         return config('routes.forgot_password');
     }

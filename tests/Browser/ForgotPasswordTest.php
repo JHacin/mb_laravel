@@ -73,14 +73,20 @@ class ForgotPasswordTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function testSuccess()
+    public function test_handles_successful_submission()
     {
         $this->browse(function (Browser $browser) {
+            $user = $this->createUser();
+
+            $this->assertDatabaseMissing('password_resets', ['email' => $user->email]);
+
             $browser
                 ->visit(new ForgotPasswordPage)
-                ->type('@email-input', $this->createUser()->email)
+                ->type('@email-input', $user->email)
                 ->click('@forgot-password-form-submit')
                 ->assertSee(trans('passwords.sent'));
+
+            $this->assertDatabaseHas('password_resets', ['email' => $user->email]);
         });
     }
 }

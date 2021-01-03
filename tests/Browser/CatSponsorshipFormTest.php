@@ -83,8 +83,7 @@ class CatSponsorshipFormTest extends DuskTestCase
                 '@personData[zip_code]-input-wrapper',
                 '@personData[city]-input-wrapper',
             ]);
-            $this->assertErrorIsShownWithin($browser, '@is_agreed_to_terms-input-wrapper',
-                'Polje mora biti obkljukano');
+            $browser->assertSeeIn('@is_agreed_to_terms-input-wrapper', 'Polje mora biti obkljukano');
         });
     }
 

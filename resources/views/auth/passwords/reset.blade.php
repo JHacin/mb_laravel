@@ -36,7 +36,9 @@
 
                 <div class="field">
                     <div class="control">
-                        <button type="submit" class="button is-link">Ponastavi geslo</button>
+                        <button type="submit" class="button is-link" dusk="reset-password-form-submit">
+                            Ponastavi geslo
+                        </button>
                     </div>
                 </div>
             </form>

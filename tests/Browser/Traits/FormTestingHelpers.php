@@ -5,55 +5,20 @@ namespace Tests\Browser\Traits;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Laravel\Dusk\Browser;
 
-/**
- * Trait FormTestingHelpers
- * @package Tests\Browser\Traits
- */
 trait FormTestingHelpers
 {
-    /**
-     * @param Browser $browser
-     */
     protected function disableHtmlFormValidation(Browser $browser)
     {
         $browser->script('for(var f=document.forms,i=f.length;i--;)f[i].setAttribute("novalidate",i)');
     }
 
-    /**
-     * @param Browser $browser
-     */
-    protected function enableHtmlFormValidation(Browser $browser)
-    {
-        $browser->script('for(var f=document.forms,i=f.length;i--;)f[i].removeAttribute("novalidate")');
-    }
-
-    /**
-     * @param Browser $browser
-     * @param array $requiredInputWrapperSelectors
-     */
     protected function assertAllRequiredErrorsAreShown(Browser $browser, array $requiredInputWrapperSelectors)
     {
         foreach ($requiredInputWrapperSelectors as $selector) {
-            $this->assertErrorIsShownWithin($browser, $selector, trans('validation.required'));
+            $browser->assertSeeIn($selector, trans('validation.required'));
         }
     }
 
-    /**
-     * @param Browser $browser
-     * @param string $selector
-     * @param string $message
-     */
-    protected function assertErrorIsShownWithin(Browser $browser, string $selector, string $message)
-    {
-        $browser->with($selector, function (Browser $wrapper) use ($message) {
-            $wrapper->assertSee($message);
-        });
-    }
-
-    /**
-     * @param Browser $browser
-     * @param string $name
-     */
     protected function selectInvalidSelectOption(Browser $browser, string $name)
     {
         $browser->script(
@@ -64,11 +29,6 @@ trait FormTestingHelpers
         );
     }
 
-    /**
-     * @param Browser $browser
-     * @param string $name
-     * @param string $value
-     */
     protected function setHiddenInputValue(Browser $browser, string $name, string $value)
     {
         $browser->script(

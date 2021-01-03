@@ -17,19 +17,9 @@ abstract class DuskTestCase extends BaseTestCase
 {
     use WithFaker, CreatesApplication, CreatesMockData, FormTestingHelpers, ElementTestingHelpers;
 
-    /**
-     * @var bool
-     */
     protected static bool $migrationRun = false;
-
-    /**
-     * @var User|null
-     */
     protected static ?User $sampleUser = null;
 
-    /**
-     * @inheritDoc
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,9 +27,6 @@ abstract class DuskTestCase extends BaseTestCase
         $this->createSampleUser();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -49,10 +36,7 @@ abstract class DuskTestCase extends BaseTestCase
         }
     }
 
-    /**
-     * @return void
-     */
-    protected function resetDatabaseBeforeFirstTest()
+    private function resetDatabaseBeforeFirstTest()
     {
         if (!static::$migrationRun) {
             $this->artisan('migrate:fresh');
@@ -61,7 +45,7 @@ abstract class DuskTestCase extends BaseTestCase
         }
     }
 
-    protected function createSampleUser()
+    private function createSampleUser()
     {
         if (!static::$sampleUser) {
             static::$sampleUser = $this->createUserWithPersonData();
@@ -79,12 +63,7 @@ abstract class DuskTestCase extends BaseTestCase
         static::startChromeDriver();
     }
 
-    /**
-     * Create the RemoteWebDriver instance.
-     *
-     * @return RemoteWebDriver
-     */
-    protected function driver()
+    protected function driver(): RemoteWebDriver
     {
         $options = (new ChromeOptions)->addArguments([
             '--disable-gpu',

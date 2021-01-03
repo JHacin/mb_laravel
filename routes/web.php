@@ -33,5 +33,5 @@ Route::post(config('routes.register'), [RegisterController::class, 'register']);
 Route::get(config('routes.forgot_password'),
     [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/geslo/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('/geslo/ponastavitev/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::get(config('routes.reset_password_form'), [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post(config('routes.forgot_password'), [ResetPasswordController::class, 'reset'])->name('password.update');

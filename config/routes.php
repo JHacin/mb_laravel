@@ -5,7 +5,7 @@ return [
     'login' => '/prijava',
     'register' => '/registracija',
     'forgot_password' => '/geslo/ponastavitev',
-    'confirm_password' => '/geslo/potrditev',
+    'reset_password_form' => '/geslo/ponastavitev/{token}',
     'user_profile' => '/profil',
     'cat_list' => '/muce',
     'cat_details' => '/muce/{cat}',
