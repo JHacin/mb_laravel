@@ -1,31 +1,19 @@
 <?php
 
-namespace App\Services;
+namespace App\Mail;
 
-use App\Mail\MailClient;
 use App\Models\PersonData;
+use MailClient;
 
-class SponsorshipMailService
+class SponsorshipMail
 {
     /**
-     * @var MailClient
-     */
-    private MailClient $client;
-
-    /**
-     * @param MailClient $mailClient
-     */
-    public function __construct(MailClient $mailClient)
-    {
-        $this->client = $mailClient;
-    }
-
-    /**
-     * @param PersonData $personData
+     * @param \App\Models\PersonData $personData
+     * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
      */
     public function sendInitialInstructionsEmail(PersonData $personData)
     {
-        $this->client->send([
+        MailClient::send([
             'to' => $personData->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',

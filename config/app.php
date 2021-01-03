@@ -1,5 +1,11 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
+
+use App\Mail\Facades\MailClientFacade;
+use App\Mail\Facades\SponsorshipMailFacade;
+use App\Mail\Facades\UserMailFacade;
+
 return [
 
     /*
@@ -175,6 +181,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
+        App\Providers\CustomFacadesProvider::class,
     ],
 
     /*
@@ -226,7 +233,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'MailClient' => MailClientFacade::class,
+        'UserMail' => UserMailFacade::class,
+        'SponsorshipMail' => SponsorshipMailFacade::class,
     ],
 
 ];

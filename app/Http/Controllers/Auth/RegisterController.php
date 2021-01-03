@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use App\Services\UserMailService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
+use UserMail;
 
 class RegisterController extends Controller
 {
@@ -32,19 +32,11 @@ class RegisterController extends Controller
     protected string $redirectTo = RouteServiceProvider::HOME;
 
     /**
-     * @var UserMailService
-     */
-    protected UserMailService $userMailService;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param UserMailService $userMailService
      */
-    public function __construct(UserMailService $userMailService)
+    public function __construct()
     {
         $this->middleware('guest');
-        $this->userMailService = $userMailService;
     }
 
     /**
@@ -76,7 +68,7 @@ class RegisterController extends Controller
             'password' => User::generateSecurePassword($data['password']),
         ]);
 
-        $this->userMailService->sendWelcomeEmail($user);
+        UserMail::sendWelcomeEmail($user);
 
         return $user;
     }

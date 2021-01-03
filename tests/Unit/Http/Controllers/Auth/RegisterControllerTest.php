@@ -4,10 +4,10 @@ namespace Tests\Unit\Http\Controllers\Auth;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\User;
-use App\Services\UserMailService;
 use Illuminate\Http\Request;
 use Mockery;
 use Tests\TestCase;
+use UserMail;
 
 class RegisterControllerTest extends TestCase
 {
@@ -16,7 +16,6 @@ class RegisterControllerTest extends TestCase
      */
     public function test_sends_welcome_email()
     {
-        $mailServiceMock = Mockery::mock(UserMailService::class);
         $requestMock = Mockery::mock(Request::class);
         /** @var User $userModel */
         $userModel = User::factory()->makeOne();
@@ -31,8 +30,7 @@ class RegisterControllerTest extends TestCase
                 'password_confirmation' => 'asdf123456',
             ]);
 
-        $mailServiceMock
-            ->shouldReceive('sendWelcomeEmail')
+        UserMail::shouldReceive('sendWelcomeEmail')
             ->once()
             ->withArgs(function (User $user) use ($userModel) {
                 return $user->email === $userModel->email;
@@ -43,6 +41,6 @@ class RegisterControllerTest extends TestCase
             ->once()
             ->andReturn(false);
 
-        (new RegisterController($mailServiceMock))->register($requestMock);
+        (new RegisterController())->register($requestMock);
     }
 }

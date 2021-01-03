@@ -1,24 +1,21 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Mail;
 
-use App\Mail\MailClient;
-use App\Services\UserMailService;
-use Mockery;
+use MailClient;
 use Tests\TestCase;
+use UserMail;
 
-class UserMailServiceTest extends TestCase
+class UserMailTest extends TestCase
 {
     /**
      * @return void
      */
     public function test_sends_welcome_email()
     {
-        $mailClientMock = Mockery::mock(MailClient::class);
         $user = $this->createUser();
 
-        $mailClientMock
-            ->shouldReceive('send')
+        MailClient::shouldReceive('send')
             ->once()
             ->with([
                 'to' => $user->email,
@@ -26,8 +23,6 @@ class UserMailServiceTest extends TestCase
                 'template' => 'user_welcome',
             ]);
 
-        $service = new UserMailService($mailClientMock);
-
-        $service->sendWelcomeEmail($user);
+        UserMail::sendWelcomeEmail($user);
     }
 }

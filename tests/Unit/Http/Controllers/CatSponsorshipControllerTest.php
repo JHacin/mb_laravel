@@ -4,8 +4,8 @@ namespace Tests\Unit\Http\Controllers;
 
 use App\Http\Controllers\CatSponsorshipController;
 use App\Http\Requests\CatSponsorshipRequest;
-use App\Services\SponsorshipMailService;
 use Mockery;
+use SponsorshipMail;
 use Tests\TestCase;
 
 class CatSponsorshipControllerTest extends TestCase
@@ -18,7 +18,6 @@ class CatSponsorshipControllerTest extends TestCase
         $cat = $this->createCat();
         $personData = $this->createPersonData();
         $requestMock = Mockery::mock(CatSponsorshipRequest::class);
-        $mailServiceMock = Mockery::mock(SponsorshipMailService::class);
 
         $requestMock
             ->shouldReceive([
@@ -30,12 +29,9 @@ class CatSponsorshipControllerTest extends TestCase
             ->once();
 
 
-        $mailServiceMock
-            ->shouldReceive('sendInitialInstructionsEmail')
+        SponsorshipMail::shouldReceive('sendInitialInstructionsEmail')
             ->once();
 
-        $controller = new CatSponsorshipController($mailServiceMock);
-
-        $controller->submit($cat, $requestMock);
+        (new CatSponsorshipController())->submit($cat, $requestMock);
     }
 }

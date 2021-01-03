@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Mail;
+namespace Tests\Unit\Mail\Client;
 
-use App\Mail\MailClient;
+use App\Mail\Client\MailClient;
 use Mailgun\Mailgun;
 use Mockery;
 use Tests\TestCase;

@@ -7,7 +7,6 @@ use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
 use App\Models\User;
-use App\Services\SponsorshipMailService;
 use Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Foundation\Application;
@@ -15,6 +14,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use SponsorshipMail;
 
 /**
  * Class CatSponsorshipController
@@ -22,19 +22,6 @@ use Illuminate\View\View;
  */
 class CatSponsorshipController extends Controller
 {
-
-    /**
-     * @var SponsorshipMailService
-     */
-    protected SponsorshipMailService $sponsorshipMailService;
-
-    /**
-     * @param SponsorshipMailService $sponsorshipMailService
-     */
-    public function __construct(SponsorshipMailService $sponsorshipMailService)
-    {
-        $this->sponsorshipMailService = $sponsorshipMailService;
-    }
 
     /**
      * Handle incoming cat sponsorship form request.
@@ -53,7 +40,7 @@ class CatSponsorshipController extends Controller
 
         $personData = $this->updateOrCreatePersonData($request->input('personData'));
         $this->createSponsorship($cat, $personData, $input);
-        $this->sponsorshipMailService->sendInitialInstructionsEmail($personData);
+        SponsorshipMail::sendInitialInstructionsEmail($personData);
 
         return back()->with(
             'success_message',

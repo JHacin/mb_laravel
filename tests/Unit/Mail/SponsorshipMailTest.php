@@ -1,24 +1,21 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Mail;
 
-use App\Mail\MailClient;
-use App\Services\SponsorshipMailService;
-use Mockery;
+use MailClient;
+use SponsorshipMail;
 use Tests\TestCase;
 
-class SponsorshipMailServiceTest extends TestCase
+class SponsorshipMailTest extends TestCase
 {
     /**
      * @return void
      */
     public function test_sends_initial_instructions_email()
     {
-        $mailClientMock = Mockery::mock(MailClient::class);
         $personData = $this->createPersonData();
 
-        $mailClientMock
-            ->shouldReceive('send')
+        MailClient::shouldReceive('send')
             ->once()
             ->with([
                 'to' => $personData->email,
@@ -27,8 +24,6 @@ class SponsorshipMailServiceTest extends TestCase
                 'template' => 'sponsorship_initial_instructions',
             ]);
 
-        $service = new SponsorshipMailService($mailClientMock);
-
-        $service->sendInitialInstructionsEmail($personData);
+        SponsorshipMail::sendInitialInstructionsEmail($personData);
     }
 }
