@@ -69,8 +69,8 @@ class CatListController extends Controller
         }
 
         if ($params['age']) {
-            $direction = $params['age'] === 'asc' ? 'desc' : 'asc';
-            return $cats->orderBy('date_of_birth', $direction);
+            $direction = $params['age'] === 'asc' ? 'DESC' : 'ASC';
+            return $cats->orderByRaw("ISNULL(date_of_birth), date_of_birth $direction");
         }
 
         if ($params['id']) {

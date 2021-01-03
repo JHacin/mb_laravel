@@ -30,6 +30,10 @@ class MailClient
      */
     public function send(array $params)
     {
+        if (env('TEST_ENV') === 'dusk') {
+            return;
+        }
+
         if (env('APP_ENV') !== 'production') {
             $params['to'] = env('MAIL_TEST_TO');
         }

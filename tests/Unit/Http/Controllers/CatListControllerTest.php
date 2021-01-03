@@ -107,14 +107,27 @@ class CatListControllerTest extends TestCase
         $this->assertStringNotContainsString('age=asc', $this->getCatsInResponse()->url(1));
         $this->assertStringNotContainsString('age=desc', $this->getCatsInResponse()->url(1));
 
-        $catsAsc = $this->getCatsInResponse(['age' => 'asc']);
-        $catsDesc = $this->getCatsInResponse(['age' => 'desc']);
+        $oldestFirst = $this->getCatsInResponse(['age' => 'desc']);
+        $youngestFirst = $this->getCatsInResponse(['age' => 'asc']);
 
-        $this->assertEquals($youngest->id, $catsAsc->first()->id);
-        $this->assertStringContainsString('age=asc', $catsAsc->url(1));
+        $this->assertEquals($oldest->id, $oldestFirst->first()->id);
+        $this->assertStringContainsString('age=desc', $oldestFirst->url(1));
 
-        $this->assertEquals($oldest->id, $catsDesc->first()->id);
-        $this->assertStringContainsString('age=desc', $catsDesc->url(1));
+        $this->assertEquals($youngest->id, $youngestFirst->first()->id);
+        $this->assertStringContainsString('age=asc', $youngestFirst->url(1));
+    }
+
+    /**
+     * @return void
+     */
+    public function test_puts_cats_with_null_date_of_birth_last_when_sorting_by_age()
+    {
+        $this->createCat(['date_of_birth' => null]);
+        $oldest = $this->createCat(['date_of_birth' => Carbon::now()->subYears(300)]);
+
+        $oldestFirst = $this->getCatsInResponse(['age' => 'desc']);
+
+        $this->assertEquals($oldest->id, $oldestFirst->first()->id);
     }
 
     /**
