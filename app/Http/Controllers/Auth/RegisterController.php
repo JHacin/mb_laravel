@@ -76,7 +76,7 @@ class RegisterController extends Controller
             'password' => User::generateSecurePassword($data['password']),
         ]);
 
-        $this->userMailService->sendWelcomeEMail($user);
+        $this->userMailService->sendWelcomeEmail($user);
 
         return $user;
     }

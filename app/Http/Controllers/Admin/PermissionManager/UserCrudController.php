@@ -163,7 +163,7 @@ class UserCrudController extends BackpackUserCrudController
             /** @var User $user */
             $user = $this->crud->getCurrentEntry();
 
-            $this->userMailService->sendWelcomeEMail($user);
+            $this->userMailService->sendWelcomeEmail($user);
         }
 
         return $response;
