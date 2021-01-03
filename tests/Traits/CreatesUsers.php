@@ -9,11 +9,7 @@ use Illuminate\Support\Arr;
 
 trait CreatesUsers
 {
-    /**
-     * @param array $attributes
-     * @return User
-     */
-    protected function createUser($attributes = []): User
+    protected function createUser(array $attributes = []): User
     {
         /** @var User $user */
         $user = User::factory()->createOne($attributes);
@@ -21,11 +17,15 @@ trait CreatesUsers
         return $user;
     }
 
-    /**
-     * @param array $attributes
-     * @return User
-     */
-    protected function createAdminUser($attributes = []): User
+    protected function makeUser(array $attributes = []): User
+    {
+        /** @var User $user */
+        $user = User::factory()->makeOne($attributes);
+
+        return $user;
+    }
+
+    protected function createAdminUser(array $attributes = []): User
     {
         $user = $this->createUser($attributes);
         $user->assignRole(User::ROLE_ADMIN);
@@ -33,12 +33,7 @@ trait CreatesUsers
         return $user;
     }
 
-    /**
-     * @param array $userAttributes
-     * @param array $personDataAttributes
-     * @return User
-     */
-    protected function createUserWithPersonData($userAttributes = [], $personDataAttributes = []): User
+    protected function createUserWithPersonData(array $userAttributes = [], array $personDataAttributes = []): User
     {
         $user = $this->createUser($userAttributes);
 
@@ -52,11 +47,7 @@ trait CreatesUsers
         return $user;
     }
 
-    /**
-     * @param array $attributes
-     * @return User
-     */
-    protected function createUserWithSponsorships($attributes = []): User
+    protected function createUserWithSponsorships(array $attributes = []): User
     {
         $user = $this->createUserWithPersonData($attributes);
 

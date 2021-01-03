@@ -9,14 +9,9 @@ use Tests\Browser\Pages\RegistrationPage;
 use Tests\DuskTestCase;
 use Throwable;
 
-/**
- * Class RegistrationTest
- * @package Tests\Browser
- */
 class RegistrationTest extends DuskTestCase
 {
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_required_fields()
@@ -34,7 +29,6 @@ class RegistrationTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_unique_email()
@@ -52,7 +46,6 @@ class RegistrationTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_password_strength()
@@ -70,7 +63,6 @@ class RegistrationTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_password_confirmation()
@@ -89,16 +81,17 @@ class RegistrationTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_handles_successful_submission()
     {
         $this->browse(function (Browser $browser) {
+            $user = $this->makeUser();
+
             $browser
                 ->visit(new RegistrationPage)
-                ->type('@name-input', 'myusername')
-                ->type('@email-input', 'john.doe@example.com')
+                ->type('@name-input', $user->name)
+                ->type('@email-input', $user->email)
                 ->type('@password-input', 'asdf1234')
                 ->type('@password_confirmation-input', 'asdf1234')
                 ->click('@register-form-submit')
@@ -106,6 +99,12 @@ class RegistrationTest extends DuskTestCase
                 ->within(new Navbar, function ($browser) {
                     $browser->assertIsShowingAuthenticatedNav();
                 });
+
+            $this->assertDatabaseHas('users', [
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_active' => true,
+            ]);
         });
     }
 }
