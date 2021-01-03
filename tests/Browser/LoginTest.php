@@ -10,36 +10,23 @@ use Tests\Browser\Pages\UserProfilePage;
 use Tests\DuskTestCase;
 use Throwable;
 
-/**
- * Class LoginTest
- * @package Tests\Browser
- */
 class LoginTest extends DuskTestCase
 {
-    /**
-     * @var User
-     */
-    protected $user;
+    protected User $activeUser;
+    protected string $password;
 
-    /**
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * @inheritDoc
-     */
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->password = '12345678';
-        $this->user = $this->createUser([
+        $this->activeUser = $this->createUser([
             'password' => User::generateSecurePassword($this->password),
+            'is_active' => true,
         ]);
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_required_fields()
@@ -56,7 +43,6 @@ class LoginTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_credentials()
@@ -64,7 +50,7 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new LoginPage)
-                ->type('@email-input', 'asd@example.com')
+                ->type('@email-input', $this->activeUser->email)
                 ->type('@password-input', 'LoremIpsum')
                 ->click('@login-form-submit')
                 ->assertSee(trans('auth.failed'));
@@ -72,7 +58,31 @@ class LoginTest extends DuskTestCase
     }
 
     /**
-     * @return void
+     * @throws Throwable
+     */
+    public function test_validates_user_exists_and_is_active()
+    {
+        $this->browse(function (Browser $b) {
+            $b
+                ->visit(new LoginPage)
+                ->type('@email-input', 'aaaabbbb@ggg.de')
+                ->type('@password-input', $this->password)
+                ->click('@login-form-submit')
+                ->assertSee('Uporabnik s tem e-mail naslovom ne obstaja oz. še ni aktiviran.');
+
+            $inactive = $this->createUser([
+                'password' => User::generateSecurePassword($this->password),
+                'is_active' => false,
+            ]);
+            $b
+                ->type('@email-input', $inactive->email)
+                ->type('@password-input', $this->password)
+                ->click('@login-form-submit')
+                ->assertSee('Uporabnik s tem e-mail naslovom ne obstaja oz. še ni aktiviran.');
+        });
+    }
+
+    /**
      * @throws Throwable
      */
     public function test_handles_successful_login()
@@ -80,7 +90,7 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser
                 ->visit(new LoginPage)
-                ->type('@email-input', $this->user->email)
+                ->type('@email-input', $this->activeUser->email)
                 ->type('@password-input', $this->password)
                 ->click('@login-form-submit')
                 ->on(new HomePage);
@@ -88,7 +98,6 @@ class LoginTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_redirects_back_after_unauthenticated_access()
@@ -97,7 +106,7 @@ class LoginTest extends DuskTestCase
             $browser
                 ->visit((new UserProfilePage())->url())
                 ->on(new LoginPage)
-                ->type('@email-input', $this->user->email)
+                ->type('@email-input', $this->activeUser->email)
                 ->type('@password-input', $this->password)
                 ->click('@login-form-submit')
                 ->on(new UserProfilePage);
