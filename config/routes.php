@@ -7,6 +7,7 @@ return [
     'forgot_password' => '/geslo/ponastavitev',
     'reset_password_form' => '/geslo/ponastavitev/{token}',
     'user_profile' => '/profil',
+    'why_become_sponsor' => '/zakaj-postati-boter',
     'cat_list' => '/muce',
     'cat_details' => '/muce/{cat}',
     'cat_sponsorship_form' => '/muce/{cat}/postani-boter',

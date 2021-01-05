@@ -6,7 +6,13 @@ $link: $primary;
 $custom-colors: ("secondary": $secondary);
 
 $family-sans-serif: 'Merriweather', serif;
+
 $title-family: 'Montserrat', sans-serif;
+$title-size: $size-4;
+$title-weight: $weight-bold;
+$title-color: $secondary;
+
+$button-family: $title-family;
 
 $footer-background-color: $primary;
 $footer-padding: 1rem;

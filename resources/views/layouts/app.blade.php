@@ -20,7 +20,7 @@
     <body>
         <nav class="navbar is-secondary" role="navigation" aria-label="glavni meni">
             <div class="navbar-brand">
-                <a class="navbar-item" href="{{ route('home') }}">
+                <a class="navbar-item" href="{{ route('home') }}" dusk="navbar-home-link">
                     <img src="{{ asset('/img/logo.png') }}" alt="Mačji boter">
                 </a>
 
@@ -39,13 +39,20 @@
 
             <div id="navbar" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item">O projektu</a>
-
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">Muce</a>
+                    <div class="navbar-item has-dropdown is-hoverable" dusk="navbar-become-regular-sponsor-category">
+                        <a class="navbar-link">Postani redni boter</a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href="{{ route('cat_list') }}">Seznam</a>
+                            <a
+                                class="navbar-item"
+                                href="{{ route('why_become_sponsor') }}"
+                                dusk="navbar-why-become-sponsor-link"
+                            >
+                                Zakaj postati mačji boter?
+                            </a>
+                            <a class="navbar-item" href="{{ route('cat_list') }}" dusk="navbar-cat-list-link">
+                                Muce, ki iščejo botra
+                            </a>
                         </div>
                     </div>
                 </div>

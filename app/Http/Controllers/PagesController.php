@@ -10,24 +10,17 @@ use Illuminate\View\View;
 
 class PagesController extends Controller
 {
-
-    /**
-     * Show the homepage.
-     *
-     * @return Application|Factory|View
-     */
-    public function index()
+    public function index(): View
     {
         return view('home');
     }
 
-    /**
-     * Show the cat details page.
-     *
-     * @param Cat $cat
-     * @return Application|Factory|View|void
-     */
-    public function catDetails(Cat $cat)
+    public function whyBecomeSponsor(): View
+    {
+        return view('why-become-sponsor');
+    }
+
+    public function catDetails(Cat $cat): View
     {
         $viewData = [
             'cat' => $cat->loadMissing('sponsorships.personData'),
