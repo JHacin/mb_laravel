@@ -95,12 +95,24 @@
             @yield('content')
         </main>
 
-        <footer class="footer has-text-centered">
-            Zavod Mačja hiša © {{ date('Y') }} Mačji boter |
-            Vse pravice pridržane |
-            Zasebnost |
-            Oblikovanje: Lana, izvedba: Jan Hacin
+        <footer>
+            <div class="footer has-text-centered">
+                <a
+                    class="button is-light"
+                    href="{{ route('faq') }}"
+                    dusk="footer-faq-link"
+                >
+                    Pogosta vprašanja
+                </a>
+            </div>
+            <div class="footer has-background-primary has-text-centered">
+                Zavod Mačja hiša © {{ date('Y') }} Mačji boter |
+                Vse pravice pridržane |
+                Zasebnost |
+                Oblikovanje: Lana, izvedba: Jan Hacin
+            </div>
         </footer>
+
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}"></script>

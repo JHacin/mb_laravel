@@ -43,7 +43,7 @@
             <div class="content">
                 <p>
                     Preprosto. Na spodnji povezavi si <strong>oglejte muce, ki iščejo botra</strong>. Izberite muco in
-                    ob njenem imenu kliknite <i>Želiš postati moj boter?</i>. Izpolnite in pošljite
+                    ob njenem imenu kliknite <em>Želiš postati moj boter?</em>. Izpolnite in pošljite
                     <strong>Dogovor o posvojitvi na daljavo</strong>. Na svoj elektronski naslov boste prejeli sporočilo
                     o sklenjenem botrstvu. Potem pa vsak mesec sproti <strong>nakazujete izbrani znesek</strong>.
                 </p>

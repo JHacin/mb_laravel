@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 // Publicly visible pages
 Route::get(config('routes.home'), [PagesController::class, 'index'])->name('home');
 Route::get(config('routes.why_become_sponsor'), [PagesController::class, 'whyBecomeSponsor'])->name('why_become_sponsor');
+Route::get(config('routes.faq'), [PagesController::class, 'faq'])->name('faq');
 Route::get('/muce', [CatListController::class, 'index'])->name('cat_list');
 Route::get('/muce/{cat}', [PagesController::class, 'catDetails'])->name('cat_details');
 

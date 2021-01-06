@@ -11,6 +11,7 @@ return [
     'cat_list' => '/muce',
     'cat_details' => '/muce/{cat}',
     'cat_sponsorship_form' => '/muce/{cat}/postani-boter',
+    'faq' => '/pravila-in-pogosta-vprasanja',
     'admin' => [
         'dashboard' => 'dashboard',
         'login' => 'login',

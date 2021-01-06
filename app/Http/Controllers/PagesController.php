@@ -15,6 +15,11 @@ class PagesController extends Controller
         return view('home');
     }
 
+    public function faq(): View
+    {
+        return view('faq');
+    }
+
     public function whyBecomeSponsor(): View
     {
         return view('why-become-sponsor');
