@@ -4,15 +4,24 @@
             <input type="hidden" name="{{ $query }}" value="{{ request($query) }}">
         @endisset
     @endforeach
-    <x-inputs.base.input name="search" label="Išči po imenu" value="{{ request('search') }}" />
-    <button type="submit" class="button is-primary" dusk="search-submit">Potrdi</button>
+    <x-inputs.base.input name="search" placeholder="Išči po imenu" value="{{ request('search') }}">
+        <x-slot name="addon">
+            <button type="submit" class="button is-primary" dusk="search-submit">
+                <span class="icon">
+                    <i class="fas fa-arrow-circle-right"></i>
+                </span>
+            </button>
+        </x-slot>
+    </x-inputs.base.input>
 </form>
 @if(request('search'))
-    <a
-        class="has-text-secondary"
-        href="{{ route('cat_list', array_merge($activeQueryParams, ['search' => null])) }}"
-        dusk="clear-search-link"
-    >
-        Počisti iskanje
-    </a>
+    <div class="mt-1">
+        <a
+            class="has-text-primary"
+            href="{{ route('cat_list', array_merge($activeQueryParams, ['search' => null])) }}"
+            dusk="clear-search-link"
+        >
+            Počisti iskanje
+        </a>
+    </div>
 @endif
