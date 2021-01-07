@@ -1,9 +1,15 @@
-@props(['name', 'label', 'options', 'selected'])
+@props([
+    'name',
+    'label',
+    'options',
+    'selected',
+    'wrapperClass' => ''
+])
 
 <div class="field" dusk="{{ $name }}-input-wrapper">
     @include('components.inputs.inc.label')
     <div class="control">
-        <div class="select">
+        <div class="select{{ $wrapperClass ? " $wrapperClass" : '' }}">
             <!--suppress HtmlFormInputWithoutLabel -->
             <select
                 id="{{ $name }}"

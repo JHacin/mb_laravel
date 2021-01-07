@@ -2,16 +2,17 @@
 
 <div class="field" dusk="{{ $name }}-input-wrapper">
     <div class="control">
-        <label class="checkbox" for="{{ $name }}">
+        <label class="checkbox is-flex is-align-items-center" for="{{ $name }}">
             <input
                 type="checkbox"
                 id="{{ $name }}"
+                class="mr-2"
                 name="{{ $name }}"
                 dusk="{{ $name }}-input"
                 {{ (old($name) || $isChecked) ? 'checked' : '' }}
                 {{ $attributes->merge(['value' => 1]) }}
             >
-            {{ $label }}
+            <span>{{ $label }}</span>
         </label>
     </div>
     @include('components.inputs.inc.error')

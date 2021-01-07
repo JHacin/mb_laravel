@@ -9,14 +9,10 @@
     /** @var ViewErrorBag $errors */
     $hasError = $errors->has($cleanErrorKey);
 
-    /** @var string $label */
-    /** @var ComponentAttributeBag $attributes */
-    $labelText = $label . ($attributes['required'] ? ' *' : '');
-
     $defaultAttributes = [
         'type' => 'text',
         'class' => 'input' . ($hasError ? ' is-danger' : ''),
-        'placeholder' => $labelText,
+        'placeholder' => $label,
     ]
 @endphp
 
