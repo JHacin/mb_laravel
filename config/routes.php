@@ -3,15 +3,18 @@
 return [
     'home' => '/',
     'login' => '/prijava',
+    'logout' => '/odjava',
     'register' => '/registracija',
     'forgot_password' => '/geslo/ponastavitev',
     'reset_password_form' => '/geslo/ponastavitev/{token}',
+    'send_reset_link_email' => '/geslo/email',
     'user_profile' => '/profil',
     'why_become_sponsor' => '/zakaj-postati-boter',
     'cat_list' => '/muce',
     'cat_details' => '/muce/{cat}',
     'cat_sponsorship_form' => '/muce/{cat}/postani-boter',
     'faq' => '/pravila-in-pogosta-vprasanja',
+    'privacy' => '/zasebnost',
     'admin' => [
         'dashboard' => 'dashboard',
         'login' => 'login',

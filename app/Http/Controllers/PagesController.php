@@ -20,6 +20,11 @@ class PagesController extends Controller
         return view('faq');
     }
 
+    public function privacy(): View
+    {
+        return view('privacy');
+    }
+
     public function whyBecomeSponsor(): View
     {
         return view('why-become-sponsor');

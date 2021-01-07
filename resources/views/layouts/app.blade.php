@@ -13,8 +13,7 @@
 
         <!-- Styles -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
@@ -96,23 +95,71 @@
         </main>
 
         <footer>
-            <div class="footer has-text-centered">
-                <a
-                    class="button is-light"
-                    href="{{ route('faq') }}"
-                    dusk="footer-faq-link"
-                >
-                    Pogosta vprašanja
-                </a>
+            <div class="footer is-flex is-justify-content-center is-align-items-center py-5">
+                <div class="px-6">
+                    <a
+                        class="footer-faq-link"
+                        href="{{ route('faq') }}"
+                        dusk="footer-faq-link"
+                    >
+                        Pogosta vprašanja
+                    </a>
+                </div>
+
+                <div class="is-flex is-align-items-center">
+                    <a
+                        class="footer-related-link"
+                        href="{{ config('links.macja_hisa') }}"
+                        dusk="footer-mh-link"
+                    >
+                        <img
+                            class="footer-related-link__image"
+                            src="{{ asset('/img/mh_logo.png') }}"
+                            alt="Mačja hiša"
+                        >
+                    </a>
+                    <a
+                        class="footer-related-link"
+                        href="{{ config('links.veterina_mh') }}"
+                        dusk="footer-vet-link"
+                    >
+                        <img
+                            class="footer-related-link__image"
+                            src="{{ asset('/img/vet_logo.png') }}"
+                            alt="Veterina MH"
+                        >
+                    </a>
+                    <a
+                        class="footer-related-link"
+                        href="{{ config('links.super_combe') }}"
+                        dusk="footer-combe-link"
+                    >
+                        <img
+                            class="footer-related-link__image"
+                            src="{{ asset('/img/combe_logo.png') }}"
+                            alt="Super Čombe"
+                        >
+                    </a>
+                </div>
             </div>
-            <div class="footer has-background-primary has-text-centered">
-                Zavod Mačja hiša © {{ date('Y') }} Mačji boter |
-                Vse pravice pridržane |
-                Zasebnost |
-                Oblikovanje: Lana, izvedba: Jan Hacin
+            <div class="footer has-background-primary has-text-centered is-size-7" dusk="footer-bottom">
+                <span>Zavod Mačja hiša © {{ date('Y') }} Mačji boter</span>
+                <span class="px-2">|</span>
+                <span>Vse pravice pridržane.</span>
+                <span class="px-2">|</span>
+                <span>
+                    <a
+                        class="has-text-white"
+                        href="{{ route('privacy') }}"
+                        dusk="footer-privacy-link"
+                    >
+                        Zasebnost
+                    </a>
+                </span>
+                <span class="px-2">|</span>
+                <span>Oblikovanje: <em>Lana</em>, izvedba: <em>Jan Hacin</em></span>
             </div>
         </footer>
-
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}"></script>
