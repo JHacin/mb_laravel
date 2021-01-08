@@ -11,7 +11,7 @@
                         @if($cats->isNotEmpty())
                             <div class="columns is-multiline" dusk="cat-list-items">
                                 @foreach($cats as $cat)
-                                    <div class="column is-one-third" dusk="cat-list-item-wrapper">
+                                    <div class="column is-one-third is-flex" dusk="cat-list-item-wrapper">
                                         <x-cat-list.cat-list-item :cat="$cat"/>
                                     </div>
                                 @endforeach
