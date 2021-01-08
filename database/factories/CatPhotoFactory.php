@@ -11,24 +11,17 @@ use Illuminate\Support\Arr;
 class CatPhotoFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
      * @var string
      */
     protected $model = CatPhoto::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
+    public function definition(): array
     {
         return [
             'cat_id' => Cat::factory(),
-            'filename' => $this->faker->word . '.jpg',
+            'filename' => $this->faker->ean13 . '.jpg',
             'alt' => $this->faker->text,
-            'index' => $this->faker->unique()->numberBetween(
+            'index' => $this->faker->numberBetween(
                 Arr::first(CatPhotoService::INDICES),
                 Arr::last(CatPhotoService::INDICES)
             ),

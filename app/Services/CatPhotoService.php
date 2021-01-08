@@ -14,66 +14,38 @@ class CatPhotoService
 
     const INDICES = [0, 1, 2, 3];
 
-    /**
-     * @return string
-     */
-    public static function getPlaceholderImage()
+    public static function getPlaceholderImage(): string
     {
         return asset('img/placeholder.png');
     }
 
-    /**
-     * Check if the provided is a base64-encoded image string.
-     * This is used e.g. to determine if the photo_n field in the request contains an existing image path
-     * or a new image (encoded as base64).
-     *
-     * @param string $string
-     *
-     * @return bool
-     */
-    public static function isBase64ImageString(string $string)
+    public static function isBase64ImageString(string $string): bool
     {
         return Str::startsWith($string, 'data:image');
     }
 
-    /**
-     * Convert a base64 string to an image, store it and return its filename
-     * relative to PATH_ROOT.
-     *
-     * @param string $base64
-     * @return string
-     */
-    public function createImageFromBase64(string $base64)
+    public function createImageFromBase64(string $base64): string
     {
         $image = Image::make($base64)->encode('jpg', 90);
 
         $filename = md5($base64 . time()) . '.jpg';
 
-        Storage::disk('public')->put(CatPhotoService::getFullPath($filename), $image->stream());
+        self::storeToDisk($filename, $image->stream());
 
         return $filename;
     }
 
-    /**
-     * Return the full path relative to the public storage root.
-     *
-     * @param string $filename
-     * @return string
-     */
-    public static function getFullPath(string $filename)
+    public static function storeToDisk(string $filename, $contents)
+    {
+        Storage::disk('public')->put(CatPhotoService::getFullPath($filename), $contents);
+    }
+
+    public static function getFullPath(string $filename): string
     {
         return self::PATH_ROOT . $filename;
     }
 
-    /**
-     * Create and connect a new CatPhoto model.
-     *
-     * @param Cat $cat
-     * @param string $filename
-     * @param int $index
-     * @return CatPhoto
-     */
-    public function create(Cat $cat, string $filename, int $index)
+    public function create(Cat $cat, string $filename, int $index): CatPhoto
     {
         $photo = new CatPhoto;
         $photo->cat_id = $cat->id;
@@ -83,12 +55,6 @@ class CatPhotoService
         return $photo;
     }
 
-    /**
-     * Remove a photo from the filesystem.
-     *
-     * @param string $filename
-     * @return void
-     */
     public function deleteFromDisk(string $filename)
     {
         Storage::disk('public')->delete(self::getFullPath($filename));
