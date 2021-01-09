@@ -16,7 +16,6 @@ class CatListTest extends DuskTestCase
 {
     protected const SORT_FIELDS = ['sponsorship_count', 'age', 'id'];
     protected const SORT_DIRECTIONS = ['asc', 'desc'];
-    protected const PER_PAGE_OPTIONS = [15, 30, 'all'];
 
     /**
      * @var Cat|null
@@ -109,11 +108,11 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_shows_first_15_cats_by_default()
+    public function test_shows_first_12_cats_by_default()
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
-            $this->assertCount(15, $b->elements('@cat-list-item'));
+            $this->assertCount(Cat::PER_PAGE_DEFAULT, $b->elements('@cat-list-item'));
         });
     }
 
@@ -179,9 +178,9 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $catName = 'test';
-            Cat::factory()->count(31)->create(['name' => $catName]);
+            Cat::factory()->count(Cat::PER_PAGE_24 + 1)->create(['name' => $catName]);
 
-            foreach (static::PER_PAGE_OPTIONS as $perPage) {
+            foreach (Cat::PER_PAGE_OPTIONS as $perPage) {
                 foreach (static::SORT_FIELDS as $sort) {
                     foreach (static::SORT_DIRECTIONS as $direction) {
                         $b->visitRoute('cat_list', ['per_page' => $perPage, $sort => $direction]);
@@ -230,12 +229,12 @@ class CatListTest extends DuskTestCase
             $this->createCat(['name' => $catName]);
 
             $this->goToPage($b);
-            $b->click('@per_page_15');
+            $b->click('@per_page_' . Cat::PER_PAGE_12);
             $b->click('@id_sort_desc');
             $this->submitSearch($b, $catName);
             $b->assertQueryStringHas('search', $catName);
             $b->click('@clear-search-link');
-            $b->assertQueryStringHas('per_page', 15);
+            $b->assertQueryStringHas('per_page', Cat::PER_PAGE_12);
             $b->assertQueryStringHas('id', 'desc');
             $b->assertQueryStringMissing('search');
         });
@@ -250,7 +249,7 @@ class CatListTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
 
-            foreach (static::PER_PAGE_OPTIONS as $option) {
+            foreach (Cat::PER_PAGE_OPTIONS as $option) {
                 $selector = '@per_page_' . $option;
                 $b->assertVisible($selector);
                 $b->assertAttribute($selector, 'href', route('cat_list', ['per_page' => $option]));
@@ -262,11 +261,11 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_doesnt_show_per_page_options_if_there_are_fewer_than_16_results()
+    public function test_doesnt_show_per_page_options_if_there_is_less_than_2_pages()
     {
         $this->browse(function (Browser $b) {
-            Cat::factory()->count(15)->create(['name' => 'hello123']);
-            Cat::factory()->count(16)->create(['name' => 'hello456']);
+            Cat::factory()->count(Cat::PER_PAGE_12)->create(['name' => 'hello123']);
+            Cat::factory()->count(Cat::PER_PAGE_12 + 1)->create(['name' => 'hello456']);
 
             $this->goToPage($b);
             $b->assertVisible('@per_page-options-wrapper');
@@ -283,20 +282,20 @@ class CatListTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_doesnt_show_30_per_page_option_if_there_are_fewer_than_30_results()
+    public function test_doesnt_show_24_per_page_option_if_there_are_fewer_than_24_results()
     {
         $this->browse(function (Browser $b) {
-            Cat::factory()->count(29)->create(['name' => 'asdasdasd123']);
-            Cat::factory()->count(30)->create(['name' => 'asdasdasd456']);
+            Cat::factory()->count(Cat::PER_PAGE_24 - 1)->create(['name' => 'asdasdasd123']);
+            Cat::factory()->count(Cat::PER_PAGE_24)->create(['name' => 'asdasdasd456']);
 
             $this->goToPage($b);
-            $b->assertVisible('@per_page_30');
+            $b->assertVisible('@per_page_' . Cat::PER_PAGE_24);
 
             $this->submitSearch($b, 'asdasdasd123');
-            $b->assertMissing('@per_page_30');
+            $b->assertMissing('@per_page_' . Cat::PER_PAGE_24);
 
             $this->submitSearch($b, 'asdasdasd456');
-            $b->assertVisible('@per_page_30');
+            $b->assertVisible('@per_page_' . Cat::PER_PAGE_24);
         });
     }
 
@@ -308,14 +307,14 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
-            $this->assertCount(15, $b->elements('@cat-list-item'));
+            $this->assertCount(Cat::PER_PAGE_12, $b->elements('@cat-list-item'));
             $b->assertQueryStringMissing('per_page');
-            $b->click('@per_page_30');
-            $this->assertCount(30, $b->elements('@cat-list-item'));
-            $b->assertQueryStringHas('per_page', 30);
-            $b->click('@per_page_15');
-            $this->assertCount(15, $b->elements('@cat-list-item'));
-            $b->assertQueryStringHas('per_page', 15);
+            $b->click('@per_page_' . Cat::PER_PAGE_24);
+            $this->assertCount(Cat::PER_PAGE_24, $b->elements('@cat-list-item'));
+            $b->assertQueryStringHas('per_page', Cat::PER_PAGE_24);
+            $b->click('@per_page_' . Cat::PER_PAGE_12);
+            $this->assertCount(Cat::PER_PAGE_12, $b->elements('@cat-list-item'));
+            $b->assertQueryStringHas('per_page', Cat::PER_PAGE_12);
         });
     }
 
@@ -327,7 +326,7 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $catName = 'test';
-            Cat::factory()->count(31)->create(['name' => $catName]);
+            Cat::factory()->count(Cat::PER_PAGE_24 + 1)->create(['name' => $catName]);
 
             foreach (static::SORT_FIELDS as $sort) {
                 foreach (static::SORT_DIRECTIONS as $direction) {
@@ -335,7 +334,7 @@ class CatListTest extends DuskTestCase
                     $this->submitSearch($b, $catName);
                     $b->click("@{$sort}_sort_{$direction}");
 
-                    foreach (static::PER_PAGE_OPTIONS as $perPage) {
+                    foreach (Cat::PER_PAGE_OPTIONS as $perPage) {
                         $b->assertAttribute(
                             "@per_page_{$perPage}",
                             'href',
@@ -355,11 +354,11 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
-            $this->assertHasClass($b, '@per_page_15', 'has-text-weight-semibold');
+            $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_12, 'has-text-weight-semibold');
 
-            $b->click('@per_page_30');
-            $this->assertNotHasClass($b, '@per_page_15', 'has-text-weight-semibold');
-            $this->assertHasClass($b, '@per_page_30', 'has-text-weight-semibold');
+            $b->click('@per_page_' . Cat::PER_PAGE_24);
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_12, 'has-text-weight-semibold');
+            $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_24, 'has-text-weight-semibold');
         });
     }
 
@@ -373,8 +372,8 @@ class CatListTest extends DuskTestCase
             $this->goToPage($b);
             $b->click('@pagination-link-page-2');
             $b->assertQueryStringHas('page', 2);
-            $b->click('@per_page_30');
-            $b->assertQueryStringHas('per_page', 30);
+            $b->click('@per_page_' . Cat::PER_PAGE_24);
+            $b->assertQueryStringHas('per_page', Cat::PER_PAGE_24);
             $b->assertQueryStringMissing('page');
         });
     }
@@ -517,9 +516,9 @@ class CatListTest extends DuskTestCase
     {
         $this->browse(function (Browser $b) {
             $catName = 'test';
-            Cat::factory()->count(31)->create(['name' => $catName]);
+            Cat::factory()->count(Cat::PER_PAGE_24 + 1)->create(['name' => $catName]);
 
-            foreach (static::PER_PAGE_OPTIONS as $perPage) {
+            foreach (Cat::PER_PAGE_OPTIONS as $perPage) {
                 foreach (static::SORT_FIELDS as $sort) {
                     foreach (static::SORT_DIRECTIONS as $direction) {
                         $b->visitRoute('cat_list', ['per_page' => $perPage, 'search' => $catName]);

@@ -2,6 +2,7 @@
 
 namespace App\View\Components\CatList;
 
+use App\Models\Cat;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\View\Component;
@@ -29,11 +30,12 @@ class PerPageOptions extends Component
      */
     public function render()
     {
-        $perPageOptions = [
-            15 => 15,
-            30 => 30,
-            'all' => 'vse',
-        ];
+        $perPageOptions = [];
+
+        foreach (Cat::PER_PAGE_OPTIONS as $option) {
+            $label = $option === Cat::PER_PAGE_ALL ? 'vse' : $option;
+            $perPageOptions[$option] = $label;
+        }
 
         return view('components.cat-list.per-page-options', [
             'options' => $perPageOptions,

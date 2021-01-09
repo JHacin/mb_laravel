@@ -54,11 +54,11 @@ class CatListControllerTest extends TestCase
     /**
      * @return void
      */
-    public function test_returns_15_cats_per_page_by_default()
+    public function test_returns_12_cats_per_page_by_default()
     {
         $cats = $this->getCatsInResponse();
 
-        $this->assertEquals(15, $cats->perPage());
+        $this->assertEquals(Cat::PER_PAGE_DEFAULT, $cats->perPage());
     }
 
     /**
@@ -66,9 +66,7 @@ class CatListControllerTest extends TestCase
      */
     public function test_per_page_query_param_works()
     {
-        $options = [15, 30, 'all'];
-
-        foreach ($options as $option) {
+        foreach (Cat::PER_PAGE_OPTIONS as $option) {
             $cats = $this->getCatsInResponse(['per_page' => $option]);
             $this->assertEquals($option === 'all' ? Cat::count() : $option, $cats->perPage());
             $this->assertStringContainsString('per_page=' . $option, $cats->url(1));

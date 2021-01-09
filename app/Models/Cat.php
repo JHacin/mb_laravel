@@ -82,6 +82,19 @@ class Cat extends Model
         self::GENDER_FEMALE => 'samica',
     ];
 
+    public const PER_PAGE_12 = 12;
+    public const PER_PAGE_24 = 24;
+    public const PER_PAGE_ALL = 'all';
+
+
+    public const PER_PAGE_OPTIONS = [
+        self::PER_PAGE_12,
+        self::PER_PAGE_24,
+        self::PER_PAGE_ALL,
+    ];
+
+    public const PER_PAGE_DEFAULT = self::PER_PAGE_12;
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

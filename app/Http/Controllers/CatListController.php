@@ -31,7 +31,7 @@ class CatListController extends Controller
         ]);
 
         if (!$params['per_page']) {
-            $params['per_page'] = 15;
+            $params['per_page'] = Cat::PER_PAGE_DEFAULT;
         }
 
         $cats = $this->addWhereClauses($cats, $params);

@@ -33,7 +33,7 @@
                             </div>
                         @endif
 
-                        @if($cats->isNotEmpty() && $cats->total() > 15)
+                        @if($cats->isNotEmpty() && $cats->total() > \App\Models\Cat::PER_PAGE_12)
                             <div class="block" dusk="per_page-options-wrapper">
                                 <x-cat-list.per-page-options :cats="$cats" />
                             </div>
