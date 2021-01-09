@@ -7,7 +7,7 @@ use Illuminate\View\View;
 
 class SearchByName extends Component
 {
-    use CatListQueryParams;
+    use HasCatListQueryParams;
 
     /**
      * @return View|string

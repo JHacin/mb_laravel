@@ -2,7 +2,7 @@
 
 namespace App\View\Components\CatList;
 
-trait CatListQueryParams
+trait HasCatListQueryParams
 {
     /**
      * @return array

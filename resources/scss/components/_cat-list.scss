@@ -5,3 +5,28 @@
 
     flex-direction: column-reverse;
 }
+
+.sort-link-arrow {
+    color: $grey-lighter;
+
+    &--active {
+        &,
+        &:hover {
+            color: $primary;
+        }
+    }
+}
+
+.sort-link-toggle {
+    &--active {
+        font-weight: $weight-semibold;
+    }
+}
+
+.per-page-option {
+    margin-right: $spacer-1;
+
+    &--active {
+        font-weight: $weight-semibold;
+    }
+}

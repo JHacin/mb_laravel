@@ -353,12 +353,14 @@ class CatListTest extends DuskTestCase
     public function test_active_per_page_link_is_highlighted()
     {
         $this->browse(function (Browser $b) {
+            $activeOptionClass = 'per-page-option--active';
+
             $this->goToPage($b);
-            $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_12, 'has-text-weight-semibold');
+            $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_12, $activeOptionClass);
 
             $b->click('@per_page_' . Cat::PER_PAGE_24);
-            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_12, 'has-text-weight-semibold');
-            $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_24, 'has-text-weight-semibold');
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_12, $activeOptionClass);
+            $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_24, $activeOptionClass);
         });
     }
 
@@ -387,20 +389,30 @@ class CatListTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             $this->createCatWithSponsorships([], 0);
             $this->createCatWithSponsorships([], 99);
-            $this->goToPage($b);
 
+            // Toggle
+            $this->goToPage($b);
             $b->assertQueryStringMissing('sponsorship_count');
-            $b->click('@sponsorship_count_sort_asc');
+            $b->click('@sponsorship_count_sort_toggle');
             $b->assertQueryStringHas('sponsorship_count', 'asc');
             $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) {
                 $this->assertEquals(0, $b->text('@cat-list-item-sponsorship-count'));
             });
-
-            $b->click('@sponsorship_count_sort_desc');
+            $b->click('@sponsorship_count_sort_toggle');
             $b->assertQueryStringHas('sponsorship_count', 'desc');
             $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) {
                 $this->assertEquals(99, $b->text('@cat-list-item-sponsorship-count'));
             });
+            $b->click('@sponsorship_count_sort_toggle');
+            $b->assertQueryStringHas('sponsorship_count', 'asc');
+
+            // Arrows
+            $this->goToPage($b);
+            $b->assertQueryStringMissing('sponsorship_count');
+            $b->click('@sponsorship_count_sort_asc');
+            $b->assertQueryStringHas('sponsorship_count', 'asc');
+            $b->click('@sponsorship_count_sort_desc');
+            $b->assertQueryStringHas('sponsorship_count', 'desc');
         });
     }
 
@@ -413,20 +425,30 @@ class CatListTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             $oldest = $this->createCat(['date_of_birth' => Carbon::now()->subYears(300)]);
             $youngest = $this->createCat(['date_of_birth' => Carbon::now()]);
-            $this->goToPage($b);
 
+            // Toggle
+            $this->goToPage($b);
             $b->assertQueryStringMissing('age');
-            $b->click('@age_sort_asc');
+            $b->click('@age_sort_toggle');
             $b->assertQueryStringHas('age', 'asc');
             $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($youngest) {
                 $this->assertEquals($youngest->name, $b->text('@cat-list-item-name'));
             });
-
-            $b->click('@age_sort_desc');
+            $b->click('@age_sort_toggle');
             $b->assertQueryStringHas('age', 'desc');
             $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($oldest) {
                 $this->assertEquals($oldest->name, $b->text('@cat-list-item-name'));
             });
+            $b->click('@age_sort_toggle');
+            $b->assertQueryStringHas('age', 'asc');
+
+            // Arrows
+            $this->goToPage($b);
+            $b->assertQueryStringMissing('age');
+            $b->click('@age_sort_asc');
+            $b->assertQueryStringHas('age', 'asc');
+            $b->click('@age_sort_desc');
+            $b->assertQueryStringHas('age', 'desc');
         });
     }
 
@@ -441,32 +463,30 @@ class CatListTest extends DuskTestCase
             $first = Cat::orderBy('id')->first();
             /** @var Cat $latest */
             $latest = Cat::orderBy('id', 'desc')->first();
-            $this->goToPage($b);
 
+            // Toggle
+            $this->goToPage($b);
             $b->assertQueryStringMissing('id');
-            $b->click('@id_sort_asc');
+            $b->click('@id_sort_toggle');
             $b->assertQueryStringHas('id', 'asc');
             $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($first) {
                 $this->assertEquals($first->name, $b->text('@cat-list-item-name'));
             });
-
-            $b->click('@id_sort_desc');
+            $b->click('@id_sort_toggle');
             $b->assertQueryStringHas('id', 'desc');
             $b->with('[dusk="cat-list-item-wrapper"]:first-of-type', function (Browser $b) use ($latest) {
                 $this->assertEquals($latest->name, $b->text('@cat-list-item-name'));
             });
-        });
-    }
+            $b->click('@id_sort_toggle');
+            $b->assertQueryStringHas('id', 'asc');
 
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_highlights_id_desc_sort_link_by_default()
-    {
-        $this->browse(function (Browser $b) {
+            // Arrows
             $this->goToPage($b);
-            $this->assertNotHasClass($b, '@id_sort_desc', 'has-text-grey-darker');
+            $b->assertQueryStringMissing('id');
+            $b->click('@id_sort_asc');
+            $b->assertQueryStringHas('id', 'asc');
+            $b->click('@id_sort_desc');
+            $b->assertQueryStringHas('id', 'desc');
         });
     }
 
@@ -477,34 +497,26 @@ class CatListTest extends DuskTestCase
     public function test_highlights_active_sort_links()
     {
         $this->browse(function (Browser $b) {
+            $activeArrowClass = 'sort-link-arrow--active';
+            $activeToggleClass = 'sort-link-toggle--active';
+
             $this->goToPage($b);
 
-            $this->assertHasClass($b, '@sponsorship_count_sort_asc', 'has-text-grey-darker');
-            $this->assertHasClass($b, '@sponsorship_count_sort_desc', 'has-text-grey-darker');
+            $this->assertNotHasClass($b, '@id_sort_asc', $activeArrowClass);
+            $this->assertHasClass($b, '@id_sort_desc', $activeArrowClass);
+            $this->assertHasClass($b, '@id_sort_toggle', $activeToggleClass);
 
-            $b->click('@sponsorship_count_sort_asc');
-            $this->assertNotHasClass($b, '@sponsorship_count_sort_asc', 'has-text-grey-darker');
-            $this->assertHasClass($b, '@sponsorship_count_sort_desc', 'has-text-grey-darker');
+            foreach (['sponsorship_count', 'age', 'id'] as $sort) {
+                $b->click("@{$sort}_sort_asc");
+                $this->assertHasClass($b, "@{$sort}_sort_asc", $activeArrowClass);
+                $this->assertNotHasClass($b, "@{$sort}_sort_desc", $activeArrowClass);
+                $this->assertHasClass($b, "@{$sort}_sort_toggle", $activeToggleClass);
 
-            $b->click('@sponsorship_count_sort_desc');
-            $this->assertHasClass($b, '@sponsorship_count_sort_asc', 'has-text-grey-darker');
-            $this->assertNotHasClass($b, '@sponsorship_count_sort_desc', 'has-text-grey-darker');
-
-            $b->click('@age_sort_asc');
-            $this->assertNotHasClass($b, '@age_sort_asc', 'has-text-grey-darker');
-            $this->assertHasClass($b, '@age_sort_desc', 'has-text-grey-darker');
-
-            $b->click('@age_sort_desc');
-            $this->assertHasClass($b, '@age_sort_asc', 'has-text-grey-darker');
-            $this->assertNotHasClass($b, '@age_sort_desc', 'has-text-grey-darker');
-
-            $b->click('@id_sort_asc');
-            $this->assertNotHasClass($b, '@id_sort_asc', 'has-text-grey-darker');
-            $this->assertHasClass($b, '@id_sort_desc', 'has-text-grey-darker');
-
-            $b->click('@id_sort_desc');
-            $this->assertHasClass($b, '@id_sort_asc', 'has-text-grey-darker');
-            $this->assertNotHasClass($b, '@id_sort_desc', 'has-text-grey-darker');
+                $b->click("@{$sort}_sort_desc");
+                $this->assertHasClass($b, "@{$sort}_sort_desc", $activeArrowClass);
+                $this->assertNotHasClass($b, "@{$sort}_sort_asc", $activeArrowClass);
+                $this->assertHasClass($b, "@{$sort}_sort_toggle", $activeToggleClass);
+            }
         });
     }
 
@@ -522,6 +534,12 @@ class CatListTest extends DuskTestCase
                 foreach (static::SORT_FIELDS as $sort) {
                     foreach (static::SORT_DIRECTIONS as $direction) {
                         $b->visitRoute('cat_list', ['per_page' => $perPage, 'search' => $catName]);
+
+                        $b->assertAttribute(
+                            "@{$sort}_sort_toggle",
+                            'href',
+                            route('cat_list') . "?per_page={$perPage}&search={$catName}&{$sort}=asc"
+                        );
 
                         $b->assertAttribute(
                             "@{$sort}_sort_{$direction}",

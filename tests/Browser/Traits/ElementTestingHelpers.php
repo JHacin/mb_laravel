@@ -22,6 +22,10 @@ trait ElementTestingHelpers
      */
     protected function assertNotHasClass(Browser $browser, string $selector, string $class)
     {
-        $this->assertStringNotContainsString($class, $browser->attribute($selector, 'class'));
+        $this->assertStringNotContainsString(
+            $class,
+            $browser->attribute($selector, 'class'),
+            "Failed asserting that $selector does not contain the class '$class'",
+        );
     }
 }

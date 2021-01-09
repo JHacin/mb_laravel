@@ -10,7 +10,7 @@ use Illuminate\View\View;
 
 class PerPageOptions extends Component
 {
-    use CatListQueryParams;
+    use HasCatListQueryParams;
 
     /**
      * @var LengthAwarePaginator
