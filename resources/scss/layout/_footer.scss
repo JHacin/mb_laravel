@@ -1,15 +1,11 @@
 .footer-faq-link {
+    @extend .has-text-white;
+
     display: inline-block;
-    color: $white;
     border: 1px solid $white;
     padding: $spacer-3 $spacer-5;
     font-weight: $weight-semibold;
     font-size: $size-5;
-
-    &:hover {
-        color: $white;
-        text-decoration: underline;
-    }
 }
 
 .footer-related-link {
