@@ -1,3 +1,25 @@
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: $spacer-5;
+    padding-bottom: $spacer-5;
+
+    > .footer-faq-link-wrapper {
+        margin-bottom: $spacer-5;
+    }
+
+    @include from($tablet) {
+        flex-direction: row;
+
+        > .footer-faq-link-wrapper {
+            margin-bottom: 0;
+        }
+    }
+}
+
 .footer-faq-link {
     @extend .has-text-white;
 
@@ -14,5 +36,29 @@
 
     &__image {
         max-height: 100%;
+    }
+}
+
+
+.footer-copyright {
+    background-color: $primary;
+    text-align: center;
+    font-size: $size-7;
+
+    &__item {
+        @include from($tablet) {
+            display: inline-block;
+        }
+
+        display: block;
+    }
+
+    &__divider {
+        @include from($tablet) {
+            display: inline-block;
+        }
+
+        padding: 0 $spacer-2;
+        display: none;
     }
 }

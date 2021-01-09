@@ -95,8 +95,8 @@
         </main>
 
         <footer>
-            <div class="footer is-flex is-justify-content-center is-align-items-center py-5">
-                <div class="px-6">
+            <div class="footer-links footer">
+                <div class="footer-faq-link-wrapper mx-5">
                     <a
                         class="footer-faq-link"
                         href="{{ route('faq') }}"
@@ -106,7 +106,7 @@
                     </a>
                 </div>
 
-                <div class="is-flex is-align-items-center">
+                <div class="is-flex is-align-items-center mx-5">
                     <a
                         class="footer-related-link"
                         href="{{ config('links.macja_hisa') }}"
@@ -142,22 +142,28 @@
                     </a>
                 </div>
             </div>
-            <div class="footer has-background-primary has-text-centered is-size-7" dusk="footer-bottom">
-                <span>Zavod Mačja hiša © {{ date('Y') }} Mačji boter</span>
-                <span class="px-2">|</span>
-                <span>Vse pravice pridržane.</span>
-                <span class="px-2">|</span>
-                <span>
+            <div class="footer-copyright footer" dusk="footer-bottom">
+                <span class="footer-copyright__item">
+                    Zavod Mačja hiša © {{ date('Y') }} Mačji boter
+                </span>
+                <span class="footer-copyright__divider">|</span>
+                <span class="footer-copyright__item">
+                    Vse pravice pridržane.
+                </span>
+                <span class="footer-copyright__divider">|</span>
+                <span class="footer-copyright__item">
                     <a
-                        class="has-text-white"
+                        class="has-text-white has-text-weight-semibold"
                         href="{{ route('privacy') }}"
                         dusk="footer-privacy-link"
                     >
                         Zasebnost
                     </a>
                 </span>
-                <span class="px-2">|</span>
-                <span>Oblikovanje: <em>Lana</em>, izvedba: <em>Jan Hacin</em></span>
+                <span class="footer-copyright__divider">|</span>
+                <span class="footer-copyright__item">
+                    Oblikovanje: <em>Lana</em>, izvedba: <em>Jan Hacin</em>
+                </span>
             </div>
         </footer>
 
