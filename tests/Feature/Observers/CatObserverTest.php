@@ -5,6 +5,7 @@ namespace Tests\Feature\Observers;
 use App\Services\CatPhotoService;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CatObserverTest extends TestCase
@@ -19,7 +20,7 @@ class CatObserverTest extends TestCase
      */
     public function test_deletes_photos_and_files_on_delete()
     {
-        $storage = $this->createFakeStorage();
+        $storage = Storage::disk('public');
         $cat = $this->createCatWithPhotos();
         $photos = $cat->photos;
 

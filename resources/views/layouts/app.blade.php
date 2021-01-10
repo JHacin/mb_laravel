@@ -17,7 +17,7 @@
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar is-secondary" role="navigation" aria-label="glavni meni">
+        <nav class="navbar is-primary" role="navigation" aria-label="glavni meni">
             <div class="navbar-brand">
                 <a class="navbar-item" href="{{ route('home') }}" dusk="navbar-home-link">
                     <img src="{{ asset('/img/logo.png') }}" alt="Mačji boter">

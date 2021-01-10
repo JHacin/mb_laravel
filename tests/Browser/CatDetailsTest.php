@@ -4,6 +4,7 @@ namespace Tests\Browser;
 
 use App\Models\Cat;
 use App\Models\PersonData;
+use App\Services\CatPhotoService;
 use App\Utilities\AgeFormat;
 use Carbon\Carbon;
 use Laravel\Dusk\Browser;
@@ -21,7 +22,7 @@ class CatDetailsTest extends DuskTestCase
     public function test_shows_cat_details()
     {
         $this->browse(function (Browser $b) {
-            $cat = $this->createCat([
+            $cat = $this->createCatWithPhotos([
                 'date_of_arrival_boter' => '2005-12-20',
                 'date_of_arrival_mh' => '2000-01-01',
                 'date_of_birth' => '1990-06-05'
@@ -29,7 +30,6 @@ class CatDetailsTest extends DuskTestCase
             $this->goToPage($b, $cat);
 
             $b->assertSeeIn('@cat-details-name', $cat->name);
-            $b->assertAttribute('@cat-details-photo', 'src', $cat->first_photo_url);
             $b->assertSeeIn('@cat-details-date_of_arrival_boter', '20. 12. 2005');
             $b->assertSeeIn('@cat-details-current_age',
                 AgeFormat::formatToAgeString($cat->date_of_birth->diff(Carbon::now())));
@@ -37,6 +37,14 @@ class CatDetailsTest extends DuskTestCase
             $b->assertSeeIn('@cat-details-age_on_arrival_mh', '9 let in 6 mesecev');
             $b->assertSeeIn('@cat-details-gender_label', $cat->gender_label);
             $b->assertSeeIn('@cat-details-story', $cat->story);
+
+            foreach (CatPhotoService::INDICES as $index) {
+                $b->assertAttribute(
+                    '@cat-details-photo-' . $index,
+                    'src',
+                    env('APP_URL') . $cat->getPhotoByIndex($index)->url,
+                );
+            }
         });
     }
 

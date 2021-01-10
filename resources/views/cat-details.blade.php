@@ -30,14 +30,19 @@
         <div class="container">
             <h1 class="title" dusk="cat-details-name">{{ $cat->name }}</h1>
 
-            <figure class="image is-128x128">
-                <img
-                    class="is-rounded"
-                    src="{{ $cat->first_photo_url }}"
-                    alt="{{ $cat->name }}"
-                    dusk="cat-details-photo"
-                >
-            </figure>
+
+            @foreach(\App\Services\CatPhotoService::INDICES as $index)
+                @if($cat->getPhotoByIndex($index) !== null)
+                    <figure class="image is-128x128">
+                        <img
+                            class="is-rounded"
+                            src="{{ $cat->getPhotoByIndex($index)->url }}"
+                            alt="{{ $cat->name }}"
+                            dusk="cat-details-photo-{{ $index }}"
+                        >
+                    </figure>
+                @endif
+            @endforeach
 
             <div class="box">
                 <div>
