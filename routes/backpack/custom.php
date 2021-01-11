@@ -28,5 +28,6 @@ Route::group([
     Route::crud(config('routes.admin.cat_locations'), 'CatLocationCrudController');
     Route::crud(config('routes.admin.sponsors'), 'SponsorCrudController');
     Route::post(config('routes.admin.sponsor_cancel_all_sponsorships'), 'SponsorCrudController@cancelAllSponsorships')
-        ->name('admin.sponsor_cancel_all_sponsorships');;
+        ->name('admin.sponsor_cancel_all_sponsorships');
+    Route::crud(config('routes.admin.sponsorship_message_types'), 'SponsorshipMessageTypeCrudController');
 });

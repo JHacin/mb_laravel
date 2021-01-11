@@ -28,6 +28,13 @@
     </a>
 </li>
 
+<li class='nav-item'>
+    <div class="nav-title">Pisma botrom</div>
+    <a class='nav-link' href='{{ backpack_url(config('routes.admin.sponsorship_message_types')) }}'>
+        <i class="las la-list nav-icon"></i> Vrste pisem
+    </a>
+</li>
+
 <li class="nav-item">
     <div class="nav-title">Uporabniki</div>
     <a class="nav-link" href="{{ backpack_url(config('routes.admin.users')) }}">
@@ -40,4 +47,3 @@
         <i class="la la-key nav-icon"></i> {{ trans('backpack::permissionmanager.permission_plural') }}
     </a>
 </li>
-
