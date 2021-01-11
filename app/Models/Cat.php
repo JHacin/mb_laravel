@@ -78,8 +78,8 @@ class Cat extends Model
 
     public const GENDER_LABELS = [
         self::GENDER_UNKNOWN => 'neznano',
-        self::GENDER_MALE => 'samec',
-        self::GENDER_FEMALE => 'samica',
+        self::GENDER_MALE => 'samček',
+        self::GENDER_FEMALE => 'samička',
     ];
 
     public const PER_PAGE_12 = 12;

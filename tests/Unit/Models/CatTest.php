@@ -72,7 +72,7 @@ class CatTest extends TestCase
     public function test_returns_gender_label()
     {
         $this->cat->update(['gender' => Cat::GENDER_MALE]);
-        $this->assertEquals('samec', $this->cat->gender_label);
+        $this->assertEquals(Cat::GENDER_LABELS[Cat::GENDER_MALE], $this->cat->gender_label);
     }
 
     /**

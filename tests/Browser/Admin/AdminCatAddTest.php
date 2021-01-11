@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Admin;
 
+use App\Models\Cat;
 use Carbon\Carbon;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Illuminate\Support\Str;
@@ -199,7 +200,7 @@ class AdminCatAddTest extends AdminTestCase
                 function (Browser $browser) use ($location, $dateOfArrivalMhInputValue, $dateOfArrivalBoterInputValue) {
                     $browser
                         ->assertSee('Garfield')
-                        ->assertSee('samec')
+                        ->assertSee(Cat::GENDER_LABELS[Cat::GENDER_MALE])
                         ->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalMhInputValue)))
                         ->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalBoterInputValue)))
                         ->assertSee($location->name)
