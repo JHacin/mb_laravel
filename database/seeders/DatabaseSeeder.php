@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CatLocationSeeder::class,
             CatSeeder::class,
             SponsorshipSeeder::class,
+            SponsorshipMessageTypeSeeder::class,
         ]);
     }
 }

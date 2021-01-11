@@ -38,5 +38,7 @@ return [
         'sponsors_edit' => 'botri/{id}/edit',
         'sponsor_cancel_all_sponsorships' => 'botri/{personData}/cancel-all-sponsorships',
         'sponsorship_message_types' => 'vrste-pisem',
+        'sponsorship_message_types_add' => 'vrste-pisem/create',
+        'sponsorship_message_types_edit' => 'vrste-pisem/{id}/edit',
     ]
 ];

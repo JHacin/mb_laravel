@@ -1,0 +1,17 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\SponsorshipMessageType;
+use Illuminate\Database\Seeder;
+
+class SponsorshipMessageTypeSeeder extends Seeder
+{
+    /**
+     * @return void
+     */
+    public function run()
+    {
+        SponsorshipMessageType::factory()->count(10)->create();
+    }
+}

@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Admin;
 
 use App\Utilities\CountryList;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Admin\AdminTestCase;
 use Tests\Browser\Pages\Admin\AdminCatLocationAddPage;
 use Tests\Browser\Pages\Admin\AdminCatLocationListPage;
 use Throwable;
