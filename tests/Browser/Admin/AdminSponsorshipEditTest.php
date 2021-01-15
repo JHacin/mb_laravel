@@ -1,12 +1,11 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Admin;
 
 use App\Models\Sponsorship;
 use Carbon\Carbon;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Admin\AdminTestCase;
 use Tests\Browser\Pages\Admin\AdminSponsorshipEditPage;
 use Tests\Browser\Pages\Admin\AdminSponsorshipListPage;
 use Throwable;

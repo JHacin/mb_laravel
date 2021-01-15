@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Admin;
 
 use Laravel\Dusk\Browser;
-use Tests\Browser\Admin\AdminTestCase;
 use Tests\Browser\Pages\Admin\AdminCatLocationEditPage;
 use Throwable;
 

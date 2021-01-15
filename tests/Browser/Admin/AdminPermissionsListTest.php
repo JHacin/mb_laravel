@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Admin;
 
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Admin\AdminTestCase;
 use Tests\Browser\Pages\Admin\AdminPermissionsListPage;
 use Throwable;
 
