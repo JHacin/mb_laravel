@@ -33,6 +33,9 @@
     <a class='nav-link' href='{{ backpack_url(config('routes.admin.sponsorship_message_types')) }}'>
         <i class="las la-list nav-icon"></i> Vrste pisem
     </a>
+    <a class='nav-link' href='{{ backpack_url(config('routes.admin.sponsorship_messages')) }}'>
+        <i class="las la-paper-plane nav-icon"></i> Pošiljanje
+    </a>
 </li>
 
 <li class="nav-item">
@@ -47,3 +50,5 @@
         <i class="la la-key nav-icon"></i> {{ trans('backpack::permissionmanager.permission_plural') }}
     </a>
 </li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('sponsorshipmessage') }}'><i class='nav-icon la la-question'></i> SponsorshipMessages</a></li>

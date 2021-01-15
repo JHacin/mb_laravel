@@ -30,4 +30,5 @@ Route::group([
     Route::post(config('routes.admin.sponsor_cancel_all_sponsorships'), 'SponsorCrudController@cancelAllSponsorships')
         ->name('admin.sponsor_cancel_all_sponsorships');
     Route::crud(config('routes.admin.sponsorship_message_types'), 'SponsorshipMessageTypeCrudController');
+    Route::crud(config('routes.admin.sponsorship_messages'), 'SponsorshipMessageCrudController');
 });
