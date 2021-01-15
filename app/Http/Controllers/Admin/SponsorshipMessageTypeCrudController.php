@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SponsorshipMessageTypeRequest;
 use App\Models\SponsorshipMessageType;
+use App\Models\User;
 use App\Utilities\Admin\CrudColumnGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -12,6 +13,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class SponsorshipMessageCrudController
@@ -35,6 +37,18 @@ class SponsorshipMessageTypeCrudController extends CrudController
             config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsorship_message_types')
         );
         $this->crud->setEntityNameStrings('Vrsta pisma', 'Vrste pisem');
+        $this->setupAccessToOperations();
+    }
+
+    protected function setupAccessToOperations()
+    {
+        $user = Auth::user();
+
+        if (!$user->hasRole(User::ROLE_SUPER_ADMIN)) {
+            $this->crud->denyAccess('create');
+            $this->crud->denyAccess('update');
+            $this->crud->denyAccess('delete');
+        }
     }
 
     protected function setupListOperation()

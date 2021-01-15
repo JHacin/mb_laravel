@@ -1,8 +1,8 @@
-@extends(backpack_user() && (Str::startsWith(\Request::path(), config('backpack.base.route_prefix'))) ? 'backpack::layouts.top_left' : 'backpack::layouts.plain')
+@extends(backpack_user() && (Str::startsWith(Request::path(), config('backpack.base.route_prefix'))) ? 'backpack::layouts.top_left' : 'backpack::layouts.plain')
 {{-- show error using sidebar layout if looged in AND on an admin page; otherwise use a blank page --}}
 
 @php
-  $title = 'Error '.$error_number;
+  $title = 'Napaka '.$error_number
 @endphp
 
 @section('after_styles')
@@ -40,7 +40,7 @@
 <div class="row">
   <div class="col-md-12 text-center">
     <div class="error_number">
-      <small>ERROR</small><br>
+      <small>Napaka</small><br>
       {{ $error_number }}
       <hr>
     </div>

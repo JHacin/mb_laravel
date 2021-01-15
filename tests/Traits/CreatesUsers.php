@@ -33,6 +33,15 @@ trait CreatesUsers
         return $user;
     }
 
+    protected function createNonSuperAdminUser(array $attributes = []): User
+    {
+        $user = $this->createUser($attributes);
+        $user->assignRole(User::ROLE_ADMIN);
+        $user->assignRole(User::ROLE_EDITOR);
+
+        return $user;
+    }
+
     protected function createUserWithPersonData(array $userAttributes = [], array $personDataAttributes = []): User
     {
         $user = $this->createUser($userAttributes);

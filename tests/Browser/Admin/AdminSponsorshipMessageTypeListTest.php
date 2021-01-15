@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Admin;
 
+use App\Models\User;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminSponsorshipMessageTypeListPage;
@@ -55,12 +56,30 @@ class AdminSponsorshipMessageTypeListTest extends AdminTestCase
     }
 
     /**
+     * @throws Throwable
+     */
+    public function test_doesnt_show_create_edit_or_delete_buttons_to_non_super_admins()
+    {
+        $this->browse(function (Browser $b) {
+            $user = $this->createNonSuperAdminUser();
+            $this->goToPage($b, $user);
+
+            $b->assertMissing('.crud-create-button'); // create btn below title
+            $b->with('#crudTable', function (Browser $b) {
+                $b->assertMissing('.la.la-edit'); // actions - edit button
+                $b->assertMissing('[data-button-type="delete"]'); // actions - delete button
+            });
+        });
+    }
+
+    /**
      * @param Browser $b
+     * @param User|null $user
      * @throws TimeoutException
      */
-    protected function goToPage(Browser $b)
+    protected function goToPage(Browser $b, User $user = null)
     {
-        $b->loginAs(static::$defaultAdmin);
+        $b->loginAs($user ?: static::$defaultAdmin);
         $b->visit(new AdminSponsorshipMessageTypeListPage);
 
         $this->waitForRequestsToFinish($b);
