@@ -26,6 +26,22 @@ class AdminCatLocationAddTest extends AdminTestCase
     }
 
     /**
+     * @throws Throwable
+     */
+    public function test_validates_name()
+    {
+        $this->browse(function (Browser $b) {
+            $location = $this->createCatLocation();
+            $this->goToPage($b);
+            $this->disableHtmlFormValidation($b);
+            $b->type('name', $location->name);
+            $this->clickSubmitButton($b);
+
+            $b->assertSee('To ime že uporablja obstoječa lokacija.');
+        });
+    }
+
+    /**
      * @return void
      * @throws Throwable
      */

@@ -101,7 +101,7 @@ return [
     'starts_with' => 'Vrednost se mora začeti z eno od naslednjih: :values.',
     'string' => 'Vrednost mora biti beseda.',
     'timezone' => 'Vrednost mora biti veljaven časovni pas.',
-    'unique' => 'Vrednost ni več na voljo.',
+    'unique' => 'Vrednost mora biti unikatna.',
     'uploaded' => 'Vrednosti polja ni bilo možno naložiti.',
     'url' => 'Vrednost nima pravilnega formata.',
     'uuid' => 'Vrednost mora biti veljaven UUID.',
