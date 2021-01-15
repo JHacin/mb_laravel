@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SponsorshipMessageTypeRequest;
 use App\Models\SponsorshipMessageType;
+use App\Utilities\Admin\CrudColumnGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -38,7 +39,19 @@ class SponsorshipMessageTypeCrudController extends CrudController
 
     protected function setupListOperation()
     {
-        $this->crud->setFromDb();
+        $this->crud->addColumn(CrudColumnGenerator::id());
+        $this->crud->addColumn(CrudColumnGenerator::name());
+        $this->crud->addColumn([
+            'name' => 'template_id',
+            'label' => trans('sponsorship_message_type.template_id'),
+            'type' => 'text',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'is_active',
+            'label' => trans('sponsorship_message_type.is_active'),
+            'type' => 'boolean',
+        ]);
+
     }
 
     protected function setupCreateOperation()
@@ -47,7 +60,7 @@ class SponsorshipMessageTypeCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'name',
-            'label' => 'Ime',
+            'label' => trans('model.name'),
             'type' => 'text',
             'hint' => 'Ime mora biti unikatno.',
             'attributes' => [
@@ -59,7 +72,7 @@ class SponsorshipMessageTypeCrudController extends CrudController
         ]);
         $this->crud->addField([
             'name' => 'template_id',
-            'label' => 'Šifra predloge',
+            'label' => trans('sponsorship_message_type.template_id'),
             'type' => 'text',
             'hint' => 'Šifra predloge v storitvi za pošiljanje mailov. Mora biti unikatna.',
             'attributes' => [
@@ -71,7 +84,7 @@ class SponsorshipMessageTypeCrudController extends CrudController
         ]);
         $this->crud->addField([
             'name' => 'is_active',
-            'label' => 'Aktivno',
+            'label' => trans('sponsorship_message_type.is_active'),
             'type' => 'checkbox',
             'hint' => 'Če pismo ni aktivno, ne bo na voljo med možnostmi pri pošiljanju botrom.',
             'wrapper' => [
