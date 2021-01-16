@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Admin\SponsorshipMessageTypeRequest;
+use App\Http\Requests\Admin\AdminSponsorshipMessageTypeRequest;
 use App\Models\SponsorshipMessageType;
 use App\Models\User;
 use App\Utilities\Admin\CrudColumnGenerator;
@@ -70,7 +70,7 @@ class SponsorshipMessageTypeCrudController extends CrudController
 
     protected function setupCreateOperation()
     {
-        $this->crud->setValidation(SponsorshipMessageTypeRequest::class);
+        $this->crud->setValidation(AdminSponsorshipMessageTypeRequest::class);
 
         $this->crud->addField([
             'name' => 'name',

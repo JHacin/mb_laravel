@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SponsorshipMessageTypeRequest extends FormRequest
+class AdminSponsorshipMessageTypeRequest extends FormRequest
 {
     public function authorize(): bool
     {

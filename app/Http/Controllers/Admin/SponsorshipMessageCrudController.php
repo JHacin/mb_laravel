@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SponsorshipMessageRequest;
+use App\Http\Requests\Admin\AdminSponsorshipMessageRequest;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\SponsorshipMessage;
@@ -132,8 +132,45 @@ class SponsorshipMessageCrudController extends CrudController
 
     protected function setupCreateOperation()
     {
-        $this->crud->setValidation(SponsorshipMessageRequest::class);
+        $this->crud->setValidation(AdminSponsorshipMessageRequest::class);
 
-        $this->crud->setFromDb();
+        $this->crud->addField([
+            'name' => 'messageType',
+            'label' => trans('sponsorship_message.message_type'),
+            'type' => 'relationship',
+            'placeholder' => 'Izberi vrsto pisma',
+            'attributes' => [
+                'required' => 'required',
+            ],
+            'wrapper' => [
+                'dusk' => 'messageType-wrapper'
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'personData',
+            'label' => trans('sponsorship_message.person_data'),
+            'type' => 'relationship',
+            'placeholder' => 'Izberi botra',
+            'attributes' => [
+                'required' => 'required',
+            ],
+            'wrapper' => [
+                'dusk' => 'personData-wrapper'
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'cat',
+            'label' => trans('sponsorship_message.cat'),
+            'type' => 'relationship',
+            'placeholder' => 'Izberi muco',
+            'attributes' => [
+                'required' => 'required',
+            ],
+            'wrapper' => [
+                'dusk' => 'cat-wrapper'
+            ]
+        ]);
     }
 }
