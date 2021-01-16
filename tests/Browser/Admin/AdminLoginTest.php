@@ -33,7 +33,7 @@ class AdminLoginTest extends AdminTestCase
     {
         parent::setUp();
         $this->adminPassword = '12345678';
-        $this->adminUser = $this->createAdminUser([
+        $this->adminUser = $this->createSuperAdminUser([
             'password' => User::generateSecurePassword($this->adminPassword),
         ]);
     }

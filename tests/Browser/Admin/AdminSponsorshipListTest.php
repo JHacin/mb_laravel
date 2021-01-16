@@ -87,7 +87,7 @@ class AdminSponsorshipListTest extends AdminTestCase
     public function test_clicking_on_anon_sponsor_opens_up_person_data_edit_form()
     {
         $this->browse(function (Browser $browser) {
-            $sponsorship = $this->createSponsorship();
+            $sponsorship = $this->createSponsorship(['person_data_id' => PersonData::factory()]);
             $this->goToPage($browser);
             $this->openFirstRowDetails($browser);
             $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
@@ -236,15 +236,18 @@ class AdminSponsorshipListTest extends AdminTestCase
     public function test_search_works()
     {
         $this->browse(function (Browser $browser) {
-            $shown = $this->createSponsorship(['monthly_amount' => 987]);
-            $hidden = $this->createSponsorship();
+            $shown = $this->createSponsorship([
+                'cat_id' => Cat::factory()->createOne(['name' => 'a_' . time()])->id,
+                'person_data_id' => PersonData::factory()->createOne(['email' => 'a_' . time() . '@example.com'])->id,
+            ]);
+            $hidden = $this->createSponsorship([
+                'cat_id' => Cat::factory()->createOne(['name' => 'b_' . time()])->id,
+                'person_data_id' => PersonData::factory()->createOne(['email' => 'b_' . time() . '@example.com'])->id,
+            ]);
             $this->goToPage($browser);
 
             $searches = [
-                $shown->id,
-                $shown->cat->id,
                 $shown->cat->name,
-                $shown->personData->id,
                 $shown->personData->email,
             ];
 
@@ -337,7 +340,7 @@ class AdminSponsorshipListTest extends AdminTestCase
     public function test_deletes_sponsorship()
     {
         $this->browse(function (Browser $browser) {
-            $sponsorship = $this->createSponsorship();
+            $sponsorship = $this->createSponsorship(['cat_id' => Cat::factory()]);
             $catNameAndId = $sponsorship->cat->name_and_id;
             $this->goToPage($browser);
             $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) use ($catNameAndId) {

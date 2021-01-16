@@ -33,7 +33,7 @@ class AdminTestCase extends DuskTestCase
     protected function createDefaultAdmin()
     {
         if (!static::$defaultAdmin) {
-            static::$defaultAdmin = $this->createAdminUser();
+            static::$defaultAdmin = $this->createSuperAdminUser();
         }
     }
 }

@@ -77,13 +77,22 @@ class AdminSponsorListTest extends AdminTestCase
     public function test_search_works()
     {
         $this->browse(function (Browser $browser) {
-            $searched = $this->createPersonData();
-            $ignored = $this->createPersonData();
+            $searched = $this->createPersonData([
+                'email' => 'a_email' . time() . '@example.com',
+                'first_name' => 'a_first_name' . time(),
+                'last_name' => 'a_last_name' . time(),
+                'city' => 'a_city' . time(),
+            ]);
+            $ignored = $this->createPersonData([
+                'email' => 'b_email' . time() . '@example.com',
+                'first_name' => 'b_first_name' . time(),
+                'last_name' => 'b_last_name' . time(),
+                'city' => 'b_city' . time(),
+            ]);
 
             $this->goToPage($browser);
 
             $searches = [
-                $searched->id,
                 $searched->email,
                 $searched->first_name,
                 $searched->last_name,

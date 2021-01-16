@@ -25,10 +25,12 @@ trait CreatesUsers
         return $user;
     }
 
-    protected function createAdminUser(array $attributes = []): User
+    protected function createSuperAdminUser(array $attributes = []): User
     {
         $user = $this->createUser($attributes);
+        $user->assignRole(User::ROLE_SUPER_ADMIN);
         $user->assignRole(User::ROLE_ADMIN);
+        $user->assignRole(User::ROLE_EDITOR);
 
         return $user;
     }

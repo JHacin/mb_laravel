@@ -12,6 +12,6 @@ trait CreatesMockData
         CreatesCatPhotos,
         CreatesCatLocations,
         CreatesSponsorships,
-        CreatesSponsorshipMessages,
+        CreatesSponsorshipMessageTypes,
         CreatesSponsorshipMessages;
 }

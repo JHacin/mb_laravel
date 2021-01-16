@@ -15,7 +15,7 @@ class UserCrudControllerTest extends TestCase
     {
         UserMail::shouldReceive('sendWelcomeEmail')->once();
 
-        $this->actingAs($this->createAdminUser())->post('admin/uporabniki', [
+        $this->actingAs($this->createSuperAdminUser())->post('admin/uporabniki', [
             'email' => $this->faker->unique()->safeEmail,
             'name' => $this->faker->unique()->company,
             'password' => 'abcd1234',
@@ -25,9 +25,10 @@ class UserCrudControllerTest extends TestCase
             'should_send_welcome_email' => true,
         ]);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         UserMail::shouldNotReceive('sendWelcomeEmail');
 
-        $this->actingAs($this->createAdminUser())->post('admin/uporabniki', [
+        $this->actingAs($this->createSuperAdminUser())->post('admin/uporabniki', [
             'email' => $this->faker->unique()->safeEmail,
             'name' => $this->faker->unique()->company,
             'password' => 'abcd1234',

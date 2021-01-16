@@ -217,7 +217,7 @@ class AdminCatAddTest extends AdminTestCase
     protected function attachImage(Browser $browser)
     {
         $browser
-            ->attach('input[data-field-name="photo_0"]', __DIR__ . '/../../../resources/img/logo.png')
+            ->attach('input[data-field-name="photo_0"]', __DIR__ . '/../../../database/seeders/assets/fake_cat_photo_0.jpg')
             ->waitFor('.modal.show[data-handle="crop-modal"] .cropper-crop-box');
     }
 
