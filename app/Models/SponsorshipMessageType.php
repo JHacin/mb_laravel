@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $name
+ * @property string $subject
  * @property string $template_id
  * @property int $is_active
  * @property Carbon|null $created_at
@@ -29,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|SponsorshipMessageType whereId($value)
  * @method static Builder|SponsorshipMessageType whereIsActive($value)
  * @method static Builder|SponsorshipMessageType whereName($value)
+ * @method static Builder|SponsorshipMessageType whereSubject($value)
  * @method static Builder|SponsorshipMessageType whereTemplateId($value)
  * @method static Builder|SponsorshipMessageType whereUpdatedAt($value)
  * @mixin Eloquent

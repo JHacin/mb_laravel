@@ -14449,6 +14449,27 @@
         }
          
     }
+            /**
+     * 
+     *
+     */ 
+        class SponsorshipMessageHandlerFacade {
+                    /**
+         * 
+         *
+         * @param \App\Models\SponsorshipMessageType $messageType
+         * @param \App\Models\PersonData $personData
+         * @param \App\Models\Cat $cat
+         * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
+         * @static 
+         */ 
+        public static function send($messageType, $personData, $cat)
+        {
+                        /** @var \App\Mail\SponsorshipMessageHandler $instance */
+                        return $instance->send($messageType, $personData, $cat);
+        }
+         
+    }
      
 }
 
@@ -21910,6 +21931,7 @@ namespace  {
             class MailClient extends \App\Mail\Facades\MailClientFacade {}
             class UserMail extends \App\Mail\Facades\UserMailFacade {}
             class SponsorshipMail extends \App\Mail\Facades\SponsorshipMailFacade {}
+            class SponsorshipMessageHandler extends \App\Mail\Facades\SponsorshipMessageHandlerFacade {}
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}
             class Widget extends \Backpack\CRUD\app\Library\Widget {}
             class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}

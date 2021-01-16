@@ -10,6 +10,7 @@ class CreateSponsorshipMessageTypesTable extends Migration
         Schema::create('sponsorship_message_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
+            $table->string('subject');
             $table->string('template_id')->unique();
             $table->boolean('is_active')->default(false);
             $table->timestamps();

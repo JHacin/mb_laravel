@@ -84,6 +84,20 @@ class SponsorshipMessageTypeCrudController extends CrudController
                 'dusk' => 'name-wrapper'
             ],
         ]);
+
+        $this->crud->addField([
+            'name' => 'subject',
+            'label' => trans('sponsorship_message_type.subject'),
+            'type' => 'text',
+            'hint' => 'Naslov, ki bo prikazan v mailu.',
+            'attributes' => [
+                'required' => 'required',
+            ],
+            'wrapper' => [
+                'dusk' => 'subject-wrapper'
+            ],
+        ]);
+
         $this->crud->addField([
             'name' => 'template_id',
             'label' => trans('sponsorship_message_type.template_id'),

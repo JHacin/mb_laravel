@@ -19,7 +19,7 @@ class AdminSponsorshipMessageTypeAddTest extends AdminTestCase
             $this->goToPage($b);
             $this->disableHtmlFormValidation($b);
             $this->clickSubmitButton($b);
-            $this->assertAllRequiredErrorsAreShown($b, ['@name-wrapper', '@template_id-wrapper']);
+            $this->assertAllRequiredErrorsAreShown($b, ['@name-wrapper', '@subject-wrapper', '@template_id-wrapper']);
         });
     }
 
@@ -64,10 +64,12 @@ class AdminSponsorshipMessageTypeAddTest extends AdminTestCase
     {
         $this->browse(function (Browser $b) {
             $name = 'name-' . time();
+            $subject = 'test subject';
             $templateId = 'template-id-' . time();
 
             $this->goToPage($b);
             $b->type('name', $name);
+            $b->type('subject', $subject);
             $b->type('template_id', $templateId);
             $this->clickCheckbox($b, '@is_active-wrapper');
             $this->clickSubmitButton($b);
@@ -75,6 +77,7 @@ class AdminSponsorshipMessageTypeAddTest extends AdminTestCase
             $b->assertSee('Vnos uspešen.');
             $this->assertDatabaseHas('sponsorship_message_types', [
                'name' => $name,
+               'subject' => $subject,
                'template_id' => $templateId,
             ]);
         });

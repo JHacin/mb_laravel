@@ -21,6 +21,7 @@ class AdminSponsorshipMessageTypeRequest extends FormRequest
                 'max:255',
                 Rule::unique('sponsorship_message_types', 'name'),
             ],
+            'subject' => ['required', 'string', 'max:255'],
             'template_id' => [
                 'required',
                 'string',

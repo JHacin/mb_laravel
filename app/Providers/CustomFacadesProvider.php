@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Mail\Client\MailClient;
 use App\Mail\SponsorshipMail;
+use App\Mail\SponsorshipMessageHandler;
 use App\Mail\UserMail;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,10 @@ class CustomFacadesProvider extends ServiceProvider
 
         $this->app->bind('sponsorship_mail', function (Application $app) {
             return $app->make(SponsorshipMail::class);
+        });
+
+        $this->app->bind('sponsorship_message_handler', function (Application $app) {
+            return $app->make(SponsorshipMessageHandler::class);
         });
     }
 
