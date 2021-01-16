@@ -33,7 +33,7 @@ class CreateSponsorshipMessagesTable extends Migration
                 ->constrained('person_data')
                 ->nullOnDelete();
 
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
     }
 

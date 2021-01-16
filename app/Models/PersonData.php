@@ -32,6 +32,8 @@ use Illuminate\Support\Carbon;
  * @property bool $is_confirmed
  * @property-read string $email_and_user_id
  * @property-read string $gender_label
+ * @property-read Collection|SponsorshipMessage[] $sponsorshipMessages
+ * @property-read int|null $sponsorship_messages_count
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
  * @property-read Collection|Sponsorship[] $unscopedSponsorships
@@ -149,28 +151,24 @@ class PersonData extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function unscopedSponsorships(): HasMany
     {
         return $this->sponsorships()->withoutGlobalScopes();
     }
 
-    /**
-     * @return HasMany
-     */
     public function sponsorships(): HasMany
     {
         return $this->hasMany(Sponsorship::class);
+    }
+
+    public function sponsorshipMessages(): HasMany
+    {
+        return $this->hasMany(SponsorshipMessage::class);
     }
 
     /*

@@ -37,6 +37,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read CatLocation|null $location
  * @property-read Collection|CatPhoto[] $photos
  * @property-read int|null $photos_count
+ * @property-read Collection|SponsorshipMessage[] $sponsorshipMessages
+ * @property-read int|null $sponsorship_messages_count
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
  * @method static Builder|Cat newModelQuery()
@@ -166,34 +168,24 @@ class Cat extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Get the sponsorships that include this cat.
-     *
-     * @return HasMany
-     */
-    public function sponsorships(): HasMany
-    {
-        return $this->hasMany(Sponsorship::class);
-    }
-
-    /**
-     * Get the location this cat is on.
-     *
-     * @return BelongsTo
-     */
     public function location(): BelongsTo
     {
         return $this->belongsTo(CatLocation::class);
     }
 
-    /**
-     * Get this cat's photos.
-     *
-     * @return HasMany
-     */
     public function photos(): HasMany
     {
         return $this->hasMany(CatPhoto::class);
+    }
+
+    public function sponsorships(): HasMany
+    {
+        return $this->hasMany(Sponsorship::class);
+    }
+
+    public function sponsorshipMessages(): HasMany
+    {
+        return $this->hasMany(SponsorshipMessage::class);
     }
 
     /*

@@ -50,5 +50,3 @@
         <i class="la la-key nav-icon"></i> {{ trans('backpack::permissionmanager.permission_plural') }}
     </a>
 </li>
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('sponsorshipmessage') }}'><i class='nav-icon la la-question'></i> SponsorshipMessages</a></li>

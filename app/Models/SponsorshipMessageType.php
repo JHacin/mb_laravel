@@ -5,8 +5,10 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -18,6 +20,8 @@ use Illuminate\Support\Carbon;
  * @property int $is_active
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection|SponsorshipMessage[] $sponsorshipMessages
+ * @property-read int|null $sponsorship_messages_count
  * @method static Builder|SponsorshipMessageType newModelQuery()
  * @method static Builder|SponsorshipMessageType newQuery()
  * @method static Builder|SponsorshipMessageType query()
@@ -53,6 +57,11 @@ class SponsorshipMessageType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function sponsorshipMessages(): HasMany
+    {
+        return $this->hasMany(SponsorshipMessage::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

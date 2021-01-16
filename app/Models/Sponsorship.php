@@ -19,9 +19,9 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int|null $person_data_id
- * @property int $is_anonymous
+ * @property bool $is_anonymous
  * @property string|null $monthly_amount
- * @property int $is_active
+ * @property bool $is_active
  * @property Carbon|null $ended_at
  * @property-read Cat|null $cat
  * @property-read PersonData|null $personData
@@ -92,21 +92,11 @@ class Sponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Get the cat in this sponsorship.
-     *
-     * @return BelongsTo
-     */
     public function cat(): BelongsTo
     {
         return $this->belongsTo(Cat::class);
     }
 
-    /**
-     * Get the person in this sponsorship.
-     *
-     * @return BelongsTo
-     */
     public function personData(): BelongsTo
     {
         return $this->belongsTo(PersonData::class);
