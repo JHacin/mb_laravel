@@ -4,29 +4,25 @@
 
 namespace App\Mail;
 
-use App\Models\Cat;
-use App\Models\PersonData;
-use App\Models\SponsorshipMessageType;
+use App\Models\SponsorshipMessage;
 use MailClient;
 
 class SponsorshipMessageHandler
 {
 
     /**
-     * @param \App\Models\SponsorshipMessageType $messageType
-     * @param \App\Models\PersonData $personData
-     * @param \App\Models\Cat $cat
+     * @param \App\Models\SponsorshipMessage $message
      * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
      */
-    public function send(SponsorshipMessageType $messageType, PersonData $personData, Cat $cat)
+    public function send(SponsorshipMessage $message)
     {
         MailClient::send([
-            'to' => $personData->email,
+            'to' => $message->personData->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
-            'subject' => $messageType->subject,
-            'template' => $messageType->template_id,
-            'v:boter' => $personData->first_name,
-            'v:muca' => $cat->name,
+            'subject' => $message->messageType->subject,
+            'template' => $message->messageType->template_id,
+            'v:ime_botra' => $message->personData->first_name,
+            'v:ime_muce' => $message->cat->name,
         ]);
     }
 }

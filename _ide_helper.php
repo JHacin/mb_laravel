@@ -14457,16 +14457,14 @@
                     /**
          * 
          *
-         * @param \App\Models\SponsorshipMessageType $messageType
-         * @param \App\Models\PersonData $personData
-         * @param \App\Models\Cat $cat
+         * @param \App\Models\SponsorshipMessage $message
          * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
          * @static 
          */ 
-        public static function send($messageType, $personData, $cat)
+        public static function send($message)
         {
                         /** @var \App\Mail\SponsorshipMessageHandler $instance */
-                        return $instance->send($messageType, $personData, $cat);
+                        return $instance->send($message);
         }
          
     }

@@ -35,14 +35,8 @@ class CatCrudController extends CrudController
     use DeleteOperation;
     use CrudFilterHelpers, ClearsModelGlobalScopes;
 
-    /**
-     * @var CatPhotoService
-     */
     private CatPhotoService $catPhotoService;
 
-    /**
-     * CatCrudController constructor.
-     */
     public function __construct()
     {
         parent::__construct();
@@ -50,7 +44,6 @@ class CatCrudController extends CrudController
     }
 
     /**
-     * @return void
      * @throws Exception
      */
     public function setup()
@@ -63,9 +56,6 @@ class CatCrudController extends CrudController
         $this->clearModelGlobalScopes();
     }
 
-    /**
-     * @return void
-     */
     protected function setupListOperation()
     {
         $this->crud->addColumn(CrudColumnGenerator::id());
@@ -136,9 +126,6 @@ class CatCrudController extends CrudController
         $this->addBooleanFilter('is_active', 'Objavljena');
     }
 
-    /**
-     * @return void
-     */
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(AdminCatRequest::class);
@@ -240,10 +227,7 @@ class CatCrudController extends CrudController
         }
     }
 
-    /**
-     * @return RedirectResponse
-     */
-    public function store()
+    public function store(): RedirectResponse
     {
         $response = $this->traitStore();
 
@@ -265,10 +249,7 @@ class CatCrudController extends CrudController
         return $response;
     }
 
-    /**
-     * @return Response
-     */
-    public function update()
+    public function update(): Response
     {
         /** @var Response $response */
         $response = $this->traitUpdate();

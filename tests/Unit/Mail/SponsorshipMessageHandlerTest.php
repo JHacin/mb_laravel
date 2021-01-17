@@ -21,21 +21,24 @@ class SponsorshipMessageHandlerTest extends TestCase
      */
     public function test_sends_message_with_correct_params()
     {
-        $messageType = $this->createSponsorshipMessageType(['template_id' => 'prvi_pozdrav_1']);
-        $personData = $this->createPersonData();
-        $cat = $this->createCat();
+
+        $msg = $this->createSponsorshipMessage([
+            'message_type_id' => $this->createSponsorshipMessageType()->id,
+            'person_data_id' => $this->createPersonData()->id,
+            'cat_id' =>  $this->createCat()->id,
+        ]);
 
         MailClient::shouldReceive('send')
             ->once()
             ->with([
-                'to' => $personData->email,
+                'to' => $msg->personData->email,
                 'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
-                'subject' => $messageType->subject,
-                'template' => $messageType->template_id,
-                'v:boter' => $personData->first_name,
-                'v:muca' => $cat->name,
+                'subject' => $msg->messageType->subject,
+                'template' => $msg->messageType->template_id,
+                'v:ime_botra' => $msg->personData->first_name,
+                'v:ime_muce' => $msg->cat->name,
             ]);
 
-        SponsorshipMessageHandler::send($messageType, $personData, $cat);
+        SponsorshipMessageHandler::send($msg);
     }
 }

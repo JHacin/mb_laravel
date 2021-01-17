@@ -14,6 +14,8 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
+use SponsorshipMessageHandler;
 
 /**
  * Class SponsorshipMessageCrudController
@@ -23,7 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 class SponsorshipMessageCrudController extends CrudController
 {
     use ListOperation;
-    use CreateOperation;
+    use CreateOperation { store as traitStore; }
 
     /**
      * @throws Exception
@@ -172,5 +174,17 @@ class SponsorshipMessageCrudController extends CrudController
                 'dusk' => 'cat-wrapper'
             ]
         ]);
+    }
+
+    public function store(): RedirectResponse
+    {
+        $response = $this->traitStore();
+
+        /** @var SponsorshipMessage $msg */
+        $msg = $this->crud->getCurrentEntry();
+
+        SponsorshipMessageHandler::send($msg);
+
+        return $response;
     }
 }
