@@ -4,7 +4,7 @@
         <a
             href="{{ route('cat_list', array_merge(['per_page' => $option], $activeQueryParams)) }}"
             dusk="per_page_{{ $option }}"
-            class="per-page-option{{ $cats->perPage() === $option ? ' per-page-option--active' : '' }}"
+            class="per-page-option{{ $activeOption == $option ? ' per-page-option--active' : '' }}"
         >
             {{ $label }}
         </a>

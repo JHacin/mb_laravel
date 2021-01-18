@@ -40,6 +40,7 @@ class PerPageOptions extends Component
         return view('components.cat-list.per-page-options', [
             'options' => $perPageOptions,
             'activeQueryParams' => Arr::except($this->getQueryParameterArray(), ['per_page']),
+            'activeOption' => request('per_page') ?: $this->cats->perPage(),
         ]);
     }
 }

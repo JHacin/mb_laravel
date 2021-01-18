@@ -16,14 +16,16 @@ class LogoutTest extends DuskTestCase
      */
     public function test_handles_logout()
     {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs($this->createUser())
-                ->visit(new HomePage)
-                ->click('@nav-logout-button')
-                ->within(new Navbar, function ($browser) {
-                    $browser->assertIsShowingUnauthenticatedNav();
-                });
+        $this->browse(function (Browser $b) {
+            $b->loginAs($this->createUser());
+            $b->visit(new HomePage);
+            $b->click('@navbar-profile-section');
+            $b->with('@navbar-profile-section', function (Browser $b) {
+                $b->click('@nav-logout-button');
+            });
+            $b->within(new Navbar, function ($browser) {
+                $browser->assertIsShowingUnauthenticatedNav();
+            });
         });
     }
 }

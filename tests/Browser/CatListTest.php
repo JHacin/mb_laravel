@@ -357,10 +357,18 @@ class CatListTest extends DuskTestCase
 
             $this->goToPage($b);
             $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_12, $activeOptionClass);
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_ALL, $activeOptionClass);
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_ALL, $activeOptionClass);
 
             $b->click('@per_page_' . Cat::PER_PAGE_24);
-            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_12, $activeOptionClass);
             $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_24, $activeOptionClass);
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_12, $activeOptionClass);
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_ALL, $activeOptionClass);
+
+            $b->click('@per_page_' . Cat::PER_PAGE_ALL);
+            $this->assertHasClass($b, '@per_page_' . Cat::PER_PAGE_ALL, $activeOptionClass);
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_12, $activeOptionClass);
+            $this->assertNotHasClass($b, '@per_page_' . Cat::PER_PAGE_24, $activeOptionClass);
         });
     }
 

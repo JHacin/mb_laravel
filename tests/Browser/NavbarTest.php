@@ -4,8 +4,11 @@ namespace Tests\Browser;
 
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Navbar;
+use Tests\Browser\Pages\BecomeSponsorOfTheMonthPage;
 use Tests\Browser\Pages\CatListPage;
+use Tests\Browser\Pages\GiftSponsorshipPage;
 use Tests\Browser\Pages\HomePage;
+use Tests\Browser\Pages\NewsPage;
 use Tests\Browser\Pages\WhyBecomeSponsorPage;
 use Tests\DuskTestCase;
 use Throwable;
@@ -68,6 +71,15 @@ class NavbarTest extends DuskTestCase
                 $b->click('@navbar-why-become-sponsor-link');
             });
             $b->on(new WhyBecomeSponsorPage);
+
+            $b->click('@navbar-become-sponsor-of-the-month-link');
+            $b->on(new BecomeSponsorOfTheMonthPage);
+
+            $b->click('@navbar-gift-sponsorship-link');
+            $b->on(new GiftSponsorshipPage);
+
+            $b->click('@navbar-news-link');
+            $b->on(new NewsPage);
         });
     }
 }

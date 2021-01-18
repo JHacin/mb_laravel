@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sl">
+<html lang="sl" class="has-navbar-fixed-top">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,7 @@
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar is-primary" role="navigation" aria-label="glavni meni">
+        <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="glavni meni">
             <div class="navbar-brand">
                 <a class="navbar-item" href="{{ route('home') }}" dusk="navbar-home-link">
                     <img src="{{ asset('/img/logo.png') }}" alt="Mačji boter">
@@ -54,14 +54,42 @@
                             </a>
                         </div>
                     </div>
+
+                    <a
+                        class="navbar-item"
+                        href="{{ route('become_sponsor_of_the_month') }}"
+                        dusk="navbar-become-sponsor-of-the-month-link"
+                    >
+                        Postani boter meseca
+                    </a>
+                    <a
+                        class="navbar-item"
+                        href="{{ route('gift_sponsorship') }}"
+                        dusk="navbar-gift-sponsorship-link"
+                    >
+                        Podari botrstvo
+                    </a>
+                    <a
+                        class="navbar-item"
+                        href="{{ route('news') }}"
+                        dusk="navbar-news-link"
+                    >
+                        Novice
+                    </a>
                 </div>
 
                 <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
+                    <div class="navbar-item has-dropdown is-hoverable" dusk="navbar-profile-section">
+                        <a class="navbar-link is-arrowless px-4">
+                            <span class="icon is-medium">
+                                <i class="fas fa-user is-size-5"></i>
+                            </span>
+                        </a>
+
+                        <div class="navbar-dropdown is-right">
                             @auth
                                 <a
-                                    class="button is-primary"
+                                    class="navbar-item"
                                     href="{{ route('user-profile') }}"
                                     dusk="nav-profile-button"
                                 >
@@ -70,17 +98,17 @@
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="button is-light" dusk="nav-logout-button">
+                                    <button type="submit" class="navbar-item button" dusk="nav-logout-button">
                                         Odjava
                                     </button>
                                 </form>
                             @endauth
 
                             @guest
-                                <a class="button is-primary" href="{{ route('register') }}" dusk="nav-register-button">
+                                <a class="navbar-item" href="{{ route('register') }}" dusk="nav-register-button">
                                     Registracija
                                 </a>
-                                <a class="button is-light" href="{{ route('login') }}" dusk="nav-login-button">
+                                <a class="navbar-item" href="{{ route('login') }}" dusk="nav-login-button">
                                     Prijava
                                 </a>
                             @endguest

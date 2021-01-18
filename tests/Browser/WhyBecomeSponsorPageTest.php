@@ -4,7 +4,6 @@ namespace Tests\Browser;
 
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\CatListPage;
-use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\WhyBecomeSponsorPage;
 use Tests\DuskTestCase;
 use Throwable;
