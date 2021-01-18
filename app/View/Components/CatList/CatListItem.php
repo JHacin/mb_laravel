@@ -12,23 +12,14 @@ class CatListItem extends Component
 {
     const VALUE_FALLBACK = '/';
 
-    /**
-     * @var Cat
-     */
     public Cat $cat;
 
-    /**
-     * @param Cat $cat
-     */
     public function __construct(Cat $cat)
     {
         $this->cat = $cat;
     }
 
-    /**
-     * @return View|string
-     */
-    public function render()
+    public function render(): View
     {
         return view('components.cat-list.cat-list-item', [
             'dateOfArrivalBoter' => $this->getDateOfArrivalBoter(),
@@ -36,9 +27,6 @@ class CatListItem extends Component
         ]);
     }
 
-    /**
-     * @return string
-     */
     protected function getDateOfArrivalBoter(): string
     {
         if (!$this->cat->date_of_arrival_boter) {
@@ -48,9 +36,6 @@ class CatListItem extends Component
         return $this->cat->date_of_arrival_boter->format(config('date.format.default'));
     }
 
-    /**
-     * @return string
-     */
     protected function getCurrentAge(): string
     {
         if (!$this->cat->date_of_birth) {

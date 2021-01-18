@@ -10,7 +10,9 @@ class PagesController extends Controller
 {
     public function index(): View
     {
-        return view('home');
+        $heroCats = Cat::inRandomOrder()->get()->slice(0, 2);
+
+        return view('home', ['heroCats' => $heroCats]);
     }
 
     public function faq(): View

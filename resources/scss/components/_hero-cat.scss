@@ -1,0 +1,39 @@
+.hero-cat {
+    position: relative;
+    display: flex;
+    box-shadow: $box-shadow;
+
+    &__image {
+        flex: 1;
+        width: 100%;
+    }
+}
+
+.hero-cat-label {
+    position: absolute;
+    bottom: $spacer-5;
+    left: $spacer-6;
+    right: $spacer-6;
+    display: flex;
+    align-items: center;
+    background-color: rgba($primary, 0.9);
+    color: $white;
+    padding: $spacer-3 $spacer-5;
+    border-radius: $radius-large;
+    box-shadow: $box-shadow;
+
+    &__icon {
+        margin-right: $spacer-5;
+        font-size: $size-2;
+        color: lighten($primary, 25%);
+    }
+
+    &__name {
+        font-size: $size-4;
+        font-weight: $weight-bold;
+    }
+
+    &__duration-of-stay {
+        font-size: $size-6;
+    }
+}

@@ -1,0 +1,14 @@
+.stat-column {
+    text-align: center;
+
+    &__value {
+        color: $secondary;
+        font-weight: $weight-bold;
+        font-size: 66px;
+    }
+
+    &__text {
+        color: $primary;
+        font-weight: $weight-semibold;
+    }
+}
