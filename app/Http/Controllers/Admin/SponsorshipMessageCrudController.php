@@ -85,6 +85,7 @@ class SponsorshipMessageCrudController extends CrudController
                 });
             }
         ]);
+        $this->crud->addColumn(CrudColumnGenerator::createdAt(['label' => 'Poslano']));
 
         $this->addFilters();
     }

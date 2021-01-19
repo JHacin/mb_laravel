@@ -27,16 +27,13 @@ class CrudColumnGenerator
         ];
     }
 
-    /**
-     * @return string[]
-     */
-    public static function createdAt(): array
+    public static function createdAt($additions = []): array
     {
-        return [
+        return array_merge([
             'name' => 'created_at',
             'label' => trans('model.created_at'),
             'type' => 'datetime',
-        ];
+        ], $additions);
     }
 
     /**

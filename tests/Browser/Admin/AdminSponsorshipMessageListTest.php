@@ -31,6 +31,7 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
                     1 => $msg->messageType->name,
                     2 => $msg->personData->email_and_user_id,
                     3 => $msg->cat->name_and_id,
+                    4 => $this->formatToDatetimeColumnString($msg->created_at),
                 ]);
             });
         });
