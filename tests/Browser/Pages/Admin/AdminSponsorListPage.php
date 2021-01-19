@@ -11,14 +11,4 @@ class AdminSponsorListPage extends Page
     {
         return $this->prefixUrl(config('routes.admin.sponsors'));
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function elements(): array
-    {
-        return [
-            '@sponsors-list-is-confirmed-filter' => '#bp-filters-navbar li[filter-name="is_confirmed"]',
-        ];
-    }
 }

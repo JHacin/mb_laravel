@@ -103,7 +103,6 @@ class AdminSponsorAddTest extends AdminTestCase
                 ->type('city', $personData->city)
                 ->select('country', $personData->country);
 
-            $this->clickCheckbox($browser, '@is-confirmed-input-wrapper');
             $this->clickSubmitButton($browser);
             $browser->assertSee('Vnos uspešen.');
             $this->openFirstRowDetails($browser);
@@ -116,9 +115,8 @@ class AdminSponsorAddTest extends AdminTestCase
                         3 => $personData->last_name,
                         4 => $personData->city,
                         5 => $this->formatToDatetimeColumnString($personData->created_at),
-                        6 => 'Da',
+                        6 => '0 botrovanj',
                         7 => '0 botrovanj',
-                        8 => '0 botrovanj',
                     ]);
                 }
             );

@@ -55,8 +55,7 @@ class AdminSponsorEditTest extends AdminTestCase
                 ->assertValue('input[name="address"]', $personData->address)
                 ->assertValue('input[name="zip_code"]', $personData->zip_code)
                 ->assertValue('input[name="city"]', $personData->city)
-                ->assertSelected('country', $personData->country)
-                ->assertValue('input[name="is_confirmed"', (int)$personData->is_confirmed);
+                ->assertSelected('country', $personData->country);
         });
     }
 

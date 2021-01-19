@@ -86,7 +86,7 @@ class CatSponsorshipController extends Controller
             'cat_id' => $cat->id,
             'monthly_amount' => $formInput['monthly_amount'],
             'is_anonymous' => $formInput['is_anonymous'] ?? false,
-            'is_active' => $personData->is_confirmed,
+            'is_active' => false,
         ]);
     }
 

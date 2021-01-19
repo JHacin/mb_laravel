@@ -297,46 +297,6 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_sets_is_active_field_to_true_if_sponsor_is_confirmed()
-    {
-        $this->browse(function (Browser $browser) {
-            $confirmed = $this->createPersonData(['is_confirmed' => true]);
-
-            $this->goToPage($browser);
-            $this->fillOutAllFields($browser, $this->getPersonDataFieldValueArray($confirmed));
-            $this->submit($browser);
-
-            $this->assertDatabaseHas('sponsorships', [
-                'person_data_id' => $confirmed->id,
-                'is_active' => true,
-            ]);
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_sets_is_active_field_to_false_if_sponsor_is_not_confirmed()
-    {
-        $this->browse(function (Browser $browser) {
-            $unconfirmed = $this->createPersonData(['is_confirmed' => false]);
-
-            $this->goToPage($browser);
-            $this->fillOutAllFields($browser, $this->getPersonDataFieldValueArray($unconfirmed));
-            $this->submit($browser);
-
-            $this->assertDatabaseHas('sponsorships', [
-                'person_data_id' => $unconfirmed->id,
-                'is_active' => false,
-            ]);
-        });
-    }
-
-    /**
      * @param Browser $browser
      * @return Browser
      */

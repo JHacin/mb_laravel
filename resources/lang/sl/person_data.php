@@ -10,5 +10,4 @@ return [
     'zip_code' => 'Poštna št.',
     'city' => 'Kraj',
     'country' => 'Država',
-    'is_confirmed' => 'Potrjen'
 ];
