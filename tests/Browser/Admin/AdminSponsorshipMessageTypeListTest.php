@@ -73,6 +73,40 @@ class AdminSponsorshipMessageTypeListTest extends AdminTestCase
     }
 
     /**
+     * @throws Throwable
+     */
+    public function test_search_works()
+    {
+        $this->browse(function (Browser $b) {
+            $shown = $this->createSponsorshipMessageType([
+                'name' => 'a_name_' . time(),
+                'template_id' => 'a_template_id_' . time(),
+            ]);
+            $hidden = $this->createSponsorshipMessageType([
+                'name' => 'b_name_' . time(),
+                'template_id' => 'b_template_id_' . time(),
+            ]);
+            $this->goToPage($b);
+
+            $searches = [
+                $shown->name,
+                $shown->template_id,
+            ];
+
+            foreach ($searches as $value) {
+                $this->enterSearchInputValue($b, $value);
+                $b->with('@crud-table-body', function (Browser $browser) use ($shown, $hidden) {
+                    $browser
+                        ->assertSee($shown->name)
+                        ->assertSee($shown->template_id)
+                        ->assertDontSee($hidden->name)
+                        ->assertDontSee($hidden->template_id);
+                });
+            }
+        });
+    }
+
+    /**
      * @param Browser $b
      * @param User|null $user
      * @throws TimeoutException
