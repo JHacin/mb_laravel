@@ -140,6 +140,9 @@ class SponsorshipMessageCrudController extends CrudController
             'name' => 'messageType',
             'label' => trans('sponsorship_message.message_type'),
             'type' => 'relationship',
+            'options' => function (Builder $query) {
+                return $query->where('is_active', true)->get();
+            },
             'placeholder' => 'Izberi vrsto pisma',
             'attributes' => [
                 'required' => 'required',

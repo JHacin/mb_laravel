@@ -33,8 +33,12 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
     public function test_selects_have_the_right_options()
     {
         $this->browse(function (Browser $b) {
+            $activeTypes = SponsorshipMessageType::where('is_active', true);
+            $inactiveType = $this->createSponsorshipMessageType(['is_active' => false]);
             $this->goToPage($b);
-            $b->assertSelectHasOptions('messageType', SponsorshipMessageType::pluck('id')->toArray());
+
+            $b->assertSelectHasOptions('messageType', $activeTypes->pluck('id')->toArray());
+            $b->assertSelectMissingOptions('messageType', [$inactiveType->id]);
             $b->assertSelectHasOptions('personData', PersonData::pluck('id')->toArray());
             $b->assertSelectHasOptions('cat', Cat::pluck('id')->toArray());
         });
