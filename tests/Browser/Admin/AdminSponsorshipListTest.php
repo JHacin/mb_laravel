@@ -9,7 +9,6 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminCatEditPage;
 use Tests\Browser\Pages\Admin\AdminSponsorEditPage;
 use Tests\Browser\Pages\Admin\AdminSponsorshipListPage;
-use Tests\Browser\Pages\Admin\AdminUserEditPage;
 use Throwable;
 
 class AdminSponsorshipListTest extends AdminTestCase
@@ -84,34 +83,16 @@ class AdminSponsorshipListTest extends AdminTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_clicking_on_anon_sponsor_opens_up_person_data_edit_form()
+    public function test_clicking_on_sponsor_opens_up_person_data_edit_form()
     {
         $this->browse(function (Browser $browser) {
-            $sponsorship = $this->createSponsorship(['person_data_id' => PersonData::factory()]);
+            $sponsorship = $this->createSponsorship();
             $this->goToPage($browser);
             $this->openFirstRowDetails($browser);
             $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
                 $browser
                     ->click('tr[data-dt-column="2"] a')
                     ->on(new AdminSponsorEditPage($sponsorship->personData));
-            });
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_clicking_on_registered_sponsor_opens_up_user_edit_form()
-    {
-        $this->browse(function (Browser $browser) {
-            $sponsorship = $this->createSponsorship(['person_data_id' => $this->createUser()->personData->id]);
-            $this->goToPage($browser);
-            $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
-                $browser
-                    ->click('tr[data-dt-column="2"] a')
-                    ->on(new AdminUserEditPage($sponsorship->personData->user));
             });
         });
     }

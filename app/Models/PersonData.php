@@ -133,14 +133,6 @@ class PersonData extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * @return bool
-     */
-    public function belongsToRegisteredUser(): bool
-    {
-        return $this->user()->exists();
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

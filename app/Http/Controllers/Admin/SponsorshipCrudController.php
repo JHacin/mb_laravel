@@ -80,12 +80,7 @@ class SponsorshipCrudController extends CrudController
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    /** @var Sponsorship $entry */
-                    $isUser = $entry->personData->belongsToRegisteredUser();
-                    $route = $isUser ? config('routes.admin.users') : config('routes.admin.sponsors');
-                    $id = $isUser ? $entry->personData->user_id : $related_key;
-
-                    return backpack_url($route, [$id, 'edit']);
+                    return backpack_url(config('routes.admin.sponsors'), [$related_key, 'edit']);
                 },
             ],
             'searchLogic' => function (Builder $query, $column, $searchTerm) {
