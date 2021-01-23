@@ -11,6 +11,14 @@ use Throwable;
 class LogoutTest extends DuskTestCase
 {
     /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
+    }
+
+    /**
      * @return void
      * @throws Throwable
      */

@@ -23,18 +23,6 @@ class PersonDataTest extends TestCase
     /**
      * @return void
      */
-    public function test_returns_whether_it_belongs_to_registered_user()
-    {
-        $this->personData->user()->dissociate();
-        $this->assertFalse($this->personData->belongsToRegisteredUser());
-
-        $this->personData->user()->associate(User::factory()->createOne());
-        $this->assertTrue($this->personData->belongsToRegisteredUser());
-    }
-
-    /**
-     * @return void
-     */
     public function test_returns_gender_label()
     {
         $this->personData->update(['gender' => PersonData::GENDER_MALE]);

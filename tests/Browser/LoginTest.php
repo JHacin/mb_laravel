@@ -15,16 +15,24 @@ class LoginTest extends DuskTestCase
     protected User $activeUser;
     protected string $password;
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        $this->password = '12345678';
-        $this->activeUser = $this->createUser([
-            'password' => User::generateSecurePassword($this->password),
-            'is_active' => true,
-        ]);
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
     }
+
+//    protected function setUp(): void
+//    {
+//        parent::setUp();
+//
+//        $this->password = '12345678';
+//        $this->activeUser = $this->createUser([
+//            'password' => User::generateSecurePassword($this->password),
+//            'is_active' => true,
+//        ]);
+//    }
 
     /**
      * @throws Throwable

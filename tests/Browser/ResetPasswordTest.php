@@ -14,6 +14,14 @@ use Throwable;
 class ResetPasswordTest extends DuskTestCase
 {
     /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
+    }
+
+    /**
      * @throws Throwable
      */
     public function test_uses_email_from_query_param()

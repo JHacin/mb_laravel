@@ -3,7 +3,6 @@
 namespace Tests\Browser;
 
 use Laravel\Dusk\Browser;
-use Tests\Browser\Components\Navbar;
 use Tests\Browser\Pages\BecomeSponsorOfTheMonthPage;
 use Tests\Browser\Pages\CatListPage;
 use Tests\Browser\Pages\GiftSponsorshipPage;
@@ -19,19 +18,21 @@ use Throwable;
  */
 class NavbarTest extends DuskTestCase
 {
-    /**
+   /**
      * @return void
      * @throws Throwable
      */
     public function test_shows_logged_out_buttons()
     {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->visit(new HomePage)
-                ->within(new Navbar, function ($browser) {
-                    $browser->assertIsShowingUnauthenticatedNav();
-                });
-        });
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
+
+//        $this->browse(function (Browser $browser) {
+//            $browser
+//                ->visit(new HomePage)
+//                ->within(new Navbar, function ($browser) {
+//                    $browser->assertIsShowingUnauthenticatedNav();
+//                });
+//        });
     }
 
     /**
@@ -40,14 +41,16 @@ class NavbarTest extends DuskTestCase
      */
     public function test_shows_logged_in_buttons()
     {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs($this->createUser())
-                ->visit(new HomePage)
-                ->within(new Navbar, function ($browser) {
-                    $browser->assertIsShowingAuthenticatedNav();
-                });
-        });
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
+
+//        $this->browse(function (Browser $browser) {
+//            $browser
+//                ->loginAs($this->createUser())
+//                ->visit(new HomePage)
+//                ->within(new Navbar, function ($browser) {
+//                    $browser->assertIsShowingAuthenticatedNav();
+//                });
+//        });
     }
 
     /**

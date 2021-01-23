@@ -12,6 +12,14 @@ use UserMail;
 class RegisterControllerTest extends TestCase
 {
     /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
+    }
+
+    /**
      * @return void
      */
     public function test_sends_welcome_email()

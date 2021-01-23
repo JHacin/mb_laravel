@@ -78,43 +78,43 @@
                     </a>
                 </div>
 
-                <div class="navbar-end">
-                    <div class="navbar-item has-dropdown is-hoverable" dusk="navbar-profile-section">
-                        <a class="navbar-link is-arrowless px-4">
-                            <span class="icon is-medium">
-                                <i class="fas fa-user is-size-5"></i>
-                            </span>
-                        </a>
+{{--                <div class="navbar-end">--}}
+{{--                    <div class="navbar-item has-dropdown is-hoverable" dusk="navbar-profile-section">--}}
+{{--                        <a class="navbar-link is-arrowless px-4">--}}
+{{--                            <span class="icon is-medium">--}}
+{{--                                <i class="fas fa-user is-size-5"></i>--}}
+{{--                            </span>--}}
+{{--                        </a>--}}
 
-                        <div class="navbar-dropdown is-right">
-                            @auth
-                                <a
-                                    class="navbar-item"
-                                    href="{{ route('user-profile') }}"
-                                    dusk="nav-profile-button"
-                                >
-                                    Profil
-                                </a>
+{{--                        <div class="navbar-dropdown is-right">--}}
+{{--                            @auth--}}
+{{--                                <a--}}
+{{--                                    class="navbar-item"--}}
+{{--                                    href="{{ route('user-profile') }}"--}}
+{{--                                    dusk="nav-profile-button"--}}
+{{--                                >--}}
+{{--                                    Profil--}}
+{{--                                </a>--}}
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="navbar-item button" dusk="nav-logout-button">
-                                        Odjava
-                                    </button>
-                                </form>
-                            @endauth
+{{--                                <form id="logout-form" action="{{ route('logout') }}" method="POST">--}}
+{{--                                    @csrf--}}
+{{--                                    <button type="submit" class="navbar-item button" dusk="nav-logout-button">--}}
+{{--                                        Odjava--}}
+{{--                                    </button>--}}
+{{--                                </form>--}}
+{{--                            @endauth--}}
 
-                            @guest
-                                <a class="navbar-item" href="{{ route('register') }}" dusk="nav-register-button">
-                                    Registracija
-                                </a>
-                                <a class="navbar-item" href="{{ route('login') }}" dusk="nav-login-button">
-                                    Prijava
-                                </a>
-                            @endguest
-                        </div>
-                    </div>
-                </div>
+{{--                            @guest--}}
+{{--                                <a class="navbar-item" href="{{ route('register') }}" dusk="nav-register-button">--}}
+{{--                                    Registracija--}}
+{{--                                </a>--}}
+{{--                                <a class="navbar-item" href="{{ route('login') }}" dusk="nav-login-button">--}}
+{{--                                    Prijava--}}
+{{--                                </a>--}}
+{{--                            @endguest--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </nav>
 

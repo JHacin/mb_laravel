@@ -12,6 +12,13 @@ use Throwable;
 
 class AdminUserAddTest extends AdminTestCase
 {
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
+    }
 
     /**
      * @return void

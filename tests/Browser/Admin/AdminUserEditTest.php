@@ -2,7 +2,6 @@
 
 namespace Tests\Browser\Admin;
 
-use App\Models\User;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminUserEditPage;
@@ -12,22 +11,30 @@ use Throwable;
 class AdminUserEditTest extends AdminTestCase
 {
     /**
-     * @var User|null
-     */
-    protected static ?User $testUser = null;
-
-    /**
      * @inheritDoc
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        if (!static::$testUser) {
-            static::$testUser = $this->createUserWithPersonData();
-            static::$testUser->assignRole(User::ROLE_EDITOR);
-        }
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
     }
+
+//    /**
+//     * @var User|null
+//     */
+//    protected static ?User $testUser = null;
+//
+//    /**
+//     * @inheritDoc
+//     */
+//    protected function setUp(): void
+//    {
+//        parent::setUp();
+//
+//        if (!static::$testUser) {
+//            static::$testUser = $this->createUserWithPersonData();
+//            static::$testUser->assignRole(User::ROLE_EDITOR);
+//        }
+//    }
 
 
     /**

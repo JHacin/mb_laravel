@@ -12,6 +12,14 @@ use Throwable;
 class RegistrationTest extends DuskTestCase
 {
     /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
+    {
+        $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
+    }
+
+    /**
      * @throws Throwable
      */
     public function test_validates_required_fields()
