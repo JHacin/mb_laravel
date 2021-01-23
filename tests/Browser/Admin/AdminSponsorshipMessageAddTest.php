@@ -4,6 +4,7 @@ namespace Tests\Browser\Admin;
 
 use App\Models\Cat;
 use App\Models\PersonData;
+use App\Models\SponsorshipMessage;
 use App\Models\SponsorshipMessageType;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
@@ -41,6 +42,83 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $b->assertSelectMissingOptions('messageType', [$inactiveType->id]);
             $b->assertSelectHasOptions('personData', PersonData::pluck('id')->toArray());
             $b->assertSelectHasOptions('cat', Cat::pluck('id')->toArray());
+        });
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function test_shows_list_of_messages_sent_to_sponsor()
+    {
+        $this->browse(function (Browser $b) {
+            /** @var PersonData $withMessages */
+            $withMessages = PersonData::factory()->createOne();
+            /** @var SponsorshipMessage $sentMessage */
+            $sentMessage = SponsorshipMessage::factory()->createOne(['person_data_id' => $withMessages->id]);
+
+            /** @var PersonData $withoutMessages */
+            $withoutMessages = PersonData::factory()->createOne();
+            $this->goToPage($b);
+
+            // Initial state
+            $b->assertPresent('@sent-messages-none-selected-msg');
+            $b->assertMissing('@sent-messages-loader');
+            $b->assertMissing('@sent-messages-table-wrapper');
+            $b->assertMissing('@sent-messages-already-sent-warning');
+
+            // Loading
+            $b->select('personData', $withMessages->id);
+            $b->assertMissing('@sent-messages-none-selected-msg');
+            $b->assertPresent('@sent-messages-loader');
+            $b->assertMissing('@sent-messages-table-wrapper');
+            $b->assertMissing('@sent-messages-already-sent-warning');
+
+            $this->waitForRequestsToFinish($b);
+            // Table is visible
+            $b->assertMissing('@sent-messages-none-selected-msg');
+            $b->assertMissing('@sent-messages-loader');
+            $b->assertPresent('@sent-messages-table-wrapper');
+            $b->assertMissing('@sent-messages-already-sent-warning');
+
+            // Shows which messages were sent
+            foreach (SponsorshipMessageType::all() as $messageType) {
+                $rowSelector = '.sent-message-row[data-message-type-id="' . $messageType->id . '"]';
+
+                $b->with($rowSelector, function (Browser $b) use ($messageType, $sentMessage) {
+                    if ($messageType->id === $sentMessage->message_type_id) {
+                        $b->assertPresent('.sent-icon');
+                        $b->assertMissing('.not-sent-icon');
+                    } else {
+                        $b->assertMissing('.sent-icon');
+                        $b->assertPresent('.not-sent-icon');
+                    }
+                });
+            }
+
+            // Shows warning when selecting already sent message
+            $b->select('messageType', $sentMessage->id);
+            $b->assertMissing('@sent-messages-none-selected-msg');
+            $b->assertMissing('@sent-messages-loader');
+            $b->assertPresent('@sent-messages-table-wrapper');
+            $b->assertPresent('@sent-messages-already-sent-warning');
+
+            // Updates on sponsor change
+            $b->select('personData', $withoutMessages->id);
+            $b->assertMissing('@sent-messages-none-selected-msg');
+            $b->assertPresent('@sent-messages-loader');
+            $b->assertMissing('@sent-messages-table-wrapper');
+            $b->assertMissing('@sent-messages-already-sent-warning');
+
+            // Shows updated values (none sent)
+            $b->assertPresent('.not-sent-icon');
+            $b->assertMissing('.sent-icon');
+
+            // Clears correctly
+            $b->script("$('select[name=\"personData\"]').val('').trigger('change')");
+            $b->assertPresent('@sent-messages-none-selected-msg');
+            $b->assertMissing('@sent-messages-loader');
+            $b->assertMissing('@sent-messages-table-wrapper');
+            $b->assertMissing('@sent-messages-already-sent-warning');
         });
     }
 

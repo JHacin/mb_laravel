@@ -14,6 +14,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use SponsorshipMessageHandler;
 
@@ -165,6 +166,11 @@ class SponsorshipMessageCrudController extends CrudController
                 'dusk' => 'personData-wrapper'
             ]
         ]);
+        $this->crud->addField([
+            'name' => 'sponsor_sent_messages',
+            'type' => 'view',
+            'view' => 'admin/sponsor-sent-messages',
+        ]);
 
         $this->crud->addField([
             'name' => 'cat',
@@ -191,4 +197,12 @@ class SponsorshipMessageCrudController extends CrudController
 
         return $response;
     }
+
+    public function getMessagesSentToSponsor(PersonData $personData): JsonResponse
+    {
+        $this->crud->hasAccessOrFail('create');
+
+        return response()->json($personData->sponsorshipMessages->load('messageType'));
+    }
 }
+
