@@ -22,7 +22,7 @@ class CatFactory extends Factory
             'date_of_birth' => $this->faker->date(),
             'date_of_arrival_mh' => $this->faker->date(),
             'date_of_arrival_boter' => $this->faker->date(),
-            'location_id' => CatLocation::inRandomOrder()->first(),
+            'location_id' => CatLocation::inRandomOrder()->first() ?: CatLocation::factory(),
             'is_active' => true,
         ];
     }

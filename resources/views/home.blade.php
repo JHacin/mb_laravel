@@ -47,26 +47,28 @@
 @endphp
 
 @section('content')
-    <div class="columns is-variable is-1">
-        @foreach([$heroCats[0], $heroCats[1]] as $heroCat)
-            <x-hero-cat :cat="$heroCat" />
-        @endforeach
-        <div class="column is-flex">
-            <div class="hero-menu">
-                @foreach($heroMenuItems as $item)
-                    <a href="{{ $item['link'] }}" class="hero-menu-item">
-                        <div class="icon is-large mr-5">
-                            <i class="hero-menu-item__icon {{ $item['icon'] }}"></i>
-                        </div>
-                        <div class="hero-menu-item__text">
-                            <span>{{ $item['text'] }}</span>
-                            <i class="fas fa-arrow-circle-right"></i>
-                        </div>
-                    </a>
-                @endforeach
+    @if(count($heroCats) === 2)
+        <div class="columns is-variable is-1">
+            @foreach([$heroCats[0], $heroCats[1]] as $heroCat)
+                <x-hero-cat :cat="$heroCat" />
+            @endforeach
+            <div class="column is-flex">
+                <div class="hero-menu">
+                    @foreach($heroMenuItems as $item)
+                        <a href="{{ $item['link'] }}" class="hero-menu-item">
+                            <div class="icon is-large mr-5">
+                                <i class="hero-menu-item__icon {{ $item['icon'] }}"></i>
+                            </div>
+                            <div class="hero-menu-item__text">
+                                <span>{{ $item['text'] }}</span>
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
+    @endif
     <section class="section">
         <div class="container is-max-widescreen">
             <div class="columns">
