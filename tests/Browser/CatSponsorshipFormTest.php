@@ -156,6 +156,29 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
+     * @throws Throwable
+     */
+    public function test_preserves_old_values_on_invalid_submission()
+    {
+        $this->browse(function (Browser $b) {
+            /** @var PersonData $personData */
+            $personData = PersonData::factory()->makeOne();
+            $formData = $this->getPersonDataFieldValueArray($personData);
+
+            $this->goToPage($b);
+            $this->disableHtmlFormValidation($b);
+            $this->fillOutAllFields($b, $formData);
+            $b->uncheck('@is_agreed_to_terms-input');
+            $this->submit($b);
+
+            foreach ($formData as $name => $value) {
+                $b->assertValue("@personData[$name]-input", $formData[$name]);
+            }
+            $b->assertValue('@monthly_amount-input', '5');
+        });
+    }
+
+    /**
      * @return void
      * @throws Throwable
      */

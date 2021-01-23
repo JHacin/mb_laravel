@@ -4,9 +4,9 @@
     use Illuminate\Support\ViewErrorBag;
 
     /** @var string $name */
-    $cleanErrorKey = str_replace(['[', ']'], ['.', ''], $name);
+    $bracketToDotConvertedName = str_replace(['[', ']'], ['.', ''], $name);
     /** @var ViewErrorBag $errors */
-    $hasError = $errors->has($cleanErrorKey);
+    $hasError = $errors->has($bracketToDotConvertedName);
 
     /** @var string $label */
     $defaultAttributes = [
@@ -23,7 +23,7 @@
         <input
             id="{{ $name }}"
             name="{{ $name }}"
-            value="{{ old($name) ?? $attributes['value'] ?? '' }}"
+            value="{{ old($bracketToDotConvertedName) ?? $attributes['value'] ?? '' }}"
             dusk="{{ $name }}-input"
             {{ $attributes->merge($defaultAttributes) }}
         >

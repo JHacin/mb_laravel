@@ -11,11 +11,13 @@
     use Illuminate\Support\ViewErrorBag;
 
     /** @var string $name */
-    $cleanErrorKey = str_replace(['[', ']'], ['.', ''], $name);
+    $bracketToDotConvertedName = str_replace(['[', ']'], ['.', ''], $name);
     /** @var ViewErrorBag $errors */
-    $hasError = $errors->has($cleanErrorKey);
+    $hasError = $errors->has($bracketToDotConvertedName);
 
-    $baseClasses = 'select' . ($hasError ? ' is-danger' : '')
+    $baseClasses = 'select' . ($hasError ? ' is-danger' : '');
+
+    $selected = old($bracketToDotConvertedName) ?? $selected ?? null
 @endphp
 
 <div class="field" dusk="{{ $name }}-input-wrapper">
@@ -35,7 +37,7 @@
                 @foreach($options as $optionValue => $optionLabel)
                     <option
                         value="{{ $optionValue }}"
-                        @isset($selected){{ $optionValue === $selected ? 'selected' : '' }}@endisset
+                        @if($selected){{ (string)$optionValue === $selected ? 'selected' : '' }}@endif
                     >
                         {{ $optionLabel }}
                     </option>
