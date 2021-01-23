@@ -28,7 +28,6 @@ class PersonDataFactory extends Factory
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'date_of_birth' => $this->faker->date(),
-            'phone' => $this->faker->phoneNumber,
             'address' => $this->faker->streetAddress,
             'zip_code' => $this->faker->postcode,
             'city' => $this->faker->city,

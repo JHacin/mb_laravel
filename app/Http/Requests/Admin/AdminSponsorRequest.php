@@ -41,7 +41,6 @@ class AdminSponsorRequest extends FormRequest
             'first_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['nullable', 'string', 'max:255'],
             'gender' => [Rule::in(PersonData::GENDERS)],
-            'phone' => ['nullable', 'string', 'max:255'],
             'date_of_birth' => ['nullable', 'date', 'before:now'],
             'address' => ['nullable', 'string', 'max:255'],
             'zip_code' => ['nullable', 'string', 'max:255'],

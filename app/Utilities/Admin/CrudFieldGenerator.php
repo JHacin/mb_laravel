@@ -69,11 +69,6 @@ class CrudFieldGenerator
             ],
         ]);
         $crudPanel->addField([
-            'name' => $namePrefix . 'phone',
-            'label' => trans('person_data.phone'),
-            'type' => 'text',
-        ]);
-        $crudPanel->addField([
             'name' => $namePrefix . 'date_of_birth',
             'label' => trans('person_data.date_of_birth'),
             'type' => 'date_picker',

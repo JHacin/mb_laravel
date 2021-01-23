@@ -22,7 +22,6 @@ use Illuminate\Support\Carbon;
  * @property string|null $first_name
  * @property string|null $last_name
  * @property Carbon|null $date_of_birth
- * @property string|null $phone
  * @property string|null $address
  * @property string|null $zip_code
  * @property string|null $city
@@ -51,7 +50,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PersonData whereGender($value)
  * @method static Builder|PersonData whereId($value)
  * @method static Builder|PersonData whereLastName($value)
- * @method static Builder|PersonData wherePhone($value)
  * @method static Builder|PersonData whereUpdatedAt($value)
  * @method static Builder|PersonData whereUserId($value)
  * @method static Builder|PersonData whereZipCode($value)
@@ -104,7 +102,6 @@ class PersonData extends Model
         'first_name',
         'last_name',
         'date_of_birth',
-        'phone',
         'address',
         'zip_code',
         'city',

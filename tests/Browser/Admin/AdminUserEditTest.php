@@ -49,7 +49,6 @@ class AdminUserEditTest extends AdminTestCase
                 ->assertValue('input[name="personData[first_name]"]', $user->personData->first_name)
                 ->assertValue('input[name="personData[last_name]"]', $user->personData->last_name)
                 ->assertValue('input[name="personData[gender]"]', $user->personData->gender)
-                ->assertValue('input[name="personData[phone]"]', $user->personData->phone)
                 ->assertValue('input[name="personData[date_of_birth]"]', $user->personData->date_of_birth->toDateString())
                 ->assertValue('input[name="personData[address]"]', $user->personData->address)
                 ->assertValue('input[name="personData[zip_code]"]', $user->personData->zip_code)

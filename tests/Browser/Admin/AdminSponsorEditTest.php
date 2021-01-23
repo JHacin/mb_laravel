@@ -50,7 +50,6 @@ class AdminSponsorEditTest extends AdminTestCase
                 ->assertValue('input[name="first_name"]', $personData->first_name)
                 ->assertValue('input[name="last_name"]', $personData->last_name)
                 ->assertValue('input[name="gender"]', $personData->gender)
-                ->assertValue('input[name="phone"]', $personData->phone)
                 ->assertValue('input[name="date_of_birth"]', $personData->date_of_birth->toDateString())
                 ->assertValue('input[name="address"]', $personData->address)
                 ->assertValue('input[name="zip_code"]', $personData->zip_code)

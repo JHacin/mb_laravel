@@ -80,7 +80,6 @@ class UserProfileTest extends DuskTestCase
             $b->assertInputValue('personData[first_name]', $user->personData->first_name);
             $b->assertInputValue('personData[last_name]', $user->personData->last_name);
             $b->assertSelected('personData[gender]', $user->personData->gender);
-            $b->assertInputValue('personData[phone]', $user->personData->phone);
             $b->assertInputValue('personData[date_of_birth]', $user->personData->date_of_birth->toDateString());
             $b->assertInputValue('personData[address]', $user->personData->address);
             $b->assertInputValue('personData[zip_code]', $user->personData->zip_code);
@@ -121,7 +120,6 @@ class UserProfileTest extends DuskTestCase
                 'password',
                 'personData[first_name]',
                 'personData[last_name]',
-                'personData[phone]',
                 'personData[address]',
                 'personData[zip_code]',
                 'personData[city]',
@@ -304,7 +302,6 @@ class UserProfileTest extends DuskTestCase
             $b->type('personData[first_name]', $newPersonData->first_name);
             $b->type('personData[last_name]', $newPersonData->last_name);
             $b->select('personData[gender]', $newPersonData->gender);
-            $b->type('personData[phone]', $newPersonData->phone);
             $this->selectFlatpickrDateInThePast($b, '@personData[date_of_birth]-input-wrapper');
             $b->type('personData[address]', $newPersonData->address);
             $b->type('personData[zip_code]', $newPersonData->zip_code);
@@ -323,7 +320,6 @@ class UserProfileTest extends DuskTestCase
                 'id' => $user->personData->id,
                 'first_name' => $newPersonData->first_name,
                 'gender' => $newPersonData->gender,
-                'phone' => $newPersonData->phone,
                 'date_of_birth' => $dateOfBirthInputValue,
                 'address' => $newPersonData->address,
                 'zip_code' => $newPersonData->zip_code,

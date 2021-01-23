@@ -19,7 +19,6 @@ class RemovePersonDataFieldsFromUsersTable extends Migration
             $table->dropColumn('first_name');
             $table->dropColumn('last_name');
             $table->dropColumn('date_of_birth');
-            $table->dropColumn('phone');
             $table->dropColumn('address');
             $table->dropColumn('zip_code');
             $table->dropColumn('city');
@@ -39,7 +38,6 @@ class RemovePersonDataFieldsFromUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('zip_code')->nullable();
             $table->string('city')->nullable();

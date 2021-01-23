@@ -177,19 +177,6 @@ class CrudColumnGenerator
      * @param array $additions
      * @return array
      */
-    public static function phone($additions = []): array
-    {
-        return array_merge([
-            'name' => 'phone',
-            'label' => trans('person_data.phone'),
-            'type' => 'text',
-        ], $additions);
-    }
-
-    /**
-     * @param array $additions
-     * @return array
-     */
     public static function name($additions = []): array
     {
         return array_merge([

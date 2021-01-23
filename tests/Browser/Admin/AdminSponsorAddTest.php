@@ -93,8 +93,6 @@ class AdminSponsorAddTest extends AdminTestCase
                 $browser->click('input[type="radio"][value="' . $personData->gender . '"]');
             });
 
-            $browser->type('phone', $personData->phone);
-
             $this->selectDatepickerDateInThePast($browser, '@date_of_birth-input-wrapper');
 
             $browser

@@ -121,8 +121,6 @@ class AdminUserAddTest extends AdminTestCase
                 $browser->click('input[value="2"]');
             });
 
-            $browser->type('personData[phone]', $personData->phone);
-
             $this->selectDatepickerDateInThePast($browser, '@date_of_birth-input-wrapper');
 
             $browser
