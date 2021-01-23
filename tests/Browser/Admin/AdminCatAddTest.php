@@ -20,11 +20,12 @@ class AdminCatAddTest extends AdminTestCase
      */
     public function test_validates_required_fields()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $this->disableHtmlFormValidation($browser);
-            $this->clickSubmitButton($browser);
-            $this->assertAllRequiredErrorsAreShown($browser, ['@name-input-wrapper']);
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $this->disableHtmlFormValidation($b);
+            $this->clickSubmitButton($b);
+            $this->assertAllRequiredErrorsAreShown($b, ['@name-input-wrapper']);
+            $this->assertAdminRadioHasRequiredError($b, 'gender');
         });
     }
 

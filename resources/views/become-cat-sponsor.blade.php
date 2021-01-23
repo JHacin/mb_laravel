@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null;
+    $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null
 @endphp
 
 @section('content')
@@ -105,7 +105,7 @@
                         </x-inputs.email>
                     </div>
                 </div>
-                
+
                 <div class="block">
                     <x-inputs.base.checkbox name="is_anonymous">
                         <x-slot name="label">

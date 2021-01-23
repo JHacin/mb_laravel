@@ -21,15 +21,12 @@ class FooterTest extends DuskTestCase
             $b->click('@footer-faq-link');
             $b->on(new FAQPage);
 
-            $b->visit(new HomePage);
             $b->click('@footer-mh-link');
             $b->assertUrlIs(config('links.macja_hisa'));
 
-            $b->visit(new HomePage);
             $b->click('@footer-vet-link');
             $b->assertUrlIs(config('links.veterina_mh'));
 
-            $b->visit(new HomePage);
             $b->click('@footer-combe-link');
             $b->assertUrlIs(config('links.super_combe'));
         });

@@ -2,7 +2,6 @@
 
 @php
     use Illuminate\Support\ViewErrorBag;
-    use Illuminate\View\ComponentAttributeBag;
 
     /** @var string $name */
     $cleanErrorKey = str_replace(['[', ']'], ['.', ''], $name);

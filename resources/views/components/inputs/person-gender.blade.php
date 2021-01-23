@@ -1,8 +1,14 @@
 @php
     use App\Models\PersonData;
+    use Illuminate\View\ComponentAttributeBag;
 
     $options = PersonData::GENDER_LABELS;
-    $selected = $selected ?? PersonData::GENDER_UNKNOWN;
+    /** @var ComponentAttributeBag $attributes */
+    $attributes = $attributes->merge(['required' => 'required'])
 @endphp
 
-@include('components.inputs.base.select', ['options' => $options, 'selected' => $selected])
+@include('components.inputs.base.select', [
+    'options' => $options,
+    'selected' => $selected,
+    'isEmptyDefault' => true,
+])

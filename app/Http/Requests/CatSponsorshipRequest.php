@@ -24,7 +24,7 @@ class CatSponsorshipRequest extends FormRequest
             ],
             'personData.first_name' => ['nullable', 'string', 'max:255'],
             'personData.last_name' => ['nullable', 'string', 'max:255'],
-            'personData.gender' => [Rule::in(PersonData::GENDERS)],
+            'personData.gender' => ['required', Rule::in(PersonData::GENDERS)],
             'personData.address' => ['required', 'string', 'max:255'],
             'personData.zip_code' => ['required', 'string', 'max:255'],
             'personData.city' => ['required', 'string', 'max:255'],

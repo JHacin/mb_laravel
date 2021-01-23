@@ -30,8 +30,8 @@ class AdminCatListTest extends AdminTestCase
         parent::setUp();
 
         if (!static::$sampleCat_1 || !static::$sampleCat_2) {
-            static::$sampleCat_1 = $this->createCat();
-            static::$sampleCat_2 = $this->createCat();
+            static::$sampleCat_1 = $this->createCat(['name' => 'a_' . time(), 'location_id' => CatLocation::factory()]);
+            static::$sampleCat_2 = $this->createCat(['name' => 'b_' . time(), 'location_id' => CatLocation::factory()]);
         }
     }
 
@@ -214,7 +214,6 @@ class AdminCatListTest extends AdminTestCase
             $this->goToCatsListPage($browser);
 
             $searches = [
-                static::$sampleCat_1->id,
                 static::$sampleCat_1->name,
                 static::$sampleCat_1->location->name
             ];

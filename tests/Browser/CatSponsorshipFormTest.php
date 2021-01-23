@@ -11,9 +11,6 @@ use Throwable;
 
 class CatSponsorshipFormTest extends DuskTestCase
 {
-    /**
-     * @var Cat|null
-     */
     protected static ?Cat $cat = null;
 
     /**
@@ -29,7 +26,6 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_association_to_correct_cat()
@@ -48,7 +44,6 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_warning_to_logged_in_user()
@@ -67,7 +62,6 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_required_fields()
@@ -78,6 +72,7 @@ class CatSponsorshipFormTest extends DuskTestCase
             $this->submit($browser);
             $this->assertAllRequiredErrorsAreShown($browser, [
                 '@personData[email]-input-wrapper',
+                '@personData[gender]-input-wrapper',
                 '@monthly_amount-input-wrapper',
                 '@personData[address]-input-wrapper',
                 '@personData[zip_code]-input-wrapper',
@@ -235,7 +230,7 @@ class CatSponsorshipFormTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             self::$sampleUser->personData()->update([
-                'gender' => PersonData::GENDER_UNKNOWN,
+                'gender' => PersonData::GENDER_FEMALE,
                 'country' => 'BE',
             ]);
 

@@ -98,6 +98,6 @@ class CatSponsorshipController extends Controller
      */
     public function form(Cat $cat)
     {
-        return view('become_cat_sponsor', ['cat' => $cat]);
+        return view('become-cat-sponsor', ['cat' => $cat]);
     }
 }

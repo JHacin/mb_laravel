@@ -63,7 +63,6 @@ class CrudFieldGenerator
             'type' => 'radio',
             'options' => PersonData::GENDER_LABELS,
             'inline' => true,
-            'default' => PersonData::GENDER_UNKNOWN,
             'wrapper' => [
                 'dusk' => 'gender-input-wrapper',
             ],

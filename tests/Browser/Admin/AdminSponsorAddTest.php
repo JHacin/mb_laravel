@@ -12,16 +12,16 @@ use Throwable;
 class AdminSponsorAddTest extends AdminTestCase
 {
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_required_fields()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $this->disableHtmlFormValidation($browser);
-            $this->clickSubmitButton($browser);
-            $this->assertAllRequiredErrorsAreShown($browser, ['@email-input-wrapper']);
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $this->disableHtmlFormValidation($b);
+            $this->clickSubmitButton($b);
+            $this->assertAllRequiredErrorsAreShown($b, ['@email-input-wrapper']);
+            $this->assertAdminRadioHasRequiredError($b, 'gender');
         });
     }
 
@@ -51,6 +51,9 @@ class AdminSponsorAddTest extends AdminTestCase
             $browser->assertSee('Ta email naslov je že v uporabi.');
 
             $this->goToPage($browser);
+            $browser->with('@gender-input-wrapper', function (Browser $browser) {
+                $browser->click('input[type="radio"][value="1"]');
+            });
             $browser->type('email', $this->faker->unique()->safeEmail);
             $this->clickSubmitButton($browser);
             $browser->assertSee('Vnos uspešen.');

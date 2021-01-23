@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Cat;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +14,7 @@ class AddFieldsToCatsTable extends Migration
     public function up()
     {
         Schema::table('cats', function (Blueprint $table) {
-            $table->smallInteger('gender')->default(Cat::GENDER_UNKNOWN);
+            $table->smallInteger('gender')->nullable();
             $table->text('story')->nullable();
             $table->date('date_of_arrival')->nullable();
             $table->date('date_of_birth')->nullable();

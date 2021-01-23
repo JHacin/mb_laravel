@@ -21,25 +21,24 @@ class AdminUserAddTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_required_fields()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $this->disableHtmlFormValidation($browser);
-            $this->clickSubmitButton($browser);
-            $this->assertAllRequiredErrorsAreShown($browser, [
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $this->disableHtmlFormValidation($b);
+            $this->clickSubmitButton($b);
+            $this->assertAllRequiredErrorsAreShown($b, [
                 '@name-input-wrapper',
                 '@email-input-wrapper',
                 '@password-input-wrapper',
             ]);
+            $this->assertAdminRadioHasRequiredError($b, 'gender');
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_email_field()
@@ -64,7 +63,6 @@ class AdminUserAddTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_password()
@@ -87,7 +85,6 @@ class AdminUserAddTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_date_of_birth_is_in_the_past()
@@ -102,7 +99,6 @@ class AdminUserAddTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_adding_a_user_works()

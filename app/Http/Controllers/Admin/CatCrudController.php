@@ -147,7 +147,6 @@ class CatCrudController extends CrudController
             'type' => 'radio',
             'options' => Cat::GENDER_LABELS,
             'inline' => true,
-            'default' => Cat::GENDER_UNKNOWN,
             'wrapper' => [
                 'dusk' => 'gender-input-wrapper'
             ],

@@ -19,13 +19,21 @@ trait FormTestingHelpers
         }
     }
 
+    protected function assertAdminRadioHasRequiredError(Browser $browser, string $fieldName)
+    {
+        $browser->assertPresent('.text-danger[dusk="' . $fieldName . '-input-wrapper"]');
+    }
+
     protected function selectInvalidSelectOption(Browser $browser, string $name)
     {
         $browser->script(
-            "document.querySelector('select[name=\"" . $name . "\"] option:first-child').value = 'FAKE_VALUE'"
+            "document.querySelector('select[name=\"" . $name . "\"] option:first-child').value = 'FAKE_VALUE';"
         );
         $browser->script(
-            "document.querySelector('select[name=\"" . $name . "\"]').value = 'FAKE_VALUE'"
+            "document.querySelector('select[name=\"" . $name . "\"] option:first-child').removeAttribute('disabled');"
+        );
+        $browser->script(
+            "document.querySelector('select[name=\"" . $name . "\"]').value = 'FAKE_VALUE';"
         );
     }
 

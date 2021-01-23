@@ -33,7 +33,7 @@ class AdminUserCreateRequest extends FormRequest
             'password' => ['required', 'confirmed'],
             'personData.first_name' => ['nullable', 'string', 'max:255'],
             'personData.last_name' => ['nullable', 'string', 'max:255'],
-            'personData.gender' => [Rule::in(PersonData::GENDERS)],
+            'personData.gender' => ['required', Rule::in(PersonData::GENDERS)],
             'personData.date_of_birth' => ['nullable', 'date', 'before:now'],
             'personData.address' => ['nullable', 'string', 'max:255'],
             'personData.zip_code' => ['nullable', 'string', 'max:255'],

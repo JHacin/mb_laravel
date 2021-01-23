@@ -24,7 +24,7 @@ class AdminCatRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string', 'min:2', 'max:100'],
-            'gender' => [Rule::in(Cat::GENDERS)],
+            'gender' => ['required', Rule::in(Cat::GENDERS)],
             'date_of_birth' => ['nullable', 'date', 'before:now'],
             'date_of_arrival_mh' => ['nullable', 'date', 'before:now', 'after_or_equal:date_of_birth'],
             'date_of_arrival_boter' => ['nullable', 'date', 'before:now', 'after_or_equal:date_of_birth'],

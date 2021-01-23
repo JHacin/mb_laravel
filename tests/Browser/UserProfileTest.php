@@ -108,7 +108,10 @@ class UserProfileTest extends DuskTestCase
             $b->clear('name');
             $b->clear('email');
             $this->submit($b);
-            $this->assertAllRequiredErrorsAreShown($b, ['@name-input-wrapper', '@email-input-wrapper']);
+            $this->assertAllRequiredErrorsAreShown(
+                $b,
+                ['@name-input-wrapper', '@email-input-wrapper', '@personData[gender]-input-wrapper']
+            );
         });
     }
 
@@ -172,8 +175,9 @@ class UserProfileTest extends DuskTestCase
             $this->submit($b);
             $b->assertSeeIn('@email-input-wrapper', 'Ta email naslov je že v uporabi.');
 
-            // Success 'Vaši podatki so bili posodobljeni.'
+            // Success
             $this->goToPage($b, $user);
+            $this->fillOutRequiredFields($b);
             $this->submit($b);
             $b->assertSee('Vaši podatki so bili posodobljeni.');
         });
@@ -189,18 +193,21 @@ class UserProfileTest extends DuskTestCase
             $this->goToPage($b, $this->createUser());
 
             // Min length
+            $this->disableHtmlFormValidation($b);
             $b->type('password', 'xx');
             $b->type('password_confirmation', 'xx');
             $this->submit($b);
             $b->assertSeeIn('@password-input-wrapper', 'Geslo mora biti dolgo vsaj 8 znakov.');
 
             // Confirmed
+            $this->disableHtmlFormValidation($b);
             $b->type('password', 'xxxxxxxxxxxxxxxx');
             $b->type('password_confirmation', 'xxyyyyyyyyyyy');
             $this->submit($b);
             $b->assertSeeIn('@password-input-wrapper', 'Gesli se ne ujemata.');
 
             // Success
+            $this->fillOutRequiredFields($b);
             $b->type('password', 'xxxxxxxxxxxxxxxx');
             $b->type('password_confirmation', 'xxxxxxxxxxxxxxxx');
             $this->submit($b);
@@ -217,6 +224,7 @@ class UserProfileTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             // Valid value
             $this->goToPage($b, $this->createUser());
+            $this->fillOutRequiredFields($b);
             $this->selectInvalidSelectOption($b, 'personData[gender]');
             $this->submit($b);
             $b->assertSeeIn('@personData[gender]-input-wrapper', 'Izbrana vrednost ni veljavna.');
@@ -232,6 +240,7 @@ class UserProfileTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             // Before now
             $this->goToPage($b, $this->createUser());
+            $this->fillOutRequiredFields($b);
             $this->setHiddenInputValue($b, 'personData[date_of_birth]', Carbon::now()->addDay()->toDateString());
             $this->submit($b);
             $b->assertSeeIn('@personData[date_of_birth]-input-wrapper', 'Datum rojstva mora biti v preteklosti.');
@@ -247,6 +256,7 @@ class UserProfileTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             // Valid value
             $this->goToPage($b, $this->createUser());
+            $this->fillOutRequiredFields($b);
             $this->selectInvalidSelectOption($b, 'personData[country]');
             $this->submit($b);
             $b->assertSeeIn('@personData[country]-input-wrapper', 'Vrednost mora biti država.');
@@ -265,6 +275,7 @@ class UserProfileTest extends DuskTestCase
 
             // Change pw
             $this->goToPage($b, $user);
+            $this->fillOutRequiredFields($b);
             $b->type('password', $newPassword);
             $b->type('password_confirmation', $newPassword);
             $this->submit($b);
@@ -335,6 +346,10 @@ class UserProfileTest extends DuskTestCase
                 'country' => $newPersonData->country,
             ]);
         });
+    }
+
+    protected function fillOutRequiredFields(Browser $b) {
+        $b->select('personData[gender]', PersonData::GENDER_FEMALE);
     }
 
     /**

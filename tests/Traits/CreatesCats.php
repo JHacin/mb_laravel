@@ -6,7 +6,9 @@ use App\Models\Cat;
 use App\Models\CatPhoto;
 use App\Models\Sponsorship;
 use App\Services\CatPhotoService;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
+use Storage;
 
 trait CreatesCats
 {
@@ -33,9 +35,14 @@ trait CreatesCats
         $indicesShuffled = Arr::shuffle(CatPhotoService::INDICES);
 
         foreach (CatPhotoService::INDICES as $index) {
+            $fileName = "fake_cat_photo_{$indicesShuffled[$index]}.jpg";
+
+            $file = UploadedFile::fake()->image($fileName);
+            Storage::disk('public')->putFileAs(CatPhotoService::PATH_ROOT, $file, $fileName);
+
             CatPhoto::factory()->createOne([
                 'cat_id' => $cat->id,
-                'filename' => "fake_cat_photo_{$indicesShuffled[$index]}.jpg",
+                'filename' => $fileName,
                 'alt' => $cat->name,
                 'index' => $index,
             ]);

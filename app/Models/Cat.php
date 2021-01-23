@@ -68,18 +68,15 @@ class Cat extends Model
     |--------------------------------------------------------------------------
     */
 
-    public const GENDER_UNKNOWN = 0;
     public const GENDER_MALE = 1;
     public const GENDER_FEMALE = 2;
 
     public const GENDERS = [
-        self::GENDER_UNKNOWN,
         self::GENDER_MALE,
         self::GENDER_FEMALE,
     ];
 
     public const GENDER_LABELS = [
-        self::GENDER_UNKNOWN => 'neznano',
         self::GENDER_MALE => 'samček',
         self::GENDER_FEMALE => 'samička',
     ];
