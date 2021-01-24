@@ -16,7 +16,10 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use MailTemplateParser;
 use SponsorshipMessageHandler;
+use TemplateApiClient;
 
 /**
  * Class SponsorshipMessageCrudController
@@ -171,7 +174,6 @@ class SponsorshipMessageCrudController extends CrudController
             'type' => 'view',
             'view' => 'admin/sponsor-sent-messages',
         ]);
-
         $this->crud->addField([
             'name' => 'cat',
             'label' => trans('sponsorship_message.cat'),
@@ -183,6 +185,11 @@ class SponsorshipMessageCrudController extends CrudController
             'wrapper' => [
                 'dusk' => 'cat-wrapper'
             ]
+        ]);
+        $this->crud->addField([
+            'name' => 'parsed_template_preview',
+            'type' => 'view',
+            'view' => 'admin/parsed-template-preview',
         ]);
     }
 
@@ -203,6 +210,22 @@ class SponsorshipMessageCrudController extends CrudController
         $this->crud->hasAccessOrFail('create');
 
         return response()->json($personData->sponsorshipMessages->load('messageType'));
+    }
+
+    public function getParsedTemplatePreview(Request $request): JsonResponse
+    {
+        $messageType = SponsorshipMessageType::find($request->query('message_type'));
+        $templateId = TemplateApiClient::retrieveTemplate($messageType->template_id);
+
+        $sponsor = PersonData::find($request->query('sponsor'));
+        $cat = Cat::find($request->query('cat'));
+
+        $parsed = MailTemplateParser::parse($templateId, [
+            'ime_botra' => $sponsor->first_name,
+            'ime_muce' => $cat->name,
+        ]);
+
+        return response()->json(['parsedTemplate' => $parsed]);
     }
 }
 

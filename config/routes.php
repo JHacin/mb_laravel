@@ -45,6 +45,7 @@ return [
         'sponsorship_message_types_edit' => 'vrste-pisem/{id}/edit',
         'sponsorship_messages' => 'pisma',
         'sponsorship_messages_add' => 'pisma/create',
-        'get_messages_sent_to_sponsor' => 'pisma/{personData}/get-sent-messages'
+        'get_messages_sent_to_sponsor' => 'pisma/{personData}/get-sent-messages',
+        'get_parsed_template_preview' => 'pisma/parsed-template-preview'
     ]
 ];
