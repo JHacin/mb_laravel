@@ -6,8 +6,8 @@
 
 <label>Poslana pisma izbranemu botru:</label>
 
-<div class="sent-messages-none-selected-msg font-italic" dusk="sent-messages-none-selected-msg">
-   Izbran še ni noben boter.
+<div class="sent-messages-none-selected-msg" dusk="sent-messages-none-selected-msg">
+   <small>Izbran še ni noben boter.</small>
 </div>
 
 <div class="sent-messages-loader spinner-border text-primary" role="status" dusk="sent-messages-loader">
@@ -45,6 +45,7 @@
 </div>
 
 @push('crud_fields_styles')
+    <!--suppress CssUnusedSymbol -->
     <style>
         .sent-messages-table-wrapper,
         .sent-messages-loader,

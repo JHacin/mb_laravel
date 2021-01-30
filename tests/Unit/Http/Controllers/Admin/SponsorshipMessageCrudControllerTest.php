@@ -9,14 +9,30 @@ use Tests\TestCase;
 
 class SponsorshipMessageCrudControllerTest extends TestCase
 {
-    public function test_sends_email_on_submit()
+    public function test_sends_email_on_submit_if_should_send_email_field_is_true()
     {
-        SponsorshipMessageHandler::shouldReceive('send')->once();
+        SponsorshipMessageHandler::partialMock()
+            ->shouldReceive('send')
+            ->once();
 
         $this->actingAs($this->createSuperAdminUser())->post('admin/pisma', [
             'messageType' => $this->createSponsorshipMessageType()->id,
             'personData' => $this->createPersonData()->id,
             'cat' => $this->createCat()->id,
+            'should_send_email' => true,
+        ]);
+    }
+
+    public function test_does_not_send_email_on_submit_if_should_send_email_field_is_false()
+    {
+        SponsorshipMessageHandler::partialMock()
+            ->shouldNotReceive('send');
+
+        $this->actingAs($this->createSuperAdminUser())->post('admin/pisma', [
+            'messageType' => $this->createSponsorshipMessageType()->id,
+            'personData' => $this->createPersonData()->id,
+            'cat' => $this->createCat()->id,
+            'should_send_email' => false,
         ]);
     }
 

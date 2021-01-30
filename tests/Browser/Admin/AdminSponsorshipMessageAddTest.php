@@ -23,7 +23,12 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $this->goToPage($b);
             $this->disableHtmlFormValidation($b);
             $this->clickSubmitButton($b);
-            $this->assertAllRequiredErrorsAreShown($b, ['@cat-wrapper', '@personData-wrapper', '@messageType-wrapper']);
+            $this->assertAllRequiredErrorsAreShown($b, [
+                '@cat-wrapper',
+                '@personData-wrapper',
+                '@messageType-wrapper',
+                '@should_send_email-input-wrapper',
+            ]);
         });
     }
 

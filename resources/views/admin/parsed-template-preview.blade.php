@@ -8,7 +8,7 @@
 </button>
 
 <div class="msg-preview-disabled-text" dusk="msg-preview-disabled-text">
-    Preden se lahko generira predogled, je treba izbrati vrsto pisma, botra in muco.
+    <small>Preden se lahko generira predogled, je treba izbrati vrsto pisma, botra in muco.</small>
 </div>
 
 <div class="msg-preview-loader spinner-border text-primary" role="status" dusk="msg-preview-loader">

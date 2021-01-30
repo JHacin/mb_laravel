@@ -170,11 +170,6 @@ class SponsorshipMessageCrudController extends CrudController
             ]
         ]);
         $this->crud->addField([
-            'name' => 'sponsor_sent_messages',
-            'type' => 'view',
-            'view' => 'admin/sponsor-sent-messages',
-        ]);
-        $this->crud->addField([
             'name' => 'cat',
             'label' => trans('sponsorship_message.cat'),
             'type' => 'relationship',
@@ -187,9 +182,42 @@ class SponsorshipMessageCrudController extends CrudController
             ]
         ]);
         $this->crud->addField([
+            'name'  => 'separator_1',
+            'type'  => 'custom_html',
+            'value' => '<hr>'
+        ]);
+        $this->crud->addField([
+            'name' => 'sponsor_sent_messages',
+            'type' => 'view',
+            'view' => 'admin/sponsor-sent-messages',
+        ]);
+        $this->crud->addField([
+            'name'  => 'separator_2',
+            'type'  => 'custom_html',
+            'value' => '<hr>'
+        ]);
+        $this->crud->addField([
             'name' => 'parsed_template_preview',
             'type' => 'view',
             'view' => 'admin/parsed-template-preview',
+        ]);
+        $this->crud->addField([
+            'name'  => 'separator_3',
+            'type'  => 'custom_html',
+            'value' => '<hr>'
+        ]);
+        $this->crud->addField([
+            'name' => 'should_send_email',
+            'label' => 'Želim, da se pismo:',
+            'type' => 'radio',
+            'options' => [
+                true => 'Pošlje na botrov email naslov',
+                false => 'Samo zapiše v bazo',
+            ],
+            'inline' => true,
+            'wrapper' => [
+                'dusk' => 'should_send_email-input-wrapper'
+            ],
         ]);
     }
 
@@ -197,10 +225,14 @@ class SponsorshipMessageCrudController extends CrudController
     {
         $response = $this->traitStore();
 
-        /** @var SponsorshipMessage $msg */
-        $msg = $this->crud->getCurrentEntry();
+        /** @var Request $request */
+        $request = $this->crud->getRequest();
 
-        SponsorshipMessageHandler::send($msg);
+        if ($request->input('should_send_email', false)) {
+            /** @var SponsorshipMessage $msg */
+            $msg = $this->crud->getCurrentEntry();
+            SponsorshipMessageHandler::send($msg);
+        }
 
         return $response;
     }
