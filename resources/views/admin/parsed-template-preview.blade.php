@@ -16,7 +16,17 @@
 </div>
 
 <div class="msg-preview-content" dusk="msg-preview-content">
-    <div class="font-weight-bolder">Predogled poslanega besedila:</div>
+    <div class="d-flex align-items-center mb-2">
+        <div class="font-weight-bolder mr-2">Predogled poslanega besedila:</div>
+        <button
+            type="button"
+            class="msg-preview-copy-to-clipboard btn btn-secondary btn-sm"
+            data-clipboard-target=".msg-preview-content-body"
+        >
+            Kopiraj
+        </button>
+    </div>
+
     <div class="msg-preview-content-body bg-light p-2"></div>
 </div>
 
@@ -30,8 +40,11 @@
 @endpush
 
 @push('crud_fields_scripts')
+    <script src="{{ asset('packages/clipboard-js/dist/clipboard.min.js') }}"></script>
     <!--suppress JSUnresolvedVariable -->
     <script>
+        new ClipboardJS('.msg-preview-copy-to-clipboard');
+
         const $messageTypeSelect = $('select[name="messageType"]');
         const $sponsorSelect = $('select[name="personData"]');
         const $catSelect = $('select[name="cat"]');
@@ -58,6 +71,7 @@
 
             $loader.show();
             $content.hide();
+            $generateBtn.attr('disabled', true);
 
             const urlWithPlaceholder =
                 "{!! route(
@@ -85,6 +99,7 @@
                     $generateBtn.text('Osveži predogled pisma');
                     $generateBtn.removeClass('btn-primary');
                     $generateBtn.addClass('btn-info');
+                    $generateBtn.removeAttr('disabled');
                     $loader.hide();
                 }
             });

@@ -163,6 +163,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $b->assertVisible('@msg-preview-loader');
             $b->assertMissing('@msg-preview-content');
             $b->assertMissing('@msg-preview-disabled-text');
+            $this->assertNotNull($b->attribute('@msg-preview-generate-btn', 'disabled'));
 
             // Got a response
             $this->waitForRequestsToFinish($b);
@@ -170,6 +171,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $b->assertVisible('@msg-preview-content');
             $b->assertMissing('@msg-preview-disabled-text');
             $b->assertSee('Osveži predogled pisma');
+            $this->assertNull($b->attribute('@msg-preview-generate-btn', 'disabled'));
 
             // Refetching
             $b->click('@msg-preview-generate-btn');
