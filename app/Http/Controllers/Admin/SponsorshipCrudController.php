@@ -203,6 +203,9 @@ class SponsorshipCrudController extends CrudController
             'name' => 'is_active',
             'label' => 'Aktivno',
             'type' => 'checkbox',
+            'wrapper' => [
+                'dusk' => 'is_active-wrapper'
+            ],
             'hint' =>
                 'Botrovanje je v teku (redna plačila, muca še kar potrebuje botre itd.).' .
                 '<br>Neaktivna botrovanja ne bodo vključena na spletni strani (v seštevkih botrovanj, na seznamih botrov itd.)',

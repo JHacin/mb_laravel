@@ -113,6 +113,36 @@ class AdminSponsorshipAddTest extends AdminTestCase
     }
 
     /**
+     * @throws Throwable
+     */
+    public function test_validates_cat_doesnt_already_an_active_sponsorship_with_the_selected_sponsor()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCat();
+            $personData = $this->createPersonData();
+            $sponsorship = $this->createSponsorship([
+                'cat_id' => $cat->id,
+                'person_data_id' => $personData->id,
+                'is_active' => true,
+            ]);
+
+            $this->goToPage($b);
+
+            $b
+                ->select('cat', $sponsorship->cat_id)
+                ->select('personData', $sponsorship->person_data_id)
+                ->type('monthly_amount', '10');
+
+            $this->clickSubmitButton($b);
+            $b->assertSee('Muca že ima aktivnega botra s tem email naslovom.');
+
+            $sponsorship->update(['is_active' => false]);
+            $this->clickSubmitButton($b);
+            $b->assertSee('Vnos uspešen.');
+        });
+    }
+
+    /**
      * @param Browser $browser
      * @throws TimeoutException
      */

@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Cat;
 use App\Models\PersonData;
 use App\Rules\CountryCode;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class CatSponsorshipRequest extends FormRequest
@@ -20,7 +22,8 @@ class CatSponsorshipRequest extends FormRequest
                 'required',
                 'string',
                 'email',
-                Rule::unique('users', 'email')->ignore(Auth::id())
+                Rule::unique('users', 'email')->ignore(Auth::id()),
+                Rule::notIn($this->getCatSponsorEmails()),
             ],
             'personData.first_name' => ['nullable', 'string', 'max:255'],
             'personData.last_name' => ['nullable', 'string', 'max:255'],
@@ -49,6 +52,23 @@ class CatSponsorshipRequest extends FormRequest
             'personData.email.unique' =>
                 'Ta email naslov že uporablja registriran uporabnik.' .
                 ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
+            'personData.email.not_in' =>
+                'Muca že ima aktivnega botra s tem email naslovom.' .
+                ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
         ];
+    }
+
+    protected function getCatSponsorEmails(): array
+    {
+        /** @var Cat $cat */
+        $cat = $this->route()->parameter('cat');
+
+        $catSponsorships = $cat
+            ->sponsorships()
+            ->with('personData')
+            ->get()
+            ->toArray();
+
+        return Arr::pluck($catSponsorships, 'person_data.email');
     }
 }

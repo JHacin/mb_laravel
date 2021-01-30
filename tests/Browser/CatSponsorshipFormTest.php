@@ -315,12 +315,40 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
+     * @throws Throwable
+     */
+    public function test_prevents_duplicate_active_sponsor_emails_for_one_cat()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCat();
+            $personData = $this->createPersonData();
+            $sponsorship = $this->createSponsorship([
+                'cat_id' => $cat->id,
+                'person_data_id' => $personData->id,
+                'is_active' => true,
+            ]);
+
+            $this->goToPage($b, $cat);
+            $formData = $this->getPersonDataFieldValueArray($personData);
+            $this->fillOutAllFields($b, $formData);
+
+            $this->submit($b);
+            $b->assertSee('Muca že ima aktivnega botra s tem email naslovom.');
+
+            $sponsorship->update(['is_active' => false]);
+            $this->submit($b);
+            $b->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
+        });
+    }
+
+    /**
      * @param Browser $browser
+     * @param Cat|null $cat
      * @return Browser
      */
-    protected function goToPage(Browser $browser): Browser
+    protected function goToPage(Browser $browser, Cat $cat = null): Browser
     {
-        return $browser->visit(new CatSponsorshipFormPage(self::$cat));
+        return $browser->visit(new CatSponsorshipFormPage($cat ?: self::$cat));
     }
 
     /**

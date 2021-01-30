@@ -30,7 +30,7 @@ class MailClient
      */
     public function send(array $params)
     {
-        if (env('TEST_ENV') === 'dusk') {
+        if (env('TEST_ENV') === 'dusk' || env('DISABLE_EMAILS') === true) {
             return;
         }
 

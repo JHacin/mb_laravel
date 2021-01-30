@@ -37,7 +37,7 @@
                 @foreach($options as $optionValue => $optionLabel)
                     <option
                         value="{{ $optionValue }}"
-                        @if($selected){{ (string)$optionValue === $selected ? 'selected' : '' }}@endif
+                        @if($selected){{ $optionValue == $selected ? 'selected' : '' }}@endif
                     >
                         {{ $optionLabel }}
                     </option>
