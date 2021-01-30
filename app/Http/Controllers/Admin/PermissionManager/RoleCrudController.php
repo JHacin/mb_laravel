@@ -26,7 +26,7 @@ class RoleCrudController extends BackpackRoleCrudController
         parent::setupListOperation();
 
         $this->crud->modifyColumn(
-            'users',
+            'users_count',
             [
                 'wrapper' => [
                     'href' => function ($crud, $column, $entry, $related_key) {

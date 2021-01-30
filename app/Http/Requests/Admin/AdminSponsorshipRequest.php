@@ -39,7 +39,8 @@ class AdminSponsorshipRequest extends FormRequest
                 Rule::exists('person_data', 'id'),
                 Rule::unique('sponsorships', 'person_data_id')
                     ->where('is_active', true)
-                    ->where('cat_id', $this->input('cat')),
+                    ->where('cat_id', $this->input('cat'))
+                    ->ignore($this->get('id'))
             ],
         ];
     }
