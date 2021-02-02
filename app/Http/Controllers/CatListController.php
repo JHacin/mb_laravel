@@ -77,7 +77,9 @@ class CatListController extends Controller
             return $cats->orderBy('id', $params['id']);
         }
 
-        return $cats->latest('id');
+        return $cats
+            ->orderBy('is_group', 'desc')
+            ->orderBy('id', 'desc');
     }
 
     /**

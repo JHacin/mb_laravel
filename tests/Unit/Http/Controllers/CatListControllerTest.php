@@ -30,19 +30,6 @@ class CatListControllerTest extends TestCase
     /**
      * @return void
      */
-    public function test_orders_by_created_at_descending()
-    {
-        $lastAddedCat = $this->createCat();
-        $cats = $this->getCatsInResponse();
-        /** @var Cat $firstCatInList */
-        $firstCatInList = $cats->first();
-
-        $this->assertEquals($firstCatInList->id, $lastAddedCat->id);
-    }
-
-    /**
-     * @return void
-     */
     public function test_doesnt_show_inactive_cats()
     {
         $inactiveCat = $this->createCat(['is_active' => false]);
@@ -71,6 +58,24 @@ class CatListControllerTest extends TestCase
             $this->assertEquals($option === 'all' ? Cat::count() : $option, $cats->perPage());
             $this->assertStringContainsString('per_page=' . $option, $cats->url(1));
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function test_sorts_by_is_group_then_id_descending_by_default()
+    {
+        $name = 'name_' . time();
+
+        $oldestNonGroupCat = $this->createCat(['is_group' => false, 'name' => $name]);
+        $lastAddedIndividualCat = $this->createCat(['is_group' => false, 'name' => $name]);
+        $lastAddedGroup = $this->createCat(['is_group' => true, 'name' => $name]);
+
+        $cats = $this->getCatsInResponse(['search' => $name]);
+
+        $this->assertEquals($cats[0]->id, $lastAddedGroup->id);
+        $this->assertEquals($cats[1]->id, $lastAddedIndividualCat->id);
+        $this->assertEquals($cats[2]->id, $oldestNonGroupCat->id);
     }
 
     /**
@@ -157,11 +162,6 @@ class CatListControllerTest extends TestCase
     {
         $garfield = $this->createCat(['name' => 'Garfield']);
         $arfieson = $this->createCat(['name' => 'Arfiešon']);
-
-        $results = $this->getCatsInResponse();
-        $this->assertTrue($results->contains('id', $garfield->id));
-        $this->assertTrue($results->contains('id', $arfieson->id));
-        $this->assertStringNotContainsString('search', $results->url(1));
 
         $results = $this->getCatsInResponse(['search' => 'garf']);
         $this->assertTrue($results->contains('id', $garfield->id));

@@ -510,11 +510,15 @@ class CatListTest extends DuskTestCase
 
             $this->goToPage($b);
 
-            $this->assertNotHasClass($b, '@id_sort_asc', $activeArrowClass);
-            $this->assertHasClass($b, '@id_sort_desc', $activeArrowClass);
-            $this->assertHasClass($b, '@id_sort_toggle', $activeToggleClass);
+            $sortOptions = ['sponsorship_count', 'age', 'id'];
 
-            foreach (['sponsorship_count', 'age', 'id'] as $sort) {
+            foreach ($sortOptions as $sort) {
+                $this->assertNotHasClass($b, "@{$sort}_sort_asc", $activeArrowClass);
+                $this->assertNotHasClass($b, "@{$sort}_sort_desc", $activeArrowClass);
+                $this->assertNotHasClass($b, "@{$sort}_sort_toggle", $activeToggleClass);
+            }
+
+            foreach ($sortOptions as $sort) {
                 $b->click("@{$sort}_sort_asc");
                 $this->assertHasClass($b, "@{$sort}_sort_asc", $activeArrowClass);
                 $this->assertNotHasClass($b, "@{$sort}_sort_desc", $activeArrowClass);
