@@ -26,6 +26,7 @@ class AdminCatEditTest extends AdminTestCase
             $browser
                 ->assertValue('input[name="name"]', $cat->name)
                 ->assertValue('input[name="gender"]', $cat->gender)
+                ->assertValue('input[name="is_group"]', $cat->is_group)
                 ->assertValue('input[name="date_of_birth"]', $cat->date_of_birth->toDateString())
                 ->assertValue('input[name="date_of_arrival_mh"]', $cat->date_of_arrival_mh->toDateString())
                 ->assertValue('input[name="date_of_arrival_boter"]', $cat->date_of_arrival_boter->toDateString())

@@ -170,6 +170,9 @@ class AdminCatAddTest extends AdminTestCase
             $browser->with('@gender-input-wrapper', function (Browser $browser) {
                 $browser->click('input[value="1"]');
             });
+            $browser->with('@is_group-input-wrapper', function (Browser $browser) {
+                $browser->click('input[value="1"]');
+            });
 
             $dateInputWrappers = [
                 '@date-of-birth-input-wrapper',

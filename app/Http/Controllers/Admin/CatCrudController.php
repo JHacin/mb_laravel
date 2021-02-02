@@ -61,24 +61,24 @@ class CatCrudController extends CrudController
         $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn([
             'name' => 'photo',
-            'label' => 'Slika',
+            'label' => trans('cat.photo'),
             'type' => 'cat_photo',
         ]);
         $this->crud->addColumn(CrudColumnGenerator::name());
         $this->crud->addColumn(CrudColumnGenerator::genderLabel());
         $this->crud->addColumn([
             'name' => 'date_of_arrival_mh',
-            'label' => 'Datum sprejema v Mačjo hišo',
+            'label' => trans('cat.date_of_arrival_mh'),
             'type' => 'date',
         ]);
         $this->crud->addColumn([
             'name' => 'date_of_arrival_boter',
-            'label' => 'Datum vstopa v botrstvo',
+            'label' => trans('cat.date_of_arrival_boter'),
             'type' => 'date',
         ]);
         $this->crud->addColumn([
             'name' => 'location',
-            'label' => 'Lokacija',
+            'label' => trans('cat.location'),
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
@@ -91,17 +91,22 @@ class CatCrudController extends CrudController
                 });
             }
         ]);
-        $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => 'Objavljena']));
+        $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => trans('cat.is_active')]));
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
         $this->crud->orderBy('updated_at', 'DESC');
 
+        $this->addFilters();
+    }
+
+    protected function addFilters()
+    {
         $this->crud->addFilter(
             [
                 'name' => 'location_id',
                 'type' => 'select2',
-                'label' => 'Lokacija',
+                'label' => trans('cat.location'),
             ],
             function () {
                 return CatLocation::all()->pluck('name', 'id')->toArray();
@@ -115,7 +120,7 @@ class CatCrudController extends CrudController
             [
                 'name' => 'gender',
                 'type' => 'dropdown',
-                'label' => 'Spol',
+                'label' => trans('cat.gender'),
             ],
             Cat::GENDER_LABELS,
             function ($value) {
@@ -123,7 +128,8 @@ class CatCrudController extends CrudController
             }
         );
 
-        $this->addBooleanFilter('is_active', 'Objavljena');
+        $this->addBooleanFilter('is_group', trans('cat.is_group'));
+        $this->addBooleanFilter('is_active', trans('cat.is_active'));
     }
 
     protected function setupCreateOperation()
@@ -132,7 +138,7 @@ class CatCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'name',
-            'label' => 'Ime',
+            'label' => trans('cat.name'),
             'type' => 'text',
             'attributes' => [
                 'required' => 'required',
@@ -143,7 +149,7 @@ class CatCrudController extends CrudController
         ]);
         $this->crud->addField([
             'name' => 'gender',
-            'label' => 'Spol',
+            'label' => trans('cat.gender'),
             'type' => 'radio',
             'options' => Cat::GENDER_LABELS,
             'inline' => true,
@@ -151,23 +157,38 @@ class CatCrudController extends CrudController
                 'dusk' => 'gender-input-wrapper'
             ],
         ]);
+        $this->crud->addField([
+            'name' => 'is_group',
+            'label' => trans('cat.is_group') . '?',
+            'type' => 'radio',
+            'options' => [
+                1 => 'Da',
+                0 => 'Ne',
+            ],
+            'default' => 0,
+            'inline' => true,
+            'wrapper' => [
+                'dusk' => 'is_group-input-wrapper'
+            ],
+            'hint' => 'Ali naj se ta vnos obravnava kot druge skupine - Čombe, Pozitivčki, Bubiji...',
+        ]);
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_birth',
-            'label' => 'Datum rojstva',
+            'label' => trans('cat.date_of_birth'),
             'wrapper' => [
                 'dusk' => 'date-of-birth-input-wrapper'
             ],
         ]));
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_mh',
-            'label' => 'Datum sprejema v zavetišče',
+            'label' => trans('cat.date_of_arrival_mh'),
             'wrapper' => [
                 'dusk' => 'date-of-arrival-mh-input-wrapper'
             ],
         ]));
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_arrival_boter',
-            'label' => 'Datum vstopa v botrstvo',
+            'label' => trans('cat.date_of_arrival_boter'),
             'wrapper' => [
                 'dusk' => 'date-of-arrival-boter-input-wrapper'
             ],
@@ -175,7 +196,7 @@ class CatCrudController extends CrudController
         foreach ($this->catPhotoService::INDICES as $index) {
             $this->crud->addField([
                 'name' => 'photo_' . $index,
-                'label' => 'Slika ' . ($index + 1),
+                'label' => trans('cat.photo') . ' ' . ($index + 1),
                 'type' => 'cat_photo',
                 'wrapper' => [
                     'dusk' => "photo-$index-input-wrapper"
@@ -184,12 +205,12 @@ class CatCrudController extends CrudController
         }
         $this->crud->addField([
             'name' => 'story',
-            'label' => 'Zgodba',
+            'label' => trans('cat.story'),
             'type' => 'wysiwyg',
         ]);
         $this->crud->addField([
             'name' => 'location_id',
-            'label' => 'Lokacija',
+            'label' => trans('cat.location'),
             'type' => 'relationship',
             'placeholder' => 'Izberi lokacijo',
             'wrapper' => [
@@ -198,7 +219,7 @@ class CatCrudController extends CrudController
         ]);
         $this->crud->addField([
             'name' => 'is_active',
-            'label' => 'Objavljena',
+            'label' => trans('cat.is_active'),
             'type' => 'checkbox',
             'hint' => 'Ali naj bo muca javno vidna (npr. na seznamu vseh muc).',
             'wrapper' => [

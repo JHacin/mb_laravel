@@ -24,6 +24,7 @@ class CatFactory extends Factory
             'date_of_arrival_boter' => $this->faker->date(),
             'location_id' => CatLocation::inRandomOrder()->first() ?: CatLocation::factory(),
             'is_active' => true,
+            'is_group' => $this->faker->boolean,
         ];
     }
 }

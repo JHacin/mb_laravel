@@ -30,6 +30,7 @@ class AdminCatRequest extends FormRequest
             'date_of_arrival_boter' => ['nullable', 'date', 'before:now', 'after_or_equal:date_of_birth'],
             'story' => ['nullable', 'string'],
             'is_active' => ['boolean'],
+            'is_group' => ['boolean'],
         ];
 
         foreach (CatPhotoService::INDICES as $index) {

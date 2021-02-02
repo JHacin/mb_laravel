@@ -19,6 +19,7 @@ class AddFieldsToCatsTable extends Migration
             $table->date('date_of_arrival')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->boolean('is_group')->default(false);
         });
     }
 
@@ -35,6 +36,7 @@ class AddFieldsToCatsTable extends Migration
             $table->dropColumn('date_of_arrival');
             $table->dropColumn('date_of_birth');
             $table->dropColumn('is_active');
+            $table->dropColumn('is_group');
         });
     }
 }

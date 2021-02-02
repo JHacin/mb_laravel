@@ -12,14 +12,7 @@ use Throwable;
 
 class AdminCatListTest extends AdminTestCase
 {
-    /**
-     * @var Cat|null
-     */
     protected static ?Cat $sampleCat_1 = null;
-
-    /**
-     * @var Cat|null
-     */
     protected static ?Cat $sampleCat_2 = null;
 
     /**
@@ -36,7 +29,6 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_cat_details_are_shown_correctly()
@@ -63,7 +55,6 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_clicking_on_location_opens_up_location_edit_form()
@@ -82,7 +73,6 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_location_filter_options()
@@ -94,7 +84,6 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_filters_by_location()
@@ -102,7 +91,7 @@ class AdminCatListTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToCatsListPage($browser);
 
-            $browser->with('@cats-list-location-filter', function (Browser $browser) {
+            $browser->with('#bp-filters-navbar li[filter-name="location_id"]', function (Browser $browser) {
                 $browser
                     ->click('a.dropdown-toggle')
                     ->select('filter_locationId', static::$sampleCat_1->location_id);
@@ -119,7 +108,6 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_gender_filter_options()
@@ -127,7 +115,7 @@ class AdminCatListTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToCatsListPage($browser);
 
-            $browser->with('@cats-list-gender-filter', function (Browser $browser) {
+            $browser->with('#bp-filters-navbar li[filter-name="gender"]', function (Browser $browser) {
                 $browser->click('a.dropdown-toggle');
 
                 foreach (Cat::GENDER_LABELS as $key => $label) {
@@ -138,51 +126,67 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_filters_by_gender()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             static::$sampleCat_1->update(['gender' => Cat::GENDER_MALE]);
             static::$sampleCat_1->refresh();
             static::$sampleCat_2->update(['gender' => Cat::GENDER_FEMALE]);
             static::$sampleCat_2->refresh();
 
-            $this->goToCatsListPage($browser);
+            $this->goToCatsListPage($b);
 
-            $browser->with('@cats-list-gender-filter', function (Browser $browser) {
+            $b->with('#bp-filters-navbar li[filter-name="gender"]', function (Browser $b) {
                 $selectedOption = static::$sampleCat_1->gender;
+                $b->click('a.dropdown-toggle');
+                $b->click(".dropdown-item[dropdownkey='$selectedOption']");
 
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->click(".dropdown-item[dropdownkey='$selectedOption']");
             });
 
-            $this->waitForRequestsToFinish($browser);
+            $this->waitForRequestsToFinish($b);
 
-            $browser->with('@crud-table-body', function (Browser $browser) {
-                $browser
-                    ->assertSee(static::$sampleCat_1->name)
-                    ->assertDontSee(static::$sampleCat_2->name);
+            $b->with('@crud-table-body', function (Browser $b) {
+                $b->assertSee(static::$sampleCat_1->name);
+                $b->assertDontSee(static::$sampleCat_2->name);
             });
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_is_active_filter_options()
     {
         $this->browse(function (Browser $browser) {
             $this->goToCatsListPage($browser);
-            $this->assertSeeBooleanTypeFilter($browser, '@cats-list-is-active-filter');
+            $this->assertSeeBooleanTypeFilter($browser, '#bp-filters-navbar li[filter-name="is_active"]');
         });
     }
 
     /**
-     * @return void
+     * @throws Throwable
+     */
+    public function test_filters_by_is_group()
+    {
+        $this->browse(function (Browser $b) {
+            static::$sampleCat_1->update(['is_group' => true]);
+            static::$sampleCat_1->refresh();
+            static::$sampleCat_2->update(['is_group' => false]);
+            static::$sampleCat_2->refresh();
+
+            $this->goToCatsListPage($b);
+            $this->clickBooleanTypeFilterValue($b, '#bp-filters-navbar li[filter-name="is_group"]', true);
+
+            $b->with('@crud-table-body', function (Browser $b) {
+                $b->assertSee(static::$sampleCat_1->name);
+                $b->assertDontSee(static::$sampleCat_2->name);
+            });
+        });
+    }
+
+    /**
      * @throws Throwable
      */
     public function test_filters_by_is_active()
@@ -194,7 +198,7 @@ class AdminCatListTest extends AdminTestCase
             static::$sampleCat_2->refresh();
 
             $this->goToCatsListPage($browser);
-            $this->clickBooleanTypeFilterValue($browser, '@cats-list-is-active-filter', true);
+            $this->clickBooleanTypeFilterValue($browser, '#bp-filters-navbar li[filter-name="is_active"]', true);
 
             $browser->with('@crud-table-body', function (Browser $browser) {
                 $browser
@@ -205,7 +209,6 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_search_works()
@@ -231,7 +234,6 @@ class AdminCatListTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_deletes_cat()

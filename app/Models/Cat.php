@@ -23,11 +23,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property int $gender
+ * @property int|null $gender
  * @property string|null $story
  * @property Carbon|null $date_of_arrival_mh
  * @property Carbon|null $date_of_birth
  * @property bool $is_active
+ * @property int $is_group
  * @property int|null $location_id
  * @property string $slug
  * @property Carbon|null $date_of_arrival_boter
@@ -51,6 +52,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Cat whereGender($value)
  * @method static Builder|Cat whereId($value)
  * @method static Builder|Cat whereIsActive($value)
+ * @method static Builder|Cat whereIsGroup($value)
  * @method static Builder|Cat whereLocationId($value)
  * @method static Builder|Cat whereName($value)
  * @method static Builder|Cat whereSlug($value)
@@ -129,8 +131,13 @@ class Cat extends Model
     */
 
     /**
-     * Get the options for generating the slug.
+     * @inheritDoc
      */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -139,18 +146,6 @@ class Cat extends Model
             ->slugsShouldBeNoLongerThan(30);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    /**
-     * @param int $index
-     * @return CatPhoto|null
-     */
     public function getPhotoByIndex(int $index): ?CatPhoto
     {
         /** @var CatPhoto $photo */
@@ -207,21 +202,11 @@ class Cat extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Convert the stored integer to a label shown to the user.
-     *
-     * @return string
-     */
     public function getGenderLabelAttribute(): string
     {
         return self::GENDER_LABELS[$this->gender];
     }
 
-    /**
-     * Finds the first photo it can, and returns its URL, otherwise an empty string.
-     *
-     * @return string
-     */
     public function getFirstPhotoUrlAttribute(): string
     {
         foreach (CatPhotoService::INDICES as $index) {
@@ -235,11 +220,6 @@ class Cat extends Model
         return CatPhotoService::getPlaceholderImage();
     }
 
-    /**
-     * Returns the name followed by the ID enclosed in parentheses.
-     *
-     * @return string
-     */
     public function getNameAndIdAttribute(): string
     {
         return sprintf('%s (%d)', $this->name, $this->id);
