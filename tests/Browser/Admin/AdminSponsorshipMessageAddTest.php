@@ -223,7 +223,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
                 function (Browser $b) use ($messageType, $cat, $personData) {
                     $this->assertDetailsModalShowsValuesInOrder($b, [
                         1 => $messageType->name,
-                        2 => $personData->email_and_user_id,
+                        2 => $personData->email_and_id,
                         3 => $cat->name_and_id,
                     ]);
                 }

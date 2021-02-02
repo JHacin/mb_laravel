@@ -102,7 +102,7 @@ class AdminSponsorshipAddTest extends AdminTestCase
                 function (Browser $b) use ($cat, $personData, $data) {
                     $this->assertDetailsModalShowsValuesInOrder($b, [
                         1 => $cat->name_and_id,
-                        2 => $personData->email_and_user_id,
+                        2 => $personData->email_and_id,
                         3 => number_format($data['monthly_amount'], 2, ',', '.') . ' €',
                         4 => 'Da',
                         5 => 'Ne',

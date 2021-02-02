@@ -12,13 +12,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
+
 /**
  * App\Models\PersonData
  *
  * @property int $id
  * @property int|null $user_id
  * @property string|null $email
- * @property int $gender
+ * @property int|null $gender
  * @property string|null $first_name
  * @property string|null $last_name
  * @property Carbon|null $date_of_birth
@@ -28,7 +29,7 @@ use Illuminate\Support\Carbon;
  * @property string|null $country
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read string $email_and_user_id
+ * @property-read string $email_and_id
  * @property-read string $gender_label
  * @property-read Collection|SponsorshipMessage[] $sponsorshipMessages
  * @property-read int|null $sponsorship_messages_count
@@ -119,7 +120,7 @@ class PersonData extends Model
      *
      * @var string
      */
-    protected $identifiableAttribute = 'email_and_user_id';
+    protected $identifiableAttribute = 'email_and_id';
 
     /*
     |--------------------------------------------------------------------------
@@ -180,9 +181,9 @@ class PersonData extends Model
      *
      * @return string
      */
-    public function getEmailAndUserIdAttribute(): string
+    public function getEmailAndIdAttribute(): string
     {
-        return sprintf('%s (%s)', $this->email, $this->user_id ?? 'ni registriran');
+        return sprintf('%s (%d)', $this->email, $this->id);
     }
 
     /*

@@ -32,7 +32,7 @@ class AdminSponsorshipListTest extends AdminTestCase
                 $this->assertDetailsModalShowsValuesInOrder($browser, [
                     0 => $sponsorship->id,
                     1 => $sponsorship->cat->name_and_id,
-                    2 => $sponsorship->personData->email_and_user_id,
+                    2 => $sponsorship->personData->email_and_id,
                     3 => '99,00 €',
                     4 => 'Da',
                     5 => 'Ne',
@@ -166,8 +166,8 @@ class AdminSponsorshipListTest extends AdminTestCase
             $this->waitForRequestsToFinish($browser);
             $browser->with('@crud-table-body', function (Browser $browser) use ($shown, $hidden) {
                 $browser
-                    ->assertSee($shown->personData->email_and_user_id)
-                    ->assertDontSee($hidden->personData->email_and_user_id);
+                    ->assertSee($shown->personData->email_and_id)
+                    ->assertDontSee($hidden->personData->email_and_id);
             });
         });
     }

@@ -29,7 +29,7 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
                 $this->assertDetailsModalShowsValuesInOrder($b, [
                     0 => $msg->id,
                     1 => $msg->messageType->name,
-                    2 => $msg->personData->email_and_user_id,
+                    2 => $msg->personData->email_and_id,
                     3 => $msg->cat->name_and_id,
                     4 => $this->formatToDatetimeColumnString($msg->created_at),
                 ]);
@@ -134,8 +134,8 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
 
             $b->with('@crud-table-body', function (Browser $b) use ($shown, $hidden) {
                 $b
-                    ->assertSee($shown->personData->email_and_user_id)
-                    ->assertDontSee($hidden->personData->email_and_user_id);
+                    ->assertSee($shown->personData->email_and_id)
+                    ->assertDontSee($hidden->personData->email_and_id);
             });
         });
     }
@@ -209,10 +209,10 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
             $b->with('@crud-table-body', function (Browser $b) use ($shown, $hidden) {
                 $b
                     ->assertSee($shown->messageType->name)
-                    ->assertSee($shown->personData->email_and_user_id)
+                    ->assertSee($shown->personData->email_and_id)
                     ->assertSee($shown->cat->name_and_id)
                     ->assertDontSee($hidden->messageType->name)
-                    ->assertDontSee($hidden->personData->email_and_user_id)
+                    ->assertDontSee($hidden->personData->email_and_id)
                     ->assertDontSee($hidden->cat->name_and_id);
             });
         });

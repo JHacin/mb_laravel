@@ -2,14 +2,12 @@
 
 namespace Tests\Unit\Models;
 
-
 use App\Models\PersonData;
-use App\Models\User;
 use Tests\TestCase;
 
 class PersonDataTest extends TestCase
 {
-    protected $personData;
+    protected PersonData $personData;
 
     /**
      * @inheritDoc
@@ -20,26 +18,17 @@ class PersonDataTest extends TestCase
         $this->personData = $this->createPersonData();
     }
 
-    /**
-     * @return void
-     */
     public function test_returns_gender_label()
     {
         $this->personData->update(['gender' => PersonData::GENDER_MALE]);
         $this->assertEquals('Moški', $this->personData->gender_label);
     }
 
-    /**
-     * @return void
-     */
-    public function test_returns_email_and_user_id_attribute_correcly()
+    public function test_returns_email_and_id_attribute_correcly()
     {
         $email = $this->personData->email;
-        $this->personData->user()->associate(User::factory()->createOne());
-        $userId = $this->personData->user_id;
+        $id = $this->personData->id;
 
-        $this->assertEquals("$email ($userId)", $this->personData->email_and_user_id);
-        $this->personData->user()->dissociate();
-        $this->assertEquals("$email (ni registriran)", $this->personData->email_and_user_id);
+        $this->assertEquals("$email ($id)", $this->personData->email_and_id);
     }
 }
