@@ -21,6 +21,10 @@ class CreateCatLocationsTable extends Migration
             $table->string('country')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('cats', function (Blueprint $table) {
+            $table->foreignId('location_id')->nullable()->constrained('cat_locations')->nullOnDelete();
+        });
     }
 
     /**
@@ -31,5 +35,10 @@ class CreateCatLocationsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('cat_locations');
+
+        Schema::table('cats', function (Blueprint $table) {
+            $table->dropForeign(['location_id']);
+            $table->dropColumn('location_id');
+        });
     }
 }

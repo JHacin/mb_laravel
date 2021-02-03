@@ -15,7 +15,11 @@ class CreateSponsorshipsTable extends Migration
         Schema::create('sponsorships', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('cat_id')->nullable()->constrained('cats')->nullOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('person_data_id')->nullable()->constrained('person_data')->nullOnDelete();
+            $table->boolean('is_anonymous')->default(false);
+            $table->decimal('monthly_amount')->nullable();
+            $table->boolean('is_active')->default(false);
+            $table->date('ended_at')->nullable();
             $table->timestamps();
         });
     }
