@@ -46,32 +46,34 @@
                 <div class="column is-6">
                     <h1 class="title" dusk="cat-details-name">{{ $cat->name }}</h1>
 
-                    <div class="block">
-                        <div class="mb-2">
-                            <span>Datum vstopa v botrstvo:</span>
-                            <strong dusk="cat-details-date_of_arrival_boter">{{ $dateOfArrivalBoter }}</strong>
-                        </div>
+                    @if(!$cat->is_group)
+                        <div class="block">
+                            <div class="mb-2">
+                                <span>Datum vstopa v botrstvo:</span>
+                                <strong dusk="cat-details-date_of_arrival_boter">{{ $dateOfArrivalBoter }}</strong>
+                            </div>
 
-                        <div class="mb-2">
-                            <span>Trenutna starost:</span>
-                            <strong dusk="cat-details-current_age">{{ $currentAge }}</strong>
-                        </div>
+                            <div class="mb-2">
+                                <span>Trenutna starost:</span>
+                                <strong dusk="cat-details-current_age">{{ $currentAge }}</strong>
+                            </div>
 
-                        <div class="mb-2">
-                            <span>Datum prihoda v Mačjo hišo:</span>
-                            <strong dusk="cat-details-date_of_arrival_mh">{{ $dateOfArrivalMh }}</strong>
-                        </div>
+                            <div class="mb-2">
+                                <span>Datum prihoda v Mačjo hišo:</span>
+                                <strong dusk="cat-details-date_of_arrival_mh">{{ $dateOfArrivalMh }}</strong>
+                            </div>
 
-                        <div class="mb-2">
-                            <span>Starost ob prihodu:</span>
-                            <strong dusk="cat-details-age_on_arrival_mh">{{ $ageOnArrivalMh }}</strong>
-                        </div>
+                            <div class="mb-2">
+                                <span>Starost ob prihodu:</span>
+                                <strong dusk="cat-details-age_on_arrival_mh">{{ $ageOnArrivalMh }}</strong>
+                            </div>
 
-                        <div>
-                            <span>Spol:</span>
-                            <strong dusk="cat-details-gender_label">{{ $cat->gender_label }}</strong>
+                            <div>
+                                <span>Spol:</span>
+                                <strong dusk="cat-details-gender_label">{{ $cat->gender_label }}</strong>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="block">
                         <a
@@ -82,11 +84,19 @@
                             <span class="icon">
                                 <i class="fas fa-arrow-circle-right"></i>
                             </span>
-                            <span>Postani moj boter</span>
+                            <span>
+                                @if($cat->is_group)
+                                    Postani boter
+                                @else
+                                    Postani moj boter
+                                @endif
+                            </span>
                         </a>
                     </div>
 
-                    <h4 class="title is-5 mb-3">Moja zgodba</h4>
+                    @if(!$cat->is_group)
+                        <h4 class="title is-5 mb-3" dusk="cat-details-story-title">Moja zgodba</h4>
+                    @endif
 
                     <div class="content" dusk="cat-details-story">
                         {!! $cat->story !!}
@@ -94,7 +104,13 @@
                 </div>
 
                 <div class="column is-3">
-                    <h5 class="title is-5">Moji botri</h5>
+                    <h5 class="title is-5" dusk="cat-details-sponsor-list-title">
+                        @if($cat->is_group)
+                            Trenutni botri
+                        @else
+                            Moji botri
+                        @endif
+                    </h5>
                     <div dusk="cat-details-sponsor-list">
                         @if($cat->sponsorships()->count() === 0)
                             Muca še nima botrov.

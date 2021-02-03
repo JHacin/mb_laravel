@@ -19,24 +19,60 @@ class CatDetailsTest extends DuskTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_shows_cat_details()
+    public function test_shows_individual_cat_details()
     {
         $this->browse(function (Browser $b) {
             $cat = $this->createCatWithPhotos([
                 'date_of_arrival_boter' => '2005-12-20',
                 'date_of_arrival_mh' => '2000-01-01',
-                'date_of_birth' => '1990-06-05'
+                'date_of_birth' => '1990-06-05',
+                'is_group' => false,
             ]);
             $this->goToPage($b, $cat);
 
             $b->assertSeeIn('@cat-details-name', $cat->name);
             $b->assertSeeIn('@cat-details-date_of_arrival_boter', '20. 12. 2005');
-            $b->assertSeeIn('@cat-details-current_age',
-                AgeFormat::formatToAgeString($cat->date_of_birth->diff(Carbon::now())));
+            $b->assertSeeIn(
+                '@cat-details-current_age',
+                AgeFormat::formatToAgeString($cat->date_of_birth->diff(Carbon::now()))
+            );
             $b->assertSeeIn('@cat-details-date_of_arrival_mh', 'januar 2000');
             $b->assertSeeIn('@cat-details-age_on_arrival_mh', '9 let in 6 mesecev');
             $b->assertSeeIn('@cat-details-gender_label', $cat->gender_label);
+            $b->assertSeeIn('@cat-details-become-sponsor-form-link', 'Postani moj boter');
+            $b->assertSeeIn('@cat-details-story-title', 'Moja zgodba');
             $b->assertSeeIn('@cat-details-story', $cat->story);
+            $b->assertSeeIn('@cat-details-sponsor-list-title', 'Moji botri');
+
+            foreach (CatPhotoService::INDICES as $index) {
+                $b->assertAttribute(
+                    '@cat-details-photo-' . $index,
+                    'src',
+                    env('APP_URL') . $cat->getPhotoByIndex($index)->url,
+                );
+            }
+        });
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function test_shows_different_content_for_groups()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCatWithPhotos(['is_group' => true]);
+            $this->goToPage($b, $cat);
+
+            $b->assertSeeIn('@cat-details-name', $cat->name);
+            $b->assertMissing('@cat-details-date_of_arrival_boter');
+            $b->assertMissing('@cat-details-current_age');
+            $b->assertMissing('@cat-details-date_of_arrival_mh');
+            $b->assertMissing('@cat-details-age_on_arrival_mh');
+            $b->assertMissing('@cat-details-gender_label');
+            $b->assertSeeIn('@cat-details-become-sponsor-form-link', 'Postani boter');
+            $b->assertMissing('@cat-details-story-title');
+            $b->assertSeeIn('@cat-details-story', $cat->story);
+            $b->assertSeeIn('@cat-details-sponsor-list-title', 'Trenutni botri');
 
             foreach (CatPhotoService::INDICES as $index) {
                 $b->assertAttribute(
@@ -59,6 +95,7 @@ class CatDetailsTest extends DuskTestCase
                 'date_of_arrival_boter' => null,
                 'date_of_arrival_mh' => null,
                 'date_of_birth' => null,
+                'is_group' => false,
             ]);
             $this->goToPage($b, $cat);
 
@@ -77,7 +114,7 @@ class CatDetailsTest extends DuskTestCase
     public function test_shows_sponsor_list()
     {
         $this->browse(function (Browser $b) {
-            $catWithoutSponsors = $this->createCat();
+            $catWithoutSponsors = $this->createCat(['is_group' => false]);
             $this->goToPage($b, $catWithoutSponsors);
             $b->assertSeeIn('@cat-details-sponsor-list', 'Muca še nima botrov.');
 
