@@ -13,6 +13,9 @@ class CatSeeder extends Seeder
     public function run()
     {
         $cats = Cat::factory()->count(100)->create();
+        $cats->push(Cat::factory()->createOne(['is_group' => true]));
+        $cats->push(Cat::factory()->createOne(['is_group' => true]));
+        $cats->push(Cat::factory()->createOne(['is_group' => true]));
 
         foreach ($cats as $cat) {
             $indicesShuffled = Arr::shuffle(CatPhotoService::INDICES);

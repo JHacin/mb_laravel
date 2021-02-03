@@ -6,3 +6,24 @@
 .cat-list-item-image-wrapper {
     border-bottom: 2px solid $secondary;
 }
+
+.cat-list-item.cat-list-item--group {
+
+    &,
+    .cat-list-item-image-wrapper {
+        border-color: $primary;
+    }
+
+    .card-content {
+        background-color: $primary;
+
+        &,
+        .title {
+            color: $white;
+        }
+
+        .cat-list-item__link {
+            @extend .has-text-white;
+        }
+    }
+}

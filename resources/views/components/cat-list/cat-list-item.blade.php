@@ -1,5 +1,5 @@
 <div
-    class="cat-list-item card is-flex-grow-1 is-flex is-flex-direction-column"
+    class="cat-list-item {{ $cat->is_group ? 'cat-list-item--group' : '' }} card is-flex-grow-1 is-flex is-flex-direction-column"
     dusk="cat-list-item"
     data-cat-id="{{ $cat->id }}"
 >
@@ -12,49 +12,67 @@
     <div class="card-content is-flex-grow-1 is-flex is-flex-direction-column">
         <h5 class="title is-5" dusk="cat-list-item-name">{{ $cat->name }}</h5>
 
-        <div class="mb-2">
-            <span>Trenutno botrov:</span>
-            <strong dusk="cat-list-item-sponsorship-count">{{ $cat->sponsorships_count }}</strong>
-        </div>
-
-        <div class="mb-2">
-            <span>Datum vstopa v botrstvo:</span>
-            <div>
-                <strong dusk="cat-list-item-date-of-arrival-boter">{{ $dateOfArrivalBoter }}</strong>
-            </div>
-        </div>
-
         <div class="mb-4">
-            <span>Trenutna starost:</span>
-            <div>
-                <strong dusk="cat-list-item-current-age">{{ $currentAge }}</strong>
+            <div class="mb-2">
+                <span>Trenutno botrov:</span>
+                    <span class="has-text-weight-semibold" dusk="cat-list-item-sponsorship-count">
+                    {{ $cat->sponsorships_count }}
+                </span>
             </div>
+
+            @if(!$cat->is_group)
+                <div class="mb-2">
+                    <span>Datum vstopa v botrstvo:</span>
+                    <div class="has-text-weight-semibold" dusk="cat-list-item-date-of-arrival-boter">
+                        {{ $dateOfArrivalBoter }}
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <span>Trenutna starost:</span>
+                    <div class="has-text-weight-semibold" dusk="cat-list-item-current-age">
+                        {{ $currentAge }}
+                    </div>
+                </div>
+            @endif
         </div>
 
         <div style="margin-top: auto;">
             <div class="mb-2">
                 <a
-                    class="is-flex is-align-items-center has-text-weight-semibold has-text-secondary"
+                    class="cat-list-item__link is-flex is-align-items-center has-text-weight-semibold has-text-secondary"
                     href="{{ route('cat_details', $cat) }}"
                     dusk="cat-list-item-details-link"
                 >
                     <span class="icon is-justify-content-flex-start">
                         <i class="fas fa-arrow-circle-right"></i>
                     </span>
-                    <span>Preberi mojo zgodbo</span>
+                    <span>
+                        @if($cat->is_group)
+                            Preberi več
+                        @else
+                            Preberi mojo zgodbo
+                        @endif
+                    </span>
                 </a>
             </div>
 
             <div>
                 <a
-                    class="is-flex is-align-items-center has-text-weight-semibold has-text-primary"
+                    class="cat-list-item__link is-flex is-align-items-center has-text-weight-semibold has-text-primary"
                     href="{{ route('become_cat_sponsor', $cat) }}"
                     dusk="cat-list-item-sponsorship-form-link"
                 >
                     <span class="icon is-justify-content-flex-start">
                         <i class="fas fa-arrow-circle-right"></i>
                     </span>
-                    <span>Postani moj boter</span>
+                    <span>
+                        @if($cat->is_group)
+                            Postani boter
+                        @else
+                            Postani moj boter
+                        @endif
+                    </span>
                 </a>
             </div>
         </div>

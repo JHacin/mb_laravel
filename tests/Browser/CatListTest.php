@@ -16,10 +16,6 @@ class CatListTest extends DuskTestCase
 {
     protected const SORT_FIELDS = ['sponsorship_count', 'age', 'id'];
     protected const SORT_DIRECTIONS = ['asc', 'desc'];
-
-    /**
-     * @var Cat|null
-     */
     protected static ?Cat $sampleCat = null;
 
     /**
@@ -30,39 +26,65 @@ class CatListTest extends DuskTestCase
         parent::setUp();
 
         if (!static::$sampleCat) {
-            static::$sampleCat = $this->createCatWithSponsorships([
-                'name' => 'Lojza',
-                'date_of_arrival_boter' => '1999-08-21',
-                'date_of_birth' => Carbon::now()->subYear()->subMonth()->subDays(4)
-            ]);
+            static::$sampleCat = $this->createCatWithSponsorships();
         }
     }
 
 
     /**
-     * @return void
      * @throws Throwable
      */
-    public function test_shows_cat_details()
+    public function test_shows_individual_cat_details_correctly()
     {
         $this->browse(function (Browser $b) {
-            $this->goToPage($b);
+            $cat = $this->createCat([
+                'name' => 'Lojza',
+                'date_of_arrival_boter' => '1999-08-21',
+                'date_of_birth' => Carbon::now()->subYear()->subMonth()->subDays(4),
+                'is_group' => false,
+            ]);
 
-            $b->with($this->getCatByIdCardSelector(static::$sampleCat), function (Browser $b) {
-               $b->assertSeeIn('@cat-list-item-name', 'Lojza');
-               $this->assertEquals(
-                   static::$sampleCat->sponsorships()->count(),
-                   $b->text('@cat-list-item-sponsorship-count'),
+            $this->goToPage($b, '?per_page=all');
+            $catDetailsCardSelector = $this->getCatByIdCardSelector($cat);
+            $this->assertNotHasClass($b, $catDetailsCardSelector, 'cat-list-item--group');
 
-               );
+            $b->with($catDetailsCardSelector, function (Browser $b) use ($cat) {
+               $b->assertSeeIn('@cat-list-item-name', $cat->name);
+               $this->assertEquals($cat->sponsorships()->count(), $b->text('@cat-list-item-sponsorship-count'));
                $b->assertSeeIn('@cat-list-item-date-of-arrival-boter', '21. 8. 1999');
                $b->assertSeeIn('@cat-list-item-current-age', '1 leto in 1 mesec');
+               $b->assertSeeIn('@cat-list-item-details-link', 'Preberi mojo zgodbo');
+               $b->assertSeeIn('@cat-list-item-sponsorship-form-link', 'Postani moj boter');
             });
         });
     }
 
     /**
-     * @return void
+     * @throws Throwable
+     */
+    public function test_shows_cat_group_details_correctly()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCat([
+                'name' => 'Pikiji',
+                'is_group' => true,
+            ]);
+
+            $this->goToPage($b, '?per_page=all');
+            $catDetailsCardSelector = $this->getCatByIdCardSelector($cat);
+            $this->assertHasClass($b, $catDetailsCardSelector, 'cat-list-item--group');
+
+            $b->with($catDetailsCardSelector, function (Browser $b) use ($cat) {
+               $b->assertSeeIn('@cat-list-item-name', $cat->name);
+               $b->assertMissing('@cat-list-item-date-of-arrival-boter');
+               $b->assertMissing('@cat-list-item-current-age');
+                $b->assertSeeIn('@cat-list-item-details-link', 'Preberi več');
+                $b->assertSeeIn('@cat-list-item-sponsorship-form-link', 'Postani boter');
+            });
+        });
+    }
+
+    /**
      * @throws Throwable
      */
     public function test_doesnt_count_inactive_sponsorships()
@@ -84,7 +106,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_links_work()
@@ -105,7 +126,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_first_12_cats_by_default()
@@ -117,7 +137,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_pagination_page_links_work()
@@ -146,7 +165,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_searching_by_name_works()
@@ -171,7 +189,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_search_respects_other_active_queries()
@@ -195,7 +212,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_clearing_search_works()
@@ -219,7 +235,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_clearing_search_keeps_other_active_queries()
@@ -241,7 +256,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_per_page_options()
@@ -258,7 +272,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_doesnt_show_per_page_options_if_there_is_less_than_2_pages()
@@ -279,7 +292,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_doesnt_show_24_per_page_option_if_there_are_fewer_than_24_results()
@@ -300,7 +312,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_clicking_per_page_links_works()
@@ -319,7 +330,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_per_page_links_respect_other_active_queries()
@@ -347,7 +357,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_active_per_page_link_is_highlighted()
@@ -373,7 +382,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_clicking_per_page_link_resets_to_page_1()
@@ -389,7 +397,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_sponsorship_count_sort_links_work()
@@ -425,7 +432,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_date_of_birth_sort_links_work()
@@ -461,7 +467,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_id_sort_links_work()
@@ -499,7 +504,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_highlights_active_sort_links()
@@ -533,7 +537,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_sort_links_respect_other_active_queries()
@@ -565,7 +568,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_sort_links_arent_shown_if_there_are_fewer_than_2_results()
@@ -581,7 +583,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_no_results_message()
@@ -597,7 +598,6 @@ class CatListTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_doesnt_show_per_page_or_sort_options_if_there_are_no_cats()
@@ -613,19 +613,11 @@ class CatListTest extends DuskTestCase
         });
     }
 
-    /**
-     * @param Cat $cat
-     * @return string
-     */
     protected function getCatByIdCardSelector(Cat $cat): string
     {
         return '[dusk="cat-list-item"][data-cat-id="' . $cat->id . '"]';
     }
 
-    /**
-     * @param Browser $browser
-     * @param string $search
-     */
     protected function submitSearch(Browser $browser, string $search)
     {
         $browser->type('@search-input', $search);
@@ -633,12 +625,8 @@ class CatListTest extends DuskTestCase
         $browser->on(new CatListPage);
     }
 
-    /**
-     * @param Browser $browser
-     * @return Browser
-     */
-    protected function goToPage(Browser $browser): Browser
+    protected function goToPage(Browser $browser, string $query = ''): Browser
     {
-        return $browser->visit(new CatListPage);
+        return $browser->visit((new CatListPage)->url() . $query);
     }
 }
