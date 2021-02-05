@@ -4,6 +4,7 @@ namespace Tests\Browser;
 
 use App\Models\Cat;
 use App\Models\PersonData;
+use App\Models\Sponsorship;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\CatSponsorshipFormPage;
 use Tests\DuskTestCase;
@@ -208,18 +209,20 @@ class CatSponsorshipFormTest extends DuskTestCase
      */
     public function test_handles_registered_user_submission()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             self::$cat->sponsorships()->delete();
-            $browser->loginAs(self::$sampleUser);
-            $this->goToPage($browser);
-            $this->fillOutNonPersonDataFields($browser);
-            $this->submit($browser);
-            $browser->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
+            $b->loginAs(self::$sampleUser);
+            $this->goToPage($b);
+            $this->fillOutNonPersonDataFields($b);
+            $b->uncheck('@wants_direct_debit-input');
+            $this->submit($b);
+            $b->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
             $this->assertDatabaseHas('sponsorships', [
                 'person_data_id' => self::$sampleUser->personData->id,
                 'cat_id' => self::$cat->id,
                 'monthly_amount' => 5,
                 'is_anonymous' => 1,
+                'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
             ]);
         });
     }
@@ -283,21 +286,20 @@ class CatSponsorshipFormTest extends DuskTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_handles_anon_user_submission()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             self::$cat->sponsorships()->delete();
             /** @var PersonData $personData */
             $personData = PersonData::factory()->makeOne();
             $formData = $this->getPersonDataFieldValueArray($personData);
 
-            $this->goToPage($browser);
-            $this->fillOutAllFields($browser, $formData);
-            $this->submit($browser);
-            $browser->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
+            $this->goToPage($b);
+            $this->fillOutAllFields($b, $formData);
+            $this->submit($b);
+            $b->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
 
             /** @var PersonData $createdPersonData */
             $createdPersonData = PersonData::firstWhere('email', $personData->email);
@@ -310,6 +312,7 @@ class CatSponsorshipFormTest extends DuskTestCase
                 'cat_id' => self::$cat->id,
                 'monthly_amount' => 5,
                 'is_anonymous' => 1,
+                'payment_type' => Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT,
             ]);
         });
     }
@@ -396,24 +399,16 @@ class CatSponsorshipFormTest extends DuskTestCase
             ->select('@personData[country]-input', $formData['country']);
     }
 
-    /**
-     * @param Browser $browser
-     * @return Browser
-     */
-    protected function fillOutNonPersonDataFields(Browser $browser): Browser
+    protected function fillOutNonPersonDataFields(Browser $b)
     {
-        return $browser
-            ->type('@monthly_amount-input', '5')
-            ->check('@is_anonymous-input')
-            ->check('@is_agreed_to_terms-input');
+        $b->type('@monthly_amount-input', '5');
+        $b->check('@is_anonymous-input');
+        $b->check('@is_agreed_to_terms-input');
+        $b->check('@wants_direct_debit-input');
     }
 
-    /**
-     * @param Browser $browser
-     * @return Browser
-     */
-    protected function submit(Browser $browser): Browser
+    protected function submit(Browser $b)
     {
-        return $browser->click('@cat-sponsorship-submit');
+        $b->click('@cat-sponsorship-submit');
     }
 }

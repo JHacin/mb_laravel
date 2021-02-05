@@ -8,28 +8,12 @@ use App\Models\PersonData;
 use App\Models\Sponsorship;
 use App\Models\User;
 use Auth;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use SponsorshipMail;
 
-/**
- * Class CatSponsorshipController
- * @package App\Http\Controllers
- */
 class CatSponsorshipController extends Controller
 {
-
-    /**
-     * Handle incoming cat sponsorship form request.
-     *
-     * @param Cat $cat
-     * @param CatSponsorshipRequest $request
-     * @return RedirectResponse
-     */
     public function submit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
     {
         $input = $request->all();
@@ -39,8 +23,8 @@ class CatSponsorshipController extends Controller
         }
 
         $personData = $this->updateOrCreatePersonData($request->input('personData'));
-        $this->createSponsorship($cat, $personData, $input);
-        SponsorshipMail::sendInitialInstructionsEmail($personData);
+        $sponsorship = $this->createSponsorship($cat, $personData, $input);
+        SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
 
         return back()->with(
             'success_message',
@@ -48,11 +32,7 @@ class CatSponsorshipController extends Controller
         );
     }
 
-    /**
-     * @param User|Authenticatable $user
-     * @param string $inputEmail
-     */
-    protected function updateUserEmail($user, string $inputEmail)
+    protected function updateUserEmail(User $user, string $inputEmail)
     {
         if ($inputEmail === $user->email) {
             return;
@@ -61,11 +41,7 @@ class CatSponsorshipController extends Controller
         $user->update(['email' => $inputEmail]);
     }
 
-    /**
-     * @param array $personDataFormInput
-     * @return PersonData|Model
-     */
-    protected function updateOrCreatePersonData(array $personDataFormInput)
+    protected function updateOrCreatePersonData(array $personDataFormInput): PersonData
     {
         $personData = PersonData::firstOrCreate(['email' => $personDataFormInput['email']]);
         $personData->update($personDataFormInput);
@@ -74,29 +50,21 @@ class CatSponsorshipController extends Controller
         return $personData;
     }
 
-    /**
-     * @param Cat $cat
-     * @param PersonData $personData
-     * @param array $formInput
-     */
-    protected function createSponsorship(Cat $cat, PersonData $personData, array $formInput)
+    protected function createSponsorship(Cat $cat, PersonData $personData, array $formInput): Sponsorship
     {
-        Sponsorship::create([
+        return Sponsorship::create([
             'person_data_id' => $personData->id,
             'cat_id' => $cat->id,
             'monthly_amount' => $formInput['monthly_amount'],
+            'payment_type' => isset($formInput['wants_direct_debit'])
+                ? Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT
+                : Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
             'is_anonymous' => $formInput['is_anonymous'] ?? false,
             'is_active' => false,
         ]);
     }
 
-    /**
-     * Show the page with the form for sponsoring a cat.
-     *
-     * @param Cat $cat
-     * @return Application|Factory|View|void
-     */
-    public function form(Cat $cat)
+    public function form(Cat $cat): View
     {
         return view('become-cat-sponsor', ['cat' => $cat]);
     }

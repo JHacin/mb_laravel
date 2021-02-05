@@ -14684,14 +14684,14 @@
                     /**
          * 
          *
-         * @param \App\Models\PersonData $personData
+         * @param \App\Models\Sponsorship $sponsorship
          * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
          * @static 
          */ 
-        public static function sendInitialInstructionsEmail($personData)
+        public static function sendInitialInstructionsEmail($sponsorship)
         {
                         /** @var \App\Mail\SponsorshipMail $instance */
-                        return $instance->sendInitialInstructionsEmail($personData);
+                        return $instance->sendInitialInstructionsEmail($sponsorship);
         }
          
     }

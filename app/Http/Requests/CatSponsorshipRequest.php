@@ -40,6 +40,7 @@ class CatSponsorshipRequest extends FormRequest
             ],
             'is_anonymous' => ['boolean'],
             'is_agreed_to_terms' => ['accepted'],
+            'wants_direct_debit' => ['boolean'],
         ];
     }
 

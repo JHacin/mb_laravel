@@ -2,22 +2,26 @@
 
 namespace App\Mail;
 
-use App\Models\PersonData;
+use App\Models\Sponsorship;
 use MailClient;
 
 class SponsorshipMail
 {
     /**
-     * @param \App\Models\PersonData $personData
+     * @param \App\Models\Sponsorship $sponsorship
      * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
      */
-    public function sendInitialInstructionsEmail(PersonData $personData)
+    public function sendInitialInstructionsEmail(Sponsorship $sponsorship)
     {
+        $template = $sponsorship->payment_type === Sponsorship::PAYMENT_TYPE_BANK_TRANSFER
+            ? 'navodila_za_botrovanje_nakazilo'
+            : 'navodila_za_botrovanje_trajnik';
+
         MailClient::send([
-            'to' => $personData->email,
+            'to' => $sponsorship->personData->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
-            'template' => 'sponsorship_initial_instructions',
+            'template' => $template,
         ]);
     }
 }

@@ -10,9 +10,6 @@ use Tests\TestCase;
 
 class CatSponsorshipControllerTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function test_sends_initial_instructions_email_on_form_submit()
     {
         $cat = $this->createCat();
@@ -21,16 +18,12 @@ class CatSponsorshipControllerTest extends TestCase
 
         $requestMock
             ->shouldReceive([
-                'all' => [
-                    'monthly_amount' => 5,
-                ],
+                'all' => ['monthly_amount' => 5],
                 'input' => $personData->toArray(),
             ])
             ->once();
 
-
-        SponsorshipMail::shouldReceive('sendInitialInstructionsEmail')
-            ->once();
+        SponsorshipMail::shouldReceive('sendInitialInstructionsEmail')->once();
 
         (new CatSponsorshipController())->submit($cat, $requestMock);
     }

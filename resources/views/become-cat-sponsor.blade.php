@@ -117,6 +117,18 @@
                     </x-inputs.base.checkbox>
                 </div>
 
+
+                <div class="block">
+                    <x-inputs.base.checkbox name="wants_direct_debit">
+                        <x-slot name="label">
+                            Želim, da mi pošljete informacije v zvezi z ureditvijo trajnika
+                        </x-slot>
+                        <x-slot name="help">
+                            Navodila boste prejeli na email naslov.
+                        </x-slot>
+                    </x-inputs.base.checkbox>
+                </div>
+
                 <div class="block">
                     <span>Ime živali, ki jo želite posvojiti na daljavo:</span>
                     <strong>{{ $cat->name }}</strong>
