@@ -6,19 +6,12 @@ use Laravel\Dusk\Browser;
 
 trait CrudFormTestingHelpers
 {
-    /**
-     * @param Browser $browser
-     */
     protected function clickSubmitButton(Browser $browser)
     {
         $browser->click('@crud-form-submit-button');
         $this->waitForRequestsToFinish($browser);
     }
 
-    /**
-     * @param Browser $browser
-     * @param string $wrapperSelector
-     */
     protected function clickCheckbox(Browser $browser, string $wrapperSelector)
     {
         $browser->with($wrapperSelector, function (Browser $browser) {
@@ -26,11 +19,13 @@ trait CrudFormTestingHelpers
         });
     }
 
-    /**
-     * @param Browser $browser
-     * @param string $wrapperSelector
-     * @param int $monthsAgo
-     */
+    protected function selectRadioOption(Browser $browser, string $wrapperSelector, $value)
+    {
+        $browser->with($wrapperSelector, function (Browser $b) use ($value) {
+            $b->click('input[value="' . $value . '"]');
+        });
+    }
+
     protected function selectDatepickerDateInThePast(Browser $browser, string $wrapperSelector, int $monthsAgo = 2)
     {
         $browser->with($wrapperSelector, function (Browser $browser) {
@@ -46,10 +41,6 @@ trait CrudFormTestingHelpers
         });
     }
 
-    /**
-     * @param Browser $browser
-     * @param string $wrapperSelector
-     */
     protected function selectDatepickerDateInTheFuture(Browser $browser, string $wrapperSelector)
     {
         $browser->with($wrapperSelector, function (Browser $browser) {

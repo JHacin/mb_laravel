@@ -167,12 +167,8 @@ class AdminCatAddTest extends AdminTestCase
 
             $browser->type('name', 'Garfield');
 
-            $browser->with('@gender-input-wrapper', function (Browser $browser) {
-                $browser->click('input[value="1"]');
-            });
-            $browser->with('@is_group-input-wrapper', function (Browser $browser) {
-                $browser->click('input[value="1"]');
-            });
+            $this->selectRadioOption($browser, '@gender-input-wrapper', Cat::GENDER_MALE);
+            $this->selectRadioOption($browser, '@is_group-input-wrapper', 1);
 
             $dateInputWrappers = [
                 '@date-of-birth-input-wrapper',

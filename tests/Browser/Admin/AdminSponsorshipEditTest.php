@@ -28,6 +28,7 @@ class AdminSponsorshipEditTest extends AdminTestCase
                 ->assertValue('input[name="monthly_amount"]', $sponsorship->monthly_amount)
                 ->assertValue('input[name="is_anonymous"]', (int)$sponsorship->is_anonymous)
                 ->assertValue('input[name="is_active"]', (int)$sponsorship->is_active)
+                ->assertValue('input[name="payment_type"]', $sponsorship->payment_type)
                 ->assertValue(
                     'input[name="ended_at"]',
                     $sponsorship->ended_at ? $sponsorship->ended_at->toDateString() : ''

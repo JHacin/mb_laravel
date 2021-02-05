@@ -208,9 +208,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $b->select('messageType', $messageType->id);
             $b->select('personData', $personData->id);
             $b->select('cat', $cat->id);
-            $b->with('@should_send_email-input-wrapper', function (Browser $b) {
-                $b->click('input[value="0"]');
-            });
+            $this->selectRadioOption($b, '@should_send_email-input-wrapper', 0);
 
             $this->clickSubmitButton($b);
             $b->on(new AdminSponsorshipMessageListPage);

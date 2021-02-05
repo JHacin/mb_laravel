@@ -192,6 +192,17 @@ class SponsorshipCrudController extends CrudController
             ]
         ]));
         $this->crud->addField([
+            'name' => 'payment_type',
+            'label' => trans('sponsorship.payment_type'),
+            'type' => 'radio',
+            'options' => Sponsorship::PAYMENT_TYPE_LABELS,
+            'default' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
+            'inline' => true,
+            'wrapper' => [
+                'dusk' => 'payment_type-input-wrapper'
+            ],
+        ]);
+        $this->crud->addField([
             'name' => 'is_anonymous',
             'label' => 'Anonimno',
             'type' => 'checkbox',
@@ -209,6 +220,11 @@ class SponsorshipCrudController extends CrudController
             'hint' =>
                 'Botrovanje je v teku (redna plačila, muca še kar potrebuje botre itd.).' .
                 '<br>Neaktivna botrovanja ne bodo vključena na spletni strani (v seštevkih botrovanj, na seznamih botrov itd.)',
+        ]);
+        $this->crud->addField([
+            'name'  => 'email_warning',
+            'type'  => 'custom_html',
+            'value' => '<b>Boter po vnosu ne bo prejel avtomatskega emaila.</b>'
         ]);
     }
 

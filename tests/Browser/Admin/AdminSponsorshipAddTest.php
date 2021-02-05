@@ -4,6 +4,7 @@ namespace Tests\Browser\Admin;
 
 use App\Models\Cat;
 use App\Models\PersonData;
+use App\Models\Sponsorship;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Admin\AdminSponsorshipAddPage;
@@ -79,31 +80,35 @@ class AdminSponsorshipAddTest extends AdminTestCase
             /** @var PersonData $personData */
             $personData = PersonData::inRandomOrder()->first();
 
-            $data = [
-                'monthly_amount' => '25.44',
-                'is_anonymous' => true,
-                'is_active' => true,
-            ];
 
-            $b
-                ->select('cat', $cat->id)
-                ->select('personData', $personData->id)
-                ->type('monthly_amount', $data['monthly_amount']);
-
+            $b->select('cat', $cat->id);
+            $b->select('personData', $personData->id);
+            $b->type('monthly_amount', '25.44');
+            $this->selectRadioOption($b, '@payment_type-input-wrapper', Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT);
             $this->clickCheckbox($b, '@is_anonymous-wrapper');
+
             $this->clickSubmitButton($b);
+
             $b->on(new AdminSponsorshipListPage);
             $b->assertSee('Vnos uspešen.');
 
-            $this->openFirstRowDetails($b);
+            $this->assertDatabaseHas('sponsorships', [
+                'cat_id' => $cat->id,
+                'person_data_id' => $personData->id,
+                'is_anonymous' => 1,
+                'payment_type' => Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT,
+                'monthly_amount' => 25.44,
+                'is_active' => 0,
+            ]);
 
+            $this->openFirstRowDetails($b);
             $b->whenAvailable(
                 '@data-table-row-details-modal',
-                function (Browser $b) use ($cat, $personData, $data) {
+                function (Browser $b) use ($cat, $personData) {
                     $this->assertDetailsModalShowsValuesInOrder($b, [
                         1 => $cat->name_and_id,
                         2 => $personData->email_and_id,
-                        3 => number_format($data['monthly_amount'], 2, ',', '.') . ' €',
+                        3 => number_format('25.44', 2, ',', '.') . ' €',
                         4 => 'Da',
                         5 => 'Ne',
                     ]);
@@ -118,20 +123,17 @@ class AdminSponsorshipAddTest extends AdminTestCase
     public function test_validates_cat_doesnt_already_an_active_sponsorship_with_the_selected_sponsor()
     {
         $this->browse(function (Browser $b) {
-            $cat = $this->createCat();
-            $personData = $this->createPersonData();
             $sponsorship = $this->createSponsorship([
-                'cat_id' => $cat->id,
-                'person_data_id' => $personData->id,
+                'cat_id' => $this->createCat()->id,
+                'person_data_id' => $this->createPersonData()->id,
                 'is_active' => true,
             ]);
 
             $this->goToPage($b);
 
-            $b
-                ->select('cat', $sponsorship->cat_id)
-                ->select('personData', $sponsorship->person_data_id)
-                ->type('monthly_amount', '10');
+            $b->select('cat', $sponsorship->cat_id);
+            $b->select('personData', $sponsorship->person_data_id);
+            $b->type('monthly_amount', '10');
 
             $this->clickSubmitButton($b);
             $b->assertSee('Muca že ima aktivnega botra s tem email naslovom.');

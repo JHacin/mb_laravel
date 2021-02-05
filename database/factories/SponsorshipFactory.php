@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class SponsorshipFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
      * @var string
      */
     protected $model = Sponsorship::class;
@@ -24,6 +22,7 @@ class SponsorshipFactory extends Factory
         return [
             'cat_id' => Cat::inRandomOrder()->first() ?: Cat::factory(),
             'person_data_id' => PersonData::inRandomOrder()->first() ?: PersonData::factory(),
+            'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
             'monthly_amount' => 5,
             'is_active' => true,
             'is_anonymous' => false,

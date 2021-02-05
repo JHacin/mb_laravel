@@ -120,9 +120,7 @@ class AdminUserAddTest extends AdminTestCase
                 ->type('personData[first_name]', $personData->first_name)
                 ->type('personData[last_name]', $personData->last_name);
 
-            $browser->with('@gender-input-wrapper', function (Browser $browser) {
-                $browser->click('input[value="2"]');
-            });
+            $this->selectRadioOption($browser, '@gender-input-wrapper', PersonData::GENDER_FEMALE);
 
             $this->selectDatepickerDateInThePast($browser, '@date_of_birth-input-wrapper');
 

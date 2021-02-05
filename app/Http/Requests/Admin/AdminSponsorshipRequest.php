@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Sponsorship;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,6 +29,7 @@ class AdminSponsorshipRequest extends FormRequest
                 'min:' . config('money.donation_minimum'),
                 'max:' . config('money.decimal_max'),
             ],
+            'payment_type' => ['required', Rule::in(Sponsorship::PAYMENT_TYPES)],
             'cat' => [
                 'required',
                 'integer',

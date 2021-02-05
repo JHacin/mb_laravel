@@ -11,18 +11,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
+
 /**
  * App\Models\Sponsorship
  *
  * @property int $id
  * @property int|null $cat_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * @property int|null $person_data_id
  * @property bool $is_anonymous
+ * @property int $payment_type
  * @property string|null $monthly_amount
  * @property bool $is_active
  * @property Carbon|null $ended_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read Cat|null $cat
  * @property-read PersonData|null $personData
  * @method static Builder|Sponsorship newModelQuery()
@@ -35,6 +37,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Sponsorship whereIsActive($value)
  * @method static Builder|Sponsorship whereIsAnonymous($value)
  * @method static Builder|Sponsorship whereMonthlyAmount($value)
+ * @method static Builder|Sponsorship wherePaymentType($value)
  * @method static Builder|Sponsorship wherePersonDataId($value)
  * @method static Builder|Sponsorship whereUpdatedAt($value)
  * @mixin Eloquent
@@ -48,6 +51,19 @@ class Sponsorship extends Model
     | CONSTANTS
     |--------------------------------------------------------------------------
     */
+
+    public const PAYMENT_TYPE_BANK_TRANSFER = 1;
+    public const PAYMENT_TYPE_DIRECT_DEBIT = 2;
+
+    public const PAYMENT_TYPES = [
+      self::PAYMENT_TYPE_BANK_TRANSFER,
+      self::PAYMENT_TYPE_DIRECT_DEBIT,
+    ];
+
+    public const PAYMENT_TYPE_LABELS = [
+        self::PAYMENT_TYPE_BANK_TRANSFER => 'Nakazilo',
+        self::PAYMENT_TYPE_DIRECT_DEBIT => 'Trajnik',
+    ];
 
     /*
     |--------------------------------------------------------------------------
