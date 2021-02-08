@@ -8,7 +8,6 @@ use Tests\Browser\Pages\CatListPage;
 use Tests\Browser\Pages\GiftSponsorshipPage;
 use Tests\Browser\Pages\HomePage;
 use Tests\Browser\Pages\NewsPage;
-use Tests\Browser\Pages\WhyBecomeSponsorPage;
 use Tests\DuskTestCase;
 use Throwable;
 
@@ -59,30 +58,41 @@ class NavbarTest extends DuskTestCase
     public function test_desktop_links_work()
     {
         $this->browse(function (Browser $b) {
+            $b->visit(new HomePage);
+            $b->assertAttribute('@navbar-contact-email-link', 'href', 'mailto:' . config('links.contact_email'));
+            $b->assertAttribute('@navbar-instagram-link', 'href', config('links.instagram_page'));
+            $b->assertAttribute('@navbar-facebook-link', 'href', config('links.facebook_page'));
+            $b->assertMissing('.nav-link--active');
+
             $b->visit(new CatListPage);
             $b->click('@navbar-home-link');
             $b->on(new HomePage);
 
-            $b->click('@navbar-become-regular-sponsor-category');
-            $b->with('@navbar-become-regular-sponsor-category', function (Browser $b) {
-                $b->click('@navbar-cat-list-link');
-            });
-            $b->on(new CatListPage);
+            $navLinks = [
+                [
+                    'dusk' => 'navbar-cat-list-link',
+                    'page' => new CatListPage,
+                ],
+                [
+                    'dusk' => 'navbar-become-sponsor-of-the-month-link',
+                    'page' => new BecomeSponsorOfTheMonthPage,
+                ],
+                [
+                    'dusk' => 'navbar-gift-sponsorship-link',
+                    'page' => new GiftSponsorshipPage,
+                ],
+                [
+                    'dusk' => 'navbar-news-link',
+                    'page' => new NewsPage,
+                ],
+            ];
 
-            $b->click('@navbar-become-regular-sponsor-category');
-            $b->with('@navbar-become-regular-sponsor-category', function (Browser $b) {
-                $b->click('@navbar-why-become-sponsor-link');
-            });
-            $b->on(new WhyBecomeSponsorPage);
-
-            $b->click('@navbar-become-sponsor-of-the-month-link');
-            $b->on(new BecomeSponsorOfTheMonthPage);
-
-            $b->click('@navbar-gift-sponsorship-link');
-            $b->on(new GiftSponsorshipPage);
-
-            $b->click('@navbar-news-link');
-            $b->on(new NewsPage);
+            foreach ($navLinks as $navLink) {
+                $b->click('@'.$navLink['dusk']);
+                $b->on($navLink['page']);
+                $this->assertHasClass($b, '@'.$navLink['dusk'], 'nav-link--active');
+                $b->assertMissing('.nav-link--active:not([dusk="' . $navLink['dusk'] . '"])');
+            }
         });
     }
 }

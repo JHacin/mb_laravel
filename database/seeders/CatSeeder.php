@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Cat;
 use App\Models\CatPhoto;
 use App\Services\CatPhotoService;
+use File;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 
@@ -28,6 +29,15 @@ class CatSeeder extends Seeder
                     'index' => $index,
                 ]);
             }
+        }
+
+        foreach (CatPhotoService::INDICES as $index) {
+            $catPhotosRoot = CatPhotoService::PATH_ROOT;
+
+            File::copy(
+                database_path("seeders/assets/fake_cat_photo_$index.jpg"),
+                storage_path("app/public/{$catPhotosRoot}fake_cat_photo_$index.jpg")
+            );
         }
     }
 }

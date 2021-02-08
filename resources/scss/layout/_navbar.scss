@@ -1,0 +1,68 @@
+$nav-sides-min-width: 175px;
+$nav-large-screen-breakpoint: $container-max-width + 2 * $nav-sides-min-width;
+$nav-height-desktop: 4rem;
+
+html.has-navbar-fixed-top {
+    @include from($navbar-breakpoint) {
+        padding-top: $nav-height-desktop;
+    }
+}
+
+.navbar {
+    box-shadow: $box-shadow;
+
+    @include from($navbar-breakpoint) {
+        min-height: $nav-height-desktop;
+    }
+}
+
+.navbar-item .nav-logo {
+    @include from($navbar-breakpoint) {
+        max-height: 2.25rem;
+    }
+}
+
+.navbar-brand,
+.navbar-end {
+    @include from($navbar-breakpoint) {
+        min-height: $nav-height-desktop;
+    }
+
+    @include from($fullhd) {
+        width: 12.5vw;
+        min-width: $nav-sides-min-width;
+        justify-content: center;
+    }
+
+    @media screen and (min-width: $nav-large-screen-breakpoint){
+        width: calc((100vw - #{$container-max-width}) / 2);
+    }
+}
+
+.navbar-start {
+    @media screen and (min-width: $nav-large-screen-breakpoint){
+        max-width: $container-max-width;
+    }
+}
+
+
+.nav-link {
+    font-size: $size-6;
+    text-transform: uppercase;
+
+    @include from($widescreen) {
+        font-size: 1.125rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    @include from($nav-large-screen-breakpoint) {
+        font-size: $size-5;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    &--active {
+        font-weight: $weight-semibold;
+    }
+}
