@@ -8,13 +8,6 @@ use Illuminate\Contracts\View\View;
 
 class PagesController extends Controller
 {
-    public function index(): View
-    {
-        $heroCats = Cat::inRandomOrder()->get()->slice(0, 3);
-
-        return view('home', ['heroCats' => $heroCats]);
-    }
-
     public function faq(): View
     {
         return view('faq');

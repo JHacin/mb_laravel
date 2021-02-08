@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CatListController;
 use App\Http\Controllers\CatSponsorshipController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GiftSponsorshipController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SponsorOfTheMonthController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Publicly visible pages
-Route::get(config('routes.home'), [PagesController::class, 'index'])->name('home');
+Route::get(config('routes.home'), [HomeController::class, 'index'])->name('home');
 Route::get(config('routes.why_become_sponsor'), [PagesController::class, 'whyBecomeSponsor'])->name('why_become_sponsor');
 Route::get(config('routes.faq'), [PagesController::class, 'faq'])->name('faq');
 Route::get(config('routes.privacy'), [PagesController::class, 'privacy'])->name('privacy');
