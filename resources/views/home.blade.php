@@ -3,29 +3,6 @@
 @php
     use App\Models\Cat;
 
-    $heroMenuItems = [
-        [
-            'icon' => 'far fa-question-circle',
-            'text' => 'Zakaj postati mačji boter?',
-            'link' => route('why_become_sponsor'),
-        ],
-        [
-            'icon' => 'fas fa-cat',
-            'text' => 'Muce, ki iščejo botra',
-            'link' => route('cat_list'),
-        ],
-        [
-            'icon' => 'fas fa-hands-helping',
-            'text' => 'Postani boter meseca',
-            'link' => '#',
-        ],
-        [
-            'icon' => 'fas fa-gift',
-            'text' => 'Podari botrstvo',
-            'link' => '#',
-        ],
-    ];
-
     $stats = [
         [
             'value' => '3800+',
@@ -47,28 +24,11 @@
 @endphp
 
 @section('content')
-    @if(count($heroCats) === 2)
-        <div class="columns is-variable is-1">
-            @foreach([$heroCats[0], $heroCats[1]] as $heroCat)
-                <x-hero-cat :cat="$heroCat" />
-            @endforeach
-            <div class="column is-flex">
-                <div class="hero-menu">
-                    @foreach($heroMenuItems as $item)
-                        <a href="{{ $item['link'] }}" class="hero-menu-item">
-                            <div class="icon is-large mr-5">
-                                <i class="hero-menu-item__icon {{ $item['icon'] }}"></i>
-                            </div>
-                            <div class="hero-menu-item__text">
-                                <span>{{ $item['text'] }}</span>
-                                <i class="fas fa-arrow-circle-right"></i>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    @endif
+    <div class="columns is-variable is-1">
+        @foreach($heroCats as $heroCat)
+            <x-hero-cat :cat="$heroCat" />
+        @endforeach
+    </div>
     <section class="section">
         <div class="container is-max-widescreen">
             <div class="columns">

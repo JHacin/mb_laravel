@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Cat;
 use App\Utilities\SponsorListViewParser;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class PagesController extends Controller
 {
     public function index(): View
     {
-        $heroCats = Cat::inRandomOrder()->get()->slice(0, 2);
+        $heroCats = Cat::inRandomOrder()->get()->slice(0, 3);
 
         return view('home', ['heroCats' => $heroCats]);
     }
