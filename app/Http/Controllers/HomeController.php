@@ -9,7 +9,11 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $heroCats = Cat::inRandomOrder()->get()->slice(0, 3);
+        $heroCats = Cat::has('photos')
+            ->whereNotNull('date_of_arrival_mh')
+            ->inRandomOrder()
+            ->get()
+            ->slice(0, 3);
 
         return view('home', ['heroCats' => $heroCats]);
     }

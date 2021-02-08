@@ -5,8 +5,8 @@ namespace App\View\Components;
 use App\Models\Cat;
 use App\Utilities\AgeFormat;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
 class HeroCat extends Component
 {
