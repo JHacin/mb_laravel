@@ -80,3 +80,7 @@
         </div>
     </section>
 @endsection
+
+@push('footer-scripts')
+    <script src="{{ mix('js/home.js') }}"></script>
+@endpush

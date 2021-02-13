@@ -22,29 +22,15 @@
             'route_name' => 'news',
             'dusk' => 'navbar-news-link',
         ],
-    ];
-
-    $socialLinks = [
-        [
-            'href' => 'mailto:' . config('links.contact_email'),
-            'icon' => 'far fa-envelope',
-            'dusk' => 'navbar-contact-email-link',
-        ],
-        [
-            'href' => config('links.instagram_page'),
-            'icon' => 'fab fa-instagram',
-            'dusk' => 'navbar-instagram-link',
-        ],
-        [
-            'href' => config('links.facebook_page'),
-            'icon' => 'fab fa-facebook',
-            'dusk' => 'navbar-facebook-link',
-        ],
     ]
 @endphp
 
 
-<nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="glavni meni">
+<nav
+    class="navbar is-primary"
+    role="navigation"
+    aria-label="glavni meni"
+>
     <div class="navbar-brand">
         <a class="navbar-item" href="{{ route('home') }}" dusk="navbar-home-link">
             <img class="nav-logo" src="{{ asset('/img/logo.png') }}" alt="Mačji boter">
@@ -77,18 +63,7 @@
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
-                @foreach($socialLinks as $socialLink)
-                    <span class="icon is-large">
-                        <a
-                            href="{{ $socialLink['href'] }}"
-                            class="has-text-white"
-                            dusk="{{ $socialLink['dusk'] }}"
-                            target="_blank"
-                        >
-                            <i class="{{ $socialLink['icon'] }} fa-2x"></i>
-                        </a>
-                    </span>
-                @endforeach
+                @include('components.layout.navbar-social-links', ['class' => 'has-text-white'])
             </div>
         </div>
     </div>

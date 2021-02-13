@@ -1,5 +1,12 @@
+@php
+    $isHomepage = Route::currentRouteName() === 'home'
+@endphp
+
 <!DOCTYPE html>
-<html lang="sl" class="has-navbar-fixed-top">
+<html
+    lang="sl"
+    @if($isHomepage)class="is-homepage"@endif
+>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +24,10 @@
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
+        @if($isHomepage)
+            @include('components.layout.home-header')
+        @endif
+
         @include('components.layout.navbar')
 
         <main>

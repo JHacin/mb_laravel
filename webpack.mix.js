@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.copyDirectory('resources/img', 'public/img')
     .js('resources/js/app.js', 'public/js')
+    .js('resources/js/home.js', 'public/js')
     .sass('resources/scss/app.scss', 'public/css')
     .browserSync({
         ui: false,
