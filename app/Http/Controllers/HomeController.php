@@ -11,6 +11,7 @@ class HomeController extends Controller
     {
         $heroCats = Cat::has('photos')
             ->whereNotNull('date_of_arrival_mh')
+            ->where('is_group', false)
             ->inRandomOrder()
             ->get()
             ->slice(0, 3);
