@@ -15,6 +15,16 @@ html:not(.is-homepage) {
 }
 
 html.is-homepage {
+    #navbar {
+        position: absolute;
+        width: 100%;
+
+        @include from($navbar-breakpoint) {
+            position: static;
+            width: auto;
+        }
+    }
+
     .navbar-item .nav-logo {
         display: none;
     }
@@ -29,7 +39,7 @@ html.is-homepage {
         margin-left: auto;
     }
 
-    .navbar-end {
+    #navbar:not(.is-active) .navbar-end {
         display: none;
     }
 }
@@ -91,5 +101,27 @@ html.is-homepage {
     &--active {
         @extend .is-active;
         font-weight: $weight-semibold;
+    }
+}
+
+.navbar-end .navbar-item .icon {
+    justify-content: flex-start;
+
+    @include from($navbar-breakpoint) {
+        justify-content: center;
+    }
+}
+
+.nav-social-link {
+    &--home-header {
+        color: $secondary;
+    }
+
+    &--navbar {
+        color: $secondary;
+
+        @include from($navbar-breakpoint) {
+            color: $white;
+        }
     }
 }

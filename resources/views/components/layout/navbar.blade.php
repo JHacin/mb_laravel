@@ -63,7 +63,7 @@
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
-                @include('components.layout.navbar-social-links', ['class' => 'has-text-white'])
+                @include('components.layout.navbar-social-links', ['link_class' => 'nav-social-link--navbar'])
             </div>
         </div>
     </div>

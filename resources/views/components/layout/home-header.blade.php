@@ -5,7 +5,7 @@
             <img src="{{ asset('/img/logo_with_text.png') }}" alt="Mačji boter" class="home-header__logo">
         </div>
         <div class="home-header__social column has-text-centered">
-            @include('components.layout.navbar-social-links', ['class' => 'has-text-secondary'])
+            @include('components.layout.navbar-social-links', ['link_class' => 'nav-social-link--home-header'])
         </div>
     </div>
 </div>

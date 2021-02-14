@@ -22,7 +22,7 @@
     <span class="icon is-large">
         <a
             href="{{ $socialLink['href'] }}"
-            class="{{ $class }}"
+            class="nav-social-link {{ $link_class }}"
             dusk="{{ $socialLink['dusk'] }}"
             target="_blank"
         >

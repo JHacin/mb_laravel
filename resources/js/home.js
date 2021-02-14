@@ -25,6 +25,8 @@ function handleStickyNav() {
             didScroll = false;
         }
     }, 50);
+
+    adjustNavPosition();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -95,4 +95,33 @@ class NavbarTest extends DuskTestCase
             }
         });
     }
+
+    /**
+     * @throws Throwable
+     */
+    public function test_burger_works()
+    {
+        $this->browse(function (Browser $b) {
+            $b->visit(new HomePage);
+
+            $defaultSize = $b->driver->manage()->window()->getSize();
+
+            // Closed
+            $this->assertNotHasClass($b, '#navbar', 'is-active');
+            $this->assertNotHasClass($b, '.navbar-burger', 'is-active');
+
+            // Open
+            $b->resize(600, 600);
+            $b->click('.navbar-burger');
+            $this->assertHasClass($b, '#navbar', 'is-active');
+            $this->assertHasClass($b, '.navbar-burger', 'is-active');
+
+            // Closed
+            $b->click('.navbar-burger');
+            $this->assertNotHasClass($b, '#navbar', 'is-active');
+            $this->assertNotHasClass($b, '.navbar-burger', 'is-active');
+
+            $b->resize($defaultSize->getWidth(), $defaultSize->getHeight());
+        });
+    }
 }
