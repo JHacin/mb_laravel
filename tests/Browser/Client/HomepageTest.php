@@ -3,7 +3,10 @@
 namespace Tests\Browser\Client;
 
 use Laravel\Dusk\Browser;
+use Tests\Browser\Client\Pages\BecomeSponsorOfTheMonthPage;
+use Tests\Browser\Client\Pages\GiftSponsorshipPage;
 use Tests\Browser\Client\Pages\HomePage;
+use Tests\Browser\Client\Pages\WhyBecomeSponsorPage;
 use Tests\DuskTestCase;
 use Throwable;
 
@@ -55,6 +58,27 @@ class HomepageTest extends DuskTestCase
             });
 
             $b->resize($defaultSize->getWidth(), $defaultSize->getHeight());
+        });
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function test_links_work()
+    {
+        $this->browse(function (Browser $b) {
+            $b->visit(new HomePage);
+
+            $b->click('@home-why-become-sponsor-link');
+            $b->on(new WhyBecomeSponsorPage);
+
+            $b->visit(new HomePage);
+            $b->click('@home-become-sponsor-of-the-month-link');
+            $b->on(new BecomeSponsorOfTheMonthPage);
+
+            $b->visit(new HomePage);
+            $b->click('@home-gift-sponsorship-link');
+            $b->on(new GiftSponsorshipPage);
         });
     }
 }

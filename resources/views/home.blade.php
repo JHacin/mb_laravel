@@ -60,13 +60,19 @@
             </div>
             <div class="block">
                 Mucam v oskrbi Mačje hiše lahko v okviru botrstva pomagate na več načinov.
-                Postanete lahko <a href="#"><strong>redni boter</strong></a>, s čemer se zavežete k rednim
+                Postanete lahko
+                <a href="{{ route('why_become_sponsor') }}" dusk="home-why-become-sponsor-link"><strong>redni boter</strong></a>,
+                s čemer se zavežete k rednim
                 mesečnim prispevkom do prekinitve.
-                Lahko pa postanete <a href="#"><strong>Boter meseca</strong></a> in z nakazilom 10 €
+                Lahko pa postanete
+                <a href="{{ route('become_sponsor_of_the_month') }}" dusk="home-become-sponsor-of-the-month-link"><strong>Boter meseca</strong></a>
+                in z nakazilom 10 €
                 muckam pomagate samo izbrani mesec. Obe vrsti pomoči sta več kot dobrodošli in potrebni.
             </div>
             <div class="block">
-                Botrstvo lahko tudi <a href="#"><strong>podarite</strong></a> in z njim razveselite obdarovanca
+                Botrstvo lahko tudi
+                <a href="{{ route('gift_sponsorship') }}" dusk="home-gift-sponsorship-link"><strong>podarite</strong></a>
+                in z njim razveselite obdarovanca
                 ter hkrati v njegovem imenu prispevate k boljšem življenju muc. Pri tem vam
                 ponujamo več različnih možnosti in upamo,
                 da boste med njimi našli tisto pravo ustrezno darilo, ki je eno, a osreči mnoge.
