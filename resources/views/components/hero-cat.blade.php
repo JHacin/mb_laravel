@@ -1,6 +1,6 @@
-<div class="column is-flex">
+<div class="hero-cat-column column is-6-tablet is-4-widescreen">
     <a href="{{ route('cat_details', $cat) }}" class="is-flex-grow-1 is-flex">
-        <div class="hero-cat is-flex-grow-1">
+        <div class="hero-cat">
             <img src="{{ $photo_url }}" alt="{{ $cat->name }}" class="hero-cat__image">
 
             <div class="hero-cat-label">

@@ -1,7 +1,28 @@
+.hero-cat-column {
+    display: flex;
+    padding-bottom: 0;
+
+    &:nth-child(3) {
+        @include from($tablet) {
+            display: none;
+        }
+
+        @include from($desktop) {
+            display: block;
+        }
+    }
+}
+
 .hero-cat {
     position: relative;
     display: flex;
     box-shadow: $box-shadow;
+    flex-grow: 1;
+    transition: opacity 0.15s ease-in-out;
+
+    &:hover {
+        opacity: 0.925;
+    }
 
     &__image {
         flex: 1;
@@ -12,28 +33,61 @@
 .hero-cat-label {
     position: absolute;
     bottom: $spacer-5;
-    left: $spacer-6;
-    right: $spacer-6;
+    left: $spacer-5;
+    right: $spacer-5;
     display: flex;
     align-items: center;
+    flex-direction: column;
     background-color: rgba($primary, 0.9);
     color: $white;
-    padding: $spacer-3 $spacer-5;
+    padding: $spacer-3 $spacer-4;
     border-radius: $radius-large;
     box-shadow: $box-shadow;
 
+    @include from($tablet) {
+        flex-direction: row;
+        padding-left: $spacer-4;
+        padding-right: $spacer-4;
+    }
+
+    @include from($desktop) {
+        left: $spacer-6;
+        right: $spacer-6;
+    }
+
     &__icon {
-        margin-right: $spacer-5;
-        font-size: $size-2;
+        font-size: $size-4;
         color: lighten($primary, 25%);
+
+        @include from($tablet) {
+            font-size: $size-2;
+            margin-right: $spacer-5;
+        }
+    }
+
+    &__name,
+    &__duration-of-stay {
+        text-align: center;
+
+        @include from($tablet) {
+            text-align: left;
+        }
     }
 
     &__name {
-        font-size: $size-4;
+        font-size: $size-5;
         font-weight: $weight-bold;
+
+        @include from($tablet) {
+            font-size: $size-4;
+        }
     }
 
     &__duration-of-stay {
-        font-size: $size-6;
+        font-size: $size-7;
+
+        @include from($tablet) {
+            font-size: $size-6;
+        }
     }
 }

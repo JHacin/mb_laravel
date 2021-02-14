@@ -29,13 +29,31 @@ class HomepageTest extends DuskTestCase
         $this->browse(function (Browser $b) {
             $defaultSize = $b->driver->manage()->window()->getSize();
             $b->visit(new HomePage);
+            // Static nav
             $b->assertScript("document.querySelector('html').classList.contains('is-homepage') === true");
+            $b->with('.navbar', function (Browser $b) {
+               $b->assertMissing('.nav-logo');
+               $b->assertMissing('.navbar-end');
+            });
+
+            // Scrolled past header (fixed nav)
             $b->scrollIntoView('footer');
             $b->resize(1600, 600);
             $b->assertScript("document.querySelector('html').classList.contains('is-homepage') === false");
+            $b->with('.navbar', function (Browser $b) {
+                $b->assertPresent('.nav-logo');
+                $b->assertPresent('.navbar-end');
+            });
+
+            // Scrolled back to top (static nav)
             $b->scrollIntoView('.home-header');
             $b->resize(1600, 600);
             $b->assertScript("document.querySelector('html').classList.contains('is-homepage') === true");
+            $b->with('.navbar', function (Browser $b) {
+                $b->assertMissing('.nav-logo');
+                $b->assertMissing('.navbar-end');
+            });
+
             $b->resize($defaultSize->getWidth(), $defaultSize->getHeight());
         });
     }

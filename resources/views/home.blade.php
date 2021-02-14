@@ -24,16 +24,16 @@
 @endphp
 
 @section('content')
-    <div class="columns is-variable is-1">
+    <div class="columns is-variable is-1 mb-0">
         @foreach($heroCats as $heroCat)
             <x-hero-cat :cat="$heroCat" />
         @endforeach
     </div>
     <section class="section">
         <div class="container is-max-widescreen">
-            <div class="columns">
+            <div class="columns is-multiline mb-6">
                 @foreach($stats as $stat)
-                    <div class="stat-column column">
+                    <div class="stat-column column is-6-tablet is-3-widescreen">
                         <div class="stat-column__value">
                             {{ $stat['value'] }}
                         </div>
@@ -43,10 +43,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
-    </section>
-    <section class="section mb-6">
-        <div class="container is-max-widescreen">
+
             <div class="block">
                 Mačji boter je projekt <strong>Mačje hiše</strong>, ki omogoča posvojitve muck na daljavo.
                 Namenjen je vsem tistim, ki nam želite <strong>pomagati pri oskrbi nekoč brezdomnih muck</strong>.
