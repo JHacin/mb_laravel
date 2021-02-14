@@ -112,16 +112,14 @@ html.is-homepage {
     }
 }
 
-.nav-social-link {
-    &--home-header {
-        color: $secondary;
-    }
+a.nav-social-link {
+    @extend .has-text-secondary;
 
-    &--navbar {
-        color: $secondary;
+    @include from($navbar-breakpoint) {
+        color: $white !important;
 
-        @include from($navbar-breakpoint) {
-            color: $white;
+        &:hover {
+            color: bulmaDarken($white, 10%) !important;
         }
     }
 }
