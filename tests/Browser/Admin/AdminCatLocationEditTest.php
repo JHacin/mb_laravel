@@ -3,7 +3,7 @@
 namespace Tests\Browser\Admin;
 
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminCatLocationEditPage;
+use Tests\Browser\Admin\Pages\AdminCatLocationEditPage;
 use Throwable;
 
 class AdminCatLocationEditTest extends AdminTestCase

@@ -6,8 +6,8 @@ use App\Models\PersonData;
 use App\Models\User;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminUserAddPage;
-use Tests\Browser\Pages\Admin\AdminUserListPage;
+use Tests\Browser\Admin\Pages\AdminUserAddPage;
+use Tests\Browser\Admin\Pages\AdminUserListPage;
 use Throwable;
 
 class AdminUserAddTest extends AdminTestCase

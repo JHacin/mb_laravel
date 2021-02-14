@@ -3,13 +3,14 @@
 namespace Tests\Unit\Models;
 
 
+use App\Models\CatPhoto;
 use App\Services\CatPhotoService;
 use Storage;
 use Tests\TestCase;
 
 class CatPhotoTest extends TestCase
 {
-    protected $catPhoto;
+    protected ?CatPhoto $catPhoto = null;
 
     /**
      * @inheritDoc

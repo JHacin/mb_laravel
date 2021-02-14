@@ -4,10 +4,10 @@ namespace Tests\Browser\Admin;
 
 use App\Models\User;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminCatListPage;
-use Tests\Browser\Pages\Admin\AdminDashboardPage;
-use Tests\Browser\Pages\Admin\AdminLoginPage;
-use Tests\Browser\Pages\HomePage;
+use Tests\Browser\Admin\Pages\AdminCatListPage;
+use Tests\Browser\Admin\Pages\AdminDashboardPage;
+use Tests\Browser\Admin\Pages\AdminLoginPage;
+use Tests\Browser\Client\Pages\HomePage;
 use Throwable;
 
 /**
@@ -16,15 +16,8 @@ use Throwable;
  */
 class AdminLoginTest extends AdminTestCase
 {
-    /**
-     * @var User
-     */
-    protected $adminUser;
-
-    /**
-     * @var string
-     */
-    protected $adminPassword;
+    protected User $adminUser;
+    protected string $adminPassword;
 
     /**
      * @inheritDoc

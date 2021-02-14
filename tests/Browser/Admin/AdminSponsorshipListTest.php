@@ -6,9 +6,9 @@ use App\Models\Cat;
 use App\Models\PersonData;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminCatEditPage;
-use Tests\Browser\Pages\Admin\AdminSponsorEditPage;
-use Tests\Browser\Pages\Admin\AdminSponsorshipListPage;
+use Tests\Browser\Admin\Pages\AdminCatEditPage;
+use Tests\Browser\Admin\Pages\AdminSponsorEditPage;
+use Tests\Browser\Admin\Pages\AdminSponsorshipListPage;
 use Throwable;
 
 class AdminSponsorshipListTest extends AdminTestCase
@@ -218,12 +218,12 @@ class AdminSponsorshipListTest extends AdminTestCase
     {
         $this->browse(function (Browser $browser) {
             $shown = $this->createSponsorship([
-                'cat_id' => Cat::factory()->createOne(['name' => 'a_' . time()])->id,
-                'person_data_id' => PersonData::factory()->createOne(['email' => 'a_' . time() . '@example.com'])->id,
+                'cat_id' => $this->createCat(['name' => 'a_' . time()])->id,
+                'person_data_id' => $this->createPersonData(['email' => 'a_' . time() . '@example.com'])->id,
             ]);
             $hidden = $this->createSponsorship([
-                'cat_id' => Cat::factory()->createOne(['name' => 'b_' . time()])->id,
-                'person_data_id' => PersonData::factory()->createOne(['email' => 'b_' . time() . '@example.com'])->id,
+                'cat_id' => $this->createCat(['name' => 'b_' . time()])->id,
+                'person_data_id' => $this->createPersonData(['email' => 'b_' . time() . '@example.com'])->id,
             ]);
             $this->goToPage($browser);
 

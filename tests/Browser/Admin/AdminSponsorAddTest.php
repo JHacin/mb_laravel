@@ -5,8 +5,8 @@ namespace Tests\Browser\Admin;
 use App\Models\PersonData;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminSponsorAddPage;
-use Tests\Browser\Pages\Admin\AdminSponsorListPage;
+use Tests\Browser\Admin\Pages\AdminSponsorAddPage;
+use Tests\Browser\Admin\Pages\AdminSponsorListPage;
 use Throwable;
 
 class AdminSponsorAddTest extends AdminTestCase

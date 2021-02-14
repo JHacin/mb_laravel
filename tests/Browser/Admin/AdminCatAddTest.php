@@ -7,8 +7,8 @@ use Carbon\Carbon;
 use Facebook\WebDriver\Exception\TimeOutException;
 use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminCatAddPage;
-use Tests\Browser\Pages\Admin\AdminCatListPage;
+use Tests\Browser\Admin\Pages\AdminCatAddPage;
+use Tests\Browser\Admin\Pages\AdminCatListPage;
 use Throwable;
 
 class AdminCatAddTest extends AdminTestCase

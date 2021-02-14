@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @inheritDoc

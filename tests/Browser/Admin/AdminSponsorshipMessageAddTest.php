@@ -7,8 +7,8 @@ use App\Models\PersonData;
 use App\Models\SponsorshipMessageType;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminSponsorshipMessageAddPage;
-use Tests\Browser\Pages\Admin\AdminSponsorshipMessageListPage;
+use Tests\Browser\Admin\Pages\AdminSponsorshipMessageAddPage;
+use Tests\Browser\Admin\Pages\AdminSponsorshipMessageListPage;
 use Throwable;
 
 class AdminSponsorshipMessageAddTest extends AdminTestCase

@@ -11,9 +11,6 @@ class SponsorshipMessageHandlerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @var bool
-     */
     protected bool $seed = true;
 
     /**

@@ -6,11 +6,7 @@ use App\Models\CatLocation;
 
 trait CreatesCatLocations
 {
-    /**
-     * @param array $attributes
-     * @return CatLocation
-     */
-    protected function createCatLocation($attributes = [])
+    protected function createCatLocation($attributes = []): CatLocation
     {
         /** @var CatLocation $catLocation */
         $catLocation = CatLocation::factory()->createOne($attributes);

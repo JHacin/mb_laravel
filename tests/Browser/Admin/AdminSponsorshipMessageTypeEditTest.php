@@ -5,7 +5,7 @@ namespace Tests\Browser\Admin;
 use App\Models\SponsorshipMessageType;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminSponsorshipMessageTypeEditPage;
+use Tests\Browser\Admin\Pages\AdminSponsorshipMessageTypeEditPage;
 use Throwable;
 
 class AdminSponsorshipMessageTypeEditTest extends AdminTestCase

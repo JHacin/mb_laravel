@@ -6,11 +6,7 @@ use App\Models\CatPhoto;
 
 trait CreatesCatPhotos
 {
-    /**
-     * @param array $attributes
-     * @return CatPhoto
-     */
-    protected function createCatPhoto($attributes = [])
+    protected function createCatPhoto($attributes = []): CatPhoto
     {
         /** @var CatPhoto $catPhoto */
         $catPhoto = CatPhoto::factory()->createOne($attributes);

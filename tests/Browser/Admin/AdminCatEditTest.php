@@ -3,7 +3,7 @@
 namespace Tests\Browser\Admin;
 
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminCatEditPage;
+use Tests\Browser\Admin\Pages\AdminCatEditPage;
 use Throwable;
 
 class AdminCatEditTest extends AdminTestCase

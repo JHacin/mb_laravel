@@ -3,9 +3,9 @@
 namespace Tests\Browser\Admin;
 
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminDashboardPage;
-use Tests\Browser\Pages\Admin\AdminLoginPage;
-use Tests\Browser\Pages\HomePage;
+use Tests\Browser\Admin\Pages\AdminDashboardPage;
+use Tests\Browser\Admin\Pages\AdminLoginPage;
+use Tests\Browser\Client\Pages\HomePage;
 use Throwable;
 
 class AdminAccessTest extends AdminTestCase

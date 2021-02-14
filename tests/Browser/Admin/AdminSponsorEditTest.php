@@ -5,9 +5,9 @@ namespace Tests\Browser\Admin;
 use App\Models\PersonData;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminSponsorEditPage;
-use Tests\Browser\Pages\Admin\AdminSponsorListPage;
-use Tests\Browser\Pages\Admin\AdminUserEditPage;
+use Tests\Browser\Admin\Pages\AdminSponsorEditPage;
+use Tests\Browser\Admin\Pages\AdminSponsorListPage;
+use Tests\Browser\Admin\Pages\AdminUserEditPage;
 use Throwable;
 
 class AdminSponsorEditTest extends AdminTestCase

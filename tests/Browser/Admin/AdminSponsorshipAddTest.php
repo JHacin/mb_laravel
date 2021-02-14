@@ -7,8 +7,8 @@ use App\Models\PersonData;
 use App\Models\Sponsorship;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminSponsorshipAddPage;
-use Tests\Browser\Pages\Admin\AdminSponsorshipListPage;
+use Tests\Browser\Admin\Pages\AdminSponsorshipAddPage;
+use Tests\Browser\Admin\Pages\AdminSponsorshipListPage;
 use Throwable;
 
 class AdminSponsorshipAddTest extends AdminTestCase

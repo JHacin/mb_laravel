@@ -6,8 +6,9 @@ use App\Models\Cat;
 use App\Models\CatLocation;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminCatListPage;
-use Tests\Browser\Pages\Admin\AdminCatLocationEditPage;
+
+use Tests\Browser\Admin\Pages\AdminCatListPage;
+use Tests\Browser\Admin\Pages\AdminCatLocationEditPage;
 use Throwable;
 
 class AdminCatListTest extends AdminTestCase

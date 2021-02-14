@@ -5,7 +5,7 @@ namespace Tests\Browser\Admin;
 use App\Models\User;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Admin\AdminUserListPage;
+use Tests\Browser\Admin\Pages\AdminUserListPage;
 use Throwable;
 
 class AdminUserListTest extends AdminTestCase

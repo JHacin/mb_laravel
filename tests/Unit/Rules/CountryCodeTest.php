@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Rules;
 
 use App\Rules\CountryCode;
 use App\Utilities\CountryList;

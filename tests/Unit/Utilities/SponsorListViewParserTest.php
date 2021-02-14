@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Utilities;
 
 use App\Models\PersonData;
 use App\Utilities\SponsorListViewParser;
