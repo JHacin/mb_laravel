@@ -5,6 +5,19 @@
         <div class="container">
             <h1 class="title">Muce, ki iščejo botra</h1>
 
+            <div class="columns">
+                <div class="column is-12-mobile is-9-desktop is-10-fullhd">
+                    Na seznamu so objavljene vse muce, ki trenutno iščejo botra. Če vas zanima več o tem,
+                    kaj je bistvo programa Mačji boter in kako poteka postopek botrovanja, si lahko
+                    preberete več na
+                    <a
+                        href="{{ route('why_become_sponsor') }}"
+                        class="has-text-weight-semibold"
+                        dusk="why-become-sponsor-link"
+                    >tej povezavi</a>.
+                </div>
+            </div>
+
             <div class="mb-6">
                 <div class="cat-list-columns columns is-multiline is-mobile">
                     <div class="column is-12-mobile is-9-desktop is-10-fullhd">

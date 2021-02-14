@@ -9,6 +9,7 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\CatDetailsPage;
 use Tests\Browser\Pages\CatListPage;
 use Tests\Browser\Pages\CatSponsorshipFormPage;
+use Tests\Browser\Pages\WhyBecomeSponsorPage;
 use Tests\DuskTestCase;
 use Throwable;
 
@@ -28,6 +29,18 @@ class CatListTest extends DuskTestCase
         if (!static::$sampleCat) {
             static::$sampleCat = $this->createCatWithSponsorships();
         }
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function test_why_become_sponsor_link_works()
+    {
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $b->click('@why-become-sponsor-link');
+            $b->on(new WhyBecomeSponsorPage);
+        });
     }
 
 
