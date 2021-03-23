@@ -6,14 +6,14 @@ authorize: ~/.ssh/id_rsa.pub
 keys:
   - ~/.ssh/id_rsa
 folders:
-  - map: /home/jan/projects/mb_laravel
+  - map: ~/projects/mb_laravel
     to: /home/vagrant/code
     type: "nfs"
 sites:
   - map: homestead.test
     to: /home/vagrant/code/public
 databases:
-  - homestead
+  - macjiboter
 features:
   - mariadb: false
   - ohmyzsh: false
