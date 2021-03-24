@@ -23,9 +23,9 @@ class SponsorshipMessageHandler
             'subject' => $message->messageType->subject,
             'template' => $message->messageType->template_id,
             'v:ime_botra' => $message->personData->first_name,
-            'v:spol_botra' => $message->personData->gender === PersonData::GENDER_MALE ? 'M' : 'F',
+            'v:boter_moski' => $message->personData->gender === PersonData::GENDER_MALE,
             'v:ime_muce' => $message->cat->name,
-            'v:spol_muce' => $message->cat->gender === Cat::GENDER_MALE ? 'M' : 'F',
+            'v:muca_moski' => $message->cat->gender === Cat::GENDER_MALE,
         ]);
     }
 }

@@ -31,15 +31,15 @@ class SponsorshipMessageHandlerTest extends TestCase
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
                 'v:ime_botra' => $msg->personData->first_name,
-                'v:spol_botra' => $msg->personData->gender === PersonData::GENDER_MALE ? 'M' : 'F',
+                'v:boter_moski' => $msg->personData->gender === PersonData::GENDER_MALE,
                 'v:ime_muce' => $msg->cat->name,
-                'v:spol_muce' => $msg->cat->gender === Cat::GENDER_MALE ? 'M' : 'F',
+                'v:muca_moski' => $msg->cat->gender === Cat::GENDER_MALE,
             ]);
 
         SponsorshipMessageHandler::send($msg);
     }
 
-    public function test_passes_correct_male_gender_abbreviation()
+    public function test_passes_correct_male_gender_variable()
     {
         $msg = $this->createSponsorshipMessage([
             'message_type_id' => $this->createSponsorshipMessageType()->id,
@@ -55,15 +55,15 @@ class SponsorshipMessageHandlerTest extends TestCase
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
                 'v:ime_botra' => $msg->personData->first_name,
-                'v:spol_botra' => 'M',
+                'v:boter_moski' => true,
                 'v:ime_muce' => $msg->cat->name,
-                'v:spol_muce' => 'M',
+                'v:muca_moski' => true,
             ]);
 
         SponsorshipMessageHandler::send($msg);
     }
 
-    public function test_passes_correct_female_gender_abbreviation()
+    public function test_passes_correct_female_gender_variable()
     {
         $msg = $this->createSponsorshipMessage([
             'message_type_id' => $this->createSponsorshipMessageType()->id,
@@ -79,9 +79,9 @@ class SponsorshipMessageHandlerTest extends TestCase
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
                 'v:ime_botra' => $msg->personData->first_name,
-                'v:spol_botra' => 'F',
+                'v:boter_moski' => false,
                 'v:ime_muce' => $msg->cat->name,
-                'v:spol_muce' => 'F',
+                'v:muca_moski' => false,
             ]);
 
         SponsorshipMessageHandler::send($msg);
