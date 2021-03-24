@@ -1,6 +1,11 @@
 .cat-list-item {
     border: 3px solid $secondary;
     border-radius: $radius-large;
+    background-color: $secondary;
+
+    .card-content {
+        background-color: $white;
+    }
 }
 
 .cat-list-item-image-wrapper {
@@ -8,6 +13,7 @@
 }
 
 .cat-list-item.cat-list-item--group {
+    background-color: $primary;
 
     &,
     .cat-list-item-image-wrapper {
