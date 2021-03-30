@@ -30,10 +30,12 @@ class SponsorshipMessageHandlerTest extends TestCase
                 'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
-                'v:ime_botra' => $msg->personData->first_name,
-                'v:boter_moski' => $msg->personData->gender === PersonData::GENDER_MALE,
-                'v:ime_muce' => $msg->cat->name,
-                'v:muca_moski' => $msg->cat->gender === Cat::GENDER_MALE,
+                'h:X-Mailgun-Variables' => json_encode([
+                    'ime_botra' => $msg->personData->first_name,
+                    'boter_moski' => $msg->personData->gender === PersonData::GENDER_MALE,
+                    'ime_muce' => $msg->cat->name,
+                    'muca_moski' => $msg->cat->gender === Cat::GENDER_MALE,
+                ])
             ]);
 
         SponsorshipMessageHandler::send($msg);
@@ -54,10 +56,12 @@ class SponsorshipMessageHandlerTest extends TestCase
                 'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
-                'v:ime_botra' => $msg->personData->first_name,
-                'v:boter_moski' => true,
-                'v:ime_muce' => $msg->cat->name,
-                'v:muca_moski' => true,
+                'h:X-Mailgun-Variables' => json_encode([
+                    'ime_botra' => $msg->personData->first_name,
+                    'boter_moski' => true,
+                    'ime_muce' => $msg->cat->name,
+                    'muca_moski' => true,
+                ])
             ]);
 
         SponsorshipMessageHandler::send($msg);
@@ -78,10 +82,12 @@ class SponsorshipMessageHandlerTest extends TestCase
                 'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
-                'v:ime_botra' => $msg->personData->first_name,
-                'v:boter_moski' => false,
-                'v:ime_muce' => $msg->cat->name,
-                'v:muca_moski' => false,
+                'h:X-Mailgun-Variables' => json_encode([
+                    'ime_botra' => $msg->personData->first_name,
+                    'boter_moski' => false,
+                    'ime_muce' => $msg->cat->name,
+                    'muca_moski' => false,
+                ])
             ]);
 
         SponsorshipMessageHandler::send($msg);

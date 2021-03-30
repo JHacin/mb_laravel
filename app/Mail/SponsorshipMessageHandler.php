@@ -22,10 +22,12 @@ class SponsorshipMessageHandler
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => $message->messageType->subject,
             'template' => $message->messageType->template_id,
-            'v:ime_botra' => $message->personData->first_name,
-            'v:boter_moski' => $message->personData->gender === PersonData::GENDER_MALE,
-            'v:ime_muce' => $message->cat->name,
-            'v:muca_moski' => $message->cat->gender === Cat::GENDER_MALE,
+            'h:X-Mailgun-Variables' => json_encode([
+                'ime_botra' => $message->personData->first_name,
+                'boter_moski' => $message->personData->gender === PersonData::GENDER_MALE,
+                'ime_muce' => $message->cat->name,
+                'muca_moski' => $message->cat->gender === Cat::GENDER_MALE,
+            ]),
         ]);
     }
 }
