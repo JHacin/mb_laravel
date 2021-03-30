@@ -8,6 +8,7 @@ use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
 use MailClient;
 use SponsorshipMail;
+use Storage;
 use Tests\TestCase;
 
 class SponsorshipMailTest extends TestCase
@@ -53,7 +54,18 @@ class SponsorshipMailTest extends TestCase
         SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
 
         // PAYMENT_TYPE_DIRECT_DEBIT
-        $expectedParams = array_merge($expectedParams, ['template' => 'navodila_za_botrovanje_trajnik']);
+        $expectedParams = array_merge(
+            $expectedParams,
+            [
+                'template' => 'navodila_za_botrovanje_trajnik',
+                'attachment' => [
+                    [
+                        'filePath' => Storage::disk('public')->path('docs/trajnik_pooblastilo.pdf'),
+                        'filename' => 'trajnik_pooblastilo.pdf',
+                    ]
+                ],
+            ]
+        );
         MailClient::shouldReceive('send')->once()->with($expectedParams);
         $sponsorship->update(['payment_type' => Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT]);
         SponsorshipMail::sendInitialInstructionsEmail($sponsorship);

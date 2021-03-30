@@ -7,6 +7,7 @@ use App\Models\Sponsorship;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
 use MailClient;
+use Storage;
 
 class SponsorshipMail
 {
@@ -41,12 +42,23 @@ class SponsorshipMail
             'referencna_stevilka' => 'PLACEHOLDER_REF',
         ];
 
-        MailClient::send([
+        $params = [
             'to' => $sponsorship->personData->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
             'template' => $template,
-            'h:X-Mailgun-Variables' => json_encode($variables),
-        ]);
+            'h:X-Mailgun-Variables' => json_encode($variables)
+        ];
+
+        if ($sponsorship->payment_type === Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT) {
+            $params['attachment'] = [
+                [
+                    'filePath' => Storage::disk('public')->path('docs/trajnik_pooblastilo.pdf'),
+                    'filename' => 'trajnik_pooblastilo.pdf',
+                ]
+            ];
+        }
+
+        MailClient::send($params);
     }
 }
