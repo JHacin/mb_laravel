@@ -13,9 +13,7 @@ use Throwable;
 
 class AdminCatAddTest extends AdminTestCase
 {
-
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_required_fields()
@@ -23,43 +21,40 @@ class AdminCatAddTest extends AdminTestCase
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
             $this->disableHtmlFormValidation($b);
+            $this->selectInvalidSelectOption($b, 'status');
             $this->clickSubmitButton($b);
-            $this->assertAllRequiredErrorsAreShown($b, ['@name-input-wrapper']);
+            $this->assertAllRequiredErrorsAreShown($b, ['@name-input-wrapper', '@gender-input-wrapper']);
             $this->assertAdminRadioHasRequiredError($b, 'gender');
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_name_field()
     {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs(static::$defaultAdmin)
-                ->visit(new AdminCatAddPage)
-                ->type('name', 'f');
-            $this->clickSubmitButton($browser);
+        $this->browse(function (Browser $b) {
+            $b->loginAs(static::$defaultAdmin);
+            $b->visit(new AdminCatAddPage);
+            $b->type('name', 'f');
+            $this->clickSubmitButton($b);
 
-            $browser
-                ->assertSee('Ime mora biti dolgo vsaj 2 znaka.')
-                ->type('name', Str::random(101));
+            $b->assertSee('Ime mora biti dolgo vsaj 2 znaka.');
+            $b->type('name', Str::random(101));
 
-            $this->clickSubmitButton($browser);
-            $browser->assertSee('Polje ne sme imeti več kot 100 znakov.');
+            $this->clickSubmitButton($b);
+            $b->assertSee('Polje ne sme imeti več kot 100 znakov.');
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_date_fields_are_in_the_past()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $this->disableHtmlFormValidation($browser);
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $this->disableHtmlFormValidation($b);
 
             $dateInputWrappers = [
                 '@date-of-birth-input-wrapper',
@@ -68,19 +63,17 @@ class AdminCatAddTest extends AdminTestCase
             ];
 
             foreach ($dateInputWrappers as $wrapper) {
-                $this->selectDatepickerDateInTheFuture($browser, $wrapper);
+                $this->selectDatepickerDateInTheFuture($b, $wrapper);
             }
 
-            $this->clickSubmitButton($browser);
-            $browser
-                ->assertSee('Datum rojstva mora biti v preteklosti.')
-                ->assertSee('Datum sprejema v zavetišče mora biti v preteklosti.')
-                ->assertSee('Datum vstopa v botrstvo mora biti v preteklosti.');
+            $this->clickSubmitButton($b);
+            $b->assertSee('Datum rojstva mora biti v preteklosti.');
+            $b->assertSee('Datum sprejema v zavetišče mora biti v preteklosti.');
+            $b->assertSee('Datum vstopa v botrstvo mora biti v preteklosti.');
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_dates_of_arrival_are_after_or_equal_to_date_of_birth()
@@ -107,49 +100,47 @@ class AdminCatAddTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_handles_images_correctly()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
 
             // Cancelling the modal
-            $this->attachImage($browser);
-            $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
+            $this->attachImage($b);
+            $b->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
                 $browser->click('.modal-footer button[data-dismiss="modal"]');
             });
-            $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
-            $browser->with('@photo-0-input-wrapper', function (Browser $browser) {
+            $b->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
+            $b->with('@photo-0-input-wrapper', function (Browser $browser) {
                 $browser->assertMissing('img.preview-image');
             });
 
             // Selecting & deleting the image
-            $browser->refresh();
-            $this->attachImage($browser);
-            $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
-                $browser->click('.modal-footer button[data-handle="modalSubmit"]');
+            $b->refresh();
+            $this->attachImage($b);
+            $b->with('.modal.show[data-handle="crop-modal"]', function (Browser $b) {
+                $b->click('.modal-footer button[data-handle="modalSubmit"]');
             });
-            $browser->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
-            $browser->with('@photo-0-input-wrapper', function (Browser $browser) {
-                $browser
-                    ->assertVisible('img.preview-image')
-                    ->click('button.delete-button')
-                    ->assertMissing('img.preview-image');
+            $b->waitUntilMissing('.modal.show[data-handle="crop-modal"]');
+            $b->with('@photo-0-input-wrapper', function (Browser $b) {
+                $b->assertVisible('img.preview-image');
+                $b->click('button.delete-button');
+                $b->assertMissing('img.preview-image');
             });
 
             // Image should be kept after validation errors
-            $browser->refresh();
-            $this->disableHtmlFormValidation($browser);
-            $this->attachImage($browser);
-            $browser->with('.modal.show[data-handle="crop-modal"]', function (Browser $browser) {
-                $browser->click('.modal-footer button[data-handle="modalSubmit"]');
+            $b->refresh();
+            $this->disableHtmlFormValidation($b);
+            $this->attachImage($b);
+            $b->with('.modal.show[data-handle="crop-modal"]', function (Browser $b) {
+                $b->click('.modal-footer button[data-handle="modalSubmit"]');
             });
-            $browser->pause(1000);
-            $this->clickSubmitButton($browser);
-            $browser->with('@photo-0-input-wrapper', function (Browser $browser) {
-                $browser->assertVisible('img.preview-image');
+            $b->pause(1000);
+            $this->clickSubmitButton($b);
+            $b->with('@photo-0-input-wrapper', function (Browser $b) {
+                $b->assertVisible('img.preview-image');
             });
         });
     }
@@ -160,15 +151,15 @@ class AdminCatAddTest extends AdminTestCase
      */
     public function test_adding_a_cat_works()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             $location = $this->createCatLocation();
+            $this->goToPage($b);
 
-            $this->goToPage($browser);
+            $b->type('name', 'Garfield');
 
-            $browser->type('name', 'Garfield');
-
-            $this->selectRadioOption($browser, '@gender-input-wrapper', Cat::GENDER_MALE);
-            $this->selectRadioOption($browser, '@is_group-input-wrapper', 1);
+            $this->selectRadioOption($b, '@gender-input-wrapper', Cat::GENDER_MALE);
+            $b->select('status', Cat::STATUS_ADOPTED);
+            $this->selectRadioOption($b, '@is_group-input-wrapper', 1);
 
             $dateInputWrappers = [
                 '@date-of-birth-input-wrapper',
@@ -176,35 +167,33 @@ class AdminCatAddTest extends AdminTestCase
                 '@date-of-arrival-boter-input-wrapper',
             ];
             foreach ($dateInputWrappers as $wrapper) {
-                $this->selectDatepickerDateInThePast($browser, $wrapper);
+                $this->selectDatepickerDateInThePast($b, $wrapper);
             }
 
-            $dateOfArrivalMhInputValue = $browser->value('input[name="date_of_arrival_mh"]');
-            $dateOfArrivalBoterInputValue = $browser->value('input[name="date_of_arrival_boter"]');
+            $dateOfArrivalMhInputValue = $b->value('input[name="date_of_arrival_mh"]');
+            $dateOfArrivalBoterInputValue = $b->value('input[name="date_of_arrival_boter"]');
 
-            $browser->script("CKEDITOR.instances.story.setData('hello')");
+            $b->script("CKEDITOR.instances.story.setData('hello')");
 
-            $browser->with('@location-input-wrapper', function (Browser $browser) use ($location) {
-                $browser
-                    ->click('.select2')
-                    ->select('location_id', $location->id);
+            $b->with('@location-input-wrapper', function (Browser $b) use ($location) {
+                $b->click('.select2');
+                $b->select('location_id', $location->id);
             });
 
-            $this->clickCheckbox($browser, '@is-active-input-wrapper');
-            $this->clickSubmitButton($browser);
-            $browser->on(new AdminCatListPage);
-            $browser->assertSee('Vnos uspešen.');
+            $this->clickCheckbox($b, '@is-active-input-wrapper');
+            $this->clickSubmitButton($b);
+            $b->on(new AdminCatListPage);
+            $b->assertSee('Vnos uspešen.');
 
-            $browser->with(
+            $b->with(
                 $this->getTableRowSelectorForIndex(1),
-                function (Browser $browser) use ($location, $dateOfArrivalMhInputValue, $dateOfArrivalBoterInputValue) {
-                    $browser
-                        ->assertSee('Garfield')
-                        ->assertSee(Cat::GENDER_LABELS[Cat::GENDER_MALE])
-                        ->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalMhInputValue)))
-                        ->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalBoterInputValue)))
-                        ->assertSee($location->name)
-                        ->assertSee('Da');
+                function (Browser $b) use ($location, $dateOfArrivalMhInputValue, $dateOfArrivalBoterInputValue) {
+                    $b->assertSee('Garfield');
+                    $b->assertSee(Cat::GENDER_LABELS[Cat::GENDER_MALE]);
+                    $b->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalMhInputValue)));
+                    $b->assertSee($this->formatToDateColumnString(Carbon::parse($dateOfArrivalBoterInputValue)));
+                    $b->assertSee($location->name);
+                    $b->assertSee(Cat::STATUS_LABELS[Cat::STATUS_ADOPTED]);
                 }
             );
         });

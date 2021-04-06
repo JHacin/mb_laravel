@@ -58,22 +58,26 @@
             </div>
 
             <div>
-                <a
-                    class="cat-list-item__link is-flex is-align-items-center has-text-weight-semibold has-text-primary"
-                    href="{{ route('become_cat_sponsor', $cat) }}"
-                    dusk="cat-list-item-sponsorship-form-link"
-                >
+                @if($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
+                    <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
+                @else
+                    <a
+                        class="cat-list-item__link is-flex is-align-items-center has-text-weight-semibold has-text-primary"
+                        href="{{ route('become_cat_sponsor', $cat) }}"
+                        dusk="cat-list-item-sponsorship-form-link"
+                    >
                     <span class="icon is-justify-content-flex-start">
                         <i class="fas fa-arrow-circle-right"></i>
                     </span>
-                    <span>
+                        <span>
                         @if($cat->is_group)
-                            Postani boter
-                        @else
-                            Postani moj boter
-                        @endif
+                                Postani boter
+                            @else
+                                Postani moj boter
+                            @endif
                     </span>
-                </a>
+                    </a>
+                @endif
             </div>
         </div>
     </div>

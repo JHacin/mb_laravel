@@ -29,6 +29,34 @@ class CatSponsorshipFormTest extends DuskTestCase
     /**
      * @throws Throwable
      */
+    public function test_throws_403_if_the_cat_does_not_have_seeking_sponsors_status()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCat(['status' => Cat::STATUS_SEEKING_SPONSORS]);
+
+            $this->goToPage($b, $cat);
+            $b->assertSee('Dogovor o posvojitvi na daljavo');
+            $b->assertDontSee('Prepovedan dostop');
+
+            // Cat updated while form was open
+            $cat->update(['status' => Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS]);
+            /** @var PersonData $personData */
+            $personData = PersonData::factory()->makeOne();
+            $this->fillOutAllFields($b, $this->getPersonDataFieldValueArray($personData));
+            $this->submit($b);
+            $b->assertDontSee('Dogovor o posvojitvi na daljavo');
+            $b->assertSee('Prepovedan dostop');
+
+            // Going to the page after cat was updated
+            $this->goToPage($b, $cat);
+            $b->assertDontSee('Dogovor o posvojitvi na daljavo');
+            $b->assertSee('Prepovedan dostop');
+        });
+    }
+
+    /**
+     * @throws Throwable
+     */
     public function test_shows_association_to_correct_cat()
     {
         $this->browse(function (Browser $browser) {

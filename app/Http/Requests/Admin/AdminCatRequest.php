@@ -25,11 +25,11 @@ class AdminCatRequest extends FormRequest
         $rules = [
             'name' => ['required', 'string', 'min:2', 'max:100'],
             'gender' => ['required', Rule::in(Cat::GENDERS)],
+            'status' => ['required', Rule::in(Cat::STATUSES)],
             'date_of_birth' => ['nullable', 'date', 'before:now'],
             'date_of_arrival_mh' => ['nullable', 'date', 'before:now', 'after_or_equal:date_of_birth'],
             'date_of_arrival_boter' => ['nullable', 'date', 'before:now', 'after_or_equal:date_of_birth'],
             'story' => ['nullable', 'string'],
-            'is_active' => ['boolean'],
             'is_group' => ['boolean'],
         ];
 

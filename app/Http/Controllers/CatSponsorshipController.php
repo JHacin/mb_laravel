@@ -16,6 +16,8 @@ class CatSponsorshipController extends Controller
 {
     public function submit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
     {
+        $this->validateCatStatus($cat);
+
         $input = $request->all();
 
         if (Auth::check()) {
@@ -66,6 +68,15 @@ class CatSponsorshipController extends Controller
 
     public function form(Cat $cat): View
     {
+        $this->validateCatStatus($cat);
+
         return view('become-cat-sponsor', ['cat' => $cat]);
+    }
+
+    protected function validateCatStatus(Cat $cat)
+    {
+        if ($cat->status !== Cat::STATUS_SEEKING_SPONSORS) {
+            abort(403);
+        }
     }
 }

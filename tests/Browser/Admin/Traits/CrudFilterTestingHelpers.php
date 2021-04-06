@@ -20,6 +20,17 @@ trait CrudFilterTestingHelpers
         });
     }
 
+    protected function assertFilterDropdownHasValues(Browser $browser, string $filterName, array $values)
+    {
+        $browser->with("#bp-filters-navbar li[filter-name=\"$filterName\"]", function (Browser $browser) use ($values) {
+            $browser->click('a.dropdown-toggle');
+
+            foreach ($values as $value) {
+                $browser->assertPresent(".dropdown-item[dropdownkey=\"$value\"]");
+            }
+        });
+    }
+
     protected function clickBooleanTypeFilterValue(Browser $browser, string $wrapperSelector, bool $value)
     {
         $browser->with($wrapperSelector, function (Browser $browser) use ($value) {

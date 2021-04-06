@@ -100,6 +100,32 @@ class CatListTest extends DuskTestCase
     /**
      * @throws Throwable
      */
+    public function test_does_not_link_to_sponsorship_form_if_status_is_temp_not_seeking_sponsors()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCat(['status' => Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS]);
+
+            $this->goToPage($b, '?per_page=all');
+            $catDetailsCardSelector = $this->getCatByIdCardSelector($cat);
+
+            $b->with($catDetailsCardSelector, function (Browser $b) use ($cat) {
+                $b->assertDontSee('Postani moj boter');
+                $b->assertSee(trans('cat.temp_not_seeking_sponsors_text'));
+            });
+
+            $cat->update(['status' => Cat::STATUS_SEEKING_SPONSORS]);
+            $b->refresh();
+
+            $b->with($catDetailsCardSelector, function (Browser $b) use ($cat) {
+                $b->assertSee('Postani moj boter');
+                $b->assertDontSee('Muca trenutno ne išče novih botrov.');
+            });
+        });
+    }
+
+    /**
+     * @throws Throwable
+     */
     public function test_doesnt_count_inactive_sponsorships()
     {
         $this->browse(function (Browser $b) {

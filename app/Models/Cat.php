@@ -21,20 +21,21 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * @property int|null $gender
+ * @property int $status
  * @property string|null $story
  * @property Carbon|null $date_of_arrival_mh
- * @property Carbon|null $date_of_birth
- * @property bool $is_active
- * @property int $is_group
- * @property int|null $location_id
- * @property string $slug
  * @property Carbon|null $date_of_arrival_boter
+ * @property Carbon|null $date_of_birth
+ * @property int $is_group
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string $slug
+ * @property int|null $location_id
  * @property-read string $first_photo_url
  * @property-read string $gender_label
  * @property-read string $name_and_id
+ * @property-read string $status_label
  * @property-read CatLocation|null $location
  * @property-read Collection|CatPhoto[] $photos
  * @property-read int|null $photos_count
@@ -51,11 +52,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Cat whereDateOfBirth($value)
  * @method static Builder|Cat whereGender($value)
  * @method static Builder|Cat whereId($value)
- * @method static Builder|Cat whereIsActive($value)
  * @method static Builder|Cat whereIsGroup($value)
  * @method static Builder|Cat whereLocationId($value)
  * @method static Builder|Cat whereName($value)
  * @method static Builder|Cat whereSlug($value)
+ * @method static Builder|Cat whereStatus($value)
  * @method static Builder|Cat whereStory($value)
  * @method static Builder|Cat whereUpdatedAt($value)
  * @mixin Eloquent
@@ -72,28 +73,43 @@ class Cat extends Model
 
     public const GENDER_MALE = 1;
     public const GENDER_FEMALE = 2;
-
     public const GENDERS = [
         self::GENDER_MALE,
         self::GENDER_FEMALE,
     ];
-
     public const GENDER_LABELS = [
         self::GENDER_MALE => 'samček',
         self::GENDER_FEMALE => 'samička',
     ];
 
+    public const STATUS_SEEKING_SPONSORS = 1;
+    public const STATUS_TEMP_NOT_SEEKING_SPONSORS = 2;
+    public const STATUS_NOT_SEEKING_SPONSORS = 3;
+    public const STATUS_ADOPTED = 4;
+    public const STATUS_RIP = 5;
+    public const STATUSES = [
+        self::STATUS_SEEKING_SPONSORS,
+        self::STATUS_TEMP_NOT_SEEKING_SPONSORS,
+        self::STATUS_NOT_SEEKING_SPONSORS,
+        self::STATUS_ADOPTED,
+        self::STATUS_RIP,
+    ];
+    public const STATUS_LABELS = [
+        self::STATUS_SEEKING_SPONSORS => 'išče botre',
+        self::STATUS_TEMP_NOT_SEEKING_SPONSORS => 'trenutno ne išče botrov',
+        self::STATUS_NOT_SEEKING_SPONSORS => 'ne išče botrov',
+        self::STATUS_ADOPTED => 'v novem domu',
+        self::STATUS_RIP => 'RIP',
+    ];
+
     public const PER_PAGE_12 = 12;
     public const PER_PAGE_24 = 24;
     public const PER_PAGE_ALL = 'all';
-
-
     public const PER_PAGE_OPTIONS = [
         self::PER_PAGE_12,
         self::PER_PAGE_24,
         self::PER_PAGE_ALL,
     ];
-
     public const PER_PAGE_DEFAULT = self::PER_PAGE_12;
 
     /*
@@ -114,7 +130,6 @@ class Cat extends Model
         'date_of_birth' => 'date',
         'date_of_arrival_mh' => 'date',
         'date_of_arrival_boter' => 'date',
-        'is_active' => 'boolean',
     ];
 
     /**
@@ -191,8 +206,15 @@ class Cat extends Model
      */
     protected static function booted()
     {
-        static::addGlobalScope('is_active', function (Builder $builder) {
-            $builder->where('is_active', true);
+        static::addGlobalScope('status', function (Builder $builder) {
+            $builder->whereNotIn(
+                'status',
+                [
+                    self::STATUS_NOT_SEEKING_SPONSORS,
+                    self::STATUS_ADOPTED,
+                    self::STATUS_RIP,
+                ]
+            );
         });
     }
 
@@ -205,6 +227,11 @@ class Cat extends Model
     public function getGenderLabelAttribute(): string
     {
         return self::GENDER_LABELS[$this->gender];
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        return self::STATUS_LABELS[$this->status];
     }
 
     public function getFirstPhotoUrlAttribute(): string

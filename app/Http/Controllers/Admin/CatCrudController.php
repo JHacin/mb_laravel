@@ -18,9 +18,8 @@ use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CatCrudController
@@ -65,6 +64,11 @@ class CatCrudController extends CrudController
             'type' => 'cat_photo',
         ]);
         $this->crud->addColumn(CrudColumnGenerator::name());
+        $this->crud->addColumn([
+            'name' => 'status_label',
+            'label' => trans('cat.status'),
+            'type' => 'text'
+        ]);
         $this->crud->addColumn(CrudColumnGenerator::genderLabel());
         $this->crud->addColumn([
             'name' => 'date_of_arrival_mh',
@@ -91,7 +95,6 @@ class CatCrudController extends CrudController
                 });
             }
         ]);
-        $this->crud->addColumn(CrudColumnGenerator::isActive(['label' => trans('cat.is_active')]));
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
@@ -116,20 +119,9 @@ class CatCrudController extends CrudController
             }
         );
 
-        $this->crud->addFilter(
-            [
-                'name' => 'gender',
-                'type' => 'dropdown',
-                'label' => trans('cat.gender'),
-            ],
-            Cat::GENDER_LABELS,
-            function ($value) {
-                $this->crud->addClause('where', 'gender', $value);
-            }
-        );
-
+        $this->addDropdownFilter('gender', trans('cat.gender'), Cat::GENDER_LABELS);
+        $this->addDropdownFilter('status', trans('cat.status'), Cat::STATUS_LABELS);
         $this->addBooleanFilter('is_group', trans('cat.is_group'));
-        $this->addBooleanFilter('is_active', trans('cat.is_active'));
     }
 
     protected function setupCreateOperation()
@@ -156,6 +148,24 @@ class CatCrudController extends CrudController
             'wrapper' => [
                 'dusk' => 'gender-input-wrapper'
             ],
+        ]);
+        $this->crud->addField([
+            'name' => 'status',
+            'label' => trans('cat.status'),
+            'type' => 'select_from_array',
+            'options' => Cat::STATUS_LABELS,
+            'allows_null' => false,
+            'default' => Cat::STATUS_NOT_SEEKING_SPONSORS,
+            'required' => true,
+            'wrapper' => [
+                'dusk' => 'status-input-wrapper'
+            ],
+            'hint' =>
+                '<em>išče botre</em>: objavljena, botrovanje je možno<br>' .
+                '<em>trenutno ne išče botrov</em>: objavljena, botrovanje ni možno, prikazana je opomba<br>' .
+                '<em>ne išče botrov</em>: ni objavljena, botrovanje ni možno<br>' .
+                '<em>v novem domu</em>: ni objavljena, botrovanje ni možno<br>' .
+                '<em>RIP</em>: ni objavljena, botrovanje ni možno<br>'
         ]);
         $this->crud->addField([
             'name' => 'is_group',
@@ -217,15 +227,6 @@ class CatCrudController extends CrudController
                 'dusk' => 'location-input-wrapper'
             ],
         ]);
-        $this->crud->addField([
-            'name' => 'is_active',
-            'label' => trans('cat.is_active'),
-            'type' => 'checkbox',
-            'hint' => 'Ali naj bo muca javno vidna (npr. na seznamu vseh muc).',
-            'wrapper' => [
-                'dusk' => 'is-active-input-wrapper'
-            ],
-        ]);
     }
 
     /**
@@ -247,7 +248,7 @@ class CatCrudController extends CrudController
         }
     }
 
-    public function store(): RedirectResponse
+    public function store(): Response
     {
         $response = $this->traitStore();
 

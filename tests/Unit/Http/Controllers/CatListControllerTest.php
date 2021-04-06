@@ -13,34 +13,34 @@ class CatListControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @var bool
-     */
     protected bool $seed = true;
 
-    /**
-     * @return void
-     */
     public function test_returns_list_of_cats()
     {
         $response = $this->getResponse();
         $response->assertViewHas('cats');
     }
 
-    /**
-     * @return void
-     */
-    public function test_doesnt_show_inactive_cats()
+    public function test_doesnt_show_cats_with_hidden_from_public_statuses()
     {
-        $inactiveCat = $this->createCat(['is_active' => false]);
-        $cats = $this->getCatsInResponse();
+        $hiddenFromPublicStatuses = [
+            Cat::STATUS_NOT_SEEKING_SPONSORS,
+            Cat::STATUS_ADOPTED,
+            Cat::STATUS_RIP
+        ];
 
-        $this->assertFalse($cats->contains($inactiveCat->id));
+        foreach (Cat::STATUSES as $status) {
+            $cat = $this->createCat(['status' => $status]);
+            $cats = $this->getCatsInResponse();
+
+            if (in_array($status, $hiddenFromPublicStatuses)) {
+                $this->assertFalse($cats->contains($cat->id));
+            } else {
+                $this->assertTrue($cats->contains($cat->id));
+            }
+        }
     }
 
-    /**
-     * @return void
-     */
     public function test_returns_12_cats_per_page_by_default()
     {
         $cats = $this->getCatsInResponse();
@@ -48,9 +48,6 @@ class CatListControllerTest extends TestCase
         $this->assertEquals(Cat::PER_PAGE_DEFAULT, $cats->perPage());
     }
 
-    /**
-     * @return void
-     */
     public function test_per_page_query_param_works()
     {
         foreach (Cat::PER_PAGE_OPTIONS as $option) {
@@ -60,9 +57,6 @@ class CatListControllerTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
     public function test_sorts_by_is_group_then_id_descending_by_default()
     {
         $name = 'name_' . time();
@@ -78,9 +72,6 @@ class CatListControllerTest extends TestCase
         $this->assertEquals($cats[2]->id, $oldestNonGroupCat->id);
     }
 
-    /**
-     * @return void
-     */
     public function test_sponsorship_count_sort_query_param_works()
     {
         $this->createCatWithSponsorships([], 0);
@@ -98,9 +89,6 @@ class CatListControllerTest extends TestCase
         $this->assertStringContainsString('sponsorship_count=desc', $catsDesc->url(1));
     }
 
-    /**
-     * @return void
-     */
     public function test_age_sort_query_param_works()
     {
         $oldest = $this->createCat(['date_of_birth' => Carbon::now()->subYears(300)]);
@@ -120,9 +108,6 @@ class CatListControllerTest extends TestCase
         $this->assertStringContainsString('age=asc', $youngestFirst->url(1));
     }
 
-    /**
-     * @return void
-     */
     public function test_puts_cats_with_null_date_of_birth_last_when_sorting_by_age()
     {
         $this->createCat(['date_of_birth' => null]);
@@ -133,9 +118,6 @@ class CatListControllerTest extends TestCase
         $this->assertEquals($oldest->id, $oldestFirst->first()->id);
     }
 
-    /**
-     * @return void
-     */
     public function test_id_sort_query_param_works()
     {
         /** @var Cat $first */
@@ -155,9 +137,6 @@ class CatListControllerTest extends TestCase
         $this->assertStringContainsString('id=desc', $catsDesc->url(1));
     }
 
-    /**
-     * @return void
-     */
     public function test_search_by_name_works()
     {
         $garfield = $this->createCat(['name' => 'Garfield']);
@@ -179,19 +158,11 @@ class CatListControllerTest extends TestCase
         $this->assertStringContainsString('search=rfie%C5%A1', $results->url(1));
     }
 
-    /**
-     * @param array $params
-     * @return TestResponse
-     */
     protected function getResponse(array $params = []): TestResponse
     {
         return $this->get(route('cat_list', $params));
     }
 
-    /**
-     * @param array $params
-     * @return LengthAwarePaginator
-     */
     protected function getCatsInResponse(array $params = []): LengthAwarePaginator
     {
         return $this->getResponse($params)->getOriginalContent()->getData()['cats'];

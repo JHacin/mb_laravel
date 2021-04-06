@@ -19,7 +19,7 @@ trait CreatesCats
     protected function createCat($attributes = []): Cat
     {
         /** @var Cat $cat */
-        $cat = Cat::factory()->createOne($attributes);
+        $cat = Cat::factory()->createOne($this->withBaseAttributes($attributes));
         return $cat;
     }
 
@@ -30,7 +30,7 @@ trait CreatesCats
     protected function createCatWithPhotos($attributes = []): Cat
     {
         /** @var Cat $cat */
-        $cat = Cat::factory()->createOne($attributes);
+        $cat = Cat::factory()->createOne($this->withBaseAttributes($attributes));
 
         $indicesShuffled = Arr::shuffle(CatPhotoService::INDICES);
 
@@ -61,8 +61,16 @@ trait CreatesCats
         /** @var Cat $cat */
         $cat = Cat::factory()
             ->has(Sponsorship::factory()->count($sponsorshipCount))
-            ->createOne($attributes);
+            ->createOne($this->withBaseAttributes($attributes));
 
         return $cat;
+    }
+
+    protected function withBaseAttributes(array $customAttributes): array
+    {
+        return array_merge(
+            ['status' => Cat::STATUS_SEEKING_SPONSORS],
+            $customAttributes
+        );
     }
 }

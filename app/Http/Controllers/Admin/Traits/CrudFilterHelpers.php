@@ -4,24 +4,23 @@ namespace App\Http\Controllers\Admin\Traits;
 
 trait CrudFilterHelpers
 {
-    /**
-     * @param string $field
-     * @param string $label
-     */
-    public function addBooleanFilter(string $field, string $label)
+    public function addBooleanFilter(string $fieldName, string $label)
+    {
+        $options = [true => 'Da', false => 'Ne'];
+        $this->addDropdownFilter($fieldName, $label, $options);
+    }
+
+    public function addDropdownFilter(string $fieldName, string $label, array $options)
     {
         $this->crud->addFilter(
             [
-                'name' => $field,
+                'name' => $fieldName,
                 'type' => 'dropdown',
                 'label' => $label,
             ],
-            [
-                true => 'Da',
-                false => 'Ne'
-            ],
-            function ($value) use ($field) {
-                $this->crud->addClause('where', $field, $value);
+            $options,
+            function ($value) use ($fieldName) {
+                $this->crud->addClause('where', $fieldName, $value);
             }
         );
     }

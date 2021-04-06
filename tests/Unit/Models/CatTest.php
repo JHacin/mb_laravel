@@ -10,78 +10,58 @@ use Tests\TestCase;
 
 class CatTest extends TestCase
 {
-    /**
-     * @var Cat
-     */
-    protected Cat $cat;
-
-    /**
-     * @inheritDoc
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->cat = $this->createCatWithPhotos();
-    }
-
-    /**
-     * @return void
-     */
     public function test_returns_photo_by_index()
     {
-        $photo = $this->cat->getPhotoByIndex(1);
+        $photo = $this->createCatWithPhotos()->getPhotoByIndex(1);
         $this->assertEquals(1, $photo->index);
     }
 
     /**
-     * @return void
      * @throws Exception
      */
     public function test_returns_first_photo_url()
     {
-        $this->cat->getPhotoByIndex(0)->delete();
-        $photo1 = $this->cat->getPhotoByIndex(1);
-        $this->assertEquals(Storage::url(CatPhotoService::getFullPath($photo1->filename)), $this->cat->first_photo_url);
+        $cat = $this->createCatWithPhotos();
+        $cat->getPhotoByIndex(0)->delete();
+        $photo1 = $cat->getPhotoByIndex(1);
+        $this->assertEquals(Storage::url(CatPhotoService::getFullPath($photo1->filename)), $cat->first_photo_url);
     }
 
-    /**
-     * @return void
-     */
     public function test_returns_placeholder_image_if_photo_doesnt_exist()
     {
         $firstPhotoUrl = $this->createCat()->first_photo_url;
         $this->assertEquals($firstPhotoUrl, CatPhotoService::getPlaceholderImage());
     }
 
-    /**
-     * @return void
-     */
-    public function test_filters_out_inactive_cats_by_default()
+    public function test_filters_out_cats_with_hidden_from_public_statuses_by_default()
     {
-        $this->cat->update(['is_active' => false]);
-        $this->assertFalse(Cat::all()->contains($this->cat->id));
-        $this->assertTrue(Cat::withoutGlobalScopes()->get()->contains($this->cat->id));
+        $hiddenFromPublicStatuses = [
+            Cat::STATUS_NOT_SEEKING_SPONSORS,
+            Cat::STATUS_ADOPTED,
+            Cat::STATUS_RIP
+        ];
 
-        $this->cat->update(['is_active' => true]);
-        $this->assertTrue(Cat::all()->contains($this->cat->id));
+        foreach (Cat::STATUSES as $status) {
+            $cat = $this->createCat(['status' => $status]);
+
+            if (in_array($status, $hiddenFromPublicStatuses)) {
+                $this->assertFalse(Cat::all()->contains($cat->id));
+                $this->assertTrue(Cat::withoutGlobalScopes()->get()->contains($cat->id));
+            } else {
+                $this->assertTrue(Cat::all()->contains($cat->id));
+            }
+        }
     }
 
-    /**
-     * @return void
-     */
     public function test_returns_gender_label()
     {
-        $this->cat->update(['gender' => Cat::GENDER_MALE]);
-        $this->assertEquals(Cat::GENDER_LABELS[Cat::GENDER_MALE], $this->cat->gender_label);
+        $cat = $this->createCat(['gender' => Cat::GENDER_MALE]);
+        $this->assertEquals(Cat::GENDER_LABELS[Cat::GENDER_MALE], $cat->gender_label);
     }
 
-    /**
-     * @return void
-     */
     public function test_returns_name_and_id_attribute_correctly()
     {
-        $this->cat->update(['name' => 'Mare']);
-        $id = $this->cat->id;
-        $this->assertEquals("Mare ($id)", $this->cat->name_and_id);
+        $cat = $this->createCat(['name' => 'Mare']);
+        $this->assertEquals("Mare ($cat->id)", $cat->name_and_id);
     }
 }

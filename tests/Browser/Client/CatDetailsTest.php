@@ -57,6 +57,27 @@ class CatDetailsTest extends DuskTestCase
     /**
      * @throws Throwable
      */
+    public function test_does_not_link_to_sponsorship_form_if_status_is_temp_not_seeking_sponsors()
+    {
+        $this->browse(function (Browser $b) {
+            $cat = $this->createCat(['status' => Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS]);
+
+            $this->goToPage($b, $cat);
+
+            $b->assertMissing('@cat-details-become-sponsor-form-link');
+            $b->assertSee(trans('cat.temp_not_seeking_sponsors_text'));
+
+            $cat->update(['status' => Cat::STATUS_SEEKING_SPONSORS]);
+            $b->refresh();
+
+            $b->assertPresent('@cat-details-become-sponsor-form-link');
+            $b->assertDontSee('Muca trenutno ne išče novih botrov.');
+        });
+    }
+
+    /**
+     * @throws Throwable
+     */
     public function test_shows_different_content_for_groups()
     {
         $this->browse(function (Browser $b) {

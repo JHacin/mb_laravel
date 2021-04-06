@@ -76,22 +76,26 @@
                     @endif
 
                     <div class="block">
-                        <a
-                            class="button is-primary is-medium"
-                            href="{{ route('become_cat_sponsor', $cat) }}"
-                            dusk="cat-details-become-sponsor-form-link"
-                        >
+                        @if($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
+                            <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
+                        @else
+                            <a
+                                class="button is-primary is-medium"
+                                href="{{ route('become_cat_sponsor', $cat) }}"
+                                dusk="cat-details-become-sponsor-form-link"
+                            >
                             <span class="icon">
                                 <i class="fas fa-arrow-circle-right"></i>
                             </span>
-                            <span>
+                                <span>
                                 @if($cat->is_group)
-                                    Postani boter
-                                @else
-                                    Postani moj boter
-                                @endif
+                                        Postani boter
+                                    @else
+                                        Postani moj boter
+                                    @endif
                             </span>
-                        </a>
+                            </a>
+                        @endif
                     </div>
 
                     @if(!$cat->is_group)
