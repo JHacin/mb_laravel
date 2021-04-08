@@ -34,30 +34,6 @@ class AdminSponsorshipMessageTypeListTest extends AdminTestCase
     /**
      * @throws Throwable
      */
-    public function test_deletes_message_type()
-    {
-        $this->browse(function (Browser $b) {
-            $messageType = $this->createSponsorshipMessageType();
-            $this->goToPage($b);
-
-            $b->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) use ($messageType) {
-                $browser
-                    ->assertSee($messageType->name)
-                    ->click('a[data-button-type="delete"]');
-            });
-            $b->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
-                $browser->press('Izbriši');
-            });
-
-            $this->waitForRequestsToFinish($b);
-            $b->assertDontSee($messageType->name);
-            $this->assertDatabaseMissing('sponsorship_message_types', ['id' => $messageType->id]);
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
     public function test_doesnt_show_create_edit_or_delete_buttons_to_non_super_admins()
     {
         $this->browse(function (Browser $b) {

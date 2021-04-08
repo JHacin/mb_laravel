@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Models\PersonData;
 use App\Models\Sponsorship;
+use App\Utilities\BankTransferFieldGenerator;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
 use MailClient;
@@ -38,8 +39,8 @@ class SponsorshipMail
             'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
             'muca_ime' => $cat->name,
             'muca_povezava' => url(route('cat_details', $cat)),
-            'namen_nakazila' => 'BOTER-' . strtoupper(str_replace(' ', '-', $cat->name)) . '-' . $cat->id,
-            'referencna_stevilka' => 'PLACEHOLDER_REF',
+            'namen_nakazila' => BankTransferFieldGenerator::purpose($sponsorship),
+            'referencna_stevilka' => $sponsorship->payment_reference_number,
         ];
 
         $params = [

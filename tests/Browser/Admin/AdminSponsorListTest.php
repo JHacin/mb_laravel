@@ -218,29 +218,6 @@ class AdminSponsorListTest extends AdminTestCase
     }
 
     /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_deletes_person_data()
-    {
-        $this->browse(function (Browser $browser) {
-            $personData = $this->createPersonData(['first_name' => 'DELETE_ME']);
-            $this->goToPage($browser);
-            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) use ($personData) {
-                $browser
-                    ->assertSee($personData->first_name)
-                    ->click('a[data-button-type="delete"]');
-            });
-            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
-                $browser->press('Izbriši');
-            });
-            $this->waitForRequestsToFinish($browser);
-            $browser->assertDontSee($personData->first_name);
-            $this->assertDatabaseMissing('person_data', ['id' => $personData->id]);
-        });
-    }
-
-    /**
      * @param Browser $browser
      * @throws TimeoutException
      */

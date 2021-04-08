@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\ClearsGlobalScopes;
+use App\Utilities\BankTransferFieldGenerator;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
-
 
 /**
  * App\Models\Sponsorship
@@ -26,6 +26,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Cat|null $cat
+ * @property-read string $payment_reference_number
  * @property-read PersonData|null $personData
  * @method static Builder|Sponsorship newModelQuery()
  * @method static Builder|Sponsorship newQuery()
@@ -139,6 +140,11 @@ class Sponsorship extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+
+    public function getPaymentReferenceNumberAttribute(): string
+    {
+        return BankTransferFieldGenerator::referenceNumber($this);
+    }
 
     /*
     |--------------------------------------------------------------------------

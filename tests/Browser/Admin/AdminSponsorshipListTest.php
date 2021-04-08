@@ -14,253 +14,115 @@ use Throwable;
 class AdminSponsorshipListTest extends AdminTestCase
 {
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_sponsorship_details_are_shown_correctly()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             $sponsorship = $this->createSponsorship([
                 'monthly_amount' => 99,
                 'is_anonymous' => true,
                 'is_active' => false,
                 'ended_at' => '2019-08-21'
             ]);
-            $this->goToPage($browser);
-            $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
-                $this->assertDetailsModalShowsValuesInOrder($browser, [
+            $this->goToPage($b);
+            $this->openFirstRowDetails($b);
+            $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) use ($sponsorship) {
+                $this->assertDetailsModalShowsValuesInOrder($b, [
                     0 => $sponsorship->id,
-                    1 => $sponsorship->cat->name_and_id,
-                    2 => $sponsorship->personData->email_and_id,
-                    3 => '99,00 €',
-                    4 => 'Da',
-                    5 => 'Ne',
-                    6 => $this->formatToDatetimeColumnString($sponsorship->created_at),
-                    7 => '21. 8. 2019',
-                    8 => $this->formatToDatetimeColumnString($sponsorship->updated_at),
+                    1 => $sponsorship->payment_reference_number,
+                    2 => $sponsorship->cat->name_and_id,
+                    3 => $sponsorship->personData->email_and_id,
+                    4 => '99,00 €',
+                    5 => 'Da',
+                    6 => 'Ne',
+                    7 => $this->formatToDatetimeColumnString($sponsorship->created_at),
+                    8 => '21. 8. 2019',
+                    9 => $this->formatToDatetimeColumnString($sponsorship->updated_at),
                 ]);
             });
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_inactive_sponsorships()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             $inactive = $this->createSponsorship(['is_active' => false]);
-            $this->goToPage($browser);
-            $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($inactive) {
-                $this->assertDetailsModalColumnShowsValue($browser, 0, $inactive->id);
-                $this->assertDetailsModalColumnShowsValue($browser, 5, 'Ne');
+            $this->goToPage($b);
+            $this->openFirstRowDetails($b);
+            $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) use ($inactive) {
+                $this->assertDetailsModalColumnShowsValue($b, 0, $inactive->id);
+                $this->assertDetailsModalColumnShowsValue($b, 5, 'Ne');
             });
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_clicking_on_cat_opens_up_cat_edit_form()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             $sponsorship = $this->createSponsorship();
-            $this->goToPage($browser);
-            $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
-                $browser
-                    ->click('tr[data-dt-column="1"] a')
+            $this->goToPage($b);
+            $this->openFirstRowDetails($b);
+            $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) use ($sponsorship) {
+                $b
+                    ->click('tr[data-dt-column="2"] a')
                     ->on(new AdminCatEditPage($sponsorship->cat));
             });
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_clicking_on_sponsor_opens_up_person_data_edit_form()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             $sponsorship = $this->createSponsorship();
-            $this->goToPage($browser);
-            $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
-                $browser
-                    ->click('tr[data-dt-column="2"] a')
+            $this->goToPage($b);
+            $this->openFirstRowDetails($b);
+            $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) use ($sponsorship) {
+                $b
+                    ->click('tr[data-dt-column="3"] a')
                     ->on(new AdminSponsorEditPage($sponsorship->personData));
             });
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
-    public function test_shows_cat_filter_options()
+    public function test_shows_correct_filter_options()
     {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $browser->assertSelectHasOptions('filter_cat', Cat::pluck('id')->toArray());
+        $this->browse(function (Browser $b) {
+            $this->goToPage($b);
+            $b->assertSelectHasOptions('filter_cat', Cat::pluck('id')->toArray());
+            $b->assertSelectHasOptions('filter_personData', PersonData::pluck('id')->toArray());
+            $this->assertSeeBooleanTypeFilter($b, '@sponsorship-list-is-active-filter');
         });
     }
 
     /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_filters_by_cat()
-    {
-        $this->browse(function (Browser $browser) {
-            $shown = $this->createSponsorship();
-            $hidden = $this->createSponsorship();
-            $this->goToPage($browser);
-
-            $browser->with('@sponsorship-list-location-filter', function (Browser $browser) use ($shown) {
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->select('filter_cat', $shown->cat_id);
-            });
-
-            $this->waitForRequestsToFinish($browser);
-
-            $browser->with('@crud-table-body', function (Browser $browser) use ($shown, $hidden) {
-                $browser
-                    ->assertSee($shown->cat->name_and_id)
-                    ->assertDontSee($hidden->cat->name_and_id);
-            });
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_shows_person_data_filter_options()
-    {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $browser->assertSelectHasOptions('filter_personData', PersonData::pluck('id')->toArray());
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_filters_by_person_data()
-    {
-        $this->browse(function (Browser $browser) {
-            $shown = $this->createSponsorship();
-            $hidden = $this->createSponsorship();
-            $this->goToPage($browser);
-            $browser->with('@sponsorship-list-person-data-filter', function (Browser $browser) use ($shown) {
-                $browser
-                    ->click('a.dropdown-toggle')
-                    ->select('filter_personData', $shown->person_data_id);
-            });
-            $this->waitForRequestsToFinish($browser);
-            $browser->with('@crud-table-body', function (Browser $browser) use ($shown, $hidden) {
-                $browser
-                    ->assertSee($shown->personData->email_and_id)
-                    ->assertDontSee($hidden->personData->email_and_id);
-            });
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_shows_is_active_filter_options()
-    {
-        $this->browse(function (Browser $browser) {
-            $this->goToPage($browser);
-            $this->assertSeeBooleanTypeFilter($browser, '@sponsorship-list-is-active-filter');
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_filters_by_is_active()
-    {
-        $this->browse(function (Browser $browser) {
-            $this->createSponsorship([
-                'is_active' => true,
-                'monthly_amount' => 5432,
-            ]);
-            $this->createSponsorship([
-                'is_active' => false,
-                'monthly_amount' => 9876,
-            ]);
-            $this->goToPage($browser);
-            $this->clickBooleanTypeFilterValue($browser, '@sponsorship-list-is-active-filter', true);
-
-            $browser->with('@crud-table-body', function (Browser $browser) {
-                $browser
-                    ->assertSee('5.432,00 €')
-                    ->assertDontSee('9.876,00 €');
-            });
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_search_works()
-    {
-        $this->browse(function (Browser $browser) {
-            $shown = $this->createSponsorship([
-                'cat_id' => $this->createCat(['name' => 'a_' . time()])->id,
-                'person_data_id' => $this->createPersonData(['email' => 'a_' . time() . '@example.com'])->id,
-            ]);
-            $hidden = $this->createSponsorship([
-                'cat_id' => $this->createCat(['name' => 'b_' . time()])->id,
-                'person_data_id' => $this->createPersonData(['email' => 'b_' . time() . '@example.com'])->id,
-            ]);
-            $this->goToPage($browser);
-
-            $searches = [
-                $shown->cat->name,
-                $shown->personData->email,
-            ];
-
-            foreach ($searches as $value) {
-                $this->enterSearchInputValue($browser, $value);
-                $browser->with('@crud-table-body', function (Browser $browser) use ($shown, $hidden) {
-                    $browser
-                        ->assertSee($shown->cat->name_and_id)
-                        ->assertDontSee($hidden->cat->name_and_id);
-                });
-            }
-        });
-    }
-
-    /**
-     * @return void
      * @throws Throwable
      */
     public function test_shows_cancel_button_if_sponsorship_is_active()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             $this->createSponsorship(['is_active' => true]);
-            $this->goToPage($browser);
-            $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) {
-                $browser->assertPresent('@sponsorship-cancel-form-button');
+            $this->goToPage($b);
+            $this->openFirstRowDetails($b);
+            $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) {
+                $b->assertPresent('@sponsorship-cancel-form-button');
             });
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_doesnt_show_cancel_button_if_sponsorship_is_not_active()
@@ -269,85 +131,59 @@ class AdminSponsorshipListTest extends AdminTestCase
             $this->createSponsorship(['is_active' => false]);
             $this->goToPage($browser);
             $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) {
-                $browser->assertMissing('@sponsorship-cancel-form-button');
+            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $b) {
+                $b->assertMissing('@sponsorship-cancel-form-button');
             });
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_cancels_sponsorship()
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $b) {
             $sponsorship = $this->createSponsorship(['is_active' => true]);
             $this->assertTrue((bool)$sponsorship->is_active);
-            $this->goToPage($browser);
-            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
-                $browser->click('@sponsorship-cancel-form-button');
+            $this->goToPage($b);
+            $b->with($this->getTableRowSelectorForIndex(1), function (Browser $b) {
+                $b->click('@sponsorship-cancel-form-button');
             });
-            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
-                $browser->press('Prekliči');
+            $b->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $b) {
+                $b->press('Prekliči');
             });
-            $this->waitForRequestsToFinish($browser);
+            $this->waitForRequestsToFinish($b);
             $sponsorship->refresh();
             $this->assertTrue((bool)$sponsorship->is_active);
-            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) {
-                $browser->click('@sponsorship-cancel-form-button');
+            $b->with($this->getTableRowSelectorForIndex(1), function (Browser $b) {
+                $b->click('@sponsorship-cancel-form-button');
             });
-            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
-                $browser->press('Potrdi');
+            $b->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $b) {
+                $b->press('Potrdi');
             });
-            $this->waitForRequestsToFinish($browser);
+            $this->waitForRequestsToFinish($b);
             $sponsorship->refresh();
             $this->assertFalse((bool)$sponsorship->is_active);
             $this->assertNotNull($sponsorship->ended_at);
-            $browser->assertSee('Botrovanje uspešno prekinjeno.');
-            $this->openFirstRowDetails($browser);
-            $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsorship) {
-                $this->assertDetailsModalColumnShowsValue($browser, 5, 'Ne');
-                $this->assertDetailsModalColumnShowsValue($browser, 7,
+            $b->assertSee('Botrovanje uspešno prekinjeno.');
+            $this->openFirstRowDetails($b);
+            $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) use ($sponsorship) {
+                $this->assertDetailsModalColumnShowsValue($b, 5, 'Ne');
+                $this->assertDetailsModalColumnShowsValue($b, 7,
                     $this->formatToDateColumnString($sponsorship->ended_at));
             });
         });
     }
 
     /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_deletes_sponsorship()
-    {
-        $this->browse(function (Browser $browser) {
-            $sponsorship = $this->createSponsorship(['cat_id' => Cat::factory()]);
-            $catNameAndId = $sponsorship->cat->name_and_id;
-            $this->goToPage($browser);
-            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) use ($catNameAndId) {
-                $browser
-                    ->assertSee($catNameAndId)
-                    ->click('a[data-button-type="delete"]');
-            });
-            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
-                $browser->press('Izbriši');
-            });
-            $this->waitForRequestsToFinish($browser);
-            $browser->assertDontSee($catNameAndId);
-            $this->assertDatabaseMissing('sponsorships', ['id' => $sponsorship->id]);
-        });
-    }
-
-    /**
-     * @param Browser $browser
+     * @param Browser $b
      * @throws TimeoutException
      */
-    protected function goToPage(Browser $browser)
+    protected function goToPage(Browser $b)
     {
-        $browser
-            ->loginAs(static::$defaultAdmin)
-            ->visit(new AdminSponsorshipListPage);
-        $this->waitForRequestsToFinish($browser);
-        $this->clearActiveFilters($browser);
+        $b->loginAs(static::$defaultAdmin);
+        $b->visit(new AdminSponsorshipListPage);
+        $this->waitForRequestsToFinish($b);
+        $this->clearActiveFilters($b);
     }
 }

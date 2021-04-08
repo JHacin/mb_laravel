@@ -37,7 +37,6 @@ class SponsorshipCrudController extends CrudController
     use CrudFilterHelpers, ClearsModelGlobalScopes;
 
     /**
-     * @return void
      * @throws Exception
      */
     public function setup()
@@ -51,12 +50,14 @@ class SponsorshipCrudController extends CrudController
         $this->clearModelGlobalScopes();
     }
 
-    /**
-     * @return void
-     */
     protected function setupListOperation()
     {
         $this->crud->addColumn(CrudColumnGenerator::id());
+        $this->crud->addColumn([
+           'name' => 'payment_reference_number',
+           'label' => trans('sponsorship.payment_reference_number'),
+           'type' => 'text',
+        ]);
         $this->crud->addColumn([
             'name' => 'cat',
             'label' => trans('cat.cat'),
@@ -117,9 +118,6 @@ class SponsorshipCrudController extends CrudController
         $this->addFilters();
     }
 
-    /**
-     * @return void
-     */
     protected function addFilters()
     {
         $this->crud->addFilter(
@@ -153,9 +151,7 @@ class SponsorshipCrudController extends CrudController
         $this->addBooleanFilter('is_active', 'Aktivno');
     }
 
-    /**
-     * @return void
-     */
+
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(AdminSponsorshipRequest::class);
@@ -222,15 +218,12 @@ class SponsorshipCrudController extends CrudController
                 '<br>Neaktivna botrovanja ne bodo vključena na spletni strani (v seštevkih botrovanj, na seznamih botrov itd.)',
         ]);
         $this->crud->addField([
-            'name'  => 'email_warning',
-            'type'  => 'custom_html',
+            'name' => 'email_warning',
+            'type' => 'custom_html',
             'value' => '<b>Boter po vnosu ne bo prejel avtomatskega emaila.</b>'
         ]);
     }
 
-    /**
-     * @return void
-     */
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
@@ -248,10 +241,6 @@ class SponsorshipCrudController extends CrudController
         ]));
     }
 
-    /**
-     * @param Sponsorship $sponsorship
-     * @return RedirectResponse
-     */
     public function cancelSponsorship(Sponsorship $sponsorship): RedirectResponse
     {
         $this->crud->hasAccessOrFail('update');

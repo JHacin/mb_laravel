@@ -3,13 +3,11 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Sponsorship;
+use Mockery;
 use Tests\TestCase;
 
 class SponsorshipTest extends TestCase
 {
-    /**
-     * @var Sponsorship
-     */
     protected Sponsorship $sponsorship;
 
     /**
@@ -21,9 +19,6 @@ class SponsorshipTest extends TestCase
         $this->sponsorship = $this->createSponsorship();
     }
 
-    /**
-     * @return void
-     */
     public function test_filters_out_inactive_sponsorships_by_default()
     {
         $this->sponsorship->update(['is_active' => false]);
@@ -32,5 +27,18 @@ class SponsorshipTest extends TestCase
 
         $this->sponsorship->update(['is_active' => true]);
         $this->assertTrue(Sponsorship::all()->contains($this->sponsorship->id));
+    }
+
+    public function test_returns_correct_payment_reference_number()
+    {
+        $fieldGeneratorMock = Mockery::mock('alias:App\Utilities\BankTransferFieldGenerator');
+
+        $fieldGeneratorMock
+            ->shouldReceive('referenceNumber')
+            ->once()
+            ->with($this->sponsorship)
+            ->andReturn('MOCK_REF');
+
+        $this->assertEquals('MOCK_REF', $this->sponsorship->payment_reference_number);
     }
 }

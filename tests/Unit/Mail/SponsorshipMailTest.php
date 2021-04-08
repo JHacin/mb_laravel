@@ -4,6 +4,7 @@ namespace Tests\Unit\Mail;
 
 use App\Models\PersonData;
 use App\Models\Sponsorship;
+use App\Utilities\BankTransferFieldGenerator;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
 use MailClient;
@@ -13,9 +14,6 @@ use Tests\TestCase;
 
 class SponsorshipMailTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function test_sends_initial_instructions_email_with_correct_params()
     {
         $sponsorship = $this->createSponsorship(['payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER]);
@@ -36,8 +34,8 @@ class SponsorshipMailTest extends TestCase
             'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
             'muca_ime' => $cat->name,
             'muca_povezava' => url(route('cat_details', $cat)),
-            'namen_nakazila' => 'BOTER-' . strtoupper(str_replace(' ', '-', $cat->name)) . '-' . $cat->id,
-            'referencna_stevilka' => 'PLACEHOLDER_REF',
+            'namen_nakazila' => BankTransferFieldGenerator::purpose($sponsorship),
+            'referencna_stevilka' => $sponsorship->payment_reference_number,
         ];
 
         $expectedParams = [

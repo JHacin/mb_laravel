@@ -102,29 +102,6 @@ class AdminCatLocationListTest extends AdminTestCase
     }
 
     /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_deletes_location()
-    {
-        $this->browse(function (Browser $browser) {
-            $location = $this->createCatLocation(['name' => 'DELETE_ME']);
-            $this->goToCatLocationsListPage($browser);
-            $browser->with($this->getTableRowSelectorForIndex(1), function (Browser $browser) use ($location) {
-                $browser
-                    ->assertSee($location->name)
-                    ->click('a[data-button-type="delete"]');
-            });
-            $browser->whenAvailable('.swal-overlay.swal-overlay--show-modal', function (Browser $browser) {
-                $browser->press('Izbriši');
-            });
-            $this->waitForRequestsToFinish($browser);
-            $browser->assertDontSee($location->name);
-            $this->assertDatabaseMissing('cat_locations', ['id' => $location->id]);
-        });
-    }
-
-    /**
      * @param Browser $browser
      * @throws TimeoutException
      */
