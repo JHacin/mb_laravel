@@ -34,6 +34,7 @@
                             name="personData[first_name]"
                             label="{{ trans('person_data.first_name') }}"
                             value="{{ $user->personData->first_name ?? '' }}"
+                            required
                         />
                     </div>
                     <div class="column is-5">
@@ -41,6 +42,7 @@
                             name="personData[last_name]"
                             label="{{ trans('person_data.last_name') }}"
                             value="{{ $user->personData->last_name ?? '' }}"
+                            required
                         />
                     </div>
                     <div class="column is-3">
