@@ -2,23 +2,25 @@
 
 namespace Tests\Feature\Observers;
 
+use App\Mail\SponsorMailingListManager;
 use Tests\TestCase;
 
 class PersonDataObserverTest extends TestCase
 {
-    /**
-     * @return void
-     */
-    public function test_gets_email_from_user_on_create()
+    public function test_on_create_gets_email_from_user()
     {
         $user = $this->createUser();
         $this->assertEquals($user->personData->email, $user->email);
     }
 
-    /**
-     * @return void
-     */
-    public function test_syncs_email_with_user_on_update()
+    public function test_on_create_is_subscribed_to_mailing_lists()
+    {
+        $mailingManagerMock = $this->mock(SponsorMailingListManager::class);
+        $mailingManagerMock->shouldReceive('addToAllLists')->once();
+        $this->createUser();
+    }
+
+    public function test_on_update_syncs_email_with_user()
     {
         $user = $this->createUser(['email' => $this->faker->unique()->safeEmail]);
         $this->assertEquals($user->personData->email, $user->email);

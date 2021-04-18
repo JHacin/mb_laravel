@@ -2,33 +2,30 @@
 
 namespace App\Observers;
 
+use App\Mail\SponsorMailingListManager;
 use App\Models\PersonData;
 
 class PersonDataObserver
 {
-    /**
-     * @param PersonData $personData
-     * @return void
-     */
+    private SponsorMailingListManager $mailingListManager;
+
+    public function __construct(SponsorMailingListManager $mailingListManager)
+    {
+        $this->mailingListManager = $mailingListManager;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | EVENTS
+    |--------------------------------------------------------------------------
+    */
+
     public function created(PersonData $personData)
     {
         $this->getEmailFromRelatedUser($personData);
+        $this->mailingListManager->addToAllLists($personData);
     }
 
-    /**
-     * @param PersonData $personData
-     */
-    protected function getEmailFromRelatedUser(PersonData $personData)
-    {
-        if ($personData->user) {
-            $personData->update(['email' => $personData->user->email]);
-        }
-    }
-
-    /**
-     * @param PersonData $personData
-     * @return void
-     */
     public function updated(PersonData $personData)
     {
         if ($personData->user) {
@@ -36,9 +33,19 @@ class PersonDataObserver
         }
     }
 
-    /**
-     * @param PersonData $personData
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | METHODS
+    |--------------------------------------------------------------------------
+    */
+
+    protected function getEmailFromRelatedUser(PersonData $personData)
+    {
+        if ($personData->user) {
+            $personData->update(['email' => $personData->user->email]);
+        }
+    }
+
     protected function syncEmailWithUser(PersonData $personData)
     {
         if ($personData->user->email !== $personData->email) {

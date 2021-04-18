@@ -14655,6 +14655,36 @@
                         /** @var \App\Mail\Client\MailClient $instance */
                         return $instance->send($params);
         }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addMemberToList($list, $email, $variables)
+        {
+                        /** @var \App\Mail\Client\MailClient $instance */
+                        return $instance->addMemberToList($list, $email, $variables);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function updateListMember($list, $email, $parameters)
+        {
+                        /** @var \App\Mail\Client\MailClient $instance */
+                        return $instance->updateListMember($list, $email, $parameters);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function removeMemberFromList($list, $email)
+        {
+                        /** @var \App\Mail\Client\MailClient $instance */
+                        return $instance->removeMemberFromList($list, $email);
+        }
          
     }
             /**

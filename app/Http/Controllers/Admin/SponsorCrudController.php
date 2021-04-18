@@ -33,7 +33,6 @@ class SponsorCrudController extends CrudController
     use CrudFilterHelpers;
 
     /**
-     * @return void
      * @throws Exception
      */
     public function setup()
@@ -44,9 +43,6 @@ class SponsorCrudController extends CrudController
         $this->crud->addButtonFromView('line', 'sponsor_cancel_all_sponsorships', 'sponsor_cancel_all_sponsorships');
     }
 
-    /**
-     * @return void
-     */
     protected function setupListOperation()
     {
         $this->crud->addColumn(CrudColumnGenerator::id());
@@ -86,9 +82,6 @@ class SponsorCrudController extends CrudController
         ]);
     }
 
-    /**
-     * @return void
-     */
     protected function setupCreateOperation()
     {
         $this->crud->setValidation(AdminSponsorRequest::class);
@@ -108,26 +101,21 @@ class SponsorCrudController extends CrudController
         CrudFieldGenerator::addPersonDataFields($this->crud);
     }
 
-    /**
-     * @return void
-     */
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
     }
 
-    /**
-     * @param PersonData $personData
-     * @return RedirectResponse
-     */
     public function cancelAllSponsorships(PersonData $personData): RedirectResponse
     {
         $this->crud->hasAccessOrFail('update');
+
         $personData->sponsorships->each(function (Sponsorship $sponsorship) {
-           if ($sponsorship->is_active) {
-               $sponsorship->cancel();
-           }
+            if ($sponsorship->is_active) {
+                $sponsorship->cancel();
+            }
         });
+
         Alert::success('Vsa aktivna botrovanja so bila uspešno prekinjena.')->flash();
         return Redirect::back();
     }
