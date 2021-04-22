@@ -26,4 +26,9 @@ class SponsorMailingListManager
 
         $this->mailClient->addMemberToList(self::ALL_SPONSORS_LIST_ADDRESS, $sponsor->email, $variables);
     }
+
+    public function removeFromAllLists(PersonData $sponsor)
+    {
+        $this->mailClient->removeMemberFromList(self::ALL_SPONSORS_LIST_ADDRESS, $sponsor->email);
+    }
 }

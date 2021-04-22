@@ -33,6 +33,11 @@ class PersonDataObserver
         }
     }
 
+    public function deleted(PersonData $personData)
+    {
+        $this->mailingListManager->removeFromAllLists($personData);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | METHODS

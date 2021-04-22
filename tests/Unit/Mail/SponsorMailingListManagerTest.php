@@ -30,7 +30,7 @@ class SponsorMailingListManagerTest extends TestCase
     }
 
 
-    public function test_adds_new_sponsor_to_all_mailing_lists()
+    public function test_adds_sponsor_to_all_mailing_lists()
     {
         $variables = [
             'boter_moski' => $this->sponsor->gender === PersonData::GENDER_MALE,
@@ -43,5 +43,12 @@ class SponsorMailingListManagerTest extends TestCase
             ->with(SponsorMailingListManager::ALL_SPONSORS_LIST_ADDRESS, $this->sponsor->email, $variables);
 
         $this->manager->addToAllLists($this->sponsor);
+    }
+
+    public function test_removes_sponsor_from_all_mailing_lists()
+    {
+        $this->mailClientMock
+            ->shouldReceive('removeMemberFromList')
+            ->with(SponsorMailingListManager::ALL_SPONSORS_LIST_ADDRESS, $this->sponsor->email);
     }
 }
