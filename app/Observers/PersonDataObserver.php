@@ -26,6 +26,11 @@ class PersonDataObserver
         $this->mailingListManager->addToAllLists($personData);
     }
 
+    public function updating(PersonData $personData)
+    {
+        $this->updateMailingListProperties($personData);
+    }
+
     public function updated(PersonData $personData)
     {
         if ($personData->user) {
@@ -56,5 +61,18 @@ class PersonDataObserver
         if ($personData->user->email !== $personData->email) {
             $personData->user->update(['email' => $personData->email]);
         }
+    }
+
+    protected function updateMailingListProperties(PersonData $personData)
+    {
+        $emailAssignedInMailingList = $personData->isDirty('email')
+            ? $personData->getOriginal('email')
+            : $personData->email;
+
+        if (!$emailAssignedInMailingList) {
+            return;
+        }
+
+        $this->mailingListManager->updateProperties($personData, $emailAssignedInMailingList);
     }
 }

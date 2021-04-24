@@ -11,9 +11,10 @@ use Tests\TestCase;
 
 class SponsorMailingListManagerTest extends TestCase
 {
-    protected MockInterface $mailClientMock;
-    protected SponsorMailingListManager $manager;
-    protected PersonData $sponsor;
+    private MockInterface $mailClientMock;
+    private SponsorMailingListManager $manager;
+    private PersonData $sponsor;
+    private array $sponsorVariables;
 
     /**
      * @throws BindingResolutionException
@@ -24,31 +25,54 @@ class SponsorMailingListManagerTest extends TestCase
 
         $this->mailClientMock = $this->mock(MailClient::class);
         $this->manager = $this->app->make(SponsorMailingListManager::class);
-
         $this->mailClientMock->shouldReceive('addMemberToList');
         $this->sponsor = $this->createPersonData();
+        $this->sponsorVariables = [
+            'boter_moski' => $this->sponsor->gender === PersonData::GENDER_MALE,
+            'boter_ime' => $this->sponsor->first_name,
+            'boter_priimek' => $this->sponsor->last_name,
+        ];
     }
 
 
     public function test_adds_sponsor_to_all_mailing_lists()
     {
-        $variables = [
-            'boter_moski' => $this->sponsor->gender === PersonData::GENDER_MALE,
-            'boter_ime' => $this->sponsor->first_name,
-            'boter_priimek' => $this->sponsor->last_name,
-        ];
-
         $this->mailClientMock
             ->shouldReceive('addMemberToList')
-            ->with(SponsorMailingListManager::ALL_SPONSORS_LIST_ADDRESS, $this->sponsor->email, $variables);
+            ->with(
+                SponsorMailingListManager::ALL_SPONSORS_LIST_ADDRESS,
+                $this->sponsor->email,
+                $this->sponsorVariables
+            );
 
         $this->manager->addToAllLists($this->sponsor);
+    }
+
+    public function test_updates_sponsor_properties()
+    {
+        $prevEmail = 'previous@example.com';
+
+        $this->mailClientMock
+            ->shouldReceive('updateListMember')
+            ->with(
+                SponsorMailingListManager::ALL_SPONSORS_LIST_ADDRESS,
+                $prevEmail,
+                [
+                    'vars' => $this->sponsorVariables,
+                    'address' => $this->sponsor->email,
+                ]
+            );
+
+        $this->manager->updateProperties($this->sponsor, $prevEmail);
     }
 
     public function test_removes_sponsor_from_all_mailing_lists()
     {
         $this->mailClientMock
             ->shouldReceive('removeMemberFromList')
-            ->with(SponsorMailingListManager::ALL_SPONSORS_LIST_ADDRESS, $this->sponsor->email);
+            ->with(
+                SponsorMailingListManager::ALL_SPONSORS_LIST_ADDRESS,
+                $this->sponsor->email
+            );
     }
 }

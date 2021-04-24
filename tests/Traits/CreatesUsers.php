@@ -17,6 +17,15 @@ trait CreatesUsers
         return $user;
     }
 
+    protected function createUserWithoutEvents(array $attributes = []): User
+    {
+        $user = User::withoutEvents(function () use ($attributes) {
+            return $this->createUser($attributes);
+        });
+
+        return $user;
+    }
+
     protected function makeUser(array $attributes = []): User
     {
         /** @var User $user */

@@ -8,24 +8,14 @@ use Exception;
 
 class CatObserver
 {
-    /**
-     * @var CatPhotoService
-     */
-    private $catPhotoService;
+    private CatPhotoService $catPhotoService;
 
-    /**
-     * CatObserver constructor.
-     */
     public function __construct()
     {
         $this->catPhotoService = new CatPhotoService();
     }
 
     /**
-     * Handle the cat "deleting" event.
-     *
-     * @param Cat $cat
-     * @return void
      * @throws Exception
      */
     public function deleting(Cat $cat)
