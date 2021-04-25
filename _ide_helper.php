@@ -19128,6 +19128,17 @@
      
 }
 
+    namespace Backpack\Settings\app\Models { 
+            /**
+     * 
+     *
+     */ 
+        class Setting {
+         
+    }
+     
+}
+
     namespace Illuminate\Http { 
             /**
      * 
@@ -22432,6 +22443,7 @@ namespace  {
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Image extends \Intervention\Image\Facades\Image {}
             class Alert extends \Prologue\Alerts\Facades\Alert {}
+            class Setting extends \Backpack\Settings\app\Models\Setting {}
      
 }
 

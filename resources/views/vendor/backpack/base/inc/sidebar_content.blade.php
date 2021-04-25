@@ -50,3 +50,11 @@
         <i class="la la-key nav-icon"></i> {{ trans('backpack::permissionmanager.permission_plural') }}
     </a>
 </li>
+
+@role(\App\Models\User::ROLE_SUPER_ADMIN)
+<li class="nav-item">
+    <a class="nav-link" href='{{ backpack_url('setting') }}'>
+        <i class="nav-icon la la-cog"></i> Nastavitve
+    </a>
+</li>
+@endrole

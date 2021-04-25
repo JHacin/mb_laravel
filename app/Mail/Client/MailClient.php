@@ -2,37 +2,25 @@
 
 namespace App\Mail\Client;
 
+use App\Settings\Settings;
 use Exception;
 use Log;
 use Mailgun\Mailgun;
 
 class MailClient
 {
-    /**
-     * @var Mailgun
-     */
     private Mailgun $client;
-
-    /**
-     * @var mixed
-     */
     private string $domain;
 
-    /**
-     * @param Mailgun $client
-     */
     public function __construct(Mailgun $client)
     {
         $this->client = $client;
         $this->domain = env('MAILGUN_DOMAIN');
     }
 
-    /**
-     * @param array $params
-     */
     public function send(array $params)
     {
-        if (env('TEST_ENV') === 'dusk' || env('DISABLE_EMAILS') === true) {
+        if (!Settings::hasValueTrue(config('settings.enable_emails'))) {
             return;
         }
 
@@ -48,6 +36,10 @@ class MailClient
 
     public function addMemberToList(string $list, string $email, array $variables)
     {
+        if (!Settings::hasValueTrue(config('settings.enable_mailing_lists'))) {
+            return;
+        }
+
         try {
             $this->client->mailingList()->member()->create(
                 $this->constructListAddress($list),
@@ -62,6 +54,10 @@ class MailClient
 
     public function updateListMember(string $list, string $email, array $parameters)
     {
+        if (!Settings::hasValueTrue(config('settings.enable_mailing_lists'))) {
+            return;
+        }
+
         try {
             $this->client->mailingList()->member()->update(
                 $this->constructListAddress($list),
@@ -75,6 +71,10 @@ class MailClient
 
     public function removeMemberFromList(string $list, string $email)
     {
+        if (!Settings::hasValueTrue(config('settings.enable_mailing_lists'))) {
+            return;
+        }
+
         try {
             $this->client->mailingList()->member()->delete(
                 $this->constructListAddress($list),
