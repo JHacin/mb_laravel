@@ -51,11 +51,23 @@ class CrudFieldGenerator
             'name' => $namePrefix . 'first_name',
             'label' => trans('person_data.first_name'),
             'type' => 'text',
+            'attributes' => [
+                'required' => 'required'
+            ],
+            'wrapper' => [
+                'dusk' => 'first_name-input-wrapper',
+            ],
         ]);
         $crudPanel->addField([
             'name' => $namePrefix . 'last_name',
             'label' => trans('person_data.last_name'),
             'type' => 'text',
+            'attributes' => [
+                'required' => 'required'
+            ],
+            'wrapper' => [
+                'dusk' => 'last_name-input-wrapper',
+            ],
         ]);
         $crudPanel->addField([
             'name' => $namePrefix . 'gender',

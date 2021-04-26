@@ -20,13 +20,16 @@ class AdminSponsorAddTest extends AdminTestCase
             $this->goToPage($b);
             $this->disableHtmlFormValidation($b);
             $this->clickSubmitButton($b);
-            $this->assertAllRequiredErrorsAreShown($b, ['@email-input-wrapper']);
+            $this->assertAllRequiredErrorsAreShown($b, [
+                '@email-input-wrapper',
+                '@first_name-input-wrapper',
+                '@last_name-input-wrapper',
+            ]);
             $this->assertAdminRadioHasRequiredError($b, 'gender');
         });
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_email_field()
@@ -34,11 +37,13 @@ class AdminSponsorAddTest extends AdminTestCase
         $this->browse(function (Browser $browser) {
             $this->goToPage($browser);
             $this->disableHtmlFormValidation($browser);
+            $this->fillRequiredFields($browser);
             $browser->type('email', 'sdfdsfds');
             $this->clickSubmitButton($browser);
             $browser->assertSee('Vrednost mora biti veljaven email naslov.');
 
             $this->goToPage($browser);
+            $this->fillRequiredFields($browser);
             $browser->type('email', static::$sampleUser->email);
             $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
@@ -46,11 +51,13 @@ class AdminSponsorAddTest extends AdminTestCase
             /** @var PersonData $existingPersonData */
             $existingPersonData = PersonData::inRandomOrder()->first();
             $this->goToPage($browser);
+            $this->fillRequiredFields($browser);
             $browser->type('email', $existingPersonData->email);
             $this->clickSubmitButton($browser);
             $browser->assertSee('Ta email naslov je že v uporabi.');
 
             $this->goToPage($browser);
+            $this->fillRequiredFields($browser);
             $browser->with('@gender-input-wrapper', function (Browser $browser) {
                 $browser->click('input[type="radio"][value="1"]');
             });
@@ -61,7 +68,6 @@ class AdminSponsorAddTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_validates_date_of_birth_is_in_the_past()
@@ -76,7 +82,6 @@ class AdminSponsorAddTest extends AdminTestCase
     }
 
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_adding_person_data_works()
@@ -125,7 +130,6 @@ class AdminSponsorAddTest extends AdminTestCase
     }
 
     /**
-     * @param Browser $browser
      * @throws TimeoutException
      */
     protected function goToPage(Browser $browser)
@@ -137,5 +141,14 @@ class AdminSponsorAddTest extends AdminTestCase
             ->on(new AdminSponsorAddPage);
 
         $this->waitForRequestsToFinish($browser);
+    }
+
+    protected function fillRequiredFields(Browser $b)
+    {
+        /** @var PersonData $personData */
+        $personData = PersonData::factory()->makeOne();
+        $b->type('email', $personData->email);
+        $b->type('first_name', $personData->first_name);
+        $b->type('last_name', $personData->last_name);
     }
 }
