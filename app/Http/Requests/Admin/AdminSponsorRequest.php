@@ -10,22 +10,13 @@ use Illuminate\Validation\Rules\Unique;
 
 class AdminSponsorRequest extends FormRequest
 {
-    /**
-     * @var PersonData|null
-     */
     protected ?PersonData $existingPersonData = null;
 
-    /**
-     * @return bool
-     */
     public function authorize(): bool
     {
         return backpack_auth()->check();
     }
 
-    /**
-     * @return array
-     */
     public function rules(): array
     {
         $this->checkIfExistingPersonData();
@@ -50,9 +41,6 @@ class AdminSponsorRequest extends FormRequest
         ];
     }
 
-    /**
-     * @return void
-     */
     protected function checkIfExistingPersonData()
     {
         $currentEntryId = $this->get('id');
@@ -61,9 +49,6 @@ class AdminSponsorRequest extends FormRequest
         }
     }
 
-    /**
-     * @return Unique
-     */
     protected function getUniqueEmailRuleForUsersTable(): Unique
     {
         $rule = Rule::unique('users', 'email');
@@ -75,9 +60,6 @@ class AdminSponsorRequest extends FormRequest
         return $rule;
     }
 
-    /**
-     * @return Unique
-     */
     protected function getUniqueEmailRuleForPersonDataTable(): Unique
     {
         $rule = Rule::unique('person_data', 'email');

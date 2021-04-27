@@ -14647,7 +14647,6 @@
                     /**
          * 
          *
-         * @param array $params
          * @static 
          */ 
         public static function send($params)
