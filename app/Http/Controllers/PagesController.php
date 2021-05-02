@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cat;
+use App\Models\News;
 use App\Utilities\SponsorListViewParser;
 use Illuminate\Contracts\View\View;
 
@@ -20,7 +21,9 @@ class PagesController extends Controller
 
     public function news(): View
     {
-        return view('news');
+        $newsPaginator = News::paginate(25);
+
+        return view('news', ['news' => $newsPaginator]);
     }
 
     public function whyBecomeSponsor(): View

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             SponsorshipSeeder::class,
             SponsorshipMessageTypeSeeder::class,
             SponsorshipMessageSeeder::class,
+            NewsSeeder::class,
         ]);
     }
 }

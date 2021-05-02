@@ -26,8 +26,9 @@
                                 @foreach($cats as $cat)
                                     <div
                                         class="column is-12-mobile is-6-tablet is-4-fullhd is-flex"
-                                        dusk="cat-list-item-wrapper">
-                                        <x-cat-list.cat-list-item :cat="$cat"/>
+                                        dusk="cat-list-item-wrapper"
+                                    >
+                                        <x-cat-list.cat-list-item :cat="$cat" />
                                     </div>
                                 @endforeach
                             </div>
