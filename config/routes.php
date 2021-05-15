@@ -13,7 +13,7 @@ return [
     'cat_list' => '/muce',
     'cat_details' => '/muce/{cat}',
     'cat_sponsorship_form' => '/muce/{cat}/postani-boter',
-    'become_sponsor_of_the_month' => '/postani-boter-meseca',
+    'special_sponsorships' => '/posebna-botrstva',
     'gift_sponsorship' => '/podari-botrstvo',
     'news' => '/novice',
     'faq' => '/pravila-in-pogosta-vprasanja',

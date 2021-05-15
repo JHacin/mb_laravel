@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 
-class SponsorOfTheMonthController extends Controller
+class SpecialSponsorshipsController extends Controller
 {
     public function index(): View
     {
-        return view('become-sponsor-of-the-month');
+        return view('special-sponsorships');
     }
 }

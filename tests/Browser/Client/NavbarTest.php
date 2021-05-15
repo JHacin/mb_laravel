@@ -3,7 +3,7 @@
 namespace Tests\Browser\Client;
 
 use Laravel\Dusk\Browser;
-use Tests\Browser\Client\Pages\BecomeSponsorOfTheMonthPage;
+use Tests\Browser\Client\Pages\SpecialSponsorshipsPage;
 use Tests\Browser\Client\Pages\CatListPage;
 use Tests\Browser\Client\Pages\GiftSponsorshipPage;
 use Tests\Browser\Client\Pages\HomePage;
@@ -74,8 +74,8 @@ class NavbarTest extends DuskTestCase
                     'page' => new CatListPage,
                 ],
                 [
-                    'dusk' => 'navbar-become-sponsor-of-the-month-link',
-                    'page' => new BecomeSponsorOfTheMonthPage,
+                    'dusk' => 'navbar-special-sponsorships-link',
+                    'page' => new SpecialSponsorshipsPage,
                 ],
                 [
                     'dusk' => 'navbar-gift-sponsorship-link',

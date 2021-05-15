@@ -9,7 +9,7 @@ use App\Http\Controllers\CatSponsorshipController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GiftSponsorshipController;
 use App\Http\Controllers\PagesController;
-use App\Http\Controllers\SponsorOfTheMonthController;
+use App\Http\Controllers\SpecialSponsorshipsController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +20,15 @@ Route::get(config('routes.faq'), [PagesController::class, 'faq'])->name('faq');
 Route::get(config('routes.privacy'), [PagesController::class, 'privacy'])->name('privacy');
 Route::get(config('routes.cat_list'), [CatListController::class, 'index'])->name('cat_list');
 Route::get(config('routes.cat_details'), [PagesController::class, 'catDetails'])->name('cat_details');
-Route::get(config('routes.become_sponsor_of_the_month'), [SponsorOfTheMonthController::class, 'index'])->name('become_sponsor_of_the_month');
 Route::get(config('routes.gift_sponsorship'), [GiftSponsorshipController::class, 'index'])->name('gift_sponsorship');
 Route::get(config('routes.news'), [PagesController::class, 'news'])->name('news');
 
 // Cat sponsorship
 Route::get(config('routes.cat_sponsorship_form'), [CatSponsorshipController::class, 'form'])->name('become_cat_sponsor');
 Route::post(config('routes.cat_sponsorship_form'), [CatSponsorshipController::class, 'submit']);
+
+// Special sponsorships
+Route::get(config('routes.special_sponsorships'), [SpecialSponsorshipsController::class, 'index'])->name('special_sponsorships');
 
 // User pages
 Route::get(config('routes.user_profile'), [UserProfileController::class, 'index'])->name('user-profile');

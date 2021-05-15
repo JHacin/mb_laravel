@@ -3,7 +3,7 @@
 namespace Tests\Browser\Client;
 
 use Laravel\Dusk\Browser;
-use Tests\Browser\Client\Pages\BecomeSponsorOfTheMonthPage;
+use Tests\Browser\Client\Pages\SpecialSponsorshipsPage;
 use Tests\Browser\Client\Pages\GiftSponsorshipPage;
 use Tests\Browser\Client\Pages\HomePage;
 use Tests\Browser\Client\Pages\WhyBecomeSponsorPage;
@@ -73,8 +73,8 @@ class HomepageTest extends DuskTestCase
             $b->on(new WhyBecomeSponsorPage);
 
             $b->visit(new HomePage);
-            $b->click('@home-become-sponsor-of-the-month-link');
-            $b->on(new BecomeSponsorOfTheMonthPage);
+            $b->click('@home-special-sponsorships-link');
+            $b->on(new SpecialSponsorshipsPage);
 
             $b->visit(new HomePage);
             $b->click('@home-gift-sponsorship-link');

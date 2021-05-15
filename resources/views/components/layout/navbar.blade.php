@@ -8,9 +8,9 @@
             'dusk' => 'navbar-cat-list-link',
         ],
         [
-            'label' => 'Postani boter meseca',
-            'route_name' => 'become_sponsor_of_the_month',
-            'dusk' => 'navbar-become-sponsor-of-the-month-link',
+            'label' => 'Posebna botrstva',
+            'route_name' => 'special_sponsorships',
+            'dusk' => 'navbar-special-sponsorships-link',
         ],
         [
             'label' => 'Podari botrstvo',

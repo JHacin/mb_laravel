@@ -64,10 +64,9 @@
                 <a href="{{ route('why_become_sponsor') }}" dusk="home-why-become-sponsor-link"><strong>redni boter</strong></a>,
                 s čemer se zavežete k rednim
                 mesečnim prispevkom do prekinitve.
-                Lahko pa postanete
-                <a href="{{ route('become_sponsor_of_the_month') }}" dusk="home-become-sponsor-of-the-month-link"><strong>Boter meseca</strong></a>
-                in z nakazilom 10 €
-                muckam pomagate samo izbrani mesec. Obe vrsti pomoči sta več kot dobrodošli in potrebni.
+                Lahko pa tudi izberete eno od
+                <a href="{{ route('special_sponsorships') }}" dusk="home-special-sponsorships-link"><strong>posebnih vrst botrstva</strong></a>.
+                Vse vrste pomoči so več kot dobrodošle in potrebne.
             </div>
             <div class="block">
                 Botrstvo lahko tudi
