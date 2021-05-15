@@ -24,6 +24,8 @@
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
+        @stack('body-start-scripts')
+
         @if($isHomepage)
             @include('components.layout.home-header')
         @endif
