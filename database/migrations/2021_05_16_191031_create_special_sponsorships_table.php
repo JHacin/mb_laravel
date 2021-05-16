@@ -1,0 +1,22 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateSpecialSponsorshipsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('special_sponsorships', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->smallInteger('type')->nullable();
+            $table->foreignId('person_data_id')->nullable()->constrained('person_data')->nullOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('special_sponsorships');
+    }
+}

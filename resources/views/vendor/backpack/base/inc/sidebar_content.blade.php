@@ -26,6 +26,9 @@
     <a class="nav-link" href="{{ backpack_url(config('routes.admin.sponsorships')) }}">
         <i class="nav-icon la la-gratipay"></i> Botrovanja
     </a>
+    <a class="nav-link" href="{{ backpack_url(config('routes.admin.special_sponsorships')) }}">
+        <i class="nav-icon la la-money-check-alt"></i> Posebna botrstva
+    </a>
 </li>
 
 <li class="nav-item">

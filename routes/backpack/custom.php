@@ -32,4 +32,5 @@ Route::group([
     Route::get(config('routes.admin.get_messages_sent_to_sponsor'), 'SponsorshipMessageCrudController@getMessagesSentToSponsor')->name('admin.get_messages_sent_to_sponsor');
     Route::get(config('routes.admin.get_parsed_template_preview'), 'SponsorshipMessageCrudController@getParsedTemplatePreview')->name('admin.get_parsed_template_preview');
     Route::crud(config('routes.admin.news'), 'NewsCrudController');
+    Route::crud(config('routes.admin.special_sponsorships'), 'SpecialSponsorshipCrudController');
 });
