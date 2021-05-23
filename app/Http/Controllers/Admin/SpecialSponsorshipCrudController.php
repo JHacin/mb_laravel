@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\AdminSpecialSponsorshipRequest;
 use App\Models\PersonData;
 use App\Models\SpecialSponsorship;
 use App\Utilities\Admin\CrudColumnGenerator;
+use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -64,6 +65,11 @@ class SpecialSponsorshipCrudController extends CrudController
                 });
             }
         ]);
+        $this->crud->addColumn([
+            'name' => 'confirmed_at',
+            'label' => trans('special_sponsorship.confirmed_at'),
+            'type' => 'date',
+        ]);
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
@@ -85,6 +91,20 @@ class SpecialSponsorshipCrudController extends CrudController
             },
             function ($value) {
                 $this->crud->addClause('where', 'person_data_id', $value);
+            }
+        );
+
+        $this->crud->addFilter(
+            [
+                'name' => 'confirmed_at',
+                'label' => trans('special_sponsorship.confirmed_at'),
+                'type' => 'date_range',
+            ],
+            false,
+            function ($value) {
+                 $dates = json_decode($value);
+                 $this->crud->addClause('where', 'confirmed_at', '>=', $dates->from);
+                 $this->crud->addClause('where', 'confirmed_at', '<=', $dates->to . ' 23:59:59');
             }
         );
     }
@@ -118,6 +138,11 @@ class SpecialSponsorshipCrudController extends CrudController
                 'dusk' => 'personData-wrapper'
             ]
         ]);
+
+        $this->crud->addField(CrudFieldGenerator::dateField([
+            'name' => 'confirmed_at',
+            'label' => trans('special_sponsorship.confirmed_at'),
+        ]));
     }
 
     protected function setupUpdateOperation()

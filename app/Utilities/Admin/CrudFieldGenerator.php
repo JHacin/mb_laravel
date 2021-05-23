@@ -39,9 +39,6 @@ class CrudFieldGenerator
         ]);
     }
 
-    /**
-     * @param CrudPanel $crudPanel
-     */
     public static function addPersonDataFields(CrudPanel $crudPanel)
     {
         $isNested = !($crudPanel->getModel() instanceof PersonData);
@@ -94,11 +91,7 @@ class CrudFieldGenerator
         self::addAddressFields($crudPanel, $namePrefix);
     }
 
-    /**
-     * @param array $additions
-     * @return array
-     */
-    public static function moneyField($additions = []): array
+    public static function moneyField(array $additions = []): array
     {
         return array_merge([
             'type' => 'number',
@@ -113,11 +106,7 @@ class CrudFieldGenerator
         ], $additions);
     }
 
-    /**
-     * @param array $additions
-     * @return array
-     */
-    public static function dateField($additions = []): array
+    public static function dateField(array $additions = []): array
     {
         return array_merge([
             'type' => 'date_picker',

@@ -136,6 +136,17 @@ return [
     'filters' => 'Filters',
     'toggle_filters' => 'Toggle filters',
     'remove_filters' => 'Počisti filtre',
+    'apply' => 'Potrdi',
+
+    //filters language strings
+    'today' => 'Danes',
+    'yesterday' => 'Včeraj',
+    'last_7_days' => 'Zadnjih 7 dni',
+    'last_30_days' => 'Zadnjih 30 dni',
+    'this_month' => 'Ta mesec',
+    'last_month' => 'Prejšnji mesec',
+    'custom_range' => 'Prosta izbira od-do',
+    'weekLabel' => 'T',
 
     // Fields
     'browse_uploads' => 'Browse uploads',

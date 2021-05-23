@@ -16,12 +16,15 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int|null $type
  * @property int|null $person_data_id
+ * @property string|null $confirmed_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read string $type_label
+ * @property-read PersonData|null $personData
  * @method static Builder|SpecialSponsorship newModelQuery()
  * @method static Builder|SpecialSponsorship newQuery()
  * @method static Builder|SpecialSponsorship query()
+ * @method static Builder|SpecialSponsorship whereConfirmedAt($value)
  * @method static Builder|SpecialSponsorship whereCreatedAt($value)
  * @method static Builder|SpecialSponsorship whereId($value)
  * @method static Builder|SpecialSponsorship wherePersonDataId($value)

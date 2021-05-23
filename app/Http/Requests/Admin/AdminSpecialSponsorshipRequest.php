@@ -22,6 +22,7 @@ class AdminSpecialSponsorshipRequest extends FormRequest
                 'integer',
                 Rule::exists('person_data', 'id'),
             ],
+            'confirmed_at' => ['nullable', 'date'],
         ];
     }
 }

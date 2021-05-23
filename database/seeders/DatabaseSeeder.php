@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             CatLocationSeeder::class,
             CatSeeder::class,
             SponsorshipSeeder::class,
+            SpecialSponsorshipSeeder::class,
             SponsorshipMessageTypeSeeder::class,
             SponsorshipMessageSeeder::class,
             NewsSeeder::class,
