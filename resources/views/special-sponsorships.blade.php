@@ -192,7 +192,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="column is-4-desktop"></div>
+                <div class="column is-4-desktop">
+                    <x-special-sponsorships.sponsors-of-this-month />
+                </div>
             </div>
         </div>
     </div>

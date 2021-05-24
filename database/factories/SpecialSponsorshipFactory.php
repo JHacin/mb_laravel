@@ -21,7 +21,7 @@ class SpecialSponsorshipFactory extends Factory
     {
         return [
             'type' => Arr::random(SpecialSponsorship::TYPES),
-            'person_data_id' => PersonData::inRandomOrder()->first() ?: PersonData::factory(),
+            'person_data_id' => PersonData::factory(),
             'confirmed_at' => $this->faker->dateTimeBetween('-1 years', '-1 day'),
         ];
     }
