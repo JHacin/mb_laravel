@@ -120,7 +120,7 @@
                             Muca še nima botrov.
                         @else
                             @foreach($sponsors['identified'] as $sponsor)
-                                <x-sponsor-details :sponsor="$sponsor"/>
+                                <x-sponsor-details :sponsor="$sponsor" />
                             @endforeach
                             @if(count($sponsors['anonymous']) > 0)
                                 <div>{{ $sponsors['anonymous_count_label'] }}</div>

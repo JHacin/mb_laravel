@@ -3,16 +3,14 @@
 namespace App\Utilities;
 
 use App\Models\PersonData;
+use App\Models\SpecialSponsorship;
 use App\Models\Sponsorship;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class SponsorListViewParser
 {
     /**
-     * Prepare various useful variables used in sponsor lists on the front end.
-     *
-     * @param Collection|Sponsorship[] $sponsorships
-     * @return array[]
+     * @param Collection|Sponsorship[]|SpecialSponsorship[] $sponsorships
      */
     public static function prepareViewData($sponsorships): array
     {
@@ -26,8 +24,7 @@ class SponsorListViewParser
     }
 
     /**
-     * @param Collection|Sponsorship[] $sponsorships
-     * @return array[]
+     * @param Collection|Sponsorship[]|SpecialSponsorship[] $sponsorships
      */
     protected static function separateAnonymousSponsors($sponsorships): array
     {
@@ -48,18 +45,13 @@ class SponsorListViewParser
     }
 
     /**
-     * @param Sponsorship $sponsorship
-     * @return bool
+     * @param Sponsorship|SpecialSponsorship $sponsorship
      */
-    protected static function isConsideredAnonymous(Sponsorship $sponsorship): bool
+    protected static function isConsideredAnonymous($sponsorship): bool
     {
         return $sponsorship->is_anonymous || self::isMissingAllDisplayableProperties($sponsorship->personData);
     }
 
-    /**
-     * @param PersonData $personData
-     * @return bool
-     */
     protected static function isMissingAllDisplayableProperties(PersonData $personData): bool
     {
         return !$personData->first_name && !$personData->city;

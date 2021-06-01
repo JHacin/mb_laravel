@@ -3,6 +3,7 @@
 namespace App\View\Components\SpecialSponsorships;
 
 use App\Models\SpecialSponsorship;
+use App\Utilities\SponsorListViewParser;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -13,49 +14,72 @@ class SponsorsOfThisMonth extends Component
     public function render(): View
     {
         $title = $this->generateTitle();
-        $sponsorsPerType = $this->getSponsorsPerSponsorshipType();
+        $sponsorshipsPerType = $this->getSponsorshipsPerType();
 
         return view('components.special-sponsorships.sponsors-of-this-month', [
             'title' => $title,
-            'sponsorsPerType' => $sponsorsPerType,
+            'sponsorshipsPerType' => $sponsorshipsPerType,
         ]);
     }
 
-    private function getSponsorsPerSponsorshipType(): array
+    private function getSponsorshipsPerType(): array
     {
         $sponsorshipsForCurrentMonth = $this->getSponsorshipsForCurrentMonth();
-        $sponsorsPerType = $this->groupSponsorsPerType($sponsorshipsForCurrentMonth);
+        $sponsorshipsPerType = $this->groupSponsorshipsPerType($sponsorshipsForCurrentMonth);
 
-        return $sponsorsPerType;
+        return $sponsorshipsPerType;
     }
 
     private function getSponsorshipsForCurrentMonth(): Collection
     {
         $now = Carbon::now();
 
-        return SpecialSponsorship
+        $sponsorships = SpecialSponsorship
             ::whereYear('confirmed_at', '=', $now->year)
             ->whereMonth('confirmed_at', '=', $now->month)
             ->orderBy('confirmed_at', 'desc')
             ->get();
+
+        return $sponsorships;
     }
 
-    /*
-     * Returns an array with type keys & personData[] values (e.g. 1 => [PersonData, PersonData, ...])
-     */
-    private function groupSponsorsPerType(Collection $sponsorshipsForCurrentMonth): array
+    private function groupSponsorshipsPerType(Collection $sponsorshipsForCurrentMonth): array
+    {
+        $result = $this->associateSponsorshipsWithType($sponsorshipsForCurrentMonth);
+        $result = $this->removeTypesWithNoMatches($result);
+        $result = $this->parseAnonymousVsIdentifiedSponsors($result);
+
+        return $result;
+    }
+
+    private function associateSponsorshipsWithType(Collection $sponsorships): array
     {
         $types = array_values(SpecialSponsorship::TYPES);
         $result = array_fill_keys($types, []);
 
-        /** @var SpecialSponsorship $sponsorship */
-        foreach ($sponsorshipsForCurrentMonth as $sponsorship) {
-            $result[$sponsorship->type][] = $sponsorship->personData;
+        foreach ($sponsorships as $sponsorship) {
+            $result[$sponsorship->type][] = $sponsorship;
         }
 
-        $result = array_filter($result, function ($value) {
+        return $result;
+    }
+
+    private function removeTypesWithNoMatches(array $sponsorshipsPerType): array
+    {
+        $result = array_filter($sponsorshipsPerType, function ($value) {
             return sizeof($value) > 0;
         }, ARRAY_FILTER_USE_BOTH);
+
+        return $result;
+    }
+
+    private function parseAnonymousVsIdentifiedSponsors(array $sponsorshipsPerType): array
+    {
+        $result = [];
+
+        foreach ($sponsorshipsPerType as $type => $sponsorships) {
+            $result[$type] = SponsorListViewParser::prepareViewData($sponsorships);
+        }
 
         return $result;
     }
