@@ -12,6 +12,7 @@ class CreateSpecialSponsorshipsTable extends Migration
             $table->smallInteger('type')->nullable();
             $table->foreignId('person_data_id')->nullable()->constrained('person_data')->nullOnDelete();
             $table->date('confirmed_at')->nullable();
+            $table->boolean('is_anonymous')->default(false);
             $table->timestamps();
         });
     }

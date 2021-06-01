@@ -23,6 +23,7 @@ class SpecialSponsorshipFactory extends Factory
             'type' => Arr::random(SpecialSponsorship::TYPES),
             'person_data_id' => PersonData::factory(),
             'confirmed_at' => $this->faker->dateTimeBetween('-1 years', '-1 day'),
+            'is_anonymous' => $this->faker->boolean(80),
         ];
     }
 }

@@ -70,6 +70,11 @@ class SpecialSponsorshipCrudController extends CrudController
             'label' => trans('special_sponsorship.confirmed_at'),
             'type' => 'date',
         ]);
+        $this->crud->addColumn([
+            'name' => 'is_anonymous',
+            'label' => trans('special_sponsorship.is_anonymous'),
+            'type' => 'boolean',
+        ]);
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
@@ -107,6 +112,8 @@ class SpecialSponsorshipCrudController extends CrudController
                  $this->crud->addClause('where', 'confirmed_at', '<=', $dates->to . ' 23:59:59');
             }
         );
+
+        $this->addBooleanFilter('is_anonymous', trans('special_sponsorship.is_anonymous'));
     }
 
     protected function setupCreateOperation()
@@ -143,6 +150,15 @@ class SpecialSponsorshipCrudController extends CrudController
             'name' => 'confirmed_at',
             'label' => trans('special_sponsorship.confirmed_at'),
         ]));
+
+        $this->crud->addField([
+            'name' => 'is_anonymous',
+            'label' => trans('special_sponsorship.is_anonymous'),
+            'type' => 'checkbox',
+            'wrapper' => [
+                'dusk' => 'is_anonymous-wrapper'
+            ]
+        ]);
     }
 
     protected function setupUpdateOperation()
