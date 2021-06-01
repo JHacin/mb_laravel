@@ -10,4 +10,9 @@ class SpecialSponsorshipsController extends Controller
     {
         return view('special-sponsorships');
     }
+
+    public function archive(): View
+    {
+        return view('special-sponsorships-archive');
+    }
 }

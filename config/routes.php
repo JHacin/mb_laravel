@@ -14,6 +14,7 @@ return [
     'cat_details' => '/muce/{cat}',
     'cat_sponsorship_form' => '/muce/{cat}/postani-boter',
     'special_sponsorships' => '/posebna-botrstva',
+    'special_sponsorships_archive' => '/posebna-botrstva/arhiv',
     'gift_sponsorship' => '/podari-botrstvo',
     'news' => '/novice',
     'faq' => '/pravila-in-pogosta-vprasanja',
