@@ -2,7 +2,7 @@
     'name',
     'options',
     'label',
-    'selected',
+    'checked',
     'isInline' => false,
 ])
 
@@ -22,8 +22,14 @@
 
     <div class="control">
         @foreach($options as $value => $label)
-            <label class="radio">
-                <input type="radio" name="{{ $name }}">
+            <label class="radio" for="{{ $name }}-{{ $value }}">
+                <input
+                    type="radio"
+                    name="{{ $name }}"
+                    id="{{ $name }}-{{ $value }}"
+                    value="{{ $value }}"
+                    @if($checked){{ $value == $checked ? 'checked' : '' }}@endif
+                >
                 {{ $label }}
             </label>
         @endforeach

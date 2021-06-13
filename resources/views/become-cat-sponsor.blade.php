@@ -4,8 +4,8 @@
     $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null;
 
     $isGiftRadioOptions = [
-        'for_me' => 'Zame',
-        'gift' => 'Darilo',
+        'no' => 'Zame',
+        'yes' => 'Darilo',
     ];
 @endphp
 
@@ -118,9 +118,14 @@
                 <x-inputs.base.radio
                     name="is_gift"
                     :options="$isGiftRadioOptions"
+                    checked="no"
                     label="Botrstvo je:"
                     isInline
                 />
+
+                <div class="giftee-form" style="display: none;">
+                    Podatki obdarovanca
+                </div>
 
                 <hr>
 
@@ -177,3 +182,7 @@
         </div>
     </section>
 @endsection
+
+@push('footer-scripts')
+    <script src="{{ mix('js/become_sponsor_form.js') }}"></script>
+@endpush
