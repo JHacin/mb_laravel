@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @php
-    $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null
+    $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null;
+
+    $isGiftRadioOptions = [
+        'for_me' => 'Zame',
+        'gift' => 'Darilo',
+    ];
 @endphp
 
 @section('content')
@@ -107,6 +112,17 @@
                         </x-inputs.email>
                     </div>
                 </div>
+
+                <hr>
+
+                <x-inputs.base.radio
+                    name="is_gift"
+                    :options="$isGiftRadioOptions"
+                    label="Botrstvo je:"
+                    isInline
+                />
+
+                <hr>
 
                 <div class="block">
                     <x-inputs.base.checkbox name="is_anonymous">
