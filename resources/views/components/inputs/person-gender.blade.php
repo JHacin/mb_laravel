@@ -9,6 +9,6 @@
 
 @include('components.inputs.base.select', [
     'options' => $options,
-    'selected' => $selected,
+    'selected' => $selected ?? null,
     'isEmptyDefault' => true,
 ])

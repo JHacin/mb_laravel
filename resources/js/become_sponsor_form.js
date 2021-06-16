@@ -1,22 +1,44 @@
-function handleIsGiftToggle() {
-    const gifteeForm = document.querySelector('.giftee-form');
-    const radios = document.querySelectorAll('input[type="radio"][name="is_gift"]');
+document.addEventListener('DOMContentLoaded', () => {
+    setDefaultFormAttributes();
+    handleIsGiftToggle();
+});
 
+function setDefaultFormAttributes() {
     const checkedRadio = document.querySelector('input[type="radio"][name="is_gift"]:checked');
-    toggleGifteeForm(checkedRadio.value);
+
+    toggleGifteeFormVisibility(isGift(checkedRadio.value));
+    toggleGifteeFormRequiredAttributes(isGift(checkedRadio.value));
+}
+
+function handleIsGiftToggle() {
+    const radios = document.querySelectorAll('input[type="radio"][name="is_gift"]');
 
     for (let i = 0; i < radios.length; i++) {
         radios[i].addEventListener('change', function (event) {
-            toggleGifteeForm(event.target.value);
+            toggleGifteeFormVisibility(isGift(event.target.value));
+            toggleGifteeFormRequiredAttributes(isGift(event.target.value));
         })
-    }
-
-    function toggleGifteeForm(radioValue) {
-        const isGift = radioValue === 'yes';
-        gifteeForm.style.display = isGift ? '' : 'none';
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    handleIsGiftToggle();
-});
+function toggleGifteeFormVisibility(isGift) {
+    getGifteeForm().style.display = isGift ? '' : 'none';
+}
+
+
+function toggleGifteeFormRequiredAttributes(isGift) {
+    const fields = getGifteeForm().querySelectorAll('input, select');
+
+    for (let i = 0; i < fields.length; i++) {
+        fields[i].required = isGift;
+    }
+}
+
+function getGifteeForm() {
+    return document.querySelector('.giftee-form')
+}
+
+function isGift(radioValue) {
+    return radioValue === 'yes';
+}
+
