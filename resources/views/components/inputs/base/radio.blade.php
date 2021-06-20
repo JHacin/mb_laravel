@@ -15,6 +15,9 @@
     ];
 
     $wrapperClass = implode(' ', array_filter($classes));
+
+    /** @var string $name */
+    $checked = old($name) ?? $checked ?? null;
 @endphp
 
 <div class="{{ $wrapperClass }}" dusk="{{ $name }}-input-wrapper">

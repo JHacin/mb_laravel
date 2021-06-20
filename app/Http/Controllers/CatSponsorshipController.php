@@ -24,8 +24,14 @@ class CatSponsorshipController extends Controller
             $this->updateUserEmail(Auth::user(), $input['personData']['email']);
         }
 
-        $personData = $this->updateOrCreatePersonData($request->input('personData'));
-        $sponsorship = $this->createSponsorship($cat, $personData, $input);
+        $payer = $this->updateOrCreatePersonData($input['personData']);
+
+        $giftee = $input['is_gift'] === 'yes'
+            ? $this->updateOrCreatePersonData($input['giftee'])
+            : null;
+
+        $sponsorship = $this->createSponsorship($cat, $payer, $giftee, $input);
+
         SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
 
         return back()->with(
@@ -52,10 +58,17 @@ class CatSponsorshipController extends Controller
         return $personData;
     }
 
-    protected function createSponsorship(Cat $cat, PersonData $personData, array $formInput): Sponsorship
-    {
+    protected function createSponsorship(
+        Cat $cat,
+        PersonData $payer,
+        ?PersonData $giftee,
+        array $formInput
+    ): Sponsorship {
+        $isGift = $giftee instanceof PersonData;
+
         return Sponsorship::create([
-            'person_data_id' => $personData->id,
+            'person_data_id' => $isGift ? $giftee->id : $payer->id,
+            'payer_id' => $isGift ? $payer->id : null,
             'cat_id' => $cat->id,
             'monthly_amount' => $formInput['monthly_amount'],
             'payment_type' => isset($formInput['wants_direct_debit'])

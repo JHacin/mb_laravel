@@ -18,6 +18,8 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int|null $cat_id
  * @property int|null $person_data_id
+ * @property int|null $payer_id
+ * @property int $is_gift
  * @property bool $is_anonymous
  * @property int $payment_type
  * @property string|null $monthly_amount
@@ -28,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @property-read Cat|null $cat
  * @property-read string $payment_reference_number
  * @property-read PersonData|null $personData
+ * @property-read PersonData|null $payer
  * @method static Builder|Sponsorship newModelQuery()
  * @method static Builder|Sponsorship newQuery()
  * @method static Builder|Sponsorship query()
@@ -36,10 +39,12 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Sponsorship whereEndedAt($value)
  * @method static Builder|Sponsorship whereId($value)
  * @method static Builder|Sponsorship whereIsActive($value)
+ * @method static Builder|Sponsorship whereIsGift($value)
  * @method static Builder|Sponsorship whereIsAnonymous($value)
  * @method static Builder|Sponsorship whereMonthlyAmount($value)
  * @method static Builder|Sponsorship wherePaymentType($value)
  * @method static Builder|Sponsorship wherePersonDataId($value)
+ * @method static Builder|Sponsorship wherePayerId($value)
  * @method static Builder|Sponsorship whereUpdatedAt($value)
  * @mixin Eloquent
  */
@@ -115,6 +120,11 @@ class Sponsorship extends Model
     }
 
     public function personData(): BelongsTo
+    {
+        return $this->belongsTo(PersonData::class);
+    }
+
+    public function payer(): BelongsTo
     {
         return $this->belongsTo(PersonData::class);
     }

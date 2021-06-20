@@ -31,6 +31,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|SpecialSponsorship whereType($value)
  * @method static Builder|SpecialSponsorship whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int $is_anonymous
+ * @method static Builder|SpecialSponsorship whereIsAnonymous($value)
  */
 class SpecialSponsorship extends Model
 {

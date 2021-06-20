@@ -14,7 +14,15 @@
         <div class="container is-max-desktop">
             <h1 class="title">Dogovor o posvojitvi na daljavo</h1>
 
-            @if (session('success_message'))
+            @if(!$errors->isEmpty())
+                <x-notification type="danger">
+                    <x-slot name="message">
+                        Nekatera od polj niso veljavna.
+                    </x-slot>
+                </x-notification>
+            @endif
+
+            @if(session('success_message'))
                 <x-notification type="success">
                     <x-slot name="message">
                         {{ session('success_message') }}

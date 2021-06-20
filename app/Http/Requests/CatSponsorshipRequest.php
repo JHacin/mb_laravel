@@ -12,11 +12,10 @@ use Illuminate\Validation\Rule;
 
 class CatSponsorshipRequest extends FormRequest
 {
-    /**
-     * @return array
-     */
     public function rules(): array
     {
+        $requiredIfGift = 'required_if:is_gift,yes';
+
         return [
             'personData.email' => [
                 'required',
@@ -32,6 +31,20 @@ class CatSponsorshipRequest extends FormRequest
             'personData.zip_code' => ['required', 'string', 'max:255'],
             'personData.city' => ['required', 'string', 'max:255'],
             'personData.country' => ['required', new CountryCode],
+            'giftee.email' => [
+                $requiredIfGift,
+                'nullable',
+                'string',
+                'email',
+                Rule::notIn($this->getCatSponsorEmails()),
+            ],
+            'giftee.first_name' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
+            'giftee.last_name' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
+            'giftee.gender' => [$requiredIfGift, 'nullable', Rule::in(PersonData::GENDERS)],
+            'giftee.address' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
+            'giftee.zip_code' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
+            'giftee.city' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
+            'giftee.country' => [$requiredIfGift, 'nullable', new CountryCode],
             'monthly_amount' => [
                 'required',
                 'numeric',
@@ -39,6 +52,7 @@ class CatSponsorshipRequest extends FormRequest
                 'max:' . config('money.decimal_max'),
             ],
             'is_anonymous' => ['boolean'],
+            'is_gift' => [Rule::in(['yes', 'no'])],
             'is_agreed_to_terms' => ['accepted'],
             'wants_direct_debit' => ['boolean'],
         ];
@@ -55,6 +69,12 @@ class CatSponsorshipRequest extends FormRequest
                 ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
             'personData.email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
+                ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
+            'giftee.email.unique' =>
+                'Ta email naslov že uporablja registriran uporabnik.' .
+                ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
+            'giftee.email.not_in' =>
+                'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
         ];
     }
@@ -64,12 +84,12 @@ class CatSponsorshipRequest extends FormRequest
         /** @var Cat $cat */
         $cat = $this->route()->parameter('cat');
 
-        $catSponsorships = $cat
+        $activeSponsorships = $cat
             ->sponsorships()
             ->with('personData')
             ->get()
             ->toArray();
 
-        return Arr::pluck($catSponsorships, 'person_data.email');
+        return Arr::pluck($activeSponsorships, 'person_data.email');
     }
 }

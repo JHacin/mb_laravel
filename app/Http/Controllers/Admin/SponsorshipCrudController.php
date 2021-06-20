@@ -92,6 +92,23 @@ class SponsorshipCrudController extends CrudController
                 });
             }
         ]);
+        $this->crud->addColumn([
+            'name' => 'payer',
+            'label' => trans('sponsorship.payer'),
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.sponsors'), [$related_key, 'edit']);
+                },
+            ],
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhereHas('payer', function (Builder $query) use ($searchTerm) {
+                    $query
+                        ->where('email', 'like', "%$searchTerm%")
+                        ->orWhere('id', 'like', "%$searchTerm%");
+                });
+            }
+        ]);
         $this->crud->addColumn(CrudColumnGenerator::moneyColumn([
             'name' => 'monthly_amount',
             'label' => trans('admin.sponsorship_monthly_amount')
@@ -148,7 +165,22 @@ class SponsorshipCrudController extends CrudController
             }
         );
 
+        $this->crud->addFilter(
+            [
+                'name' => 'payer',
+                'type' => 'select2',
+                'label' => trans('sponsorship.payer'),
+            ],
+            function () {
+                return PersonData::all()->pluck('email_and_id', 'id')->toArray();
+            },
+            function ($value) {
+                $this->crud->addClause('where', 'payer_id', $value);
+            }
+        );
+
         $this->addBooleanFilter('is_active', 'Aktivno');
+        $this->addBooleanFilter('is_gift', 'Podarjeno');
     }
 
 
@@ -178,6 +210,23 @@ class SponsorshipCrudController extends CrudController
             ],
             'wrapper' => [
                 'dusk' => 'personData-wrapper'
+            ]
+        ]);
+        $this->crud->addField([
+            'name' => 'is_gift',
+            'label' => 'Botrstvo je podarjeno',
+            'type' => 'checkbox',
+            'wrapper' => [
+                'dusk' => 'is_gift-wrapper'
+            ]
+        ]);
+        $this->crud->addField([
+            'name' => 'payer',
+            'label' => trans('sponsorship.payer'),
+            'type' => 'relationship',
+            'placeholder' => 'Izberi plačnika',
+            'wrapper' => [
+                'dusk' => 'payer-wrapper'
             ]
         ]);
         $this->crud->addField(CrudFieldGenerator::moneyField([

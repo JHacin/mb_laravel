@@ -17,6 +17,7 @@ class AdminSponsorshipRequest extends FormRequest
     {
         return [
             'is_anonymous' => ['boolean'],
+            'is_gift' => ['boolean'],
             'monthly_amount' => [
                 'required',
                 'numeric',
@@ -38,6 +39,12 @@ class AdminSponsorshipRequest extends FormRequest
                     ->where('cat_id', $this->input('cat'))
                     ->ignore($this->get('id'))
             ],
+            'payer' => [
+                'required_if:is_gift,1',
+                'nullable',
+                'integer',
+                Rule::exists('person_data', 'id'),
+            ],
         ];
     }
 
@@ -45,6 +52,8 @@ class AdminSponsorshipRequest extends FormRequest
     {
         return [
             'personData.unique' => 'Muca že ima aktivnega botra s tem email naslovom.',
+            'payer.unique' => 'Muca že ima aktivnega botra s tem email naslovom.',
+            'payer.required_if' => 'Plačnik je obvezen če je botrstvo podarjeno.',
         ];
     }
 }

@@ -22,10 +22,12 @@ class SponsorshipFactory extends Factory
         return [
             'cat_id' => Cat::inRandomOrder()->first() ?: Cat::factory(),
             'person_data_id' => PersonData::inRandomOrder()->first() ?: PersonData::factory(),
+            'payer_id' => PersonData::inRandomOrder()->first() ?: PersonData::factory(),
             'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
             'monthly_amount' => 5,
             'is_active' => true,
             'is_anonymous' => false,
+            'is_gift' => false,
         ];
     }
 }
