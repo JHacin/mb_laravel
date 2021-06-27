@@ -71,7 +71,7 @@ trait CreatesUsers
     {
         $user = $this->createUserWithPersonData($attributes);
 
-        Sponsorship::factory()->count(4)->create(['person_data_id' => $user->personData->id]);
+        Sponsorship::factory()->count(4)->create(['sponsor_id' => $user->personData->id]);
         $user->refresh();
 
         return $user;

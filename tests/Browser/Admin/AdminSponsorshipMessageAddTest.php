@@ -25,7 +25,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $this->clickSubmitButton($b);
             $this->assertAllRequiredErrorsAreShown($b, [
                 '@cat-wrapper',
-                '@personData-wrapper',
+                '@sponsor-wrapper',
                 '@messageType-wrapper',
                 '@should_send_email-input-wrapper',
             ]);
@@ -44,7 +44,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
 
             $b->assertSelectHasOptions('messageType', $activeTypes->pluck('id')->toArray());
             $b->assertSelectMissingOptions('messageType', [$inactiveType->id]);
-            $b->assertSelectHasOptions('personData', PersonData::pluck('id')->toArray());
+            $b->assertSelectHasOptions('sponsor', PersonData::pluck('id')->toArray());
             $b->assertSelectHasOptions('cat', Cat::pluck('id')->toArray());
         });
     }
@@ -56,7 +56,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
     {
         $this->browse(function (Browser $b) {
             $withMessages = $this->createPersonData();
-            $sentMessage = $this->createSponsorshipMessage(['person_data_id' => $withMessages->id]);
+            $sentMessage = $this->createSponsorshipMessage(['sponsor_id' => $withMessages->id]);
             $withoutMessages = $this->createPersonData();
             $this->goToPage($b);
 
@@ -67,7 +67,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $b->assertMissing('@sent-messages-already-sent-warning');
 
             // Loading
-            $b->select('personData', $withMessages->id);
+            $b->select('sponsor', $withMessages->id);
             $b->assertMissing('@sent-messages-none-selected-msg');
             $b->assertVisible('@sent-messages-loader');
             $b->assertMissing('@sent-messages-table-wrapper');
@@ -96,7 +96,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             }
 
             // Shows warning when selecting already sent message
-            $b->select('personData', $withMessages->id);
+            $b->select('sponsor', $withMessages->id);
             $b->select('messageType', $sentMessage->message_type_id);
             $b->assertMissing('@sent-messages-none-selected-msg');
             $b->assertMissing('@sent-messages-loader');
@@ -104,7 +104,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $b->assertVisible('@sent-messages-already-sent-warning');
 
             // Updates on sponsor change
-            $b->select('personData', $withoutMessages->id);
+            $b->select('sponsor', $withoutMessages->id);
             $b->assertMissing('@sent-messages-none-selected-msg');
             $b->assertVisible('@sent-messages-loader');
             $this->waitForRequestsToFinish($b);
@@ -114,7 +114,7 @@ class AdminSponsorshipMessageAddTest extends AdminTestCase
             $b->assertMissing('.sent-icon');
 
             // Clears correctly
-            $b->script("$('select[name=\"personData\"]').val('').trigger('change')");
+            $b->script("$('select[name=\"sponsor\"]').val('').trigger('change')");
             $b->assertVisible('@sent-messages-none-selected-msg');
             $b->assertMissing('@sent-messages-loader');
             $b->assertMissing('@sent-messages-table-wrapper');

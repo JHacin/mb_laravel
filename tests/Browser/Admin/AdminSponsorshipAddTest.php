@@ -94,7 +94,7 @@ class AdminSponsorshipAddTest extends AdminTestCase
 
             $this->assertDatabaseHas('sponsorships', [
                 'cat_id' => $cat->id,
-                'person_data_id' => $personData->id,
+                'sponsor_id' => $personData->id,
                 'is_anonymous' => 1,
                 'payment_type' => Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT,
                 'monthly_amount' => 25.44,
@@ -125,14 +125,14 @@ class AdminSponsorshipAddTest extends AdminTestCase
         $this->browse(function (Browser $b) {
             $sponsorship = $this->createSponsorship([
                 'cat_id' => $this->createCat()->id,
-                'person_data_id' => $this->createPersonData()->id,
+                'sponsor_id' => $this->createPersonData()->id,
                 'is_active' => true,
             ]);
 
             $this->goToPage($b);
 
             $b->select('cat', $sponsorship->cat_id);
-            $b->select('personData', $sponsorship->person_data_id);
+            $b->select('personData', $sponsorship->sponsor_id);
             $b->type('monthly_amount', '10');
 
             $this->clickSubmitButton($b);

@@ -158,16 +158,16 @@ class CatDetailsTest extends DuskTestCase
             $this->createSponsorship(['cat_id' => $cat->id, 'is_anonymous' => true]);
 
             $fullPD = PersonData::factory()->state(['first_name' => 'Vinko', 'city' => 'Rovte']);
-            $this->createSponsorship(['cat_id' => $cat->id, 'person_data_id' => $fullPD]);
+            $this->createSponsorship(['cat_id' => $cat->id, 'sponsor_id' => $fullPD]);
 
             $noFirstNamePD = PersonData::factory()->state(['first_name' => null, 'city' => 'Vrhnika']);
-            $this->createSponsorship(['cat_id' => $cat->id, 'person_data_id' => $noFirstNamePD]);
+            $this->createSponsorship(['cat_id' => $cat->id, 'sponsor_id' => $noFirstNamePD]);
 
             $noCityPD = PersonData::factory()->state(['first_name' => 'Janez', 'city' => null]);
-            $this->createSponsorship(['cat_id' => $cat->id, 'person_data_id' => $noCityPD]);
+            $this->createSponsorship(['cat_id' => $cat->id, 'sponsor_id' => $noCityPD]);
 
             $unknownPD = PersonData::factory()->state(['first_name' => null, 'city' => null]);
-            $this->createSponsorship(['cat_id' => $cat->id, 'person_data_id' => $unknownPD]);
+            $this->createSponsorship(['cat_id' => $cat->id, 'sponsor_id' => $unknownPD]);
 
             $this->goToPage($b, $cat);
             $b->assertSeeIn('@cat-details-sponsor-list', 'Vinko, Rovte');

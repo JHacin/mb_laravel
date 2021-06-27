@@ -120,22 +120,22 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
     public function test_filters_by_person_data()
     {
         $this->browse(function (Browser $b) {
-            $shown = $this->createSponsorshipMessage(['person_data_id' => PersonData::factory()]);
-            $hidden = $this->createSponsorshipMessage(['person_data_id' => PersonData::factory()]);
+            $shown = $this->createSponsorshipMessage(['sponsor_id' => PersonData::factory()]);
+            $hidden = $this->createSponsorshipMessage(['sponsor_id' => PersonData::factory()]);
             $this->goToPage($b);
 
             $b->with('#bp-filters-navbar li[filter-name="personData"]', function (Browser $b) use ($shown) {
                 $b
                     ->click('a.dropdown-toggle')
-                    ->select('filter_personData', $shown->person_data_id);
+                    ->select('filter_personData', $shown->sponsor_id);
             });
 
             $this->waitForRequestsToFinish($b);
 
             $b->with('@crud-table-body', function (Browser $b) use ($shown, $hidden) {
                 $b
-                    ->assertSee($shown->personData->email_and_id)
-                    ->assertDontSee($hidden->personData->email_and_id);
+                    ->assertSee($shown->sponsor->email_and_id)
+                    ->assertDontSee($hidden->sponsor->email_and_id);
             });
         });
     }
@@ -175,12 +175,12 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
         $this->browse(function (Browser $b) {
             $shown = $this->createSponsorshipMessage([
                 'message_type_id' => SponsorshipMessageType::factory(),
-                'person_data_id' => PersonData::factory(),
+                'sponsor_id' => PersonData::factory(),
                 'cat_id' => Cat::factory()
             ]);
             $hidden = $this->createSponsorshipMessage([
                 'message_type_id' => SponsorshipMessageType::factory(),
-                'person_data_id' => PersonData::factory(),
+                'sponsor_id' => PersonData::factory(),
                 'cat_id' => Cat::factory()
             ]);
             $this->goToPage($b);
@@ -195,7 +195,7 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
             $b->with('#bp-filters-navbar li[filter-name="personData"]', function (Browser $b) use ($shown) {
                 $b
                     ->click('a.dropdown-toggle')
-                    ->select('filter_personData', $shown->person_data_id);
+                    ->select('filter_personData', $shown->sponsor_id);
             });
             $this->waitForRequestsToFinish($b);
 
@@ -226,19 +226,19 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
         $this->browse(function (Browser $b) {
             $shown = $this->createSponsorshipMessage([
                 'message_type_id' => SponsorshipMessageType::factory(),
-                'person_data_id' => PersonData::factory(),
+                'sponsor_id' => PersonData::factory(),
                 'cat_id' => Cat::factory()
             ]);
             $hidden = $this->createSponsorshipMessage([
                 'message_type_id' => SponsorshipMessageType::factory(),
-                'person_data_id' => PersonData::factory(),
+                'sponsor_id' => PersonData::factory(),
                 'cat_id' => Cat::factory()
             ]);
             $this->goToPage($b);
 
             $searches = [
                 $shown->messageType->name,
-                $shown->personData->email,
+                $shown->sponsor->email,
                 $shown->cat->name,
             ];
 
@@ -247,10 +247,10 @@ class AdminSponsorshipMessageListTest extends AdminTestCase
                 $b->with('@crud-table-body', function (Browser $browser) use ($shown, $hidden) {
                     $browser
                         ->assertSee($shown->messageType->name)
-                        ->assertSee($shown->personData->email)
+                        ->assertSee($shown->sponsor->email)
                         ->assertSee($shown->cat->name)
                         ->assertDontSee($hidden->messageType->name)
-                        ->assertDontSee($hidden->personData->email)
+                        ->assertDontSee($hidden->sponsor->email)
                         ->assertDontSee($hidden->cat->name);
                 });
             }

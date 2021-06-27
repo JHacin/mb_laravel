@@ -86,10 +86,10 @@ class CatSponsorshipRequest extends FormRequest
 
         $activeSponsorships = $cat
             ->sponsorships()
-            ->with('personData')
+            ->with('sponsor')
             ->get()
             ->toArray();
 
-        return Arr::pluck($activeSponsorships, 'person_data.email');
+        return Arr::pluck($activeSponsorships, 'sponsor.email');
     }
 }

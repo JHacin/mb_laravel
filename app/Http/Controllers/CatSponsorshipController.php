@@ -67,7 +67,7 @@ class CatSponsorshipController extends Controller
         $isGift = $giftee instanceof PersonData;
 
         return Sponsorship::create([
-            'person_data_id' => $isGift ? $giftee->id : $payer->id,
+            'sponsor_id' => $isGift ? $giftee->id : $payer->id,
             'payer_id' => $isGift ? $payer->id : null,
             'cat_id' => $cat->id,
             'monthly_amount' => $formInput['monthly_amount'],

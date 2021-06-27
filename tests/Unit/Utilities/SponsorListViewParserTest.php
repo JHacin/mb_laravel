@@ -17,28 +17,28 @@ class SponsorListViewParserTest extends TestCase
         $anonymous = [
             $this->createSponsorship([
                 'is_anonymous' => false,
-                'person_data_id' => PersonData::factory()->createOne([
+                'sponsor_id' => PersonData::factory()->createOne([
                     'first_name' => null,
                     'city' => null,
                 ])
             ]),
             $this->createSponsorship([
                 'is_anonymous' => true,
-                'person_data_id' => PersonData::factory()->createOne([
+                'sponsor_id' => PersonData::factory()->createOne([
                     'first_name' => 'Miško',
                     'city' => null,
                 ])
             ]),
             $this->createSponsorship([
                 'is_anonymous' => true,
-                'person_data_id' => PersonData::factory()->createOne([
+                'sponsor_id' => PersonData::factory()->createOne([
                     'first_name' => null,
                     'city' => null,
                 ])
             ]),
             $this->createSponsorship([
                 'is_anonymous' => true,
-                'person_data_id' => PersonData::factory()->createOne([
+                'sponsor_id' => PersonData::factory()->createOne([
                     'first_name' => null,
                     'city' => 'Celje',
                 ])
@@ -48,7 +48,7 @@ class SponsorListViewParserTest extends TestCase
         $identified = [
             $this->createSponsorship([
                 'is_anonymous' => false,
-                'person_data_id' => PersonData::factory()->createOne([
+                'sponsor_id' => PersonData::factory()->createOne([
                     'first_name' => null,
                     'city' => 'Celje',
                 ])
@@ -56,7 +56,7 @@ class SponsorListViewParserTest extends TestCase
 
             $this->createSponsorship([
                 'is_anonymous' => false,
-                'person_data_id' => PersonData::factory()->createOne([
+                'sponsor_id' => PersonData::factory()->createOne([
                     'first_name' => 'Miško',
                     'city' => null,
                 ])

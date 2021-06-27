@@ -30,11 +30,11 @@ class AdminSponsorshipRequest extends FormRequest
                 'integer',
                 Rule::exists('cats', 'id'),
             ],
-            'personData' => [
+            'sponsor' => [
                 'required',
                 'integer',
                 Rule::exists('person_data', 'id'),
-                Rule::unique('sponsorships', 'person_data_id')
+                Rule::unique('sponsorships', 'sponsor_id')
                     ->where('is_active', true)
                     ->where('cat_id', $this->input('cat'))
                     ->ignore($this->get('id'))
@@ -51,7 +51,7 @@ class AdminSponsorshipRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'personData.unique' => 'Muca že ima aktivnega botra s tem email naslovom.',
+            'sponsor.unique' => 'Muca že ima aktivnega botra s tem email naslovom.',
             'payer.unique' => 'Muca že ima aktivnega botra s tem email naslovom.',
             'payer.required_if' => 'Plačnik je obvezen če je botrstvo podarjeno.',
         ];

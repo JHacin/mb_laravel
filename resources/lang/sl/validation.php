@@ -127,6 +127,15 @@ return [
             ],
             'exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.'
         ],
+        'sponsor' => [
+            'email' => [
+                'unique' => 'Ta email naslov je že v uporabi.',
+            ],
+            'date_of_birth' => [
+                'before' => 'Datum rojstva mora biti v preteklosti.',
+            ],
+            'exists' => 'Uporabnik s to šifro ne obstaja v bazi podatkov.'
+        ],
         'name' => [
             'min' => 'Ime mora biti dolgo vsaj 2 znaka.',
         ],

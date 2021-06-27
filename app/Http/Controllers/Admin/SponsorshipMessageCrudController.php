@@ -60,8 +60,8 @@ class SponsorshipMessageCrudController extends CrudController
             }
         ]);
         $this->crud->addColumn([
-            'name' => 'personData',
-            'label' => trans('sponsorship_message.person_data'),
+            'name' => 'sponsor',
+            'label' => trans('sponsorship_message.sponsor'),
             'type' => 'relationship',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
@@ -69,7 +69,7 @@ class SponsorshipMessageCrudController extends CrudController
                 },
             ],
             'searchLogic' => function (Builder $query, $column, $searchTerm) {
-                $query->orWhereHas('personData', function (Builder $query) use ($searchTerm) {
+                $query->orWhereHas('sponsor', function (Builder $query) use ($searchTerm) {
                     $query->where('email', 'like', "%$searchTerm%");
                 });
             }
@@ -110,15 +110,15 @@ class SponsorshipMessageCrudController extends CrudController
         );
         $this->crud->addFilter(
             [
-                'name' => 'personData',
+                'name' => 'sponsor',
                 'type' => 'select2',
-                'label' => trans('sponsorship_message.person_data'),
+                'label' => trans('sponsorship_message.sponsor'),
             ],
             function () {
                 return PersonData::all()->pluck('email_id', 'id')->toArray();
             },
             function ($value) {
-                $this->crud->addClause('where', 'person_data_id', $value);
+                $this->crud->addClause('where', 'sponsor_id', $value);
             }
         );
         $this->crud->addFilter(
@@ -158,15 +158,15 @@ class SponsorshipMessageCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'personData',
-            'label' => trans('sponsorship_message.person_data'),
+            'name' => 'sponsor',
+            'label' => trans('sponsorship_message.sponsor'),
             'type' => 'relationship',
             'placeholder' => 'Izberi botra',
             'attributes' => [
                 'required' => 'required',
             ],
             'wrapper' => [
-                'dusk' => 'personData-wrapper'
+                'dusk' => 'sponsor-wrapper'
             ]
         ]);
         $this->crud->addField([
@@ -237,11 +237,11 @@ class SponsorshipMessageCrudController extends CrudController
         return $response;
     }
 
-    public function getMessagesSentToSponsor(PersonData $personData): JsonResponse
+    public function getMessagesSentToSponsor(PersonData $sponsor): JsonResponse
     {
         $this->crud->hasAccessOrFail('create');
 
-        return response()->json($personData->sponsorshipMessages->load('messageType'));
+        return response()->json($sponsor->sponsorshipMessages->load('messageType'));
     }
 
     public function getParsedTemplatePreview(Request $request): JsonResponse

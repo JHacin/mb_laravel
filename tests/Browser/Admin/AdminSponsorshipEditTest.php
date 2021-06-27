@@ -24,7 +24,7 @@ class AdminSponsorshipEditTest extends AdminTestCase
 
             $browser
                 ->assertAttribute('select[name="cat"', 'data-current-value', $sponsorship->cat_id)
-                ->assertAttribute('select[name="personData"', 'data-current-value', $sponsorship->person_data_id)
+                ->assertAttribute('select[name="personData"', 'data-current-value', $sponsorship->sponsor_id)
                 ->assertValue('input[name="monthly_amount"]', $sponsorship->monthly_amount)
                 ->assertValue('input[name="is_anonymous"]', (int)$sponsorship->is_anonymous)
                 ->assertValue('input[name="is_active"]', (int)$sponsorship->is_active)

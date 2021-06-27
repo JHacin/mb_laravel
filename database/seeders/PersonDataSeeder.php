@@ -10,9 +10,9 @@ class PersonDataSeeder extends Seeder
 {
     public function run()
     {
-        PersonData::factory()
-            ->count(10)
-            ->create();
+//        PersonData::factory()
+//            ->count(10)
+//            ->create();
 
         PersonData::factory()
             ->has(

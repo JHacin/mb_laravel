@@ -67,7 +67,7 @@ class CatPhoto extends Model
      */
     public function cat(): BelongsTo
     {
-        return $this->belongsTo(Cat::class);
+        return $this->belongsTo(Cat::class, 'cat_id');
     }
 
     /*

@@ -15,24 +15,24 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property int|null $type
- * @property int|null $person_data_id
+ * @property int|null $sponsor_id
  * @property string|null $confirmed_at
+ * @property int $is_anonymous
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read string $type_label
- * @property-read PersonData|null $personData
+ * @property-read PersonData|null $sponsor
  * @method static Builder|SpecialSponsorship newModelQuery()
  * @method static Builder|SpecialSponsorship newQuery()
  * @method static Builder|SpecialSponsorship query()
  * @method static Builder|SpecialSponsorship whereConfirmedAt($value)
  * @method static Builder|SpecialSponsorship whereCreatedAt($value)
  * @method static Builder|SpecialSponsorship whereId($value)
- * @method static Builder|SpecialSponsorship wherePersonDataId($value)
+ * @method static Builder|SpecialSponsorship whereIsAnonymous($value)
+ * @method static Builder|SpecialSponsorship whereSponsorId($value)
  * @method static Builder|SpecialSponsorship whereType($value)
  * @method static Builder|SpecialSponsorship whereUpdatedAt($value)
  * @mixin Eloquent
- * @property int $is_anonymous
- * @method static Builder|SpecialSponsorship whereIsAnonymous($value)
  */
 class SpecialSponsorship extends Model
 {
@@ -93,9 +93,9 @@ class SpecialSponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function personData(): BelongsTo
+    public function sponsor(): BelongsTo
     {
-        return $this->belongsTo(PersonData::class);
+        return $this->belongsTo(PersonData::class, 'sponsor_id');
     }
 
     /*

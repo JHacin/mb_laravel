@@ -17,7 +17,7 @@ class AdminSpecialSponsorshipRequest extends FormRequest
     {
         return [
             'type' => ['required', Rule::in(SpecialSponsorship::TYPES)],
-            'personData' => [
+            'sponsor' => [
                 'required',
                 'integer',
                 Rule::exists('person_data', 'id'),

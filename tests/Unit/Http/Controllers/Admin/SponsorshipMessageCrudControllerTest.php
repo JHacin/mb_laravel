@@ -17,7 +17,7 @@ class SponsorshipMessageCrudControllerTest extends TestCase
 
         $this->actingAs($this->createSuperAdminUser())->post('admin/pisma', [
             'messageType' => $this->createSponsorshipMessageType()->id,
-            'personData' => $this->createPersonData()->id,
+            'sponsor' => $this->createPersonData()->id,
             'cat' => $this->createCat()->id,
             'should_send_email' => true,
         ]);
@@ -39,8 +39,8 @@ class SponsorshipMessageCrudControllerTest extends TestCase
     public function test_returns_messages_sent_to_sponsor()
     {
         $sponsor = $this->createPersonData();
-        $message1 = $this->createSponsorshipMessage(['person_data_id' => $sponsor->id]);
-        $message2 = $this->createSponsorshipMessage(['person_data_id' => $sponsor->id]);
+        $message1 = $this->createSponsorshipMessage(['sponsor_id' => $sponsor->id]);
+        $message2 = $this->createSponsorshipMessage(['sponsor_id' => $sponsor->id]);
 
         $response = $this
             ->actingAs($this->createSuperAdminUser())

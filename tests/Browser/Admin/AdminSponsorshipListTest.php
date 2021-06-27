@@ -32,7 +32,7 @@ class AdminSponsorshipListTest extends AdminTestCase
                     0 => $sponsorship->id,
                     1 => $sponsorship->payment_reference_number,
                     2 => $sponsorship->cat->name_and_id,
-                    3 => $sponsorship->personData->email_and_id,
+                    3 => $sponsorship->sponsor->email_and_id,
                     4 => '99,00 €',
                     5 => 'Da',
                     6 => 'Ne',
@@ -89,7 +89,7 @@ class AdminSponsorshipListTest extends AdminTestCase
             $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) use ($sponsorship) {
                 $b
                     ->click('tr[data-dt-column="3"] a')
-                    ->on(new AdminSponsorEditPage($sponsorship->personData));
+                    ->on(new AdminSponsorEditPage($sponsorship->sponsor));
             });
         });
     }
@@ -102,7 +102,7 @@ class AdminSponsorshipListTest extends AdminTestCase
         $this->browse(function (Browser $b) {
             $this->goToPage($b);
             $b->assertSelectHasOptions('filter_cat', Cat::pluck('id')->toArray());
-            $b->assertSelectHasOptions('filter_personData', PersonData::pluck('id')->toArray());
+            $b->assertSelectHasOptions('filter_sponsor', PersonData::pluck('id')->toArray());
             $this->assertSeeBooleanTypeFilter($b, '@sponsorship-list-is-active-filter');
         });
     }

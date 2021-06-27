@@ -28,7 +28,7 @@ class CreateSponsorshipMessagesTable extends Migration
                 ->nullOnDelete();
 
             $table
-                ->foreignId('person_data_id')
+                ->foreignId('sponsor_id')
                 ->nullable()
                 ->constrained('person_data')
                 ->nullOnDelete();

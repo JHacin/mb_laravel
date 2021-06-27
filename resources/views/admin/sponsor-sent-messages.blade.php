@@ -97,8 +97,8 @@
                 return;
             }
 
-            const urlWithPlaceholder = "{{ route('admin.get_messages_sent_to_sponsor', ':personDataId') }}";
-            const requestUrl = urlWithPlaceholder.replace(':personDataId', e.target.value);
+            const urlWithPlaceholder = "{{ route('admin.get_messages_sent_to_sponsor', ':sponsorId') }}";
+            const requestUrl = urlWithPlaceholder.replace(':sponsorId', e.target.value);
 
             $.ajax({
                 url: requestUrl,

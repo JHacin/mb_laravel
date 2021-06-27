@@ -35,9 +35,9 @@ class SponsorListViewParser
 
         foreach ($sponsorships as $sponsorship) {
             if (self::isConsideredAnonymous($sponsorship)) {
-                $result['anonymous'][] = $sponsorship->personData;
+                $result['anonymous'][] = $sponsorship->sponsor;
             } else {
-                $result['identified'][] = $sponsorship->personData;
+                $result['identified'][] = $sponsorship->sponsor;
             }
         }
 
@@ -49,11 +49,11 @@ class SponsorListViewParser
      */
     protected static function isConsideredAnonymous($sponsorship): bool
     {
-        return $sponsorship->is_anonymous || self::isMissingAllDisplayableProperties($sponsorship->personData);
+        return $sponsorship->is_anonymous || self::isMissingAllDisplayableProperties($sponsorship->sponsor);
     }
 
-    protected static function isMissingAllDisplayableProperties(PersonData $personData): bool
+    protected static function isMissingAllDisplayableProperties(PersonData $sponsor): bool
     {
-        return !$personData->first_name && !$personData->city;
+        return !$sponsor->first_name && !$sponsor->city;
     }
 }

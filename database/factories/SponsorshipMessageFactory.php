@@ -18,9 +18,9 @@ class SponsorshipMessageFactory extends Factory
     public function definition(): array
     {
         return [
-            'message_type_id' => SponsorshipMessageType::inRandomOrder()->first() ?: SponsorshipMessageType::factory(),
-            'cat_id' => Cat::inRandomOrder()->first() ?: Cat::factory(),
-            'person_data_id' => PersonData::inRandomOrder()->first() ?: PersonData::factory(),
+            'message_type_id' => SponsorshipMessageType::factory(),
+            'cat_id' => Cat::factory(),
+            'sponsor_id' => PersonData::factory(),
         ];
     }
 }

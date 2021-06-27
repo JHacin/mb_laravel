@@ -15,6 +15,6 @@ class BankTransferFieldGenerator
 
     public static function referenceNumber(Sponsorship $sponsorship): string
     {
-        return 'SI00 80-' . $sponsorship->cat_id . '-' . $sponsorship->person_data_id;
+        return 'SI00 80-' . $sponsorship->cat_id . '-' . $sponsorship->sponsor_id;
     }
 }

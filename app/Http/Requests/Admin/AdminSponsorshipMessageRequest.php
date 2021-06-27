@@ -16,7 +16,7 @@ class AdminSponsorshipMessageRequest extends FormRequest
     {
         return [
             'messageType' => ['required', 'integer', Rule::exists('sponsorship_message_types', 'id')],
-            'personData' => ['required', 'integer', Rule::exists('person_data', 'id')],
+            'sponsor' => ['required', 'integer', Rule::exists('person_data', 'id')],
             'cat' => ['required', 'integer', Rule::exists('cats', 'id')],
             'should_send_email' => ['required', 'boolean'],
         ];

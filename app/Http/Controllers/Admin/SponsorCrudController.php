@@ -61,7 +61,7 @@ class SponsorCrudController extends CrudController
                 'href' => function ($crud, $column, $entry, $related_key) {
                     return backpack_url(
                         config('routes.admin.sponsorships') .
-                        '?personData=' .
+                        '?sponsor=' .
                         $entry->getKey() .
                         '&is_active=1'
                     );
@@ -76,7 +76,7 @@ class SponsorCrudController extends CrudController
             'wrapper' => [
                 'dusk' => 'related-unscopedSponsorships-link',
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url(config('routes.admin.sponsorships') . '?personData=' . $entry->getKey());
+                    return backpack_url(config('routes.admin.sponsorships') . '?sponsor=' . $entry->getKey());
                 },
             ],
         ]);
@@ -106,11 +106,11 @@ class SponsorCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    public function cancelAllSponsorships(PersonData $personData): RedirectResponse
+    public function cancelAllSponsorships(PersonData $sponsor): RedirectResponse
     {
         $this->crud->hasAccessOrFail('update');
 
-        $personData->sponsorships->each(function (Sponsorship $sponsorship) {
+        $sponsor->sponsorships->each(function (Sponsorship $sponsorship) {
             if ($sponsorship->is_active) {
                 $sponsorship->cancel();
             }

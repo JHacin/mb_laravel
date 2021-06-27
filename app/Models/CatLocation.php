@@ -69,7 +69,7 @@ class CatLocation extends Model
      */
     public function cats(): HasMany
     {
-        return $this->hasMany(Cat::class);
+        return $this->hasMany(Cat::class, 'location_id');
     }
 
     /*

@@ -16,12 +16,12 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int|null $message_type_id
  * @property int|null $cat_id
- * @property int|null $person_data_id
+ * @property int|null $sponsor_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Cat|null $cat
  * @property-read SponsorshipMessageType|null $messageType
- * @property-read PersonData|null $personData
+ * @property-read PersonData|null $sponsor
  * @method static Builder|SponsorshipMessage newModelQuery()
  * @method static Builder|SponsorshipMessage newQuery()
  * @method static Builder|SponsorshipMessage query()
@@ -29,7 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|SponsorshipMessage whereCreatedAt($value)
  * @method static Builder|SponsorshipMessage whereId($value)
  * @method static Builder|SponsorshipMessage whereMessageTypeId($value)
- * @method static Builder|SponsorshipMessage wherePersonDataId($value)
+ * @method static Builder|SponsorshipMessage whereSponsorId($value)
  * @method static Builder|SponsorshipMessage whereUpdatedAt($value)
  * @mixin Eloquent
  */
@@ -60,17 +60,17 @@ class SponsorshipMessage extends Model
 
     public function messageType(): BelongsTo
     {
-        return $this->belongsTo(SponsorshipMessageType::class);
+        return $this->belongsTo(SponsorshipMessageType::class, 'message_type_id');
     }
 
-    public function personData(): BelongsTo
+    public function sponsor(): BelongsTo
     {
-        return $this->belongsTo(PersonData::class);
+        return $this->belongsTo(PersonData::class, 'sponsor_id');
     }
 
     public function cat(): BelongsTo
     {
-        return $this->belongsTo(Cat::class);
+        return $this->belongsTo(Cat::class, 'cat_id');
     }
 
     /*

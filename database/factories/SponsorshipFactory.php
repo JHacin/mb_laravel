@@ -14,15 +14,12 @@ class SponsorshipFactory extends Factory
      */
     protected $model = Sponsorship::class;
 
-    /**
-     * @return array
-     */
     public function definition(): array
     {
         return [
-            'cat_id' => Cat::inRandomOrder()->first() ?: Cat::factory(),
-            'person_data_id' => PersonData::inRandomOrder()->first() ?: PersonData::factory(),
-            'payer_id' => PersonData::inRandomOrder()->first() ?: PersonData::factory(),
+            'cat_id' => Cat::factory(),
+            'sponsor_id' => PersonData::factory(),
+            'payer_id' => PersonData::factory(),
             'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
             'monthly_amount' => 5,
             'is_active' => true,

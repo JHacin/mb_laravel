@@ -22,7 +22,7 @@ class SponsorshipMail
             ? 'navodila_za_botrovanje_nakazilo'
             : 'navodila_za_botrovanje_trajnik';
 
-        $personData = $sponsorship->personData;
+        $personData = $sponsorship->sponsor;
         $cat = $sponsorship->cat;
 
         $variables = [
@@ -44,7 +44,7 @@ class SponsorshipMail
         ];
 
         $params = [
-            'to' => $sponsorship->personData->email,
+            'to' => $sponsorship->sponsor->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
             'template' => $template,

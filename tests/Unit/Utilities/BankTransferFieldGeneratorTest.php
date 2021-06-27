@@ -36,7 +36,7 @@ class BankTransferFieldGeneratorTest extends TestCase
         $sponsorship = $this->createSponsorship();
 
         $this->assertEquals(
-            sprintf('SI00 80-%s-%s', $sponsorship->cat_id, $sponsorship->person_data_id),
+            sprintf('SI00 80-%s-%s', $sponsorship->cat_id, $sponsorship->sponsor_id),
             BankTransferFieldGenerator::referenceNumber($sponsorship)
         );
     }

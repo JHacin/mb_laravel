@@ -167,7 +167,7 @@ class User extends Authenticatable
      */
     public function personData(): HasOne
     {
-        return $this->hasOne(PersonData::class);
+        return $this->hasOne(PersonData::class, 'user_id');
     }
 
     /*

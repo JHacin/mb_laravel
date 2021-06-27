@@ -18,13 +18,13 @@ class SponsorshipMessageHandler
     public function send(SponsorshipMessage $message)
     {
         MailClient::send([
-            'to' => $message->personData->email,
+            'to' => $message->sponsor->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => $message->messageType->subject,
             'template' => $message->messageType->template_id,
             'h:X-Mailgun-Variables' => json_encode([
-                'ime_botra' => $message->personData->first_name,
-                'boter_moski' => $message->personData->gender === PersonData::GENDER_MALE,
+                'ime_botra' => $message->sponsor->first_name,
+                'boter_moski' => $message->sponsor->gender === PersonData::GENDER_MALE,
                 'ime_muce' => $message->cat->name,
                 'muca_moski' => $message->cat->gender === Cat::GENDER_MALE,
             ]),

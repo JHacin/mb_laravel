@@ -136,7 +136,7 @@ class PersonData extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function unscopedSponsorships(): HasMany
@@ -146,12 +146,12 @@ class PersonData extends Model
 
     public function sponsorships(): HasMany
     {
-        return $this->hasMany(Sponsorship::class);
+        return $this->hasMany(Sponsorship::class, 'sponsor_id');
     }
 
     public function sponsorshipMessages(): HasMany
     {
-        return $this->hasMany(SponsorshipMessage::class);
+        return $this->hasMany(SponsorshipMessage::class, 'sponsor_id');
     }
 
     /*

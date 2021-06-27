@@ -177,22 +177,22 @@ class Cat extends Model
 
     public function location(): BelongsTo
     {
-        return $this->belongsTo(CatLocation::class);
+        return $this->belongsTo(CatLocation::class, 'location_id');
     }
 
     public function photos(): HasMany
     {
-        return $this->hasMany(CatPhoto::class);
+        return $this->hasMany(CatPhoto::class, 'cat_id');
     }
 
     public function sponsorships(): HasMany
     {
-        return $this->hasMany(Sponsorship::class);
+        return $this->hasMany(Sponsorship::class, 'cat_id');
     }
 
     public function sponsorshipMessages(): HasMany
     {
-        return $this->hasMany(SponsorshipMessage::class);
+        return $this->hasMany(SponsorshipMessage::class, 'cat_id');
     }
 
     /*

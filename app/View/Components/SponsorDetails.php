@@ -14,7 +14,7 @@ class SponsorDetails extends Component
     /**
      * @var PersonData
      */
-    public $sponsor;
+    public PersonData $sponsor;
 
     /**
      * Create a new component instance.

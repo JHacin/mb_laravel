@@ -49,7 +49,7 @@ class SpecialSponsorshipCrudController extends CrudController
             'type' => 'text',
         ]);
         $this->crud->addColumn([
-            'name' => 'personData',
+            'name' => 'sponsor',
             'label' => trans('sponsor.sponsor'),
             'type' => 'relationship',
             'wrapper' => [
@@ -58,7 +58,7 @@ class SpecialSponsorshipCrudController extends CrudController
                 },
             ],
             'searchLogic' => function (Builder $query, $column, $searchTerm) {
-                $query->orWhereHas('personData', function (Builder $query) use ($searchTerm) {
+                $query->orWhereHas('sponsor', function (Builder $query) use ($searchTerm) {
                     $query
                         ->where('email', 'like', "%$searchTerm%")
                         ->orWhere('id', 'like', "%$searchTerm%");
@@ -87,7 +87,7 @@ class SpecialSponsorshipCrudController extends CrudController
 
         $this->crud->addFilter(
             [
-                'name' => 'personData',
+                'name' => 'sponsor',
                 'type' => 'select2',
                 'label' => trans('sponsor.sponsor'),
             ],
@@ -95,7 +95,7 @@ class SpecialSponsorshipCrudController extends CrudController
                 return PersonData::all()->pluck('email_and_id', 'id')->toArray();
             },
             function ($value) {
-                $this->crud->addClause('where', 'person_data_id', $value);
+                $this->crud->addClause('where', 'sponsor_id', $value);
             }
         );
 
@@ -134,7 +134,7 @@ class SpecialSponsorshipCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'personData',
+            'name' => 'sponsor',
             'label' => trans('sponsor.sponsor'),
             'type' => 'relationship',
             'placeholder' => 'Izberi botra',
@@ -142,7 +142,7 @@ class SpecialSponsorshipCrudController extends CrudController
                 'required' => 'required',
             ],
             'wrapper' => [
-                'dusk' => 'personData-wrapper'
+                'dusk' => 'sponsor-wrapper'
             ]
         ]);
 

@@ -233,7 +233,7 @@ class CatSponsorshipFormTest extends DuskTestCase
             $this->submit($b);
             $b->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
             $this->assertDatabaseHas('sponsorships', [
-                'person_data_id' => self::$sampleUser->personData->id,
+                'sponsor_id' => self::$sampleUser->personData->id,
                 'cat_id' => $cat->id,
                 'monthly_amount' => 5,
                 'is_anonymous' => 1,
@@ -323,7 +323,7 @@ class CatSponsorshipFormTest extends DuskTestCase
                 array_merge(['id' => $createdPersonData->id], $formData)
             );
             $this->assertDatabaseHas('sponsorships', [
-                'person_data_id' => $createdPersonData->id,
+                'sponsor_id' => $createdPersonData->id,
                 'cat_id' => $cat->id,
                 'monthly_amount' => 5,
                 'is_anonymous' => 1,
@@ -342,7 +342,7 @@ class CatSponsorshipFormTest extends DuskTestCase
             $personData = $this->createPersonData();
             $sponsorship = $this->createSponsorship([
                 'cat_id' => $cat->id,
-                'person_data_id' => $personData->id,
+                'sponsor_id' => $personData->id,
                 'is_active' => true,
             ]);
 
