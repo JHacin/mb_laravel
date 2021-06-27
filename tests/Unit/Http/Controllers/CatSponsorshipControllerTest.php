@@ -18,8 +18,11 @@ class CatSponsorshipControllerTest extends TestCase
 
         $requestMock
             ->shouldReceive([
-                'all' => ['monthly_amount' => 5],
-                'input' => $personData->toArray(),
+                'all' => [
+                    'monthly_amount' => 5,
+                    'personData' => $personData->toArray(),
+                    'is_gift' => 'no',
+                ],
             ])
             ->once();
 

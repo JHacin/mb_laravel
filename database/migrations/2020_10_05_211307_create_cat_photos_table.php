@@ -5,11 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateCatPhotosTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('cat_photos', function (Blueprint $table) {
@@ -17,16 +12,11 @@ class CreateCatPhotosTable extends Migration
             $table->string('filename');
             $table->string('alt')->nullable();
             $table->integer('index');
-            $table->foreignId('cat_id')->constrained('cats');
+            $table->foreignId('cat_id')->constrained('cats')->cascadeOnDelete();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('cat_photos');

@@ -93,7 +93,7 @@ class CatListControllerTest extends TestCase
     {
         $oldest = $this->createCat(['date_of_birth' => Carbon::now()->subYears(300)]);
         $youngest = $this->createCat(['date_of_birth' => Carbon::now()]);
-        Cat::factory()->createOne();
+        $this->createCat();
 
         $this->assertStringNotContainsString('age=asc', $this->getCatsInResponse()->url(1));
         $this->assertStringNotContainsString('age=desc', $this->getCatsInResponse()->url(1));

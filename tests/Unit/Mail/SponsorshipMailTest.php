@@ -16,7 +16,10 @@ class SponsorshipMailTest extends TestCase
 {
     public function test_sends_initial_instructions_email_with_correct_params()
     {
-        $sponsorship = $this->createSponsorship(['payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER]);
+        $sponsorship = $this->createSponsorship([
+            'cat_id' => $this->createCat()->id, //Todo: figure out why the test fails if this is removed
+            'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER
+        ]);
         $personData = $sponsorship->sponsor;
         $cat = $sponsorship->cat;
 

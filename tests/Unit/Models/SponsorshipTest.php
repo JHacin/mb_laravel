@@ -6,6 +6,10 @@ use App\Models\Sponsorship;
 use Mockery;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class SponsorshipTest extends TestCase
 {
     protected Sponsorship $sponsorship;

@@ -23,7 +23,7 @@ class CatLocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->company,
+            'name' => $this->faker->unique()->name,
             'address' => $this->faker->streetAddress,
             'zip_code' => $this->faker->postcode,
             'city' => $this->faker->city,

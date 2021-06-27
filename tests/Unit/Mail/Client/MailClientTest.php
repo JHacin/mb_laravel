@@ -9,6 +9,10 @@ use Mailgun\Mailgun;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class MailClientTest extends TestCase
 {
     protected MockInterface $settingsMock;
