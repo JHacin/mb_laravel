@@ -17,6 +17,6 @@ databases:
 features:
   - mariadb: false
   - ohmyzsh: false
-  - webdriver: false
+  - webdriver: true
 name: mb-laravel
 hostname: mb-laravel
