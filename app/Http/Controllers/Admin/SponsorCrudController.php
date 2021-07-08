@@ -41,6 +41,7 @@ class SponsorCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsors'));
         $this->crud->setEntityNameStrings('Boter', 'Botri');
         $this->crud->addButtonFromView('line', 'sponsor_cancel_all_sponsorships', 'sponsor_cancel_all_sponsorships');
+        $this->crud->enableExportButtons();
     }
 
     protected function setupListOperation()

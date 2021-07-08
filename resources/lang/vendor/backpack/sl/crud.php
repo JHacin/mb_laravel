@@ -103,13 +103,13 @@ return [
         'sortDescending' => ': activate to sort column descending',
     ],
     'export' => [
-        'export' => 'Export',
-        'copy' => 'Copy',
+        'export' => 'Izvozi',
+        'copy' => 'Kopiraj',
         'excel' => 'Excel',
         'csv' => 'CSV',
         'pdf' => 'PDF',
         'print' => 'Print',
-        'column_visibility' => 'Column visibility',
+        'column_visibility' => 'Vidni podatki',
     ],
 
     // global crud - errors

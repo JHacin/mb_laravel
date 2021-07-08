@@ -33,6 +33,7 @@ class NewsCrudController extends CrudController
         $this->crud->setModel(News::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.news'));
         $this->crud->setEntityNameStrings('Novica', 'Novice');
+        $this->crud->enableExportButtons();
     }
 
     protected function setupListOperation()

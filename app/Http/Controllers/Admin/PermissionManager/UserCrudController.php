@@ -22,6 +22,7 @@ class UserCrudController extends BackpackUserCrudController
     {
         parent::setup();
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.users'));
+        $this->crud->enableExportButtons();
     }
 
     /**

@@ -48,6 +48,7 @@ class SponsorshipCrudController extends CrudController
         $this->crud->setSubheading('Uredi botrovanje', 'edit');
         $this->crud->addButtonFromView('line', 'sponsorship_cancel', 'sponsorship_cancel');
         $this->clearModelGlobalScopes();
+        $this->crud->enableExportButtons();
     }
 
     protected function setupListOperation()

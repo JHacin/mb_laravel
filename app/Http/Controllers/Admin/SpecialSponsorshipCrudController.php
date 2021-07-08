@@ -38,6 +38,7 @@ class SpecialSponsorshipCrudController extends CrudController
         $this->crud->setModel(SpecialSponsorship::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.special_sponsorships'));
         $this->crud->setEntityNameStrings('Posebno botrstvo', 'Posebna botrstva');
+        $this->crud->enableExportButtons();
     }
 
     protected function setupListOperation()

@@ -39,6 +39,7 @@ class SponsorshipMessageCrudController extends CrudController
         $this->crud->setModel(SponsorshipMessage::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsorship_messages'));
         $this->crud->setEntityNameStrings('Pismo', 'Pisma');
+        $this->crud->enableExportButtons();
     }
 
     protected function setupListOperation()

@@ -53,6 +53,7 @@ class CatCrudController extends CrudController
         $this->crud->setSubheading('Dodaj novo muco', 'create');
         $this->crud->setSubheading('Uredi muco', 'edit');
         $this->clearModelGlobalScopes();
+        $this->crud->enableExportButtons();
     }
 
     protected function setupListOperation()

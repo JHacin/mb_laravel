@@ -38,6 +38,7 @@ class SponsorshipMessageTypeCrudController extends CrudController
         );
         $this->crud->setEntityNameStrings('Vrsta pisma', 'Vrste pisem');
         $this->setupAccessToOperations();
+        $this->crud->enableExportButtons();
     }
 
     protected function setupAccessToOperations()
