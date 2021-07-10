@@ -30,6 +30,7 @@ Route::post(config('routes.cat_sponsorship_form'), [CatSponsorshipController::cl
 // Special sponsorships
 Route::get(config('routes.special_sponsorships'), [SpecialSponsorshipsController::class, 'index'])->name('special_sponsorships');
 Route::get(config('routes.special_sponsorships_form'), [SpecialSponsorshipsController::class, 'form'])->name('special_sponsorships_form');
+Route::post(config('routes.special_sponsorships_form'), [SpecialSponsorshipsController::class, 'submit']);
 Route::get(config('routes.special_sponsorships_archive'), [SpecialSponsorshipsController::class, 'archive'])->name('special_sponsorships_archive');
 
 // User pages

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SpecialSponsorship;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SpecialSponsorshipsController extends Controller
 {
@@ -29,6 +30,11 @@ class SpecialSponsorshipsController extends Controller
         }
 
         return $type;
+    }
+
+    public function submit(): RedirectResponse
+    {
+        return back()->with('success_message', 'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
     }
 
     public function archive(): View
