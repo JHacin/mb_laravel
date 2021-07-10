@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @php
+    use App\Models\SpecialSponsorship;
+
     $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null;
 
     $isGiftRadioOptions = [
         'no' => 'Zame',
         'yes' => 'Darilo',
     ];
+
+    $typeOptions = SpecialSponsorship::TYPE_LABELS;
 @endphp
 
 @section('content')
@@ -42,6 +46,14 @@
                 @csrf
 
                 <div class="columns is-multiline mb-4">
+                    <div class='column is-12'>
+                        <x-inputs.base.select
+                            name="type"
+                            label="{{ trans('special_sponsorship.type') }}"
+                            :options="$typeOptions"
+                            :selected="$selectedType"
+                        />
+                    </div>
                     <div class="column is-4">
                         <x-inputs.base.input
                             name="personData[first_name]"

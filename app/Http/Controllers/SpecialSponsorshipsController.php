@@ -16,9 +16,9 @@ class SpecialSponsorshipsController extends Controller
 
     public function form(Request $request): View
     {
-        $sponsorshipType = $this->getValidSponsorshipType($request);
+        $selectedType = $this->getValidSponsorshipType($request);
 
-        return view('special-sponsorships-form', ['sponsorship_type' => $sponsorshipType]);
+        return view('special-sponsorships-form', ['selectedType' => $selectedType]);
     }
 
     protected function getValidSponsorshipType(Request $request): int
