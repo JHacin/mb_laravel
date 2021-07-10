@@ -2,60 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\HasSponsorshipForm;
 use App\Http\Requests\CatSponsorshipRequest;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
-use App\Models\User;
-use Auth;
+
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use SponsorshipMail;
 
 class CatSponsorshipController extends Controller
 {
+    use HasSponsorshipForm;
+
     public function submit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
     {
         $this->validateCatStatus($cat);
 
-        $input = $request->all();
+        $this->updateUserIfLoggedIn($request);
+        $payer = $this->getPayer($request);
+        $giftee = $this->getGiftee($request);
 
-        if (Auth::check()) {
-            $this->updateUserEmail(Auth::user(), $input['personData']['email']);
-        }
-
-        $payer = $this->updateOrCreatePersonData($input['personData']);
-
-        $giftee = $input['is_gift'] === 'yes'
-            ? $this->updateOrCreatePersonData($input['giftee'])
-            : null;
-
-        $sponsorship = $this->createSponsorship($cat, $payer, $giftee, $input);
+        $sponsorship = $this->createSponsorship($cat, $payer, $giftee, $request->all());
 
         SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
 
-        return back()->with(
-            'success_message',
-            'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.'
-        );
-    }
-
-    protected function updateUserEmail(User $user, string $inputEmail)
-    {
-        if ($inputEmail === $user->email) {
-            return;
-        }
-
-        $user->update(['email' => $inputEmail]);
-    }
-
-    protected function updateOrCreatePersonData(array $personDataFormInput): PersonData
-    {
-        $personData = PersonData::firstOrCreate(['email' => $personDataFormInput['email']]);
-        $personData->update($personDataFormInput);
-        $personData->refresh();
-
-        return $personData;
+        return $this->successRedirect();
     }
 
     protected function createSponsorship(
@@ -66,7 +39,7 @@ class CatSponsorshipController extends Controller
     ): Sponsorship {
         $isGift = $giftee instanceof PersonData;
 
-        return Sponsorship::create([
+        $params = [
             'sponsor_id' => $isGift ? $giftee->id : $payer->id,
             'payer_id' => $isGift ? $payer->id : null,
             'cat_id' => $cat->id,
@@ -76,7 +49,9 @@ class CatSponsorshipController extends Controller
                 : Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
             'is_anonymous' => $formInput['is_anonymous'] ?? false,
             'is_active' => false,
-        ]);
+        ];
+
+        return Sponsorship::create($params);
     }
 
     public function form(Cat $cat): View
