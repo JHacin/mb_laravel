@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@php
+
+function formLink(int $type): string {
+    return route('special_sponsorships_form', ['tip' => $type]);
+}
+
+@endphp
+
 @section('content')
     <div class="section special-sponsorships-page">
         <div class="container mb-6">
@@ -41,7 +49,10 @@
                             </div>
                         </div>
                         <div>
-                            <a class="special-sponsorship-type-card__button" href="#">
+                            <a
+                                class="special-sponsorship-type-card__button"
+                                href="{{ formLink(\App\Models\SpecialSponsorship::TYPE_BOTER_MESECA) }}"
+                            >
                                 <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
@@ -62,7 +73,10 @@
                             </div>
                         </div>
                         <div>
-                            <a class="special-sponsorship-type-card__button" href="#">
+                            <a
+                                class="special-sponsorship-type-card__button"
+                                href="{{ formLink(\App\Models\SpecialSponsorship::TYPE_MUC_GRE_BREZ_SKRBI_V_NOVE_DNI) }}"
+                            >
                                 <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
@@ -83,7 +97,10 @@
                             </div>
                         </div>
                         <div>
-                            <a class="special-sponsorship-type-card__button" href="#">
+                            <a
+                                class="special-sponsorship-type-card__button"
+                                href="{{ formLink(\App\Models\SpecialSponsorship::TYPE_MUCA_GRE_BREZ_SKRBI_V_NOVE_DNI) }}"
+                            >
                                 <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
@@ -110,7 +127,10 @@
                             </div>
                         </div>
                         <div>
-                            <a class="special-sponsorship-type-card__button" href="#">
+                            <a
+                                class="special-sponsorship-type-card__button"
+                                href="{{ formLink(\App\Models\SpecialSponsorship::TYPE_NOV_ZACETEK) }}"
+                            >
                                 <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
@@ -147,7 +167,10 @@
                             </div>
                         </div>
                         <div>
-                            <a class="special-sponsorship-type-card__button" href="#">
+                            <a
+                                class="special-sponsorship-type-card__button"
+                                href="{{ formLink(\App\Models\SpecialSponsorship::TYPE_FIP_BOJEVNIK_ZA_1_DAN) }}"
+                            >
                                 <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
@@ -165,7 +188,10 @@
                             </div>
                         </div>
                         <div>
-                            <a class="special-sponsorship-type-card__button" href="#">
+                            <a
+                                class="special-sponsorship-type-card__button"
+                                href="{{ formLink(\App\Models\SpecialSponsorship::TYPE_FIP_BOJEVNIK_ZA_2_DNI) }}"
+                            >
                                 <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
@@ -185,7 +211,10 @@
                             </div>
                         </div>
                         <div>
-                            <a class="special-sponsorship-type-card__button" href="#">
+                            <a
+                                class="special-sponsorship-type-card__button"
+                                href="{{ formLink(\App\Models\SpecialSponsorship::TYPE_FIP_BOJEVNIK_ZA_1_TEDEN) }}"
+                            >
                                 <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
