@@ -67,6 +67,23 @@ class SpecialSponsorshipCrudController extends CrudController
             }
         ]);
         $this->crud->addColumn([
+            'name' => 'payer',
+            'label' => trans('sponsorship.payer'),
+            'type' => 'relationship',
+            'wrapper' => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url(config('routes.admin.sponsors'), [$related_key, 'edit']);
+                },
+            ],
+            'searchLogic' => function (Builder $query, $column, $searchTerm) {
+                $query->orWhereHas('payer', function (Builder $query) use ($searchTerm) {
+                    $query
+                        ->where('email', 'like', "%$searchTerm%")
+                        ->orWhere('id', 'like', "%$searchTerm%");
+                });
+            }
+        ]);
+        $this->crud->addColumn([
             'name' => 'confirmed_at',
             'label' => trans('special_sponsorship.confirmed_at'),
             'type' => 'date',
@@ -102,6 +119,20 @@ class SpecialSponsorshipCrudController extends CrudController
 
         $this->crud->addFilter(
             [
+                'name' => 'payer',
+                'type' => 'select2',
+                'label' => trans('sponsorship.payer'),
+            ],
+            function () {
+                return PersonData::all()->pluck('email_and_id', 'id')->toArray();
+            },
+            function ($value) {
+                $this->crud->addClause('where', 'payer_id', $value);
+            }
+        );
+
+        $this->crud->addFilter(
+            [
                 'name' => 'confirmed_at',
                 'label' => trans('special_sponsorship.confirmed_at'),
                 'type' => 'date_range',
@@ -115,6 +146,7 @@ class SpecialSponsorshipCrudController extends CrudController
         );
 
         $this->addBooleanFilter('is_anonymous', trans('special_sponsorship.is_anonymous'));
+        $this->addBooleanFilter('is_gift', 'Podarjeno');
     }
 
     protected function setupCreateOperation()
@@ -144,6 +176,25 @@ class SpecialSponsorshipCrudController extends CrudController
             ],
             'wrapper' => [
                 'dusk' => 'sponsor-wrapper'
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'is_gift',
+            'label' => 'Botrstvo je podarjeno',
+            'type' => 'checkbox',
+            'wrapper' => [
+                'dusk' => 'is_gift-wrapper'
+            ]
+        ]);
+
+        $this->crud->addField([
+            'name' => 'payer',
+            'label' => trans('sponsorship.payer'),
+            'type' => 'relationship',
+            'placeholder' => 'Izberi plačnika',
+            'wrapper' => [
+                'dusk' => 'payer-wrapper'
             ]
         ]);
 

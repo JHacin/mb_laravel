@@ -11,6 +11,8 @@ class CreateSpecialSponsorshipsTable extends Migration
             $table->bigIncrements('id');
             $table->smallInteger('type')->nullable();
             $table->foreignId('sponsor_id')->nullable()->constrained('person_data')->nullOnDelete();
+            $table->foreignId('payer_id')->nullable()->constrained('person_data')->nullOnDelete();
+            $table->boolean('is_gift')->default(false);
             $table->date('confirmed_at')->nullable();
             $table->boolean('is_anonymous')->default(false);
             $table->timestamps();

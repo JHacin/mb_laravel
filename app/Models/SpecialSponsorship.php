@@ -16,11 +16,14 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int|null $type
  * @property int|null $sponsor_id
+ * @property int|null $payer_id
+ * @property int $is_gift
  * @property string|null $confirmed_at
  * @property int $is_anonymous
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read string $type_label
+ * @property-read PersonData|null $payer
  * @property-read PersonData|null $sponsor
  * @method static Builder|SpecialSponsorship newModelQuery()
  * @method static Builder|SpecialSponsorship newQuery()
@@ -29,6 +32,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|SpecialSponsorship whereCreatedAt($value)
  * @method static Builder|SpecialSponsorship whereId($value)
  * @method static Builder|SpecialSponsorship whereIsAnonymous($value)
+ * @method static Builder|SpecialSponsorship whereIsGift($value)
+ * @method static Builder|SpecialSponsorship wherePayerId($value)
  * @method static Builder|SpecialSponsorship whereSponsorId($value)
  * @method static Builder|SpecialSponsorship whereType($value)
  * @method static Builder|SpecialSponsorship whereUpdatedAt($value)
@@ -96,6 +101,11 @@ class SpecialSponsorship extends Model
     public function sponsor(): BelongsTo
     {
         return $this->belongsTo(PersonData::class, 'sponsor_id');
+    }
+
+    public function payer(): BelongsTo
+    {
+        return $this->belongsTo(PersonData::class, 'payer_id');
     }
 
     /*

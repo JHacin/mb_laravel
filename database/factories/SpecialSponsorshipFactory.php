@@ -22,8 +22,10 @@ class SpecialSponsorshipFactory extends Factory
         return [
             'type' => Arr::random(SpecialSponsorship::TYPES),
             'sponsor_id' => PersonData::factory(),
+            'payer_id' => PersonData::factory(),
             'confirmed_at' => $this->faker->dateTimeBetween('-1 years', '-1 day'),
             'is_anonymous' => $this->faker->boolean(80),
+            'is_gift' => false,
         ];
     }
 }
