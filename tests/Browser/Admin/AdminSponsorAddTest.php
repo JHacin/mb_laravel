@@ -44,20 +44,6 @@ class AdminSponsorAddTest extends AdminTestCase
 
             $this->goToPage($browser);
             $this->fillRequiredFields($browser);
-            $browser->type('email', static::$sampleUser->email);
-            $this->clickSubmitButton($browser);
-            $browser->assertSee('Ta email naslov je že v uporabi.');
-
-            /** @var PersonData $existingPersonData */
-            $existingPersonData = PersonData::inRandomOrder()->first();
-            $this->goToPage($browser);
-            $this->fillRequiredFields($browser);
-            $browser->type('email', $existingPersonData->email);
-            $this->clickSubmitButton($browser);
-            $browser->assertSee('Ta email naslov je že v uporabi.');
-
-            $this->goToPage($browser);
-            $this->fillRequiredFields($browser);
             $browser->with('@gender-input-wrapper', function (Browser $browser) {
                 $browser->click('input[type="radio"][value="1"]');
             });

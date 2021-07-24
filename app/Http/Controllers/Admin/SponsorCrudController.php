@@ -107,6 +107,7 @@ class SponsorCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
+    /** @noinspection PhpUnused */
     public function cancelAllSponsorships(PersonData $sponsor): RedirectResponse
     {
         $this->crud->hasAccessOrFail('update');

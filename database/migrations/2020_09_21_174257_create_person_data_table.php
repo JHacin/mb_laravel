@@ -6,17 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePersonDataTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('person_data', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->smallInteger('gender')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -29,11 +24,6 @@ class CreatePersonDataTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('person_data');

@@ -97,9 +97,6 @@ class Sponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * @return void
-     */
     public function cancel()
     {
         $this->update([
@@ -151,6 +148,7 @@ class Sponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
+    /** @noinspection PhpUnused */
     public function getPaymentReferenceNumberAttribute(): string
     {
         return BankTransferFieldGenerator::referenceNumber($this);
