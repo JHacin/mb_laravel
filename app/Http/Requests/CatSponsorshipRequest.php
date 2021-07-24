@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Rules\CountryCode;
-use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
@@ -21,7 +20,6 @@ class CatSponsorshipRequest extends FormRequest
                 'required',
                 'string',
                 'email',
-                Rule::unique('users', 'email')->ignore(Auth::id()),
                 Rule::notIn($this->getCatSponsorEmails()),
             ],
             'personData.first_name' => ['required', 'string', 'max:255'],

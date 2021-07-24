@@ -39,7 +39,6 @@ class SpecialSponsorshipsController extends Controller
 
     public function submit(SpecialSponsorshipRequest $request): RedirectResponse
     {
-        $this->updateUserIfLoggedIn($request);
         $payer = $this->getPayer($request);
         $giftee = $this->getGiftee($request);
 

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Traits;
 
 use App\Models\PersonData;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 trait HasSponsorshipForm
 {
@@ -17,38 +15,40 @@ trait HasSponsorshipForm
 
     protected function getGiftee(FormRequest $request): ?PersonData
     {
-        return $request->input('is_gift') === 'yes'
-            ? $this->updateOrCreatePersonData($request->input('giftee'))
-            : null;
-    }
-
-    protected function updateUserIfLoggedIn(FormRequest $request): void
-    {
-        if (Auth::check()) {
-            $this->updateUserEmail(Auth::user(), $request->input('personData.email'));
+        if ($request->input('is_gift') === 'yes') {
+            return $this->updateOrCreatePersonData($request->input('giftee'));
         }
+
+        return null;
     }
 
     protected function successRedirect(): RedirectResponse
     {
-        return back()->with('success_message', 'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
-    }
-
-    private function updateUserEmail(User $user, string $inputEmail): void
-    {
-        if ($inputEmail === $user->email) {
-            return;
-        }
-
-        $user->update(['email' => $inputEmail]);
+        return back()->with(
+            'success_message',
+            'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.'
+        );
     }
 
     private function updateOrCreatePersonData(array $personDataFormInput): PersonData
     {
-        $personData = PersonData::firstOrCreate(['email' => $personDataFormInput['email']]);
-        $personData->update($personDataFormInput);
-        $personData->refresh();
+        $existingWithSameData = $this->findSponsorWithSameData($personDataFormInput);
 
-        return $personData;
+        if ($existingWithSameData instanceof PersonData) {
+            $existingWithSameData->update($personDataFormInput);
+            $existingWithSameData->refresh();
+            return $existingWithSameData;
+        }
+
+        return PersonData::create($personDataFormInput);
+    }
+
+    private function findSponsorWithSameData(array $personDataFormInput): ?PersonData
+    {
+        return PersonData::where(['email' => $personDataFormInput['email']])
+            ->whereRaw("UPPER(first_name) = '" . strtoupper($personDataFormInput['first_name']) . "'")
+            ->whereRaw("UPPER(last_name) = '" . strtoupper($personDataFormInput['last_name']) . "'")
+            ->get()
+            ->first();
     }
 }

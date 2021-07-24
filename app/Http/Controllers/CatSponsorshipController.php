@@ -20,7 +20,6 @@ class CatSponsorshipController extends Controller
     {
         $this->validateCatStatus($cat);
 
-        $this->updateUserIfLoggedIn($request);
         $payer = $this->getPayer($request);
         $giftee = $this->getGiftee($request);
 
