@@ -3,8 +3,6 @@
 @php
     use App\Models\SpecialSponsorship;
 
-    $user = Auth::check() ? Auth::getUser()->loadMissing('personData') : null;
-
     $isGiftRadioOptions = [
         'no' => 'Zame',
         'yes' => 'Darilo',
@@ -32,14 +30,6 @@
                         {{ session('success_message') }}
                     </x-slot>
                 </x-notification>
-            @else
-                @auth
-                    <x-notification type="warning">
-                        <x-slot name="message">
-                            <strong>Pozor</strong>: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.
-                        </x-slot>
-                    </x-notification>
-                @endauth
             @endif
 
             <form method="POST" action="{{ route('special_sponsorships_form') }}">
@@ -58,7 +48,6 @@
                         <x-inputs.base.input
                             name="personData[first_name]"
                             label="{{ trans('person_data.first_name') }}"
-                            value="{{ $user->personData->first_name ?? '' }}"
                             required
                         />
                     </div>
@@ -66,7 +55,6 @@
                         <x-inputs.base.input
                             name="personData[last_name]"
                             label="{{ trans('person_data.last_name') }}"
-                            value="{{ $user->personData->last_name ?? '' }}"
                             required
                         />
                     </div>
@@ -74,7 +62,6 @@
                         <x-inputs.person-gender
                             name="personData[gender]"
                             label="{{ trans('person_data.gender') }}"
-                            :selected="$user->personData->gender ?? null"
                             wrapperClass="is-fullwidth"
                         />
                     </div>
@@ -82,7 +69,6 @@
                         <x-inputs.base.input
                             name="personData[address]"
                             label="{{ trans('person_data.address') }}"
-                            value="{{ $user->personData->address ?? '' }}"
                             required
                         />
                     </div>
@@ -90,7 +76,6 @@
                         <x-inputs.base.input
                             name="personData[zip_code]"
                             label="{{ trans('person_data.zip_code') }}"
-                            value="{{ $user->personData->zip_code ?? '' }}"
                             required
                         />
                     </div>
@@ -98,7 +83,6 @@
                         <x-inputs.base.input
                             name="personData[city]"
                             label="{{ trans('person_data.city') }}"
-                            value="{{ $user->personData->city ?? '' }}"
                             required
                         />
                     </div>
@@ -106,7 +90,6 @@
                         <x-inputs.country
                             name="personData[country]"
                             label="{{ trans('person_data.country') }}"
-                            :selected="$user->personData->country ?? null"
                             required
                             wrapperClass="is-fullwidth"
                         />
@@ -116,7 +99,6 @@
                             name="personData[email]"
                             label="{{ trans('user.email') }}"
                             required
-                            value="{{ $user->email ?? '' }}"
                         >
                             <x-slot name="help">
                                 Vpišite vaš pravi e-mail naslov, saj vas le tako lahko obveščamo.

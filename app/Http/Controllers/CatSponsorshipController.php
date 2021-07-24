@@ -20,8 +20,8 @@ class CatSponsorshipController extends Controller
     {
         $this->validateCatStatus($cat);
 
-        $payer = $this->getPayer($request);
-        $giftee = $this->getGiftee($request);
+        $payer = $this->getPayerFromFormData($request);
+        $giftee = $this->getGifteeFromFormData($request);
 
         $sponsorship = $this->createSponsorship($cat, $payer, $giftee, $request->all());
 
@@ -46,6 +46,7 @@ class CatSponsorshipController extends Controller
             'payment_type' => isset($formInput['wants_direct_debit'])
                 ? Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT
                 : Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
+            'is_gift' => $isGift,
             'is_anonymous' => $formInput['is_anonymous'] ?? false,
             'is_active' => false,
         ];

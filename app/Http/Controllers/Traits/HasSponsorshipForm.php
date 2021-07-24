@@ -8,12 +8,12 @@ use Illuminate\Http\RedirectResponse;
 
 trait HasSponsorshipForm
 {
-    protected function getPayer(FormRequest $request): PersonData
+    protected function getPayerFromFormData(FormRequest $request): PersonData
     {
         return $this->updateOrCreatePersonData($request->input('personData'));
     }
 
-    protected function getGiftee(FormRequest $request): ?PersonData
+    protected function getGifteeFromFormData(FormRequest $request): ?PersonData
     {
         if ($request->input('is_gift') === 'yes') {
             return $this->updateOrCreatePersonData($request->input('giftee'));
@@ -32,7 +32,7 @@ trait HasSponsorshipForm
 
     private function updateOrCreatePersonData(array $personDataFormInput): PersonData
     {
-        $existingWithSameData = $this->findSponsorWithSameData($personDataFormInput);
+        $existingWithSameData = $this->findPersonWithSameNameAndEmail($personDataFormInput);
 
         if ($existingWithSameData instanceof PersonData) {
             $existingWithSameData->update($personDataFormInput);
@@ -43,7 +43,7 @@ trait HasSponsorshipForm
         return PersonData::create($personDataFormInput);
     }
 
-    private function findSponsorWithSameData(array $personDataFormInput): ?PersonData
+    private function findPersonWithSameNameAndEmail(array $personDataFormInput): ?PersonData
     {
         return PersonData::where(['email' => $personDataFormInput['email']])
             ->whereRaw("UPPER(first_name) = '" . strtoupper($personDataFormInput['first_name']) . "'")

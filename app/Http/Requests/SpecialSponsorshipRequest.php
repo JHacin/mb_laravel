@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\PersonData;
 use App\Rules\CountryCode;
-use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -15,12 +14,7 @@ class SpecialSponsorshipRequest extends FormRequest
         $requiredIfGift = 'required_if:is_gift,yes';
 
         return [
-            'personData.email' => [
-                'required',
-                'string',
-                'email',
-                Rule::unique('users', 'email')->ignore(Auth::id()),
-            ],
+            'personData.email' => ['required', 'string', 'email'],
             'personData.first_name' => ['required', 'string', 'max:255'],
             'personData.last_name' => ['required', 'string', 'max:255'],
             'personData.gender' => ['required', Rule::in(PersonData::GENDERS)],
@@ -53,15 +47,9 @@ class SpecialSponsorshipRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'personData.email.unique' =>
-                'Ta email naslov že uporablja registriran uporabnik.' .
-                ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
             'personData.email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
-            'giftee.email.unique' =>
-                'Ta email naslov že uporablja registriran uporabnik.' .
-                ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
             'giftee.email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
