@@ -63,26 +63,6 @@ class CatSponsorshipFormTest extends DuskTestCase
     /**
      * @throws Throwable
      */
-    public function test_shows_warning_to_logged_in_user()
-    {
-        $this->browse(function (Browser $b) {
-            $cat = $this->createCat();
-
-            $b->loginAs(self::$sampleUser);
-            $this
-                ->goToPage($b, $cat)
-                ->assertSee('Pozor: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.');
-
-            $b->logout();
-            $this
-                ->goToPage($b, $cat)
-                ->assertDontSee('Pozor: vse spremembe osebnih podatkov bodo shranjene v vašem profilu.');
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
     public function test_validates_required_fields()
     {
         $this->browse(function (Browser $b) {
@@ -114,35 +94,6 @@ class CatSponsorshipFormTest extends DuskTestCase
             $b->type('@personData[email]-input', 'aasdasasdsa');
             $this->submit($b);
             $b->assertSee(trans('validation.email'));
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function test_prevents_anon_from_using_existing_user_email()
-    {
-        $this->browse(function (Browser $b) {
-            $this->goToPage($b, $this->createCat());
-            $this->disableHtmlFormValidation($b);
-            $b->type('@personData[email]-input', self::$sampleUser->email);
-            $this->submit($b);
-            $b->assertSee('Ta email naslov že uporablja registriran uporabnik.');
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function test_allows_registered_user_to_submit_with_own_email()
-    {
-        $this->browse(function (Browser $b) {
-            $b->loginAs(self::$sampleUser);
-            $this->goToPage($b, $this->createCat());
-            $this->disableHtmlFormValidation($b);
-            $b->type('@personData[email]-input', self::$sampleUser->email);
-            $this->submit($b);
-            $b->assertDontSee('Ta email naslov že uporablja registriran uporabnik.');
         });
     }
 
@@ -189,7 +140,7 @@ class CatSponsorshipFormTest extends DuskTestCase
             $this->submit($b);
 
             foreach ($formData as $name => $value) {
-                $b->assertValue("@personData[$name]-input", $formData[$name]);
+                $b->assertValue("@personData[$name]-input", $value);
             }
             $b->assertValue('@monthly_amount-input', '5');
         });
@@ -198,111 +149,7 @@ class CatSponsorshipFormTest extends DuskTestCase
     /**
      * @throws Throwable
      */
-    public function test_has_default_values_from_registered_user()
-    {
-        $this->browse(function (Browser $b) {
-            $b->loginAs(self::$sampleUser);
-            $this->goToPage($b, $this->createCat());
-            $b->assertValue('@monthly_amount-input', '');
-            $b->assertNotChecked('@is_anonymous-input');
-            $b->assertNotChecked('@is_agreed_to_terms-input');
-            $b
-                ->assertValue('@personData[email]-input', self::$sampleUser->personData->email)
-                ->assertValue('@personData[first_name]-input', self::$sampleUser->personData->first_name)
-                ->assertValue('@personData[last_name]-input', self::$sampleUser->personData->last_name)
-                ->assertValue('@personData[gender]-input', self::$sampleUser->personData->gender)
-                ->assertValue('@personData[address]-input', self::$sampleUser->personData->address)
-                ->assertValue('@personData[zip_code]-input', self::$sampleUser->personData->zip_code)
-                ->assertValue('@personData[city]-input', self::$sampleUser->personData->city)
-                ->assertValue('@personData[country]-input', self::$sampleUser->personData->country);
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function test_handles_registered_user_submission()
-    {
-        $this->browse(function (Browser $b) {
-            $cat = $this->createCat();
-            $cat->sponsorships()->delete();
-            $b->loginAs(self::$sampleUser);
-            $this->goToPage($b, $cat);
-            $this->fillOutNonPersonDataFields($b);
-            $b->uncheck('@wants_direct_debit-input');
-            $this->submit($b);
-            $b->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
-            $this->assertDatabaseHas('sponsorships', [
-                'sponsor_id' => self::$sampleUser->personData->id,
-                'cat_id' => $cat->id,
-                'monthly_amount' => 5,
-                'is_anonymous' => 1,
-                'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
-            ]);
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function test_updates_registered_user_email()
-    {
-        $this->browse(function (Browser $b) {
-            $newEmail = $this->faker->unique()->safeEmail;
-            $b->loginAs(self::$sampleUser);
-            $this->goToPage($b, $this->createCat());
-            $this->fillOutNonPersonDataFields($b);
-            $b->type('@personData[email]-input', $newEmail);
-            $this->submit($b);
-            $b->assertSee('Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.');
-            $this->assertDatabaseHas('users', [
-                'id' => self::$sampleUser->id,
-                'email' => $newEmail,
-            ]);
-        });
-    }
-
-    /**
-     * @return void
-     * @throws Throwable
-     */
-    public function test_updates_registered_user_person_data()
-    {
-        $this->browse(function (Browser $b) {
-            self::$sampleUser->personData()->update([
-                'gender' => PersonData::GENDER_FEMALE,
-                'country' => 'BE',
-            ]);
-
-            /** @var PersonData $newPersonData */
-            $newPersonData = PersonData::factory()->makeOne([
-                'email' => 'changed_test@example.com',
-                'first_name' => 'changed_first_name',
-                'last_name' => 'changed_last_name',
-                'gender' => PersonData::GENDER_MALE,
-                'address' => 'changed_address',
-                'zip_code' => 'changed_zip_code',
-                'city' => 'changed_city',
-                'country' => 'SE',
-            ]);
-            $formData = $this->getPersonDataFieldValueArray($newPersonData);
-
-            $b->loginAs(self::$sampleUser);
-            $this->goToPage($b, $this->createCat());
-            $this->fillOutAllFields($b, $formData);
-            $this->submit($b);
-
-            $this->assertDatabaseHas(
-                'person_data',
-                array_merge(['id' => self::$sampleUser->personData->id], $formData)
-            );
-        });
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function test_handles_anon_user_submission()
+    public function test_handles_submission()
     {
         $this->browse(function (Browser $b) {
             $cat = $this->createCat();

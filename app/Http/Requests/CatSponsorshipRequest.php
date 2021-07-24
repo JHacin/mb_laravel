@@ -62,15 +62,9 @@ class CatSponsorshipRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'personData.email.unique' =>
-                'Ta email naslov že uporablja registriran uporabnik.' .
-                ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
             'personData.email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
-            'giftee.email.unique' =>
-                'Ta email naslov že uporablja registriran uporabnik.' .
-                ' Če je email naslov vaš in ga želite uporabiti, se prosimo najprej prijavite v račun.',
             'giftee.email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
