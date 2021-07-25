@@ -4,14 +4,14 @@ namespace Tests\Unit\Http\Controllers\Admin;
 
 use App\Mail\Client\TemplateApiClient;
 use App\Mail\MailTemplateParser;
-use SponsorshipMessageHandler;
+use App\Mail\SponsorshipMessageHandler;
 use Tests\TestCase;
 
 class SponsorshipMessageCrudControllerTest extends TestCase
 {
     public function test_sends_email_on_submit_if_should_send_email_field_is_true()
     {
-        SponsorshipMessageHandler::partialMock()
+        $this->mock(SponsorshipMessageHandler::class)
             ->shouldReceive('send')
             ->once();
 
@@ -25,7 +25,7 @@ class SponsorshipMessageCrudControllerTest extends TestCase
 
     public function test_does_not_send_email_on_submit_if_should_send_email_field_is_false()
     {
-        SponsorshipMessageHandler::partialMock()
+        $this->mock(SponsorshipMessageHandler::class)
             ->shouldNotReceive('send');
 
         $this->actingAs($this->createSuperAdminUser())->post('admin/pisma', [

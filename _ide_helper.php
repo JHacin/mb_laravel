@@ -14705,25 +14705,6 @@
         }
          
     }
-            /**
-     * 
-     *
-     */ 
-        class SponsorshipMessageHandlerFacade {
-                    /**
-         * 
-         *
-         * @param \App\Models\SponsorshipMessage $message
-         * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
-         * @static 
-         */ 
-        public static function send($message)
-        {
-                        /** @var \App\Mail\SponsorshipMessageHandler $instance */
-                        return $instance->send($message);
-        }
-         
-    }
      
 }
 
@@ -22379,7 +22360,6 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class MailClient extends \App\Mail\Facades\MailClientFacade {}
             class SponsorshipMail extends \App\Mail\Facades\SponsorshipMailFacade {}
-            class SponsorshipMessageHandler extends \App\Mail\Facades\SponsorshipMessageHandlerFacade {}
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}
             class Widget extends \Backpack\CRUD\app\Library\Widget {}
             class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}

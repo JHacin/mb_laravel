@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\AdminSponsorshipMessageRequest;
 use App\Mail\Client\TemplateApiClient;
 use App\Mail\MailTemplateParser;
+use App\Mail\SponsorshipMessageHandler;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\SponsorshipMessage;
@@ -19,7 +20,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use SponsorshipMessageHandler;
 
 /**
  * Class SponsorshipMessageCrudController
@@ -33,16 +33,19 @@ class SponsorshipMessageCrudController extends CrudController
 
     private MailTemplateParser $mailTemplateParser;
     private TemplateApiClient $templateApiClient;
+    private SponsorshipMessageHandler $sponsorshipMessageHandler;
 
     public function __construct(
         CrudPanel $crud,
         MailTemplateParser $mailTemplateParser,
-        TemplateApiClient $templateApiClient
+        TemplateApiClient $templateApiClient,
+        SponsorshipMessageHandler $sponsorshipMessageHandler
     ) {
         parent::__construct();
         $this->crud = $crud;
         $this->mailTemplateParser = $mailTemplateParser;
         $this->templateApiClient = $templateApiClient;
+        $this->sponsorshipMessageHandler = $sponsorshipMessageHandler;
     }
 
     /**
@@ -246,7 +249,7 @@ class SponsorshipMessageCrudController extends CrudController
         if ($request->input('should_send_email', false)) {
             /** @var SponsorshipMessage $msg */
             $msg = $this->crud->getCurrentEntry();
-            SponsorshipMessageHandler::send($msg);
+            $this->sponsorshipMessageHandler->send($msg);
         }
 
         return $response;

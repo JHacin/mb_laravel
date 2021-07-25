@@ -4,7 +4,6 @@
 
 use App\Mail\Facades\MailClientFacade;
 use App\Mail\Facades\SponsorshipMailFacade;
-use App\Mail\Facades\SponsorshipMessageHandlerFacade;
 
 return [
 
@@ -235,7 +234,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'MailClient' => MailClientFacade::class,
         'SponsorshipMail' => SponsorshipMailFacade::class,
-        'SponsorshipMessageHandler' => SponsorshipMessageHandlerFacade::class,
     ],
 
 ];

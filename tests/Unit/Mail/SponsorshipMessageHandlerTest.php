@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Mail;
 
+use App\Mail\SponsorshipMessageHandler;
 use App\Models\Cat;
 use App\Models\PersonData;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use MailClient;
-use SponsorshipMessageHandler;
 use Tests\TestCase;
 
 class SponsorshipMessageHandlerTest extends TestCase
@@ -38,7 +38,7 @@ class SponsorshipMessageHandlerTest extends TestCase
                 ])
             ]);
 
-        SponsorshipMessageHandler::send($msg);
+        (new SponsorshipMessageHandler())->send($msg);
     }
 
     public function test_passes_correct_male_gender_variable()
@@ -64,7 +64,7 @@ class SponsorshipMessageHandlerTest extends TestCase
                 ])
             ]);
 
-        SponsorshipMessageHandler::send($msg);
+        (new SponsorshipMessageHandler())->send($msg);
     }
 
     public function test_passes_correct_female_gender_variable()
@@ -90,6 +90,6 @@ class SponsorshipMessageHandlerTest extends TestCase
                 ])
             ]);
 
-        SponsorshipMessageHandler::send($msg);
+        (new SponsorshipMessageHandler())->send($msg);
     }
 }
