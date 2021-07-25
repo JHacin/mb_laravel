@@ -3,7 +3,6 @@
 /** @noinspection PhpUndefinedClassInspection */
 
 use App\Mail\Facades\MailClientFacade;
-use App\Mail\Facades\MailTemplateParserFacade;
 use App\Mail\Facades\SponsorshipMailFacade;
 use App\Mail\Facades\SponsorshipMessageHandlerFacade;
 use App\Mail\Facades\TemplateApiClientFacade;
@@ -241,7 +240,6 @@ return [
         'SponsorshipMail' => SponsorshipMailFacade::class,
         'SponsorshipMessageHandler' => SponsorshipMessageHandlerFacade::class,
         'TemplateApiClient' => TemplateApiClientFacade::class,
-        'MailTemplateParser' => MailTemplateParserFacade::class,
     ],
 
 ];

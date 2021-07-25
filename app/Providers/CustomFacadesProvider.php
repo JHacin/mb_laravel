@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Mail\Client\MailClient;
 use App\Mail\Client\TemplateApiClient;
-use App\Mail\MailTemplateParser;
 use App\Mail\SponsorshipMail;
 use App\Mail\SponsorshipMessageHandler;
 use App\Mail\UserMail;
@@ -38,10 +37,6 @@ class CustomFacadesProvider extends ServiceProvider
 
         $this->app->bind('template_api_client', function (Application $app) {
             return $app->make(TemplateApiClient::class);
-        });
-
-        $this->app->bind('template_parser', function (Application $app) {
-            return $app->make(MailTemplateParser::class);
         });
     }
 

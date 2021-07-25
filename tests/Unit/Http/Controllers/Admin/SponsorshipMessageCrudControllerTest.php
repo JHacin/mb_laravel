@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Http\Controllers\Admin;
 
-use MailTemplateParser;
+use App\Mail\MailTemplateParser;
 use SponsorshipMessageHandler;
 use TemplateApiClient;
 use Tests\TestCase;
@@ -63,7 +63,8 @@ class SponsorshipMessageCrudControllerTest extends TestCase
             ->with($messageType->template_id)
             ->andReturn('template_text');
 
-        MailTemplateParser::shouldReceive('parse')
+        $this->mock(MailTemplateParser::class)
+            ->shouldReceive('parse')
             ->once()
             ->with('template_text', [
                 'ime_botra' => $sponsor->first_name,

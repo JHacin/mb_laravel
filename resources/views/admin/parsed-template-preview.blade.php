@@ -46,7 +46,7 @@
         new ClipboardJS('.msg-preview-copy-to-clipboard');
 
         const $messageTypeSelect = $('select[name="messageType"]');
-        const $sponsorSelect = $('select[name="personData"]');
+        const $sponsorSelect = $('select[name="sponsor"]');
         const $catSelect = $('select[name="cat"]');
         const $generateBtn = $('.msg-preview-generate-btn');
         const $btnDisabledText = $('.msg-preview-disabled-text');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\AdminSponsorshipMessageRequest;
+use App\Mail\MailTemplateParser;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\SponsorshipMessage;
@@ -17,7 +18,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use MailTemplateParser;
 use SponsorshipMessageHandler;
 use TemplateApiClient;
 
@@ -30,6 +30,15 @@ class SponsorshipMessageCrudController extends CrudController
 {
     use ListOperation;
     use CreateOperation { store as traitStore; }
+
+    private MailTemplateParser $mailTemplateParser;
+
+    public function __construct(CrudPanel $crud, MailTemplateParser $mailTemplateParser)
+    {
+        parent::__construct();
+        $this->crud = $crud;
+        $this->mailTemplateParser = $mailTemplateParser;
+    }
 
     /**
      * @throws Exception
@@ -253,7 +262,7 @@ class SponsorshipMessageCrudController extends CrudController
         $sponsor = PersonData::find($request->query('sponsor'));
         $cat = Cat::find($request->query('cat'));
 
-        $parsed = MailTemplateParser::parse($templateId, [
+        $parsed = $this->mailTemplateParser->parse($templateId, [
             'ime_botra' => $sponsor->first_name,
             'ime_muce' => $cat->name,
         ]);
