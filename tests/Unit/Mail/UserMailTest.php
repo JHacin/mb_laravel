@@ -2,9 +2,10 @@
 
 namespace Tests\Unit\Mail;
 
-use MailClient;
+use App\Mail\Client\MailClient;
+use App\Mail\UserMail;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Tests\TestCase;
-use UserMail;
 
 class UserMailTest extends TestCase
 {
@@ -18,12 +19,14 @@ class UserMailTest extends TestCase
 
     /**
      * @return void
+     * @throws BindingResolutionException
      */
     public function test_sends_welcome_email()
     {
         $user = $this->createUser();
 
-        MailClient::shouldReceive('send')
+        $this->mock(MailClient::class)
+            ->shouldReceive('send')
             ->once()
             ->with([
                 'to' => $user->email,
@@ -31,6 +34,6 @@ class UserMailTest extends TestCase
                 'template' => 'user_welcome',
             ]);
 
-        UserMail::sendWelcomeEmail($user);
+        $this->app->make(UserMail::class)->sendWelcomeEmail($user);
     }
 }

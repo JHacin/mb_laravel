@@ -6,7 +6,7 @@ use Handlebars\Handlebars;
 
 class MailTemplateParser
 {
-    protected Handlebars $engine;
+    private Handlebars $engine;
 
     public function __construct(Handlebars $engine)
     {

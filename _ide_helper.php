@@ -14638,58 +14638,7 @@
      
 }
 
-        namespace App\Mail\Facades { 
-            /**
-     * 
-     *
-     */ 
-        class MailClientFacade {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function send($params)
-        {
-                        /** @var \App\Mail\Client\MailClient $instance */
-                        return $instance->send($params);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function addMemberToList($list, $email, $variables)
-        {
-                        /** @var \App\Mail\Client\MailClient $instance */
-                        return $instance->addMemberToList($list, $email, $variables);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function updateListMember($list, $email, $parameters)
-        {
-                        /** @var \App\Mail\Client\MailClient $instance */
-                        return $instance->updateListMember($list, $email, $parameters);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function removeMemberFromList($list, $email)
-        {
-                        /** @var \App\Mail\Client\MailClient $instance */
-                        return $instance->removeMemberFromList($list, $email);
-        }
-         
-    }
-     
-}
-
-    namespace Backpack\CRUD\app\Library\CrudPanel { 
+        namespace Backpack\CRUD\app\Library\CrudPanel { 
             /**
      * This object allows developers to use CRUD::addField() instead of $this->crud->addField(),
      * by providing a Facade that leads to the CrudPanel object. That object is stored in Laravel's
@@ -22339,7 +22288,6 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
-            class MailClient extends \App\Mail\Facades\MailClientFacade {}
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}
             class Widget extends \Backpack\CRUD\app\Library\Widget {}
             class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}

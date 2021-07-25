@@ -2,11 +2,12 @@
 
 namespace Tests\Unit\Mail;
 
+use App\Mail\Client\MailClient;
 use App\Mail\SponsorshipMessageHandler;
 use App\Models\Cat;
 use App\Models\PersonData;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use MailClient;
 use Tests\TestCase;
 
 class SponsorshipMessageHandlerTest extends TestCase
@@ -15,6 +16,9 @@ class SponsorshipMessageHandlerTest extends TestCase
 
     protected bool $seed = true;
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function test_sends_message_with_correct_params()
     {
         $msg = $this->createSponsorshipMessage([
@@ -23,7 +27,8 @@ class SponsorshipMessageHandlerTest extends TestCase
             'cat_id' =>  $this->createCat()->id,
         ]);
 
-        MailClient::shouldReceive('send')
+        $this->mock(MailClient::class)
+            ->shouldReceive('send')
             ->once()
             ->with([
                 'to' => $msg->sponsor->email,
@@ -38,9 +43,12 @@ class SponsorshipMessageHandlerTest extends TestCase
                 ])
             ]);
 
-        (new SponsorshipMessageHandler())->send($msg);
+        $this->app->make(SponsorshipMessageHandler::class)->send($msg);
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function test_passes_correct_male_gender_variable()
     {
         $msg = $this->createSponsorshipMessage([
@@ -49,7 +57,8 @@ class SponsorshipMessageHandlerTest extends TestCase
             'cat_id' =>  $this->createCat(['gender' => Cat::GENDER_MALE])->id,
         ]);
 
-        MailClient::shouldReceive('send')
+        $this->mock(MailClient::class)
+            ->shouldReceive('send')
             ->once()
             ->with([
                 'to' => $msg->sponsor->email,
@@ -64,9 +73,12 @@ class SponsorshipMessageHandlerTest extends TestCase
                 ])
             ]);
 
-        (new SponsorshipMessageHandler())->send($msg);
+        $this->app->make(SponsorshipMessageHandler::class)->send($msg);
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function test_passes_correct_female_gender_variable()
     {
         $msg = $this->createSponsorshipMessage([
@@ -75,7 +87,8 @@ class SponsorshipMessageHandlerTest extends TestCase
             'cat_id' =>  $this->createCat(['gender' => Cat::GENDER_FEMALE])->id,
         ]);
 
-        MailClient::shouldReceive('send')
+        $this->mock(MailClient::class)
+            ->shouldReceive('send')
             ->once()
             ->with([
                 'to' => $msg->sponsor->email,
@@ -90,6 +103,6 @@ class SponsorshipMessageHandlerTest extends TestCase
                 ])
             ]);
 
-        (new SponsorshipMessageHandler())->send($msg);
+        $this->app->make(SponsorshipMessageHandler::class)->send($msg);
     }
 }

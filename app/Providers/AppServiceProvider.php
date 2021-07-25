@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Mail\Client\MailClient;
 use App\Mail\Client\TemplateApiClient;
 use App\Mail\MailTemplateParser;
+use App\Mail\SponsorshipMail;
 use App\Mail\UserMail;
 use Handlebars\Handlebars;
 use Illuminate\Foundation\Application;
@@ -15,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(Mailgun::class, function (Application $app) {
-            return Mailgun::create(env('MAILGUN_SECRET'), env('MAILGUN_ENDPOINT'));
+        $this->app->singleton(MailClient::class, function (Application $app) {
+            return new MailClient(Mailgun::create(env('MAILGUN_SECRET'), env('MAILGUN_ENDPOINT')));
         });
         $this->app->singleton(MailTemplateParser::class, function (Application $app) {
             return new MailTemplateParser(new Handlebars());
@@ -25,7 +27,10 @@ class AppServiceProvider extends ServiceProvider
             return new TemplateApiClient();
         });
         $this->app->singleton(UserMail::class, function (Application $app) {
-            return new UserMail();
+            return new UserMail($app->make(MailClient::class));
+        });
+        $this->app->singleton(SponsorshipMail::class, function (Application $app) {
+            return new SponsorshipMail($app->make(MailClient::class));
         });
     }
 

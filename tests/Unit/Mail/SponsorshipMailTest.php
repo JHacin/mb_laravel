@@ -2,20 +2,25 @@
 
 namespace Tests\Unit\Mail;
 
+use App\Mail\Client\MailClient;
 use App\Mail\SponsorshipMail;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
 use App\Utilities\BankTransferFieldGenerator;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
-use MailClient;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Storage;
 use Tests\TestCase;
 
 class SponsorshipMailTest extends TestCase
 {
+    /**
+     * @throws BindingResolutionException
+     */
     public function test_sends_initial_instructions_email_with_correct_params()
     {
+        $mailClientMock = $this->mock(MailClient::class);
         $sponsorship = $this->createSponsorship([
             'cat_id' => $this->createCat()->id, //Todo: figure out why the test fails if this is removed
             'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER
@@ -51,8 +56,8 @@ class SponsorshipMailTest extends TestCase
 
         // PAYMENT_TYPE_BANK_TRANSFER
         $expectedParams = array_merge($expectedParams, ['template' => 'navodila_za_botrovanje_nakazilo']);
-        MailClient::shouldReceive('send')->once()->with($expectedParams);
-        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
+        $mailClientMock->shouldReceive('send')->once()->with($expectedParams);
+        $this->app->make(SponsorshipMail::class)->sendInitialInstructionsEmail($sponsorship);
 
         // PAYMENT_TYPE_DIRECT_DEBIT
         $expectedParams = array_merge(
@@ -67,22 +72,22 @@ class SponsorshipMailTest extends TestCase
                 ],
             ]
         );
-        MailClient::shouldReceive('send')->once()->with($expectedParams);
+        $mailClientMock->shouldReceive('send')->once()->with($expectedParams);
         $sponsorship->update(['payment_type' => Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT]);
-        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
+        $this->app->make(SponsorshipMail::class)->sendInitialInstructionsEmail($sponsorship);
 
         // MALE SPONSOR
         $expectedVariables = array_merge($expectedVariables, ['boter_moski' => true]);
         $expectedParams = array_merge($expectedParams, ['h:X-Mailgun-Variables' => json_encode($expectedVariables)]);
         $personData->update(['gender' => PersonData::GENDER_MALE]);
-        MailClient::shouldReceive('send')->once()->with($expectedParams);
-        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
+        $mailClientMock->shouldReceive('send')->once()->with($expectedParams);
+        $this->app->make(SponsorshipMail::class)->sendInitialInstructionsEmail($sponsorship);
 
         // FEMALE SPONSOR
         $expectedVariables = array_merge($expectedVariables, ['boter_moski' => false]);
         $expectedParams = array_merge($expectedParams, ['h:X-Mailgun-Variables' => json_encode($expectedVariables)]);
         $personData->update(['gender' => PersonData::GENDER_FEMALE]);
-        MailClient::shouldReceive('send')->once()->with($expectedParams);
-        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
+        $mailClientMock->shouldReceive('send')->once()->with($expectedParams);
+        $this->app->make(SponsorshipMail::class)->sendInitialInstructionsEmail($sponsorship);
     }
 }

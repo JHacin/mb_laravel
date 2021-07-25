@@ -2,16 +2,23 @@
 
 namespace App\Mail;
 
+use App\Mail\Client\MailClient;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
 use App\Utilities\BankTransferFieldGenerator;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
-use MailClient;
 use Storage;
 
 class SponsorshipMail
 {
+    private MailClient $mailClient;
+
+    public function __construct(MailClient $mailClient)
+    {
+        $this->mailClient = $mailClient;
+    }
+
     /**
      * @param \App\Models\Sponsorship $sponsorship
      * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
@@ -60,6 +67,6 @@ class SponsorshipMail
             ];
         }
 
-        MailClient::send($params);
+        $this->mailClient->send($params);
     }
 }

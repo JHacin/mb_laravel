@@ -11,8 +11,10 @@ namespace PHPSTORM_META {
     */
     override(new \Illuminate\Contracts\Container\Container, map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -199,8 +201,10 @@ namespace PHPSTORM_META {
         ]));
     override(\Illuminate\Container\Container::makeWith(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -387,8 +391,10 @@ namespace PHPSTORM_META {
         ]));
     override(\Illuminate\Contracts\Container\Container::get(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -575,8 +581,10 @@ namespace PHPSTORM_META {
         ]));
     override(\Illuminate\Contracts\Container\Container::make(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -763,8 +771,10 @@ namespace PHPSTORM_META {
         ]));
     override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -951,8 +961,10 @@ namespace PHPSTORM_META {
         ]));
     override(\App::get(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -1139,8 +1151,10 @@ namespace PHPSTORM_META {
         ]));
     override(\App::make(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -1327,8 +1341,10 @@ namespace PHPSTORM_META {
         ]));
     override(\App::makeWith(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -1515,8 +1531,10 @@ namespace PHPSTORM_META {
         ]));
     override(\app(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -1703,8 +1721,10 @@ namespace PHPSTORM_META {
         ]));
     override(\resolve(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,
@@ -1891,8 +1911,10 @@ namespace PHPSTORM_META {
         ]));
     override(\Psr\Container\ContainerInterface::get(0), map([
         '' => '@',
+            'App\Mail\Client\MailClient' => \App\Mail\Client\MailClient::class,
             'App\Mail\Client\TemplateApiClient' => \App\Mail\Client\TemplateApiClient::class,
             'App\Mail\MailTemplateParser' => \App\Mail\MailTemplateParser::class,
+            'App\Mail\SponsorshipMail' => \App\Mail\SponsorshipMail::class,
             'App\Mail\UserMail' => \App\Mail\UserMail::class,
             'Asm89\Stack\CorsService' => \Asm89\Stack\CorsService::class,
             'Facade\FlareClient\Flare' => \Facade\FlareClient\Flare::class,

@@ -4,20 +4,28 @@
 
 namespace App\Mail;
 
+use App\Mail\Client\MailClient;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\SponsorshipMessage;
-use MailClient;
 
 class SponsorshipMessageHandler
 {
+    private MailClient $mailClient;
+
+    public function __construct(MailClient $mailClient)
+    {
+        $this->mailClient = $mailClient;
+    }
+
+
     /**
      * @param \App\Models\SponsorshipMessage $message
      * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
      */
     public function send(SponsorshipMessage $message)
     {
-        MailClient::send([
+        $this->mailClient->send([
             'to' => $message->sponsor->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => $message->messageType->subject,
