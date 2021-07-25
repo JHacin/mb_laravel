@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\PermissionManager;
 
 use App\Http\Requests\Admin\AdminUserCreateRequest;
 use App\Http\Requests\Admin\AdminUserUpdateRequest;
+use App\Mail\UserMail;
 use App\Models\User;
 use App\Utilities\Admin\CrudColumnGenerator;
 use App\Utilities\Admin\CrudFieldGenerator;
@@ -11,10 +12,17 @@ use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as Backpa
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use UserMail;
 
 class UserCrudController extends BackpackUserCrudController
 {
+    private UserMail $userMail;
+
+    public function __construct(UserMail $userMail)
+    {
+        parent::__construct();
+        $this->userMail = $userMail;
+    }
+
     /**
      * @inheritDoc
      */
@@ -148,7 +156,7 @@ class UserCrudController extends BackpackUserCrudController
             /** @var User $user */
             $user = $this->crud->getCurrentEntry();
 
-            UserMail::sendWelcomeEmail($user);
+            $this->userMail->sendWelcomeEmail($user);
         }
 
         return $response;

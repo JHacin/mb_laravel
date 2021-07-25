@@ -3,11 +3,12 @@
 namespace Tests\Unit\Http\Controllers\Auth;
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Mail\UserMail;
 use App\Models\User;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
 use Mockery;
 use Tests\TestCase;
-use UserMail;
 
 class RegisterControllerTest extends TestCase
 {
@@ -20,10 +21,11 @@ class RegisterControllerTest extends TestCase
     }
 
     /**
-     * @return void
+     * @throws BindingResolutionException
      */
     public function test_sends_welcome_email()
     {
+        $userMailMock = $this->mock(UserMail::class);
         $requestMock = Mockery::mock(Request::class);
         /** @var User $userModel */
         $userModel = User::factory()->makeOne();
@@ -38,7 +40,8 @@ class RegisterControllerTest extends TestCase
                 'password_confirmation' => 'asdf123456',
             ]);
 
-        UserMail::shouldReceive('sendWelcomeEmail')
+        $userMailMock
+            ->shouldReceive('sendWelcomeEmail')
             ->once()
             ->withArgs(function (User $user) use ($userModel) {
                 return $user->email === $userModel->email;
@@ -49,6 +52,7 @@ class RegisterControllerTest extends TestCase
             ->once()
             ->andReturn(false);
 
-        (new RegisterController())->register($requestMock);
+        $ctrl = $this->app->make(RegisterController::class);
+        $ctrl->register($requestMock);
     }
 }

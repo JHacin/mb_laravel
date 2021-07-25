@@ -14690,25 +14690,6 @@
      * 
      *
      */ 
-        class UserMailFacade {
-                    /**
-         * 
-         *
-         * @param \App\Models\User $user
-         * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
-         * @static 
-         */ 
-        public static function sendWelcomeEmail($user)
-        {
-                        /** @var \App\Mail\UserMail $instance */
-                        return $instance->sendWelcomeEmail($user);
-        }
-         
-    }
-            /**
-     * 
-     *
-     */ 
         class SponsorshipMailFacade {
                     /**
          * 
@@ -22397,7 +22378,6 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class MailClient extends \App\Mail\Facades\MailClientFacade {}
-            class UserMail extends \App\Mail\Facades\UserMailFacade {}
             class SponsorshipMail extends \App\Mail\Facades\SponsorshipMailFacade {}
             class SponsorshipMessageHandler extends \App\Mail\Facades\SponsorshipMessageHandlerFacade {}
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}

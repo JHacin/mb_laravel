@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserMail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Validation\Validator as ValidatorInstance;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
-use UserMail;
 
 class RegisterController extends Controller
 {
@@ -16,8 +16,11 @@ class RegisterController extends Controller
 
     protected string $redirectTo = RouteServiceProvider::HOME;
 
-    public function __construct()
+    private UserMail $userMail;
+
+    public function __construct(UserMail $userMail)
     {
+        $this->userMail = $userMail;
         $this->middleware('guest');
     }
 
@@ -39,7 +42,7 @@ class RegisterController extends Controller
             'is_active' => true,
         ]);
 
-        UserMail::sendWelcomeEmail($user);
+        $this->userMail->sendWelcomeEmail($user);
 
         return $user;
     }

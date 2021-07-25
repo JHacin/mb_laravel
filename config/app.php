@@ -5,7 +5,6 @@
 use App\Mail\Facades\MailClientFacade;
 use App\Mail\Facades\SponsorshipMailFacade;
 use App\Mail\Facades\SponsorshipMessageHandlerFacade;
-use App\Mail\Facades\UserMailFacade;
 
 return [
 
@@ -235,7 +234,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'MailClient' => MailClientFacade::class,
-        'UserMail' => UserMailFacade::class,
         'SponsorshipMail' => SponsorshipMailFacade::class,
         'SponsorshipMessageHandler' => SponsorshipMessageHandlerFacade::class,
     ],

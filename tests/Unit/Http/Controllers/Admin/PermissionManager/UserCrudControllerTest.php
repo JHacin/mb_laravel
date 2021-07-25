@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Http\Controllers\Admin\PermissionManager;
 
+use App\Mail\UserMail;
 use App\Models\PersonData;
 use Tests\TestCase;
-use UserMail;
 
 class UserCrudControllerTest extends TestCase
 {
@@ -16,12 +16,11 @@ class UserCrudControllerTest extends TestCase
         $this->markTestSkipped('skipping until user profiles are implemented for the public audience');
     }
 
-    /**
-     * @return void
-     */
     public function test_sends_welcome_email_if_needed()
     {
-        UserMail::shouldReceive('sendWelcomeEmail')->once();
+        $userMailMock = $this->mock(UserMail::class);
+
+        $userMailMock->shouldReceive('sendWelcomeEmail')->once();
 
         $this->actingAs($this->createSuperAdminUser())->post('admin/uporabniki', [
             'email' => $this->faker->unique()->safeEmail,
@@ -33,8 +32,7 @@ class UserCrudControllerTest extends TestCase
             'should_send_welcome_email' => true,
         ]);
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        UserMail::shouldNotReceive('sendWelcomeEmail');
+        $userMailMock->shouldNotReceive('sendWelcomeEmail');
 
         $this->actingAs($this->createSuperAdminUser())->post('admin/uporabniki', [
             'email' => $this->faker->unique()->safeEmail,
