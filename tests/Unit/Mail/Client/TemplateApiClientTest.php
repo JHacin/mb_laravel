@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Mail\Client;
 
+use App\Mail\Client\TemplateApiClient;
 use Http;
 use Illuminate\Http\Response;
 use Mockery;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use TemplateApiClient;
 use Tests\TestCase;
 
 class TemplateApiClientTest extends TestCase
@@ -39,7 +39,7 @@ class TemplateApiClientTest extends TestCase
             ->shouldReceive('successful')
             ->once()
             ->andReturn(true);
-        
+
         $responseMock
             ->shouldReceive('json')
             ->once()
@@ -51,7 +51,7 @@ class TemplateApiClientTest extends TestCase
                 ]
             ]);
 
-        $response = TemplateApiClient::retrieveTemplate($messageType->template_id);
+        $response = (new TemplateApiClient())->retrieveTemplate($messageType->template_id);
 
         $this->assertEquals('template_text', $response);
     }
@@ -64,7 +64,7 @@ class TemplateApiClientTest extends TestCase
         $wasCaught = false;
 
         try {
-            TemplateApiClient::retrieveTemplate($messageType->template_id);
+            (new TemplateApiClient())->retrieveTemplate($messageType->template_id);
         } catch (NotFoundHttpException $exception) {
             $this->assertEquals(404, $exception->getStatusCode());
             $this->assertEquals('Predloga s to šifro ne obstaja.', $exception->getMessage());
@@ -82,7 +82,7 @@ class TemplateApiClientTest extends TestCase
         $wasCaught = false;
 
         try {
-            TemplateApiClient::retrieveTemplate($messageType->template_id);
+            (new TemplateApiClient())->retrieveTemplate($messageType->template_id);
         } catch (HttpException $exception) {
             $this->assertEquals(503, $exception->getStatusCode());
             $this->assertEquals(

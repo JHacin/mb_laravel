@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\AdminSponsorshipMessageRequest;
+use App\Mail\Client\TemplateApiClient;
 use App\Mail\MailTemplateParser;
 use App\Models\Cat;
 use App\Models\PersonData;
@@ -19,7 +20,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use SponsorshipMessageHandler;
-use TemplateApiClient;
 
 /**
  * Class SponsorshipMessageCrudController
@@ -32,12 +32,17 @@ class SponsorshipMessageCrudController extends CrudController
     use CreateOperation { store as traitStore; }
 
     private MailTemplateParser $mailTemplateParser;
+    private TemplateApiClient $templateApiClient;
 
-    public function __construct(CrudPanel $crud, MailTemplateParser $mailTemplateParser)
-    {
+    public function __construct(
+        CrudPanel $crud,
+        MailTemplateParser $mailTemplateParser,
+        TemplateApiClient $templateApiClient
+    ) {
         parent::__construct();
         $this->crud = $crud;
         $this->mailTemplateParser = $mailTemplateParser;
+        $this->templateApiClient = $templateApiClient;
     }
 
     /**
@@ -247,6 +252,7 @@ class SponsorshipMessageCrudController extends CrudController
         return $response;
     }
 
+    /** @noinspection PhpUnused */
     public function getMessagesSentToSponsor(PersonData $sponsor): JsonResponse
     {
         $this->crud->hasAccessOrFail('create');
@@ -257,7 +263,7 @@ class SponsorshipMessageCrudController extends CrudController
     public function getParsedTemplatePreview(Request $request): JsonResponse
     {
         $messageType = SponsorshipMessageType::find($request->query('message_type'));
-        $templateId = TemplateApiClient::retrieveTemplate($messageType->template_id);
+        $templateId = $this->templateApiClient->retrieveTemplate($messageType->template_id);
 
         $sponsor = PersonData::find($request->query('sponsor'));
         $cat = Cat::find($request->query('cat'));

@@ -14743,23 +14743,6 @@
         }
          
     }
-            /**
-     * 
-     *
-     */ 
-        class TemplateApiClientFacade {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function retrieveTemplate($templateId)
-        {
-                        /** @var \App\Mail\Client\TemplateApiClient $instance */
-                        return $instance->retrieveTemplate($templateId);
-        }
-         
-    }
      
 }
 
@@ -22417,7 +22400,6 @@ namespace  {
             class UserMail extends \App\Mail\Facades\UserMailFacade {}
             class SponsorshipMail extends \App\Mail\Facades\SponsorshipMailFacade {}
             class SponsorshipMessageHandler extends \App\Mail\Facades\SponsorshipMessageHandlerFacade {}
-            class TemplateApiClient extends \App\Mail\Facades\TemplateApiClientFacade {}
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}
             class Widget extends \Backpack\CRUD\app\Library\Widget {}
             class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}

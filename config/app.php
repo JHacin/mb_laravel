@@ -5,7 +5,6 @@
 use App\Mail\Facades\MailClientFacade;
 use App\Mail\Facades\SponsorshipMailFacade;
 use App\Mail\Facades\SponsorshipMessageHandlerFacade;
-use App\Mail\Facades\TemplateApiClientFacade;
 use App\Mail\Facades\UserMailFacade;
 
 return [
@@ -239,7 +238,6 @@ return [
         'UserMail' => UserMailFacade::class,
         'SponsorshipMail' => SponsorshipMailFacade::class,
         'SponsorshipMessageHandler' => SponsorshipMessageHandlerFacade::class,
-        'TemplateApiClient' => TemplateApiClientFacade::class,
     ],
 
 ];

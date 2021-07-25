@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Http\Controllers\Admin;
 
+use App\Mail\Client\TemplateApiClient;
 use App\Mail\MailTemplateParser;
 use SponsorshipMessageHandler;
-use TemplateApiClient;
 use Tests\TestCase;
 
 class SponsorshipMessageCrudControllerTest extends TestCase
@@ -58,7 +58,8 @@ class SponsorshipMessageCrudControllerTest extends TestCase
         $sponsor = $this->createPersonData();
         $cat = $this->createCat();
 
-        TemplateApiClient::shouldReceive('retrieveTemplate')
+        $this->mock(TemplateApiClient::class)
+            ->shouldReceive('retrieveTemplate')
             ->once()
             ->with($messageType->template_id)
             ->andReturn('template_text');

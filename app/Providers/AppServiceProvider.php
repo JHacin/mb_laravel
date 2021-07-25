@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Mail\Client\TemplateApiClient;
 use App\Mail\MailTemplateParser;
 use Handlebars\Handlebars;
 use Illuminate\Foundation\Application;
@@ -18,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(MailTemplateParser::class, function (Application $app) {
             return new MailTemplateParser(new Handlebars());
+        });
+        $this->app->singleton(TemplateApiClient::class, function (Application $app) {
+            return new TemplateApiClient();
         });
     }
 
