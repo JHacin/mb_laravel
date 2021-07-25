@@ -4,12 +4,16 @@ namespace Tests\Unit\Http\Controllers;
 
 use App\Http\Controllers\CatSponsorshipController;
 use App\Http\Requests\CatSponsorshipRequest;
+use App\Mail\SponsorshipMail;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Mockery;
-use SponsorshipMail;
 use Tests\TestCase;
 
 class CatSponsorshipControllerTest extends TestCase
 {
+    /**
+     * @throws BindingResolutionException
+     */
     public function test_sends_initial_instructions_email_on_form_submit()
     {
         $cat = $this->createCat();
@@ -26,8 +30,7 @@ class CatSponsorshipControllerTest extends TestCase
             ])
             ->once();
 
-        SponsorshipMail::shouldReceive('sendInitialInstructionsEmail')->once();
-
-        (new CatSponsorshipController())->submit($cat, $requestMock);
+        $this->mock(SponsorshipMail::class)->shouldReceive('sendInitialInstructionsEmail')->once();
+        $this->app->make(CatSponsorshipController::class)->submit($cat, $requestMock);
     }
 }

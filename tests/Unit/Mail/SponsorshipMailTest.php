@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Mail;
 
+use App\Mail\SponsorshipMail;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
 use App\Utilities\BankTransferFieldGenerator;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
 use MailClient;
-use SponsorshipMail;
 use Storage;
 use Tests\TestCase;
 
@@ -52,7 +52,7 @@ class SponsorshipMailTest extends TestCase
         // PAYMENT_TYPE_BANK_TRANSFER
         $expectedParams = array_merge($expectedParams, ['template' => 'navodila_za_botrovanje_nakazilo']);
         MailClient::shouldReceive('send')->once()->with($expectedParams);
-        SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
+        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
 
         // PAYMENT_TYPE_DIRECT_DEBIT
         $expectedParams = array_merge(
@@ -69,20 +69,20 @@ class SponsorshipMailTest extends TestCase
         );
         MailClient::shouldReceive('send')->once()->with($expectedParams);
         $sponsorship->update(['payment_type' => Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT]);
-        SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
+        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
 
         // MALE SPONSOR
         $expectedVariables = array_merge($expectedVariables, ['boter_moski' => true]);
         $expectedParams = array_merge($expectedParams, ['h:X-Mailgun-Variables' => json_encode($expectedVariables)]);
         $personData->update(['gender' => PersonData::GENDER_MALE]);
         MailClient::shouldReceive('send')->once()->with($expectedParams);
-        SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
+        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
 
         // FEMALE SPONSOR
         $expectedVariables = array_merge($expectedVariables, ['boter_moski' => false]);
         $expectedParams = array_merge($expectedParams, ['h:X-Mailgun-Variables' => json_encode($expectedVariables)]);
         $personData->update(['gender' => PersonData::GENDER_FEMALE]);
         MailClient::shouldReceive('send')->once()->with($expectedParams);
-        SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
+        (new SponsorshipMail())->sendInitialInstructionsEmail($sponsorship);
     }
 }

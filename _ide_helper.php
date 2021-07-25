@@ -14686,25 +14686,6 @@
         }
          
     }
-            /**
-     * 
-     *
-     */ 
-        class SponsorshipMailFacade {
-                    /**
-         * 
-         *
-         * @param \App\Models\Sponsorship $sponsorship
-         * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
-         * @static 
-         */ 
-        public static function sendInitialInstructionsEmail($sponsorship)
-        {
-                        /** @var \App\Mail\SponsorshipMail $instance */
-                        return $instance->sendInitialInstructionsEmail($sponsorship);
-        }
-         
-    }
      
 }
 
@@ -22359,7 +22340,6 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class MailClient extends \App\Mail\Facades\MailClientFacade {}
-            class SponsorshipMail extends \App\Mail\Facades\SponsorshipMailFacade {}
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}
             class Widget extends \Backpack\CRUD\app\Library\Widget {}
             class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}

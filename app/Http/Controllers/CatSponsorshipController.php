@@ -4,17 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\HasSponsorshipForm;
 use App\Http\Requests\CatSponsorshipRequest;
+use App\Mail\SponsorshipMail;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use SponsorshipMail;
 
 class CatSponsorshipController extends Controller
 {
     use HasSponsorshipForm;
+
+    private SponsorshipMail $sponsorshipMail;
+
+    public function __construct(SponsorshipMail $sponsorshipMail)
+    {
+        $this->sponsorshipMail = $sponsorshipMail;
+    }
 
     public function submit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
     {
@@ -25,7 +32,7 @@ class CatSponsorshipController extends Controller
 
         $sponsorship = $this->createSponsorship($cat, $payer, $giftee, $request->all());
 
-        SponsorshipMail::sendInitialInstructionsEmail($sponsorship);
+        $this->sponsorshipMail->sendInitialInstructionsEmail($sponsorship);
 
         return $this->successRedirect();
     }

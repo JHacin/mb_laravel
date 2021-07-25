@@ -3,7 +3,6 @@
 /** @noinspection PhpUndefinedClassInspection */
 
 use App\Mail\Facades\MailClientFacade;
-use App\Mail\Facades\SponsorshipMailFacade;
 
 return [
 
@@ -233,7 +232,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'MailClient' => MailClientFacade::class,
-        'SponsorshipMail' => SponsorshipMailFacade::class,
     ],
 
 ];
