@@ -4,7 +4,7 @@ mix
     .copyDirectory('resources/img', 'public/img')
     .js('resources/js/app.js', 'public/js')
     .js('resources/js/home.js', 'public/js')
-    .js('resources/js/become_sponsor_form.js', 'public/js')
+    .js('resources/js/giftee_form.js', 'public/js')
     .sass('resources/scss/app.scss', 'public/css');
 
 if (mix.inProduction()) {

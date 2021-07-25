@@ -1,40 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
     setDefaultFormAttributes();
-    handleIsGiftToggle();
+    handleToggling();
 });
 
 function setDefaultFormAttributes() {
     const checkedRadio = document.querySelector('input[type="radio"][name="is_gift"]:checked');
 
-    toggleGifteeFormVisibility(isGift(checkedRadio.value));
-    toggleGifteeFormRequiredAttributes(isGift(checkedRadio.value));
+    toggleFormVisibility(isGift(checkedRadio.value));
+    toggleRequiredAttributes(isGift(checkedRadio.value));
 }
 
-function handleIsGiftToggle() {
+function handleToggling() {
     const radios = document.querySelectorAll('input[type="radio"][name="is_gift"]');
 
     for (let i = 0; i < radios.length; i++) {
         radios[i].addEventListener('change', function (event) {
-            toggleGifteeFormVisibility(isGift(event.target.value));
-            toggleGifteeFormRequiredAttributes(isGift(event.target.value));
+            toggleFormVisibility(isGift(event.target.value));
+            toggleRequiredAttributes(isGift(event.target.value));
         })
     }
 }
 
-function toggleGifteeFormVisibility(isGift) {
-    getGifteeForm().style.display = isGift ? '' : 'none';
+function toggleFormVisibility(isGift) {
+    getForm().style.display = isGift ? '' : 'none';
 }
 
 
-function toggleGifteeFormRequiredAttributes(isGift) {
-    const fields = getGifteeForm().querySelectorAll('input, select');
+function toggleRequiredAttributes(isGift) {
+    const fields = getForm().querySelectorAll('input, select');
 
     for (let i = 0; i < fields.length; i++) {
         fields[i].required = isGift;
     }
 }
 
-function getGifteeForm() {
+function getForm() {
     return document.querySelector('.giftee-form')
 }
 
