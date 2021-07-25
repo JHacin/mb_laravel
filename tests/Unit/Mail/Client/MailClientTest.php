@@ -4,7 +4,6 @@ namespace Tests\Unit\Mail\Client;
 
 use App\Mail\Client\MailClient;
 use App\Settings\Settings;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Mailgun\Mailgun;
 use Mockery\MockInterface;
 use Tests\TestCase;
@@ -15,23 +14,28 @@ use Tests\TestCase;
  */
 class MailClientTest extends TestCase
 {
-    protected MockInterface $settingsMock;
-    protected MockInterface $mailgunMock;
+    /**
+     * @var MockInterface|Settings
+     */
+    protected $settingsMock;
+
+    /**
+     * @var MockInterface|Mailgun
+     */
+    protected $mailgunMock;
+
     protected MailClient $client;
     protected string $list = 'list';
     protected string $listAddress;
     protected string $emailAddress = 'email_address';
 
-    /**
-     * @throws BindingResolutionException
-     */
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->settingsMock = $this->mock('overload:'.Settings::class);
         $this->mailgunMock = $this->mock(Mailgun::class);
-        $this->client = $this->app->make(MailClient::class);
+        $this->client = new MailClient($this->mailgunMock);
         $this->listAddress = $this->list . '@' . env('MAILGUN_DOMAIN');
     }
 
