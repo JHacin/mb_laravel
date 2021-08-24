@@ -26,8 +26,8 @@ class SponsorshipMail
     public function sendInitialInstructionsEmail(Sponsorship $sponsorship)
     {
         $template = $sponsorship->payment_type === Sponsorship::PAYMENT_TYPE_BANK_TRANSFER
-            ? 'navodila_za_botrovanje_nakazilo'
-            : 'navodila_za_botrovanje_trajnik';
+            ? 'navodila_za_botrstvo_nakazilo'
+            : 'navodila_za_botrstvo_trajnik';
 
         $personData = $sponsorship->sponsor;
         $cat = $sponsorship->cat;

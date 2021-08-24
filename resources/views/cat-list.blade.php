@@ -8,7 +8,7 @@
             <div class="columns">
                 <div class="column is-12-mobile is-9-desktop is-10-fullhd">
                     Na seznamu so objavljene vse muce, ki trenutno iščejo botra. Če vas zanima več o tem,
-                    kaj je bistvo programa Mačji boter in kako poteka postopek botrovanja, si lahko
+                    kaj je bistvo programa Mačji boter in kako poteka postopek botrstva, si lahko
                     preberete več na
                     <a
                         href="{{ route('why_become_sponsor') }}"

@@ -31,8 +31,8 @@ class AdminSponsorListTest extends AdminTestCase
                     3 => $personData->last_name,
                     4 => $personData->city,
                     5 => $this->formatToDateColumnString($personData->created_at),
-                    6 => $personData->sponsorships()->count() . ' botrovanj',
-                    7 => $personData->unscopedSponsorships()->count() . ' botrovanj',
+                    6 => $personData->sponsorships()->count() . ' botrstev',
+                    7 => $personData->unscopedSponsorships()->count() . ' botrstev',
                 ]);
             });
         });
@@ -208,11 +208,11 @@ class AdminSponsorListTest extends AdminTestCase
             $this->waitForRequestsToFinish($browser);
             $sponsor->refresh();
             $this->assertTrue($sponsor->sponsorships()->count() === 0);
-            $browser->assertSee('Vsa aktivna botrovanja so bila uspešno prekinjena.');
+            $browser->assertSee('Vsa aktivna botrstva so bila uspešno prekinjena.');
             $this->openFirstRowDetails($browser);
             $browser->whenAvailable('@data-table-row-details-modal', function (Browser $browser) use ($sponsor) {
-                $this->assertDetailsModalColumnShowsValue($browser, 6, '0 botrovanj');
-                $this->assertDetailsModalColumnShowsValue($browser, 7, $sponsor->unscopedSponsorships()->count() . ' botrovanj');
+                $this->assertDetailsModalColumnShowsValue($browser, 6, '0 botrstev');
+                $this->assertDetailsModalColumnShowsValue($browser, 7, $sponsor->unscopedSponsorships()->count() . ' botrstev');
             });
         });
     }

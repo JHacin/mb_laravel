@@ -8,7 +8,7 @@
         @csrf
         <button type="submit" class="btn btn-sm btn-link" dusk="sponsor-cancel-all-sponsorships-form-button">
             <i class="la la-times"></i>
-            Prekini vsa botrovanja
+            Prekini vsa botrstva
         </button>
     </form>
 
@@ -21,7 +21,7 @@
 
                     swal({
                         title: "{!! trans('backpack::base.warning') !!}",
-                        text: 'Ali res želite prekiniti vsa aktivna botrovanja, povezana s to osebo?',
+                        text: 'Ali res želite prekiniti vsa aktivna botrstva, povezana s to osebo?',
                         icon: 'warning',
                         buttons: {
                             cancel: {

@@ -7,7 +7,7 @@
                 <h1 class="title">Botrstvo je odlično dobrodelno darilo</h1>
 
                 <div class="block">
-                    Mačje botrovanje je lahko tudi izvirno rojstnodnevno darilo,
+                    Mačje botrstvo je lahko tudi izvirno rojstnodnevno darilo,
                     lahko pa ga podarite tudi ob kakšni drugi priložnosti (zaključku šolskega leta,
                     poroki, diplomi, materinskem dnevu ...) ali kar tako.
                     Podarite ga lahko svojim partnerjem, staršem, prijateljem, mentorjem, učiteljem...

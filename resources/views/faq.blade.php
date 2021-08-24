@@ -52,8 +52,8 @@
                             da odstopate od dogovora.
                         </p>
                         <p>
-                            V primeru, da vaših prispevkov za botrovanje ne bomo prejemali, si pridržujemo pravico,
-                            da vaše botrovanje prekinemo brez opozorila.
+                            V primeru, da vaših prispevkov za botrstvo ne bomo prejemali, si pridržujemo pravico,
+                            da vaše botrstvo prekinemo brez opozorila.
                         </p>
                     </div>
                 </div>

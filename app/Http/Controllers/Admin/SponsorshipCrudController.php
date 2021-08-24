@@ -43,9 +43,9 @@ class SponsorshipCrudController extends CrudController
     {
         $this->crud->setModel(Sponsorship::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/' . config('routes.admin.sponsorships'));
-        $this->crud->setEntityNameStrings('Botrovanje', 'Botrovanja');
-        $this->crud->setSubheading('Dodaj novo botrovanje', 'create');
-        $this->crud->setSubheading('Uredi botrovanje', 'edit');
+        $this->crud->setEntityNameStrings('Botrstvo', 'Botrstva');
+        $this->crud->setSubheading('Dodaj novo botrstvo', 'create');
+        $this->crud->setSubheading('Uredi botrstvo', 'edit');
         $this->crud->addButtonFromView('line', 'sponsorship_cancel', 'sponsorship_cancel');
         $this->clearModelGlobalScopes();
         $this->crud->enableExportButtons();
@@ -264,8 +264,8 @@ class SponsorshipCrudController extends CrudController
                 'dusk' => 'is_active-wrapper'
             ],
             'hint' =>
-                'Botrovanje je v teku (redna plačila, muca še kar potrebuje botre itd.).' .
-                '<br>Neaktivna botrovanja ne bodo vključena na spletni strani (v seštevkih botrovanj, na seznamih botrov itd.)',
+                'Botrstvo je v teku (redna plačila, muca še kar potrebuje botre itd.).' .
+                '<br>Neaktivna botrstva ne bodo vključena na spletni strani (v seštevkih botrstev, na seznamih botrov itd.)',
         ]);
         $this->crud->addField([
             'name' => 'email_warning',
@@ -282,8 +282,8 @@ class SponsorshipCrudController extends CrudController
             'name' => 'ended_at',
             'label' => 'Datum konca',
             'hint' =>
-                'Če želite uradno prekiniti botrovanje, je treba tudi odkljukati polje \'Aktivno\'.' .
-                ' Datum konca se hrani samo za evidenco tega, koliko časa je trajalo določeno botrovanje.' .
+                'Če želite uradno prekiniti botrstvo, je treba tudi odkljukati polje \'Aktivno\'.' .
+                ' Datum konca se hrani samo za evidenco tega, koliko časa je trajalo določeno botrstvo.' .
                 ' Datum se lahko izbriše s pritiskom na polje > "Clear".',
             'wrapper' => [
                 'dusk' => 'ended_at-wrapper'
@@ -296,7 +296,7 @@ class SponsorshipCrudController extends CrudController
         $this->crud->hasAccessOrFail('update');
         if ($sponsorship->is_active) {
             $sponsorship->cancel();
-            Alert::success('Botrovanje uspešno prekinjeno.')->flash();
+            Alert::success('Botrstvo uspešno prekinjeno.')->flash();
         }
         return Redirect::back();
     }

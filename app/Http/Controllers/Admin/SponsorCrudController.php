@@ -53,10 +53,10 @@ class SponsorCrudController extends CrudController
         $this->crud->addColumn(CrudColumnGenerator::city());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn([
-            'label' => 'Aktivna botrovanja',
+            'label' => 'Aktivna botrstva',
             'type' => 'relationship_count',
             'name' => 'sponsorships',
-            'suffix' => ' botrovanj',
+            'suffix' => ' botrstev',
             'wrapper' => [
                 'dusk' => 'related-sponsorships-link',
                 'href' => function ($crud, $column, $entry, $related_key) {
@@ -70,10 +70,10 @@ class SponsorCrudController extends CrudController
             ],
         ]);
         $this->crud->addColumn([
-            'label' => 'Vsa botrovanja',
+            'label' => 'Vsa botrstva',
             'type' => 'relationship_count',
             'name' => 'unscopedSponsorships',
-            'suffix' => ' botrovanj',
+            'suffix' => ' botrstev',
             'wrapper' => [
                 'dusk' => 'related-unscopedSponsorships-link',
                 'href' => function ($crud, $column, $entry, $related_key) {
@@ -118,7 +118,7 @@ class SponsorCrudController extends CrudController
             }
         });
 
-        Alert::success('Vsa aktivna botrovanja so bila uspešno prekinjena.')->flash();
+        Alert::success('Vsa aktivna botrstva so bila uspešno prekinjena.')->flash();
         return Redirect::back();
     }
 }

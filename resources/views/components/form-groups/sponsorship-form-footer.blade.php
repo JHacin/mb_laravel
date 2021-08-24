@@ -1,7 +1,7 @@
 <div class="block">
     <x-inputs.base.checkbox name="is_anonymous">
         <x-slot name="label">
-            Botrovanje naj bo <strong>anonimno</strong>
+            Botrstvo naj bo <strong>anonimno</strong>
         </x-slot>
         <x-slot name="help">
             Označite, če ne želite, da se vaše ime in kraj prikažeta na seznamu botrov.

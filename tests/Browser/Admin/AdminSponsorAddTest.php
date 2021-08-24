@@ -107,8 +107,8 @@ class AdminSponsorAddTest extends AdminTestCase
                         3 => $personData->last_name,
                         4 => $personData->city,
                         5 => $this->formatToDatetimeColumnString($personData->created_at),
-                        6 => '0 botrovanj',
-                        7 => '0 botrovanj',
+                        6 => '0 botrstev',
+                        7 => '0 botrstev',
                     ]);
                 }
             );

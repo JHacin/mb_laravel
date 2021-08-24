@@ -46,7 +46,7 @@ class UserProfileTest extends DuskTestCase
             $this->goToPage($b, $this->createUser());
 
             $b->with('@sponsorship-list', function (Browser $b) {
-                $b->assertSee('Nimate še botrovanj.');
+                $b->assertSee('Nimate še botrstev.');
             });
         });
     }

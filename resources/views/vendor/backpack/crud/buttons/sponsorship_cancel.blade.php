@@ -21,7 +21,7 @@
 
                     swal({
                         title: "{!! trans('backpack::base.warning') !!}",
-                        text: 'Ali res želite prekiniti botrovanje?',
+                        text: 'Ali res želite prekiniti botrstvo?',
                         icon: 'warning',
                         buttons: {
                             cancel: {

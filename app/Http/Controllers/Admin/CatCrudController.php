@@ -162,11 +162,11 @@ class CatCrudController extends CrudController
                 'dusk' => 'status-input-wrapper'
             ],
             'hint' =>
-                '<em>išče botre</em>: objavljena, botrovanje je možno<br>' .
-                '<em>trenutno ne išče botrov</em>: objavljena, botrovanje ni možno, prikazana je opomba<br>' .
-                '<em>ne išče botrov</em>: ni objavljena, botrovanje ni možno<br>' .
-                '<em>v novem domu</em>: ni objavljena, botrovanje ni možno<br>' .
-                '<em>RIP</em>: ni objavljena, botrovanje ni možno<br>'
+                '<em>išče botre</em>: objavljena, botrstvo je možno<br>' .
+                '<em>trenutno ne išče botrov</em>: objavljena, botrstvo ni možno, prikazana je opomba<br>' .
+                '<em>ne išče botrov</em>: ni objavljena, botrstvo ni možno<br>' .
+                '<em>v novem domu</em>: ni objavljena, botrstvo ni možno<br>' .
+                '<em>RIP</em>: ni objavljena, botrstvo ni možno<br>'
         ]);
         $this->crud->addField([
             'name' => 'is_group',

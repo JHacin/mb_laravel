@@ -50,12 +50,12 @@ class SponsorshipMailTest extends TestCase
             'to' => $personData->email,
             'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
-            'template' => 'navodila_za_botrovanje_nakazilo',
+            'template' => 'navodila_za_botrstvo_nakazilo',
             'h:X-Mailgun-Variables' => json_encode($expectedVariables),
         ];
 
         // PAYMENT_TYPE_BANK_TRANSFER
-        $expectedParams = array_merge($expectedParams, ['template' => 'navodila_za_botrovanje_nakazilo']);
+        $expectedParams = array_merge($expectedParams, ['template' => 'navodila_za_botrstvo_nakazilo']);
         $mailClientMock->shouldReceive('send')->once()->with($expectedParams);
         $this->app->make(SponsorshipMail::class)->sendInitialInstructionsEmail($sponsorship);
 
@@ -63,7 +63,7 @@ class SponsorshipMailTest extends TestCase
         $expectedParams = array_merge(
             $expectedParams,
             [
-                'template' => 'navodila_za_botrovanje_trajnik',
+                'template' => 'navodila_za_botrstvo_trajnik',
                 'attachment' => [
                     [
                         'filePath' => Storage::disk('public')->path('docs/trajnik_pooblastilo.pdf'),

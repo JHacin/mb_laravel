@@ -22,9 +22,9 @@
 </li>
 
 <li class="nav-item">
-    <div class="nav-title">Botrovanja</div>
+    <div class="nav-title">Botrstva</div>
     <a class="nav-link" href="{{ backpack_url(config('routes.admin.sponsorships')) }}">
-        <i class="nav-icon la la-gratipay"></i> Botrovanja
+        <i class="nav-icon la la-gratipay"></i> Botrstva
     </a>
     <a class="nav-link" href="{{ backpack_url(config('routes.admin.special_sponsorships')) }}">
         <i class="nav-icon la la-money-check-alt"></i> Posebna botrstva

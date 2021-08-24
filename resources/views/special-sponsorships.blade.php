@@ -162,8 +162,8 @@ function formLink(int $type): string {
                             <div>
                                 Z donacijo 25 evrov enemu FIP bojevniku omogočite zdravilo za en dan. V zahvalo vi ali
                                 vaš obdarovanec prejmete elektronsko potrdilo/diplomo FIP bojevnik. V primeru, da v času
-                                vašega botrovanja zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
-                                botrovanje in kako poteka zdravljenje.
+                                vašega botrstva zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
+                                botrstvo in kako poteka zdravljenje.
                             </div>
                         </div>
                         <div>
@@ -183,8 +183,8 @@ function formLink(int $type): string {
                             <div>
                                 Z donacijo 50 evrov enemu FIP bojevniku omogočite zdravilo za dva dni. V zahvalo vi ali
                                 vaš obdarovanec prejmete elektronsko potrdilo/diplomo FIP bojevnik. V primeru, da v času
-                                vašega botrovanja zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
-                                botrovanje in kako poteka zdravljenje.
+                                vašega botrstva zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
+                                botrstvo in kako poteka zdravljenje.
                             </div>
                         </div>
                         <div>
@@ -206,8 +206,8 @@ function formLink(int $type): string {
                                 vseh stroškov zdravljenja za enega muca. V zahvalo vi ali vaš obdarovanec prejmete
                                 elektronsko potrdilo/diplomo FIP bojevnik, za dve leti vas (ga) uvrstimo med redne botre
                                 mucka Čombeta in prejemate vse, kar prejemajo mačji botri (pisma muckov, voščilo dostop
-                                do mesečnih namizij ...). V primeru, da v času vašega botrovanja zdravimo katerega od
-                                muckov, vas obvestimo o tem, komu smo namenili botrovanje in kako poteka zdravljenje.
+                                do mesečnih namizij ...). V primeru, da v času vašega botrstva zdravimo katerega od
+                                muckov, vas obvestimo o tem, komu smo namenili botrstvo in kako poteka zdravljenje.
                             </div>
                         </div>
                         <div>

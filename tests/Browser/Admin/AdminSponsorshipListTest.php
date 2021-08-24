@@ -165,7 +165,7 @@ class AdminSponsorshipListTest extends AdminTestCase
             $sponsorship->refresh();
             $this->assertFalse((bool)$sponsorship->is_active);
             $this->assertNotNull($sponsorship->ended_at);
-            $b->assertSee('Botrovanje uspešno prekinjeno.');
+            $b->assertSee('Botrstvo uspešno prekinjeno.');
             $this->openFirstRowDetails($b);
             $b->whenAvailable('@data-table-row-details-modal', function (Browser $b) use ($sponsorship) {
                 $this->assertDetailsModalColumnShowsValue($b, 5, 'Ne');

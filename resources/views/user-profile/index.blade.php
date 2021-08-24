@@ -21,10 +21,10 @@
                 </x-notification>
             @endif
 
-            <h1 class="title">Moja botrovanja</h1>
+            <h1 class="title">Moja botrstva</h1>
             <div dusk="sponsorship-list">
                 @if($sponsorships->count() === 0)
-                    <div>Nimate še botrovanj.</div>
+                    <div>Nimate še botrstev.</div>
                 @else
                     @foreach($sponsorships as $sponsorship)
                         <div>
