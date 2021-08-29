@@ -6,8 +6,8 @@
             <div class="mb-6">
                 <h1 class="title">Novice</h1>
 
-                <div class="columns is-multiline is-mobile is-variable is-8-desktop">
-                    <div class="column is-12-mobile is-9-desktop">
+                <div class="columns is-multiline is-mobile is-8-desktop">
+                    <div class="column is-12-mobile is-12-tablet is-8-widescreen">
                         <div class="mb-5">
                             @foreach($news as $newsPiece)
                                 <div class="news-piece mb-5">
@@ -22,11 +22,11 @@
                         </div>
                         <div>{{ $news->links() }}</div>
                     </div>
-                    <div class="column is-12-mobile is-3-desktop">
-                        <div class="mb-6">
+                    <div class="column is-12-mobile is-12-tablet is-4-widescreen">
+                        <div class="has-text-centered mb-6">
                             <x-fb-feed />
                         </div>
-                        <div>
+                        <div class="has-text-centered">
                             IG feed
                         </div>
                     </div>

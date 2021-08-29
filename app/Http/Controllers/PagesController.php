@@ -21,7 +21,7 @@ class PagesController extends Controller
 
     public function news(): View
     {
-        $newsPaginator = News::paginate(25);
+        $newsPaginator = News::paginate(10);
 
         return view('news', ['news' => $newsPaginator]);
     }

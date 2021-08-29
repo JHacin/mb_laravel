@@ -10,7 +10,6 @@ use Throwable;
 class NewsPageTest extends DuskTestCase
 {
     /**
-     * @return void
      * @throws Throwable
      */
     public function test_it_works()
