@@ -32,7 +32,7 @@ class SponsorshipMail
         $cat = $sponsorship->cat;
 
         $variables = [
-            'app_url' => env('APP_URL'),
+            'app_url' => config('app.url'),
             'faq_url' => url(route('faq')),
             'boter_moski' => $personData->gender === PersonData::GENDER_MALE,
             'boter_ime' => $personData->first_name ?? '/',
@@ -51,7 +51,7 @@ class SponsorshipMail
 
         $params = [
             'to' => $sponsorship->sponsor->email,
-            'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
+            'bcc' => config('mail.vars.bcc_copy_address'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
             'template' => $template,
             'h:X-Mailgun-Variables' => json_encode($variables)

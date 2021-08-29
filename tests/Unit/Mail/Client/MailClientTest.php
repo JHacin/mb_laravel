@@ -36,7 +36,7 @@ class MailClientTest extends TestCase
         $this->settingsMock = $this->mock('overload:'.Settings::class);
         $this->mailgunMock = $this->mock(Mailgun::class);
         $this->client = new MailClient($this->mailgunMock);
-        $this->listAddress = $this->list . '@' . env('MAILGUN_DOMAIN');
+        $this->listAddress = $this->list . '@' . config('services.mailgun.domain');
     }
 
     public function test_sends_message_with_params()
@@ -44,7 +44,7 @@ class MailClientTest extends TestCase
         $this->enableSetting(config('settings.enable_emails'));
 
         $params = [
-            'to' => env('MAIL_TEST_TO'),
+            'to' => config('mail.vars.test_to_address'),
             'subject' => 'Hello',
             'text' => 'This is a message.',
         ];
@@ -53,8 +53,8 @@ class MailClientTest extends TestCase
             ->shouldReceive('messages->send')
             ->once()
             ->with(
-                env('MAILGUN_DOMAIN'),
-                array_merge(['from' => env('MAIL_FROM_ADDRESS')], $params)
+                config('services.mailgun.domain'),
+                array_merge(['from' => config('mail.from.address')], $params)
             );
 
         $this->client->send($params);

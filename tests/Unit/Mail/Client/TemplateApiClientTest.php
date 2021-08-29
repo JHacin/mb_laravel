@@ -18,13 +18,13 @@ class TemplateApiClientTest extends TestCase
 
         Http::shouldReceive('withBasicAuth')
             ->once()
-            ->with('api', env('MAILGUN_SECRET'))
+            ->with('api', config('services.mailgun.secret'))
             ->andReturnSelf();
 
         $requestUrl =
-            env('MAILGUN_ENDPOINT') .
+            config('services.mailgun.endpoint') .
             '/v3/' .
-            env('MAILGUN_DOMAIN') .
+            config('services.mailgun.domain') .
             '/templates/' .
             $messageType->template_id;
 

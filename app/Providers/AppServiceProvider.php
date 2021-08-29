@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(MailClient::class, function (Application $app) {
-            return new MailClient(Mailgun::create(env('MAILGUN_SECRET'), env('MAILGUN_ENDPOINT')));
+            return new MailClient(Mailgun::create(config('services.mailgun.secret'), config('services.mailgun.endpoint')));
         });
         $this->app->singleton(MailTemplateParser::class, function (Application $app) {
             return new MailTemplateParser(new Handlebars());

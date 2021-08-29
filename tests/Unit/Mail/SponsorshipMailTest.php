@@ -28,7 +28,7 @@ class SponsorshipMailTest extends TestCase
         $cat = $sponsorship->cat;
 
         $expectedVariables = [
-            'app_url' => env('APP_URL'),
+            'app_url' => config('app.url'),
             'faq_url' => url(route('faq')),
             'boter_moski' => $personData->gender === PersonData::GENDER_MALE,
             'boter_ime' => $personData->first_name ?? '/',
@@ -47,7 +47,7 @@ class SponsorshipMailTest extends TestCase
 
         $expectedParams = [
             'to' => $personData->email,
-            'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
+            'bcc' => config('mail.vars.bcc_copy_address'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
             'template' => 'navodila_za_botrstvo_nakazilo',
             'h:X-Mailgun-Variables' => json_encode($expectedVariables),

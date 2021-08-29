@@ -15,7 +15,7 @@ class MailClient
     public function __construct(Mailgun $client)
     {
         $this->client = $client;
-        $this->domain = env('MAILGUN_DOMAIN');
+        $this->domain = config('services.mailgun.domain');
     }
 
     public function send(array $params)
@@ -24,13 +24,13 @@ class MailClient
             return;
         }
 
-        if (env('APP_ENV') !== 'production') {
-            $params['to'] = env('MAIL_TEST_TO');
+        if (config('app.env') !== 'production') {
+            $params['to'] = config('mail.vars.test_to_address');
         }
 
         $this->client->messages()->send(
             $this->domain,
-            array_merge(['from' => env('MAIL_FROM_ADDRESS')], $params)
+            array_merge(['from' => config('mail.from.address')], $params)
         );
     }
 
@@ -87,7 +87,7 @@ class MailClient
 
     protected function constructListAddress(string $list): string
     {
-        return sprintf('%s@%s', $list, env('MAILGUN_DOMAIN'));
+        return sprintf('%s@%s', $list, config('services.mailgun.domain'));
     }
 
     protected function logException(Exception $e)

@@ -48,7 +48,7 @@ class CatDetailsTest extends DuskTestCase
                 $b->assertAttribute(
                     '@cat-details-photo-' . $index,
                     'src',
-                    env('APP_URL') . $cat->getPhotoByIndex($index)->url,
+                    config('app.url') . $cat->getPhotoByIndex($index)->url,
                 );
             }
         });
@@ -99,7 +99,7 @@ class CatDetailsTest extends DuskTestCase
                 $b->assertAttribute(
                     '@cat-details-photo-' . $index,
                     'src',
-                    env('APP_URL') . $cat->getPhotoByIndex($index)->url,
+                    config('app.url') . $cat->getPhotoByIndex($index)->url,
                 );
             }
         });

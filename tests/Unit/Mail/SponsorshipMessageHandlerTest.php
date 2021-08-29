@@ -32,7 +32,7 @@ class SponsorshipMessageHandlerTest extends TestCase
             ->once()
             ->with([
                 'to' => $msg->sponsor->email,
-                'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
+                'bcc' => config('mail.vars.bcc_copy_address'),
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
                 'h:X-Mailgun-Variables' => json_encode([
@@ -62,7 +62,7 @@ class SponsorshipMessageHandlerTest extends TestCase
             ->once()
             ->with([
                 'to' => $msg->sponsor->email,
-                'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
+                'bcc' => config('mail.vars.bcc_copy_address'),
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
                 'h:X-Mailgun-Variables' => json_encode([
@@ -92,7 +92,7 @@ class SponsorshipMessageHandlerTest extends TestCase
             ->once()
             ->with([
                 'to' => $msg->sponsor->email,
-                'bcc' => env('MAIL_BCC_COPY_ADDRESS'),
+                'bcc' => config('mail.vars.bcc_copy_address'),
                 'subject' => $msg->messageType->subject,
                 'template' => $msg->messageType->template_id,
                 'h:X-Mailgun-Variables' => json_encode([

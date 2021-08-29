@@ -9,13 +9,13 @@ class TemplateApiClient
     public function retrieveTemplate(string $templateId): string
     {
         $requestUrl =
-            env('MAILGUN_ENDPOINT') .
+            config('services.mailgun.endpoint') .
             '/v3/' .
-            env('MAILGUN_DOMAIN') .
+            config('services.mailgun.domain') .
             '/templates/' .
             $templateId;
 
-        $client = Http::withBasicAuth('api', env('MAILGUN_SECRET'));
+        $client = Http::withBasicAuth('api', config('services.mailgun.secret'));
         $response = $client->get($requestUrl, ['active' => 'yes']);
 
         if (!$response->successful()) {
