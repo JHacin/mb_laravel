@@ -3,7 +3,6 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Sponsorship;
-use Mockery;
 use Tests\TestCase;
 
 /**
@@ -33,16 +32,51 @@ class SponsorshipTest extends TestCase
         $this->assertTrue(Sponsorship::all()->contains($this->sponsorship->id));
     }
 
+    public function test_returns_correct_payment_purpose()
+    {
+        // without relations
+        $this->assertEquals('/', $this->createSponsorship(['cat_id' => null])->payment_purpose);
+        $this->assertNotEquals('/', $this->createSponsorshipWithCatAndSponsor()->payment_purpose);
+
+        // with relations
+        $sponsorship = $this->createSponsorshipWithCatAndSponsor();
+
+        $sponsorship->cat->update(['name' => 'muca']);
+        $this->assertEquals(
+            'BOTER-MUCA-' . $sponsorship->cat_id,
+            $sponsorship->payment_purpose
+        );
+
+        $sponsorship->cat->update(['name' => 'muca s presledki']);
+        $this->assertEquals(
+            'BOTER-MUCA-S-PRESLEDKI-' . $sponsorship->cat_id,
+            $sponsorship->payment_purpose
+        );
+
+        $sponsorship->cat->update(['name' => 'muca čšž']);
+        $this->assertEquals(
+            'BOTER-MUCA-ČŠŽ-' . $sponsorship->cat_id,
+            $sponsorship->payment_purpose
+        );
+    }
+
     public function test_returns_correct_payment_reference_number()
     {
-        $fieldGeneratorMock = Mockery::mock('alias:App\Utilities\BankTransferFieldGenerator');
+        $sponsorship = $this->createSponsorship();
 
-        $fieldGeneratorMock
-            ->shouldReceive('referenceNumber')
-            ->once()
-            ->with($this->sponsorship)
-            ->andReturn('MOCK_REF');
+        // without relations
+        $sponsorship->cat()->dissociate();
+        $sponsorship->sponsor()->dissociate();
+        $this->assertEquals('/', $sponsorship->payment_reference_number);
 
-        $this->assertEquals('MOCK_REF', $this->sponsorship->payment_reference_number);
+        $sponsorship->cat()->associate($this->createCat());
+        $this->assertEquals('/', $sponsorship->payment_reference_number);
+
+        // with relations
+        $sponsorship->sponsor()->associate($this->createPersonData());
+        $this->assertEquals(
+            sprintf('SI00 80-%s-%s', $sponsorship->cat_id, $sponsorship->sponsor_id),
+            $sponsorship->payment_reference_number
+        );
     }
 }

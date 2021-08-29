@@ -6,7 +6,6 @@ use App\Mail\Client\MailClient;
 use App\Mail\SponsorshipMail;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
-use App\Utilities\BankTransferFieldGenerator;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -42,7 +41,7 @@ class SponsorshipMailTest extends TestCase
             'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
             'muca_ime' => $cat->name,
             'muca_povezava' => url(route('cat_details', $cat)),
-            'namen_nakazila' => BankTransferFieldGenerator::purpose($sponsorship),
+            'namen_nakazila' => $sponsorship->payment_purpose,
             'referencna_stevilka' => $sponsorship->payment_reference_number,
         ];
 

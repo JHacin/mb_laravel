@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Traits\ClearsGlobalScopes;
-use App\Utilities\BankTransferFieldGenerator;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +27,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Cat|null $cat
+ * @property-read string $payment_purpose
  * @property-read string $payment_reference_number
  * @property-read PersonData|null $payer
  * @property-read PersonData|null $sponsor
@@ -48,7 +48,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Sponsorship whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class Sponsorship extends Model
+class Sponsorship extends Model implements BankTransferFields
 {
     use HasFactory, CrudTrait, ClearsGlobalScopes;
 
@@ -148,10 +148,24 @@ class Sponsorship extends Model
     |--------------------------------------------------------------------------
     */
 
-    /** @noinspection PhpUnused */
+    public function getPaymentPurposeAttribute(): string
+    {
+        if (!$this->cat) {
+            return '/';
+        }
+
+        $formattedCatName = mb_strtoupper(str_replace(' ', '-', $this->cat->name));
+
+        return 'BOTER-' . $formattedCatName . '-' . $this->cat->id;
+    }
+
     public function getPaymentReferenceNumberAttribute(): string
     {
-        return BankTransferFieldGenerator::referenceNumber($this);
+        if (!$this->cat || !$this->sponsor) {
+            return '/';
+        }
+
+        return 'SI00 80-' . $this->cat_id . '-' . $this->sponsor_id;
     }
 
     /*
