@@ -5,31 +5,18 @@ namespace Tests\Unit\Models;
 use App\Models\Sponsorship;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class SponsorshipTest extends TestCase
 {
-    protected Sponsorship $sponsorship;
-
-    /**
-     * @inheritDoc
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->sponsorship = $this->createSponsorship();
-    }
-
     public function test_filters_out_inactive_sponsorships_by_default()
     {
-        $this->sponsorship->update(['is_active' => false]);
-        $this->assertFalse(Sponsorship::all()->contains($this->sponsorship->id));
-        $this->assertTrue(Sponsorship::withoutGlobalScopes()->get()->contains($this->sponsorship->id));
+        $sponsorship = $this->createSponsorship();
 
-        $this->sponsorship->update(['is_active' => true]);
-        $this->assertTrue(Sponsorship::all()->contains($this->sponsorship->id));
+        $sponsorship->update(['is_active' => false]);
+        $this->assertFalse(Sponsorship::all()->contains($sponsorship->id));
+        $this->assertTrue(Sponsorship::withoutGlobalScopes()->get()->contains($sponsorship->id));
+
+        $sponsorship->update(['is_active' => true]);
+        $this->assertTrue(Sponsorship::all()->contains($sponsorship->id));
     }
 
     public function test_returns_correct_payment_purpose()
@@ -75,7 +62,7 @@ class SponsorshipTest extends TestCase
         // with relations
         $sponsorship->sponsor()->associate($this->createPersonData());
         $this->assertEquals(
-            sprintf('SI00 80-%s-%s', $sponsorship->cat_id, $sponsorship->sponsor_id),
+            sprintf('SI00 80-0%s-%s', $sponsorship->cat_id, $sponsorship->sponsor_id),
             $sponsorship->payment_reference_number
         );
     }

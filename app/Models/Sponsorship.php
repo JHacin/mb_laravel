@@ -165,7 +165,7 @@ class Sponsorship extends Model implements BankTransferFields
             return '/';
         }
 
-        return 'SI00 80-' . $this->cat_id . '-' . $this->sponsor_id;
+        return 'SI00 80-0' . $this->cat_id . '-' . $this->sponsor_id;
     }
 
     /*

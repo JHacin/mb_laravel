@@ -45,6 +45,11 @@ class SpecialSponsorshipCrudController extends CrudController
     {
         $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn([
+            'name' => 'payment_reference_number',
+            'label' => trans('sponsorship.payment_reference_number'),
+            'type' => 'text',
+        ]);
+        $this->crud->addColumn([
             'name' => 'type_label',
             'label' => trans('special_sponsorship.type'),
             'type' => 'text',

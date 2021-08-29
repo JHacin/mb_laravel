@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
+
 /**
  * App\Models\SpecialSponsorship
  *
@@ -22,6 +23,8 @@ use Illuminate\Support\Carbon;
  * @property int $is_anonymous
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read string $payment_purpose
+ * @property-read string $payment_reference_number
  * @property-read string $type_label
  * @property-read PersonData|null $payer
  * @property-read PersonData|null $sponsor
@@ -39,7 +42,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|SpecialSponsorship whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class SpecialSponsorship extends Model
+class SpecialSponsorship extends Model implements BankTransferFields
 {
     use CrudTrait, HasFactory;
 
@@ -125,6 +128,15 @@ class SpecialSponsorship extends Model
         return self::TYPE_LABELS[$this->type];
     }
 
+    public function getPaymentPurposeAttribute(): string
+    {
+        return 'POSEBNI-BOTER-' . $this->type;
+    }
+
+    public function getPaymentReferenceNumberAttribute(): string
+    {
+        return 'SI00 80-1' . $this->type . '-' . $this->id;
+    }
 
     /*
     |--------------------------------------------------------------------------
