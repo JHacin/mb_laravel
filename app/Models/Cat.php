@@ -101,6 +101,11 @@ class Cat extends Model
         self::STATUS_ADOPTED => 'v novem domu',
         self::STATUS_RIP => 'RIP',
     ];
+    public const STATUSES_EXCLUDED_FROM_PUBLIC = [
+        self::STATUS_NOT_SEEKING_SPONSORS,
+        self::STATUS_ADOPTED,
+        self::STATUS_RIP,
+    ];
 
     public const PER_PAGE_12 = 12;
     public const PER_PAGE_24 = 24;
@@ -207,14 +212,7 @@ class Cat extends Model
     protected static function booted()
     {
         static::addGlobalScope('status', function (Builder $builder) {
-            $builder->whereNotIn(
-                'status',
-                [
-                    self::STATUS_NOT_SEEKING_SPONSORS,
-                    self::STATUS_ADOPTED,
-                    self::STATUS_RIP,
-                ]
-            );
+            $builder->whereNotIn('status', self::STATUSES_EXCLUDED_FROM_PUBLIC);
         });
     }
 
@@ -257,4 +255,31 @@ class Cat extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD-RELATED FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /** @noinspection PhpUnused */
+    public function openViewFromCrud(): string
+    {
+        $classes = 'btn btn-sm btn-link';
+
+        if (in_array($this->status, self::STATUSES_EXCLUDED_FROM_PUBLIC)) {
+            $classes .= ' disabled';
+        }
+
+        return '
+            <a
+                href="' . route('cat_details', $this) . '"
+                class="' . $classes . '"
+                target="_blank"
+            >
+              <i class="la la-eye"></i>
+              Ogled
+            </a>
+        ';
+    }
 }
