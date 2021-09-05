@@ -16,6 +16,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
+use Backpack\ReviseOperation\ReviseOperation;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ class CatCrudController extends CrudController
     use CreateOperation { store as traitStore; }
     use UpdateOperation { update as traitUpdate; }
     use DeleteOperation;
+    use ReviseOperation;
     use CrudFilterHelpers, ClearsModelGlobalScopes;
 
     private CatPhotoService $catPhotoService;

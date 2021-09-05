@@ -12,6 +12,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
+use Backpack\ReviseOperation\ReviseOperation;
 use Exception;
 
 /**
@@ -25,6 +26,7 @@ class CatLocationCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
+    use ReviseOperation;
 
     /**
      * @return void

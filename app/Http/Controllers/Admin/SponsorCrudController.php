@@ -14,6 +14,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
+use Backpack\ReviseOperation\ReviseOperation;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -31,6 +32,7 @@ class SponsorCrudController extends CrudController
     use UpdateOperation;
     use DeleteOperation;
     use CrudFilterHelpers;
+    use ReviseOperation;
 
     /**
      * @throws Exception

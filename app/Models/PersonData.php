@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 
 /**
@@ -58,7 +59,7 @@ use Illuminate\Support\Carbon;
  */
 class PersonData extends Model
 {
-    use HasFactory, CrudTrait;
+    use HasFactory, CrudTrait, RevisionableTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -191,4 +192,15 @@ class PersonData extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD-RELATED FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public function identifiableName(): string
+    {
+        return $this->email;
+    }
 }

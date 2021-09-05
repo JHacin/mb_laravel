@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 
 /**
@@ -57,7 +58,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, CrudTrait;
+    use HasFactory, Notifiable, HasRoles, CrudTrait, RevisionableTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -197,4 +198,15 @@ class User extends Authenticatable
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD-RELATED FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public function identifiableName(): string
+    {
+        return $this->email;
+    }
 }

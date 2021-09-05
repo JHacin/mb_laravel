@@ -12,6 +12,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
+use Backpack\ReviseOperation\ReviseOperation;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +27,7 @@ class SponsorshipMessageTypeCrudController extends CrudController
     use CreateOperation;
     use UpdateOperation;
     use DeleteOperation;
+    use ReviseOperation;
 
     /**
      * @throws Exception
@@ -46,9 +48,7 @@ class SponsorshipMessageTypeCrudController extends CrudController
         $user = Auth::user();
 
         if (!$user->hasRole(User::ROLE_SUPER_ADMIN)) {
-            $this->crud->denyAccess('create');
-            $this->crud->denyAccess('update');
-            $this->crud->denyAccess('delete');
+            $this->crud->denyAccess(['create', 'update', 'delete', 'revise']);
         }
     }
 

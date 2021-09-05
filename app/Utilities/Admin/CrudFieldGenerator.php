@@ -100,7 +100,7 @@ class CrudFieldGenerator
             'attributes' => [
                 'min' => '0.00',
                 'max' => config('money.decimal_max'),
-                'step' => '0.01',
+                'step' => '1',
                 'placeholder' => '0.00'
             ],
         ], $additions);

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Utilities\Admin\CrudColumnGenerator;
 use App\Utilities\Admin\CrudFieldGenerator;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
+use Backpack\ReviseOperation\ReviseOperation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use Illuminate\Http\Request;
 class UserCrudController extends BackpackUserCrudController
 {
     use CrudFilterHelpers;
+    use ReviseOperation;
 
     private UserMail $userMail;
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 
 /**
@@ -44,7 +45,7 @@ use Illuminate\Support\Carbon;
  */
 class SpecialSponsorship extends Model implements BankTransferFields
 {
-    use CrudTrait, HasFactory;
+    use CrudTrait, RevisionableTrait, HasFactory;
 
     /*
     |--------------------------------------------------------------------------
@@ -143,4 +144,15 @@ class SpecialSponsorship extends Model implements BankTransferFields
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD-RELATED FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public function identifiableName(): string
+    {
+        return $this->id;
+    }
 }

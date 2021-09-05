@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * App\Models\CatLocation
@@ -39,7 +40,7 @@ use Illuminate\Support\Carbon;
  */
 class CatLocation extends Model
 {
-    use CrudTrait, HasFactory;
+    use CrudTrait, RevisionableTrait, HasFactory;
 
     /*
     |--------------------------------------------------------------------------
@@ -89,4 +90,15 @@ class CatLocation extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD-RELATED FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public function identifiableName(): string
+    {
+        return $this->name;
+    }
 }

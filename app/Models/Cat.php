@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * App\Models\Cat
@@ -63,7 +64,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Cat extends Model
 {
-    use HasFactory, CrudTrait, HasSlug, ClearsGlobalScopes;
+    use HasFactory, CrudTrait, RevisionableTrait, HasSlug, ClearsGlobalScopes;
 
     /*
     |--------------------------------------------------------------------------
@@ -281,5 +282,10 @@ class Cat extends Model
               Ogled
             </a>
         ';
+    }
+
+    public function identifiableName(): string
+    {
+        return $this->name;
     }
 }

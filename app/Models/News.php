@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
  * App\Models\News
@@ -29,7 +30,7 @@ use Illuminate\Support\Carbon;
  */
 class News extends Model
 {
-    use CrudTrait, HasFactory;
+    use CrudTrait, RevisionableTrait, HasFactory;
 
     /*
     |--------------------------------------------------------------------------
@@ -69,4 +70,15 @@ class News extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD-RELATED FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public function identifiableName(): string
+    {
+        return $this->title;
+    }
 }
