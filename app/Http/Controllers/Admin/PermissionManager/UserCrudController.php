@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\PermissionManager;
 
+use App\Http\Controllers\Admin\Traits\CrudFilterHelpers;
 use App\Http\Requests\Admin\AdminUserCreateRequest;
 use App\Http\Requests\Admin\AdminUserUpdateRequest;
 use App\Mail\UserMail;
@@ -15,6 +16,8 @@ use Illuminate\Http\Request;
 
 class UserCrudController extends BackpackUserCrudController
 {
+    use CrudFilterHelpers;
+
     private UserMail $userMail;
 
     public function __construct(UserMail $userMail)
@@ -66,6 +69,8 @@ class UserCrudController extends BackpackUserCrudController
         $this->crud->addColumn(CrudColumnGenerator::isActive());
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
+
+        $this->addBooleanFilter('is_active', trans('user.is_active'));
     }
 
     /**

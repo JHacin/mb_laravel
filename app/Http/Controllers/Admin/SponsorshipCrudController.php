@@ -180,8 +180,9 @@ class SponsorshipCrudController extends CrudController
             }
         );
 
-        $this->addBooleanFilter('is_active', 'Aktivno');
-        $this->addBooleanFilter('is_gift', 'Podarjeno');
+        $this->addBooleanFilter('is_anonymous', trans('sponsorship.is_anonymous'));
+        $this->addBooleanFilter('is_active', trans('sponsorship.is_active'));
+        $this->addBooleanFilter('is_gift', trans('sponsorship.is_gift'));
     }
 
 
@@ -291,6 +292,7 @@ class SponsorshipCrudController extends CrudController
         ]));
     }
 
+    /** @noinspection PhpUnused */
     public function cancelSponsorship(Sponsorship $sponsorship): RedirectResponse
     {
         $this->crud->hasAccessOrFail('update');

@@ -7,5 +7,6 @@ return [
     'payer' => 'Plačnik',
     'is_anonymous' => 'Anonimno',
     'is_active' => 'Aktivno',
+    'is_gift' => 'Podarjeno',
     'payment_reference_number' => 'Referenca',
 ];
