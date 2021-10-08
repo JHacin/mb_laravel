@@ -12,6 +12,7 @@ folders:
 sites:
   - map: homestead.test
     to: /home/vagrant/code/public
+    php: "8.0"
 databases:
   - macjiboter
 features:
