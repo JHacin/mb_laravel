@@ -48,6 +48,20 @@
 
                 <x-form-groups.payer-data />
 
+                <div class="columns">
+                    <div class="column is-12">
+                        <x-inputs.money
+                            name="amount"
+                            label="{{ trans('special_sponsorship.amount') }}"
+                            required
+                            min="{{ \App\Models\SpecialSponsorship::TYPE_AMOUNTS[$selectedType] }}"
+                            value="{{ \App\Models\SpecialSponsorship::TYPE_AMOUNTS[$selectedType] }}"
+                        >
+                            <x-slot name="help">Če želite, lahko donirate višji znesek.</x-slot>
+                        </x-inputs.money>
+                    </div>
+                </div>
+
                 <hr>
 
                 <x-form-groups.giftee-data />
@@ -59,3 +73,29 @@
         </div>
     </div>
 @endsection
+
+@push('footer-scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            handleTypeChanges();
+        });
+
+        function handleTypeChanges() {
+            const typeSelect = document.querySelector('select[name="type"]')
+            const amountInput = document.querySelector('input[type="number"][name="amount"]')
+            const amounts = @json(\App\Models\SpecialSponsorship::TYPE_AMOUNTS);
+
+            typeSelect.addEventListener('change', function(ev) {
+                const type = ev.target.value;
+                const newMinAmount = amounts[type]
+
+                amountInput.setAttribute('min', newMinAmount);
+
+                if (Number(amountInput.value) < newMinAmount) {
+                    amountInput.value = newMinAmount;
+                }
+            });
+        }
+
+    </script>
+@endpush
