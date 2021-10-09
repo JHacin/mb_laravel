@@ -14,9 +14,6 @@ class SpecialSponsorshipFactory extends Factory
      */
     protected $model = SpecialSponsorship::class;
 
-    /**
-     * @return array
-     */
     public function definition(): array
     {
         return [
@@ -26,6 +23,7 @@ class SpecialSponsorshipFactory extends Factory
             'confirmed_at' => $this->faker->dateTimeBetween('-1 years', '-1 day'),
             'is_anonymous' => $this->faker->boolean(80),
             'is_gift' => false,
+            'amount' => $this->faker->numberBetween(5, 100),
         ];
     }
 }

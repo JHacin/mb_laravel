@@ -15,6 +15,7 @@ class CreateSpecialSponsorshipsTable extends Migration
             $table->boolean('is_gift')->default(false);
             $table->date('confirmed_at')->nullable();
             $table->boolean('is_anonymous')->default(false);
+            $table->decimal('amount')->nullable();
             $table->timestamps();
         });
     }

@@ -100,6 +100,10 @@ class SpecialSponsorshipCrudController extends CrudController
             'label' => trans('special_sponsorship.is_anonymous'),
             'type' => 'boolean',
         ]);
+        $this->crud->addColumn(CrudColumnGenerator::moneyColumn([
+            'name' => 'amount',
+            'label' => trans('special_sponsorship.amount')
+        ]));
         $this->crud->addColumn(CrudColumnGenerator::createdAt());
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
 
@@ -204,6 +208,14 @@ class SpecialSponsorshipCrudController extends CrudController
                 'dusk' => 'payer-wrapper'
             ]
         ]);
+
+        $this->crud->addField(CrudFieldGenerator::moneyField([
+            'name' => 'amount',
+            'label' => trans('special_sponsorship.amount'),
+            'wrapper' => [
+                'dusk' => 'amount-wrapper'
+            ]
+        ]));
 
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'confirmed_at',
