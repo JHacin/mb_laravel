@@ -81,6 +81,16 @@ class SpecialSponsorship extends Model implements BankTransferFields
         self::TYPE_FIP_BOJEVNIK_ZA_1_TEDEN => 'FIP bojevnik za en teden',
     ];
 
+    public const TYPE_AMOUNTS = [
+        self::TYPE_BOTER_MESECA => 10,
+        self::TYPE_MUC_GRE_BREZ_SKRBI_V_NOVE_DNI => 25,
+        self::TYPE_MUCA_GRE_BREZ_SKRBI_V_NOVE_DNI => 35,
+        self::TYPE_NOV_ZACETEK => 60,
+        self::TYPE_FIP_BOJEVNIK_ZA_1_DAN => 25,
+        self::TYPE_FIP_BOJEVNIK_ZA_2_DNI => 50,
+        self::TYPE_FIP_BOJEVNIK_ZA_1_TEDEN => 175,
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
