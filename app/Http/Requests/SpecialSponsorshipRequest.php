@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\PersonData;
+use App\Models\SpecialSponsorship;
 use App\Rules\CountryCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -38,6 +39,7 @@ class SpecialSponsorshipRequest extends FormRequest
             'is_anonymous' => ['boolean'],
             'is_gift' => [Rule::in(['yes', 'no'])],
             'is_agreed_to_terms' => ['accepted'],
+            'amount' => ['required', 'numeric', 'min:' . SpecialSponsorship::TYPE_AMOUNTS[$this->input('type')]],
         ];
     }
 
@@ -52,7 +54,8 @@ class SpecialSponsorshipRequest extends FormRequest
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
             'giftee.email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
-                ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
+                ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
+            'amount.min' => 'Znesek mora biti vsaj :min €.'
         ];
     }
 }
