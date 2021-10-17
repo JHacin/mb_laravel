@@ -19,9 +19,9 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property int|null $type
  * @property int|null $sponsor_id
  * @property int|null $payer_id
- * @property int $is_gift
- * @property string|null $confirmed_at
- * @property int $is_anonymous
+ * @property bool $is_gift
+ * @property bool $is_anonymous
+ * @property Carbon|null $confirmed_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read string $payment_purpose
@@ -99,6 +99,17 @@ class SpecialSponsorship extends Model implements BankTransferFields
 
     protected $table = 'special_sponsorships';
     protected $guarded = ['id'];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_anonymous' => 'boolean',
+        'is_gift' => 'boolean',
+        'confirmed_at' => 'date',
+    ];
 
     /*
     |--------------------------------------------------------------------------

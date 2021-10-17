@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Settings\Settings;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -11,16 +12,16 @@ class SettingsSeeder extends Seeder
     {
         $settings = [
             [
-                'key' => config('settings.enable_emails'),
+                'key' => Settings::KEY_ENABLE_EMAILS,
                 'name' => 'Omogoči pošiljanje mailov',
-                'value' => config('settings.value_false'),
+                'value' => Settings::VALUE_FALSE,
                 'field' => '{"name":"value","label":"Veljavno?","type":"checkbox"}',
                 'active' => 1,
             ],
             [
-                'key' => config('settings.enable_mailing_lists'),
+                'key' => Settings::KEY_ENABLE_MAILING_LISTS,
                 'name' => 'Omogoči mailing sezname',
-                'value' => config('settings.value_false'),
+                'value' => Settings::VALUE_FALSE,
                 'field' => '{"name":"value","label":"Veljavno?","type":"checkbox"}',
                 'active' => 1,
             ],

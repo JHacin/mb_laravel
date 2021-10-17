@@ -20,7 +20,7 @@ class MailClient
 
     public function send(array $params)
     {
-        if (!Settings::hasValueTrue(config('settings.enable_emails'))) {
+        if (!Settings::hasValueTrue(Settings::KEY_ENABLE_EMAILS)) {
             return;
         }
 
@@ -36,7 +36,7 @@ class MailClient
 
     public function addMemberToList(string $list, string $email, array $variables)
     {
-        if (!Settings::hasValueTrue(config('settings.enable_mailing_lists'))) {
+        if (!Settings::hasValueTrue(Settings::KEY_ENABLE_MAILING_LISTS)) {
             return;
         }
 
@@ -54,7 +54,7 @@ class MailClient
 
     public function updateListMember(string $list, string $email, array $parameters)
     {
-        if (!Settings::hasValueTrue(config('settings.enable_mailing_lists'))) {
+        if (!Settings::hasValueTrue(Settings::KEY_ENABLE_MAILING_LISTS)) {
             return;
         }
 
@@ -71,7 +71,7 @@ class MailClient
 
     public function removeMemberFromList(string $list, string $email)
     {
-        if (!Settings::hasValueTrue(config('settings.enable_mailing_lists'))) {
+        if (!Settings::hasValueTrue(Settings::KEY_ENABLE_MAILING_LISTS)) {
             return;
         }
 

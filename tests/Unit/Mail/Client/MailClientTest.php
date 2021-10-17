@@ -41,7 +41,7 @@ class MailClientTest extends TestCase
 
     public function test_sends_message_with_params()
     {
-        $this->enableSetting(config('settings.enable_emails'));
+        $this->enableSetting(Settings::KEY_ENABLE_EMAILS);
 
         $params = [
             'to' => config('mail.vars.test_to_address'),
@@ -62,7 +62,7 @@ class MailClientTest extends TestCase
 
     public function test_adds_member_to_list()
     {
-        $this->enableSetting(config('settings.enable_mailing_lists'));
+        $this->enableSetting(Settings::KEY_ENABLE_MAILING_LISTS);
 
         $variables = ['var' => 'value'];
 
@@ -76,7 +76,7 @@ class MailClientTest extends TestCase
 
     public function test_updates_list_member()
     {
-        $this->enableSetting(config('settings.enable_mailing_lists'));
+        $this->enableSetting(Settings::KEY_ENABLE_MAILING_LISTS);
 
         $parameters = ['param' => 'value'];
 
@@ -90,7 +90,7 @@ class MailClientTest extends TestCase
 
     public function test_removes_member_from_list()
     {
-        $this->enableSetting(config('settings.enable_mailing_lists'));
+        $this->enableSetting(Settings::KEY_ENABLE_MAILING_LISTS);
 
         $this->mailgunMock
             ->shouldReceive('mailingList->member->delete')

@@ -24,29 +24,28 @@ class SponsorshipMailTest extends TestCase
             'cat_id' => $this->createCat()->id, //Todo: figure out why the test fails if this is removed
             'payment_type' => Sponsorship::PAYMENT_TYPE_BANK_TRANSFER
         ]);
-        $personData = $sponsorship->sponsor;
+        $sponsor = $sponsorship->sponsor;
         $cat = $sponsorship->cat;
 
         $expectedVariables = [
             'app_url' => config('app.url'),
-            'faq_url' => url(route('faq')),
-            'boter_moski' => $personData->gender === PersonData::GENDER_MALE,
-            'boter_ime' => $personData->first_name ?? '/',
-            'boter_priimek' => $personData->last_name ?? '/',
-            'boter_naslov' => $personData->address ?? '/',
-            'boter_postna_stevilka' => $personData->zip_code ?? '/',
-            'boter_kraj' => $personData->city ?? '/',
-            'boter_drzava' => $personData->country ? CountryList::COUNTRY_NAMES[$personData->country] : '/',
-            'boter_email' => $personData->email,
-            'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
+            'boter_moski' => $sponsor->gender === PersonData::GENDER_MALE,
+            'boter_ime' => $sponsor->first_name ?? '/',
+            'boter_priimek' => $sponsor->last_name ?? '/',
+            'boter_naslov' => $sponsor->address ?? '/',
+            'boter_postna_stevilka' => $sponsor->zip_code ?? '/',
+            'boter_kraj' => $sponsor->city ?? '/',
+            'boter_drzava' => $sponsor->country ? CountryList::COUNTRY_NAMES[$sponsor->country] : '/',
+            'boter_email' => $sponsor->email,
             'muca_ime' => $cat->name,
             'muca_povezava' => url(route('cat_details', $cat)),
+            'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
             'namen_nakazila' => $sponsorship->payment_purpose,
             'referencna_stevilka' => $sponsorship->payment_reference_number,
         ];
 
         $expectedParams = [
-            'to' => $personData->email,
+            'to' => $sponsor->email,
             'bcc' => config('mail.vars.bcc_copy_address'),
             'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
             'template' => 'navodila_za_botrstvo_nakazilo',
@@ -78,14 +77,14 @@ class SponsorshipMailTest extends TestCase
         // MALE SPONSOR
         $expectedVariables = array_merge($expectedVariables, ['boter_moski' => true]);
         $expectedParams = array_merge($expectedParams, ['h:X-Mailgun-Variables' => json_encode($expectedVariables)]);
-        $personData->update(['gender' => PersonData::GENDER_MALE]);
+        $sponsor->update(['gender' => PersonData::GENDER_MALE]);
         $mailClientMock->shouldReceive('send')->once()->with($expectedParams);
         $this->app->make(SponsorshipMail::class)->sendInitialInstructionsEmail($sponsorship);
 
         // FEMALE SPONSOR
         $expectedVariables = array_merge($expectedVariables, ['boter_moski' => false]);
         $expectedParams = array_merge($expectedParams, ['h:X-Mailgun-Variables' => json_encode($expectedVariables)]);
-        $personData->update(['gender' => PersonData::GENDER_FEMALE]);
+        $sponsor->update(['gender' => PersonData::GENDER_FEMALE]);
         $mailClientMock->shouldReceive('send')->once()->with($expectedParams);
         $this->app->make(SponsorshipMail::class)->sendInitialInstructionsEmail($sponsorship);
     }

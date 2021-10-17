@@ -28,23 +28,32 @@ class SponsorshipMail
             ? 'navodila_za_botrstvo_nakazilo'
             : 'navodila_za_botrstvo_trajnik';
 
-        $personData = $sponsorship->sponsor;
+        $sponsor = $sponsorship->sponsor;
+        $payer = $sponsorship->payer ?? $sponsor;
         $cat = $sponsorship->cat;
 
         $variables = [
             'app_url' => config('app.url'),
-            'faq_url' => url(route('faq')),
-            'boter_moski' => $personData->gender === PersonData::GENDER_MALE,
-            'boter_ime' => $personData->first_name ?? '/',
-            'boter_priimek' => $personData->last_name ?? '/',
-            'boter_naslov' => $personData->address ?? '/',
-            'boter_postna_stevilka' => $personData->zip_code ?? '/',
-            'boter_kraj' => $personData->city ?? '/',
-            'boter_drzava' => $personData->country ? CountryList::COUNTRY_NAMES[$personData->country] : '/',
-            'boter_email' => $personData->email,
-            'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
+            'boter_moski' => $sponsor->gender === PersonData::GENDER_MALE,
+            'boter_ime' => $sponsor->first_name ?? '/',
+            'boter_priimek' => $sponsor->last_name ?? '/',
+            'boter_naslov' => $sponsor->address ?? '/',
+            'boter_postna_stevilka' => $sponsor->zip_code ?? '/',
+            'boter_kraj' => $sponsor->city ?? '/',
+            'boter_drzava' => $sponsor->country ? CountryList::COUNTRY_NAMES[$sponsor->country] : '/',
+            'boter_email' => $sponsor->email,
+            'placnik_ime' => $payer->first_name ?? '/',
+            'placnik_priimek' => $payer->last_name ?? '/',
+            'placnik_naslov' => $payer->address ?? '/',
+            'placnik_postna_stevilka' => $payer->zip_code ?? '/',
+            'placnik_kraj' => $payer->city ?? '/',
+            'placnik_drzava' => $payer->country ? CountryList::COUNTRY_NAMES[$payer->country] : '/',
+            'placnik_email' => $payer->email,
             'muca_ime' => $cat->name,
             'muca_povezava' => url(route('cat_details', $cat)),
+            'je_darilo' => $sponsorship->is_gift === true,
+            'je_anonimno' => $sponsorship->is_anonymous === true,
+            'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
             'namen_nakazila' => $sponsorship->payment_purpose,
             'referencna_stevilka' => $sponsorship->payment_reference_number,
         ];

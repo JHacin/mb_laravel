@@ -19,7 +19,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property int|null $cat_id
  * @property int|null $sponsor_id
  * @property int|null $payer_id
- * @property int $is_gift
+ * @property bool $is_gift
  * @property bool $is_anonymous
  * @property int $payment_type
  * @property string|null $monthly_amount
@@ -90,6 +90,7 @@ class Sponsorship extends Model implements BankTransferFields
         'ended_at' => 'date',
         'is_anonymous' => 'boolean',
         'is_active' => 'boolean',
+        'is_gift' => 'boolean',
     ];
 
     /*
