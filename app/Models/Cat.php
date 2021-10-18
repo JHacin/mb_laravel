@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\ClearsGlobalScopes;
 use App\Services\CatPhotoService;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\CatFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -44,6 +46,8 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property-read int|null $sponsorship_messages_count
  * @property-read Collection|Sponsorship[] $sponsorships
  * @property-read int|null $sponsorships_count
+ * @property-read Collection|Revision[] $revisionHistory
+ * @property-read int|null $revision_history_count
  * @method static Builder|Cat newModelQuery()
  * @method static Builder|Cat newQuery()
  * @method static Builder|Cat query()
@@ -60,6 +64,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static Builder|Cat whereStatus($value)
  * @method static Builder|Cat whereStory($value)
  * @method static Builder|Cat whereUpdatedAt($value)
+ * @method static CatFactory factory(...$parameters)
  * @mixin Eloquent
  */
 class Cat extends Model

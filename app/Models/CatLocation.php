@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\CatLocationFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -25,6 +27,8 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property Carbon|null $updated_at
  * @property-read Collection|Cat[] $cats
  * @property-read int|null $cats_count
+ * @property-read Collection|Revision[] $revisionHistory
+ * @property-read int|null $revision_history_count
  * @method static Builder|CatLocation newModelQuery()
  * @method static Builder|CatLocation newQuery()
  * @method static Builder|CatLocation query()
@@ -36,6 +40,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static Builder|CatLocation whereName($value)
  * @method static Builder|CatLocation whereUpdatedAt($value)
  * @method static Builder|CatLocation whereZipCode($value)
+ * @method static CatLocationFactory factory(...$parameters)
  * @mixin Eloquent
  */
 class CatLocation extends Model

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Mail\Client\MailClient;
 use App\Mail\Client\TemplateApiClient;
 use App\Mail\MailTemplateParser;
+use App\Mail\SpecialSponsorshipMail;
 use App\Mail\SponsorshipMail;
 use App\Mail\UserMail;
 use Handlebars\Handlebars;
@@ -31,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(SponsorshipMail::class, function (Application $app) {
             return new SponsorshipMail($app->make(MailClient::class));
+        });
+        $this->app->singleton(SpecialSponsorshipMail::class, function (Application $app) {
+            return new SpecialSponsorshipMail($app->make(MailClient::class));
         });
     }
 

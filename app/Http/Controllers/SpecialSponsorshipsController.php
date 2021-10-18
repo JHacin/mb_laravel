@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\HasSponsorshipForm;
 use App\Http\Requests\SpecialSponsorshipRequest;
+use App\Mail\SpecialSponsorshipMail;
 use App\Models\PersonData;
 use App\Models\SpecialSponsorship;
 use Illuminate\Http\Request;
@@ -13,6 +14,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class SpecialSponsorshipsController extends Controller
 {
     use HasSponsorshipForm;
+
+    private SpecialSponsorshipMail $sponsorshipMail;
+
+    public function __construct(SpecialSponsorshipMail $sponsorshipMail)
+    {
+        $this->sponsorshipMail = $sponsorshipMail;
+    }
 
     public function index(): View
     {
@@ -45,7 +53,7 @@ class SpecialSponsorshipsController extends Controller
 
         $sponsorship = $this->createSponsorship($payer, $giftee, $request->all());
 
-        // Todo: mail
+        $this->sponsorshipMail->sendInitialInstructionsEmail($sponsorship);
 
         return $this->successRedirect();
     }
@@ -63,6 +71,7 @@ class SpecialSponsorshipsController extends Controller
             'payer_id' => $isGift ? $payer->id : null,
             'is_gift' => $isGift,
             'is_anonymous' => $formInput['is_anonymous'] ?? false,
+            'amount' => $formInput['amount'],
         ];
 
         return SpecialSponsorship::create($params);

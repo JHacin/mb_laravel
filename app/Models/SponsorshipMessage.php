@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\SponsorshipMessageFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|SponsorshipMessage whereMessageTypeId($value)
  * @method static Builder|SponsorshipMessage whereSponsorId($value)
  * @method static Builder|SponsorshipMessage whereUpdatedAt($value)
+ * @method static SponsorshipMessageFactory factory(...$parameters)
  * @mixin Eloquent
  */
 class SponsorshipMessage extends Model

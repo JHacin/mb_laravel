@@ -4,12 +4,11 @@ namespace App\Mail;
 
 use App\Mail\Client\MailClient;
 use App\Models\PersonData;
-use App\Models\Sponsorship;
+use App\Models\SpecialSponsorship;
 use App\Utilities\CountryList;
 use App\Utilities\CurrencyFormat;
-use Storage;
 
-class SponsorshipMail
+class SpecialSponsorshipMail
 {
     private MailClient $mailClient;
 
@@ -18,19 +17,11 @@ class SponsorshipMail
         $this->mailClient = $mailClient;
     }
 
-    /**
-     * @param \App\Models\Sponsorship $sponsorship
-     * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
-     */
-    public function sendInitialInstructionsEmail(Sponsorship $sponsorship)
+    public function sendInitialInstructionsEmail(SpecialSponsorship $sponsorship)
     {
-        $template = $sponsorship->payment_type === Sponsorship::PAYMENT_TYPE_BANK_TRANSFER
-            ? 'navodila_za_botrstvo_nakazilo'
-            : 'navodila_za_botrstvo_trajnik';
 
         $sponsor = $sponsorship->sponsor;
         $payer = $sponsorship->payer ?? $sponsor;
-        $cat = $sponsorship->cat;
 
         $variables = [
             'app_url' => config('app.url'),
@@ -49,11 +40,10 @@ class SponsorshipMail
             'placnik_kraj' => $payer->city ?? '/',
             'placnik_drzava' => $payer->country ? CountryList::COUNTRY_NAMES[$payer->country] : '/',
             'placnik_email' => $payer->email,
-            'muca_ime' => $cat->name,
-            'muca_povezava' => url(route('cat_details', $cat)),
+            'vrsta_botrstva' => SpecialSponsorship::TYPE_LABELS[$sponsorship->type],
             'je_darilo' => $sponsorship->is_gift === true,
             'je_anonimno' => $sponsorship->is_anonymous === true,
-            'znesek' => CurrencyFormat::format($sponsorship->monthly_amount),
+            'znesek' => CurrencyFormat::format($sponsorship->amount),
             'namen_nakazila' => $sponsorship->payment_purpose,
             'referencna_stevilka' => $sponsorship->payment_reference_number,
         ];
@@ -61,19 +51,10 @@ class SponsorshipMail
         $params = [
             'to' => $payer->email,
             'bcc' => config('mail.vars.bcc_copy_address'),
-            'subject' => 'Navodila po izpolnitvi obrazca za pristop k botrstvu',
-            'template' => $template,
+            'subject' => 'Navodila po izpolnitvi obrazca za botrstvo',
+            'template' => 'navodila_za_posebno_botrstvo',
             'h:X-Mailgun-Variables' => json_encode($variables)
         ];
-
-        if ($sponsorship->payment_type === Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT) {
-            $params['attachment'] = [
-                [
-                    'filePath' => Storage::disk('public')->path('docs/trajnik_pooblastilo.pdf'),
-                    'filename' => 'trajnik_pooblastilo.pdf',
-                ]
-            ];
-        }
 
         $this->mailClient->send($params);
     }

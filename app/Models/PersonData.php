@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\PersonDataFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 
@@ -39,6 +41,8 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property-read Collection|Sponsorship[] $unscopedSponsorships
  * @property-read int|null $unscoped_sponsorships_count
  * @property-read User|null $user
+ * @property-read Collection|Revision[] $revisionHistory
+ * @property-read int|null $revision_history_count
  * @method static Builder|PersonData newModelQuery()
  * @method static Builder|PersonData newQuery()
  * @method static Builder|PersonData query()
@@ -55,6 +59,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static Builder|PersonData whereUpdatedAt($value)
  * @method static Builder|PersonData whereUserId($value)
  * @method static Builder|PersonData whereZipCode($value)
+ * @method static PersonDataFactory factory(...$parameters)
  * @mixin Eloquent
  */
 class PersonData extends Model

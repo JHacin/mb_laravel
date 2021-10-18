@@ -4,12 +4,15 @@ namespace App\Models;
 
 use App\Models\Traits\ClearsGlobalScopes;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\SponsorshipFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -32,6 +35,8 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property-read string $payment_reference_number
  * @property-read PersonData|null $payer
  * @property-read PersonData|null $sponsor
+ * @property-read Collection|Revision[] $revisionHistory
+ * @property-read int|null $revision_history_count
  * @method static Builder|Sponsorship newModelQuery()
  * @method static Builder|Sponsorship newQuery()
  * @method static Builder|Sponsorship query()
@@ -47,6 +52,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static Builder|Sponsorship wherePaymentType($value)
  * @method static Builder|Sponsorship whereSponsorId($value)
  * @method static Builder|Sponsorship whereUpdatedAt($value)
+ * @method static SponsorshipFactory factory(...$parameters)
  * @mixin Eloquent
  */
 class Sponsorship extends Model implements BankTransferFields

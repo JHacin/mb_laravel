@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\SpecialSponsorshipFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 
@@ -20,18 +23,23 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property int|null $sponsor_id
  * @property int|null $payer_id
  * @property bool $is_gift
- * @property bool $is_anonymous
  * @property Carbon|null $confirmed_at
+ * @property bool $is_anonymous
+ * @property string|null $amount
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read string $payment_purpose
  * @property-read string $payment_reference_number
  * @property-read string $type_label
  * @property-read PersonData|null $payer
+ * @property-read Collection|Revision[] $revisionHistory
+ * @property-read int|null $revision_history_count
  * @property-read PersonData|null $sponsor
+ * @method static SpecialSponsorshipFactory factory(...$parameters)
  * @method static Builder|SpecialSponsorship newModelQuery()
  * @method static Builder|SpecialSponsorship newQuery()
  * @method static Builder|SpecialSponsorship query()
+ * @method static Builder|SpecialSponsorship whereAmount($value)
  * @method static Builder|SpecialSponsorship whereConfirmedAt($value)
  * @method static Builder|SpecialSponsorship whereCreatedAt($value)
  * @method static Builder|SpecialSponsorship whereId($value)
@@ -152,7 +160,7 @@ class SpecialSponsorship extends Model implements BankTransferFields
 
     public function getPaymentPurposeAttribute(): string
     {
-        return 'POSEBNI-BOTER-' . $this->type;
+        return self::TYPE_LABELS[$this->type] . ' - ' . $this->sponsor->last_name;
     }
 
     public function getPaymentReferenceNumberAttribute(): string

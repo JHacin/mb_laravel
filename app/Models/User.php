@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\UserFactory;
 use Eloquent;
 use Hash;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +18,7 @@ use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+use Venturecraft\Revisionable\Revision;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 
@@ -40,6 +42,8 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property-read PersonData|null $personData
  * @property-read Collection|Role[] $roles
  * @property-read int|null $roles_count
+ * @property-read Collection|Revision[] $revisionHistory
+ * @property-read int|null $revision_history_count
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User permission($permissions)
@@ -54,6 +58,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
+ * @method static UserFactory factory(...$parameters)
  * @mixin Eloquent
  */
 class User extends Authenticatable

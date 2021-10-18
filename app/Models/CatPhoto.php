@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\CatPhotoService;
+use Database\Factories\CatPhotoFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,6 +34,7 @@ use Storage;
  * @method static Builder|CatPhoto whereUpdatedAt($value)
  * @method static Builder|CatPhoto whereIndex($value)
  * @method static Builder|CatPhoto whereFilename($value)
+ * @method static CatPhotoFactory factory(...$parameters)
  * @mixin Eloquent
  */
 class CatPhoto extends Model
