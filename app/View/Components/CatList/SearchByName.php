@@ -9,10 +9,11 @@ class SearchByName extends Component
 {
     use HasCatListQueryParams;
 
-    /**
-     * @return View|string
-     */
-    public function render()
+    public function __construct(public int $numResults)
+    {
+    }
+
+    public function render(): string|View
     {
         return view('components.cat-list.search-by-name', ['activeQueryParams' => $this->getQueryParameterArray()]);
     }

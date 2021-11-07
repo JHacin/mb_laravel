@@ -38,7 +38,7 @@
                     </div>
                     <div class="column is-12-mobile is-3-desktop is-2-fullhd">
                         <div class="block">
-                            <x-cat-list.search-by-name />
+                            <x-cat-list.search-by-name :numResults="$cats->total()" />
                         </div>
 
                         @if($cats->total() > 1)

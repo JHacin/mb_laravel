@@ -1,3 +1,5 @@
+@props(['numResults'])
+
 <form action="{{ route('cat_list') }}" method="GET">
     @foreach(['per_page', 'sponsorship_count', 'age', 'id'] as $query)
         @isset($query)
@@ -15,13 +17,21 @@
     </x-inputs.base.input>
 </form>
 @if(request('search'))
-    <div class="mt-1">
-        <a
-            class="has-text-primary"
-            href="{{ route('cat_list', array_merge($activeQueryParams, ['search' => null])) }}"
-            dusk="clear-search-link"
-        >
-            Počisti iskanje
-        </a>
+    <div class="mt-2">
+        <div class="mb-1">
+            <span class="has-text-weight-semibold">Št. rezultatov:</span>
+            <span>{{ $numResults }}</span>
+        </div>
+
+        <div>
+            <a
+                class="has-text-primary"
+                href="{{ route('cat_list', array_merge($activeQueryParams, ['search' => null])) }}"
+                dusk="clear-search-link"
+            >
+                Počisti iskanje
+            </a>
+        </div>
     </div>
+
 @endif
