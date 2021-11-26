@@ -1,4 +1,5 @@
 @php
+    /** @var array $field */
     $value = old($field['name']) ?? $field['default'] ?? '';
 @endphp
 
@@ -42,7 +43,7 @@
         </button>
     </div>
 
-    <div data-handle="crop-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div data-handle="crop-modal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,6 +76,8 @@
 
 @if ($crud->fieldTypeNotLoaded($field))
     @php
+        /** @var Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud */
+        /** @var array $field */
         $crud->markFieldTypeAsLoaded($field);
     @endphp
 
