@@ -267,8 +267,7 @@ class CatCrudController extends CrudController
                 continue;
             }
 
-            $filename = $this->catPhotoService->createImageFromBase64($request->get('photo_' . $index));
-            $this->catPhotoService->create($cat, $filename, $index);
+            $this->catPhotoService->create($cat, $request->get('photo_' . $index), $index);
         }
 
         return $response;
@@ -276,7 +275,6 @@ class CatCrudController extends CrudController
 
     public function update(): Response
     {
-        /** @var Response $response */
         $response = $this->traitUpdate();
 
         /** @var Cat $cat */
@@ -292,7 +290,7 @@ class CatCrudController extends CrudController
                 if ($existingImage) {
                     try {
                         $existingImage->delete();
-                    } catch (Exception $exception) {
+                    } catch (Exception) {
                         continue;
                     }
                 }
@@ -305,15 +303,12 @@ class CatCrudController extends CrudController
                 if ($existingImage) {
                     try {
                         $existingImage->delete();
-                    } catch (Exception $e) {
+                    } catch (Exception) {
                         continue;
                     }
                 }
 
-                $filename = $this->catPhotoService->createImageFromBase64($imagePath);
-                $this->catPhotoService->create($cat, $filename, $index);
-
-                continue;
+                $this->catPhotoService->create($cat, $imagePath, $index);
             }
         }
 
