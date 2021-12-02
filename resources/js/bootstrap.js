@@ -1,4 +1,3 @@
-import lodash from 'lodash';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/sl';
@@ -13,6 +12,5 @@ dayjs.locale('sl');
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window._ = lodash;
 window.dayjs = dayjs;
 window.flatpickr = flatpickr;
