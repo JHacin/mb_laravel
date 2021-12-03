@@ -5,6 +5,10 @@
         <div class="container is-max-desktop">
             <h1 class="title">Dogovor o posvojitvi na daljavo</h1>
 
+            <div id="v-app-cat-sponsor-form">
+                <v-cat-sponsor-form />
+            </div>
+
             @if(!$errors->isEmpty())
                 <x-notification type="danger">
                     <x-slot name="message">
@@ -65,3 +69,7 @@
         </div>
     </section>
 @endsection
+
+@push('footer-scripts')
+    <script src="{{ asset('js/cat-sponsor-form.js') }}"></script>
+@endpush
