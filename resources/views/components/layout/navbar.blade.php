@@ -33,7 +33,7 @@
 >
     <div class="navbar-brand">
         <a class="navbar-item" href="{{ route('home') }}" dusk="navbar-home-link">
-            <img class="nav-logo" src="{{ asset('/img/logo.png') }}" alt="Mačji boter">
+            <img class="nav-logo" src="{{ mix('img/logo.png') }}" alt="Mačji boter">
         </a>
 
         <a

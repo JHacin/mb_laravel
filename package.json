@@ -9,6 +9,7 @@
     },
     "devDependencies": {
         "@vue/compiler-sfc": "^3.2.23",
+        "autoprefixer": "^10.4.0",
         "browser-sync": "^2.27.7",
         "browser-sync-webpack-plugin": "^2.3.0",
         "cross-env": "^7.0.3",
@@ -17,10 +18,12 @@
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.22.1",
         "laravel-mix": "^6.0.39",
+        "postcss": "^8.4.4",
         "prettier": "2.5.0",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.26.11",
         "sass-loader": "^12.3.0",
+        "tailwindcss": "^2.2.19",
         "vue-loader": "^16.8.3"
     },
     "dependencies": {

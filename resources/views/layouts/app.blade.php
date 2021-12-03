@@ -9,7 +9,7 @@
 >
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -21,7 +21,8 @@
         <!-- Styles -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-        <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+        <link href="{{ mix('css/app-new.css') }}" rel="stylesheet">
+        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
         @stack('body-start-scripts')
@@ -56,7 +57,7 @@
                     >
                         <img
                             class="footer-related-link__image"
-                            src="{{ asset('/img/mh_logo.png') }}"
+                            src="{{ mix('img/mh_logo.png') }}"
                             alt="Mačja hiša"
                         >
                     </a>
@@ -67,7 +68,7 @@
                     >
                         <img
                             class="footer-related-link__image"
-                            src="{{ asset('/img/vet_logo.png') }}"
+                            src="{{ mix('img/vet_logo.png') }}"
                             alt="Veterina MH"
                         >
                     </a>
@@ -78,7 +79,7 @@
                     >
                         <img
                             class="footer-related-link__image"
-                            src="{{ asset('/img/combe_logo.png') }}"
+                            src="{{ mix('img/combe_logo.png') }}"
                             alt="Super Čombe"
                         >
                     </a>

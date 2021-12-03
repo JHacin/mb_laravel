@@ -8,6 +8,8 @@ mix.copyDirectory('resources/img', 'public/img')
 
 mix.js('resources/js/cat-sponsor-form.js', 'public/js').vue({ version: 3 });
 
+mix.postCss('resources/css/app-new.css', 'public/css', [require('tailwindcss')])
+
 if (mix.inProduction()) {
     mix.version();
 } else {

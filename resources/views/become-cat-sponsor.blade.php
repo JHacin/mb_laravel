@@ -71,5 +71,5 @@
 @endsection
 
 @push('footer-scripts')
-    <script src="{{ asset('js/cat-sponsor-form.js') }}"></script>
+    <script src="{{ mix('js/cat-sponsor-form.js') }}"></script>
 @endpush
