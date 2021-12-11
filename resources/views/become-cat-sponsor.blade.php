@@ -5,9 +5,9 @@
         <div class="container is-max-desktop">
             <h1 class="title">Dogovor o posvojitvi na daljavo</h1>
 
-            <div id="v-app-cat-sponsor-form">
-                <v-cat-sponsor-form />
-            </div>
+{{--            <div id="v-app-cat-sponsor-form">--}}
+{{--                <v-cat-sponsor-form />--}}
+{{--            </div>--}}
 
             @if(!$errors->isEmpty())
                 <x-notification type="danger">
