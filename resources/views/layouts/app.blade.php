@@ -38,75 +38,70 @@
         </main>
 
         <footer>
-            <div class="footer-links footer">
-                <div class="footer-faq-link-wrapper mx-5">
+            <div
+              class="tw-bg-secondary tw-text-white tw-p-4 tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-justify-center"
+            >
+                <div class="tw-mb-5 md:tw-mb-0 tw-mx-5">
                     <a
-                        class="footer-faq-link"
-                        href="{{ route('faq') }}"
-                        dusk="footer-faq-link"
+                      class="tw-text-white hover:tw-text-gray-200 tw-inline-block tw-border tw-border-white tw-py-3 tw-px-5 tw-font-semibold tw-text-xl"
+                      href="{{ route('faq') }}"
+                      dusk="footer-faq-link"
                     >
                         Pogosta vprašanja
                     </a>
                 </div>
 
-                <div class="is-flex is-align-items-center mx-5">
+                <div class="tw-flex tw-items-center tw-mx-5">
                     <a
-                        class="footer-related-link"
-                        href="{{ config('links.macja_hisa') }}"
-                        dusk="footer-mh-link"
+                      class="tw-h-[55px] tw-px-4"
+                      href="{{ config('links.macja_hisa') }}"
+                      dusk="footer-mh-link"
                     >
                         <img
-                            class="footer-related-link__image"
-                            src="{{ mix('img/mh_logo.png') }}"
-                            alt="Mačja hiša"
+                          class="tw-max-h-full"
+                          src="{{ mix('img/mh_logo.png') }}"
+                          alt="Mačja hiša"
                         >
                     </a>
                     <a
-                        class="footer-related-link"
-                        href="{{ config('links.veterina_mh') }}"
-                        dusk="footer-vet-link"
+                      class="tw-h-[55px] tw-px-4"
+                      href="{{ config('links.veterina_mh') }}"
+                      dusk="footer-vet-link"
                     >
                         <img
-                            class="footer-related-link__image"
-                            src="{{ mix('img/vet_logo.png') }}"
-                            alt="Veterina MH"
+                          class="tw-max-h-full"
+                          src="{{ mix('img/vet_logo.png') }}"
+                          alt="Veterina MH"
                         >
                     </a>
                     <a
-                        class="footer-related-link"
-                        href="{{ config('links.super_combe') }}"
-                        dusk="footer-combe-link"
+                      class="tw-h-[55px] tw-px-4"
+                      href="{{ config('links.super_combe') }}"
+                      dusk="footer-combe-link"
                     >
                         <img
-                            class="footer-related-link__image"
-                            src="{{ mix('img/combe_logo.png') }}"
-                            alt="Super Čombe"
+                          class="tw-max-h-full"
+                          src="{{ mix('img/combe_logo.png') }}"
+                          alt="Super Čombe"
                         >
                     </a>
                 </div>
             </div>
-            <div class="footer-copyright footer" dusk="footer-bottom">
-                <span class="footer-copyright__item">
-                    Zavod Mačja hiša © {{ date('Y') }} Mačji boter
-                </span>
-                <span class="footer-copyright__divider">|</span>
-                <span class="footer-copyright__item">
-                    Vse pravice pridržane.
-                </span>
-                <span class="footer-copyright__divider">|</span>
-                <span class="footer-copyright__item">
+
+            <div class="tw-bg-primary tw-text-white tw-text-sm tw-text-center tw-p-4">
+                <span class="tw-block md:tw-inline-block">Zavod Mačja hiša © {{ date('Y') }} Mačji boter</span>
+                <span class="tw-hidden md:tw-inline-block tw-px-2">|</span>
+                <span class="tw-block md:tw-inline-block">Vse pravice pridržane.</span>
+                <span class="tw-hidden md:tw-inline-block tw-px-2">|</span>
+                <span class="tw-block md:tw-inline-block">
                     <a
-                        class="has-text-white has-text-weight-semibold"
-                        href="{{ route('privacy') }}"
-                        dusk="footer-privacy-link"
-                    >
-                        Zasebnost
-                    </a>
+                      class="tw-text-white hover:tw-text-gray-200 tw-font-semibold"
+                      href="{{ route('privacy') }}"
+                      dusk="footer-privacy-link"
+                    >Zasebnost</a>
                 </span>
-                <span class="footer-copyright__divider">|</span>
-                <span class="footer-copyright__item">
-                    Oblikovanje: <em>Lana</em>, izvedba: <em>Jan Hacin</em>
-                </span>
+                <span class="tw-hidden md:tw-inline-block tw-px-2">|</span>
+                <span class="tw-block md:tw-inline-block">Oblikovanje: <em>Lana</em>, izvedba: <em>Jan Hacin</em></span>
             </div>
         </footer>
 
