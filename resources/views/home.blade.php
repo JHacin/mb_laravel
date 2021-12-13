@@ -29,6 +29,7 @@
             <x-hero-cat :cat="$heroCat" />
         @endforeach
     </div>
+
     <section class="section">
         <div class="container is-max-widescreen">
             <div class="columns is-multiline mb-6">
@@ -82,7 +83,3 @@
         </div>
     </section>
 @endsection
-
-@push('footer-scripts')
-    <script src="{{ mix('js/home.js') }}"></script>
-@endpush

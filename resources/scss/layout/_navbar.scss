@@ -2,7 +2,7 @@ $nav-sides-min-width: 175px;
 $nav-large-screen-breakpoint: $container-max-width + 2 * $nav-sides-min-width;
 $nav-height-desktop: 4.25rem;
 
-html:not(.is-homepage) {
+html {
     @extend .has-navbar-fixed-top;
 
     @include from($navbar-breakpoint) {
@@ -11,36 +11,6 @@ html:not(.is-homepage) {
 
     .navbar {
         @extend .is-fixed-top;
-    }
-}
-
-html.is-homepage {
-    #navbar {
-        position: absolute;
-        width: 100%;
-
-        @include from($navbar-breakpoint) {
-            position: static;
-            width: auto;
-        }
-    }
-
-    .navbar-item .nav-logo {
-        display: none;
-    }
-
-    .navbar-brand {
-        @include from($navbar-breakpoint) {
-            display: none;
-        }
-    }
-
-    .navbar-start {
-        margin-left: auto;
-    }
-
-    #navbar:not(.is-active) .navbar-end {
-        display: none;
     }
 }
 

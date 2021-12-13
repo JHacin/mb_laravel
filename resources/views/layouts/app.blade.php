@@ -1,12 +1,5 @@
-@php
-    $isHomepage = Route::currentRouteName() === 'home'
-@endphp
-
 <!DOCTYPE html>
-<html
-    lang="sl"
-    @if($isHomepage)class="is-homepage"@endif
->
+<html lang="sl">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,10 +19,6 @@
     </head>
     <body>
         @stack('body-start-scripts')
-
-        @if($isHomepage)
-            @include('components.layout.home-header')
-        @endif
 
         @include('components.layout.navbar')
 
