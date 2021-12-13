@@ -1,11 +1,3 @@
-.cat-list-columns {
-    @include from($desktop) {
-        flex-direction: row;
-    }
-
-    flex-direction: column-reverse;
-}
-
 .sort-link-arrow {
     color: $grey-lighter;
 

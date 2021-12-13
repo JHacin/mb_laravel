@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.tw-section {
+    @apply tw-block tw-py-12 tw-px-6 md:tw-px-12;
+}
+
+.tw-title {
+    @apply tw-text-secondary tw-text-4xl tw-font-bold tw-mb-6;
+}
+
+.tw-content-block {
+    @apply tw-mb-6;
+}

@@ -30,7 +30,7 @@
         @endforeach
     </div>
 
-    <section class="tw-block tw-py-12 tw-px-6 md:tw-px-12">
+    <section class="tw-section">
         <div class="tw-container tw-mx-auto tw-max-w-screen-xl">
             <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-4 tw-gap-3 md:tw-gap-10 tw-mb-12">
                 @foreach($stats as $stat)
@@ -45,13 +45,13 @@
                 @endforeach
             </div>
 
-            <div class="tw-mb-6">
+            <div class="tw-content-block">
                 Mačji boter je projekt <strong>Mačje hiše</strong>, ki omogoča posvojitve muck na daljavo.
                 Namenjen je vsem tistim, ki nam želite <strong>pomagati pri oskrbi nekoč brezdomnih muck</strong>.
                 Gre za obliko donacije, ki donatorja poveže z določenim mucem ali skupino mucov in mu
                 hkrati <strong>omogoča boljši vpogled v to, za kaj je bil porabljen njegov prispevek</strong>.
             </div>
-            <div class="tw-mb-6">
+            <div class="tw-content-block">
                 V projekt Mačji boter so vključeni predvsem tisti mucki, ki iz različnih vzrokov
                 <strong>dalj časa iščejo svoj dom</strong> ali pa zaradi njihovih posebnosti
                 predvidevamo, da bodo pri nas dalj časa. S pomočjo mačjih botrov jim v skrbništvu
@@ -59,7 +59,7 @@
                 kar potrebujejo za srečno mačje življenje.
                 Tudi skrb, ljubezen, neprespane noči, solze, ko je hudo, in radost, ko gre na bolje.
             </div>
-            <div class="tw-mb-6">
+            <div class="tw-content-block">
                 Mucam v oskrbi Mačje hiše lahko v okviru botrstva pomagate na več načinov.
                 Postanete lahko
                 <a href="{{ route('why_become_sponsor') }}" dusk="home-why-become-sponsor-link"><strong>redni boter</strong></a>,
@@ -69,7 +69,7 @@
                 <a href="{{ route('special_sponsorships') }}" dusk="home-special-sponsorships-link"><strong>posebnih vrst botrstva</strong></a>.
                 Vse vrste pomoči so več kot dobrodošle in potrebne.
             </div>
-            <div class="tw-mb-6">
+            <div class="tw-content-block">
                 Botrstvo lahko tudi
                 <a href="{{ route('gift_sponsorship') }}" dusk="home-gift-sponsorship-link"><strong>podarite</strong></a>
                 in z njim razveselite obdarovanca
@@ -77,7 +77,7 @@
                 ponujamo več različnih možnosti in upamo,
                 da boste med njimi našli tisto pravo ustrezno darilo, ki je eno, a osreči mnoge.
             </div>
-            <div class="tw-mb-6">
+            <div class="tw-content-block">
                 <strong>Hvala za vso pomoč, muce jo resnično potrebujejo!</strong>
             </div>
         </div>
