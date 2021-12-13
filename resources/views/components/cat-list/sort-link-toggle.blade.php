@@ -1,5 +1,5 @@
 <a
-    class="sort-link-toggle{{ $isActive ? ' sort-link-toggle--active' : '' }}"
+    class="{{ $isActive ? ' tw-font-semibold' : '' }}"
     href="{{ route('cat_list', $routeParams) }}"
     dusk="{{ $query }}_sort_toggle"
 >

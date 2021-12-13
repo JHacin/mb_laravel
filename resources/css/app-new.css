@@ -14,3 +14,7 @@
 .tw-content-block {
     @apply tw-mb-6;
 }
+
+.tw-icon {
+    @apply tw-inline-flex tw-items-center tw-justify-center tw-h-6 tw-w-6;
+}

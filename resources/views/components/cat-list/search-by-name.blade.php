@@ -17,15 +17,15 @@
     </x-inputs.base.input>
 </form>
 @if(request('search'))
-    <div class="mt-2">
-        <div class="mb-1">
-            <span class="has-text-weight-semibold">Št. rezultatov:</span>
+    <div class="tw-mt-2">
+        <div class="tw-mb-1">
+            <span class="tw-font-semibold">Št. rezultatov:</span>
             <span>{{ $numResults }}</span>
         </div>
 
         <div>
             <a
-                class="has-text-primary"
+                class="tw-text-primary"
                 href="{{ route('cat_list', array_merge($activeQueryParams, ['search' => null])) }}"
                 dusk="clear-search-link"
             >

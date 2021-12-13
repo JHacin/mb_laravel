@@ -1,7 +1,7 @@
 <a
     href="{{ route('cat_list', $routeParams) }}"
     dusk="{{ $query }}_sort_{{ $direction }}"
-    class="sort-link-arrow{{ $isActive ? ' sort-link-arrow--active' : '' }}"
+    class="hover:tw-text-primary {{ $isActive ? ' tw-text-primary' : 'tw-text-gray-300' }}"
 >
     @if($direction === 'asc')
         <i class="fas fa-angle-up"></i>
