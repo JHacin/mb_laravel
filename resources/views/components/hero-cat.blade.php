@@ -1,6 +1,6 @@
 <div class="tw-flex md:last:tw-hidden xl:last:tw-block">
-    <a href="{{ route('cat_details', $cat) }}" class="tw-flex tw-flex-grow">
-        <div class="tw-relative tw-flex tw-shadow tw-flex-grow tw-transition-opacity hover:tw-opacity-90">
+    <a href="{{ route('cat_details', $cat) }}" class="tw-flex tw-grow">
+        <div class="tw-relative tw-flex tw-shadow tw-grow tw-transition-opacity hover:tw-opacity-90">
             <img src="{{ $photo_url }}" alt="{{ $cat->name }}" class="tw-flex-1 tw-w-full">
 
             <div class="tw-absolute tw-bottom-6 tw-left-6 md:tw-left-12 tw-right-6 md:tw-right-12 tw-flex

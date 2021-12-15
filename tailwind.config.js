@@ -1,8 +1,6 @@
 module.exports = {
   prefix: 'tw-',
-  mode: 'jit',
-  purge: ['./resources/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue'],
-  darkMode: false,
+  content: ['./resources/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue'],
   theme: {
     colors: {
       primary: '#d76f44',
@@ -20,15 +18,12 @@ module.exports = {
         700: '#3f3f46',
         800: '#27272a',
         900: '#18181b',
-      }
+      },
     },
     fontFamily: {
       sans: ['Montserrat', 'sans-serif'],
-      serif: ['Montserrat', 'serif']
+      serif: ['Montserrat', 'serif'],
     },
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [require('@tailwindcss/forms')],

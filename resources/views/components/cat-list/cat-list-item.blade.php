@@ -1,6 +1,6 @@
 <div
     class="tw-shadow-xl tw-border-2 tw-rounded-xl
-           tw-flex-grow is-flex tw-flex tw-flex-col tw-overflow-hidden
+           tw-grow is-flex tw-flex tw-flex-col tw-overflow-hidden
            {{ $cat->is_group ? 'tw-text-white' : 'tw-text-black' }}
            {{ $cat->is_group ? 'tw-border-primary' : 'tw-border-secondary' }}
            {{ $cat->is_group ? 'tw-bg-primary' : 'tw-bg-secondary' }}"
@@ -20,7 +20,7 @@
         </figure>
     </div>
 
-    <div class="tw-p-6 tw-flex-grow tw-flex tw-flex-col {{ $cat->is_group ? 'tw-bg-primary' : 'tw-bg-white' }}">
+    <div class="tw-p-6 tw-grow tw-flex tw-flex-col {{ $cat->is_group ? 'tw-bg-primary' : 'tw-bg-white' }}">
         <h5
           class="tw-font-bold tw-text-xl tw-mb-3 {{ $cat->is_group ? 'tw-text-white' : 'tw-text-secondary' }}"
           dusk="cat-list-item-name"
