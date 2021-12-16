@@ -16,10 +16,13 @@
     ]
 @endphp
 
-<div class="field{{ isset($addon) ? ' has-addons' : '' }}" dusk="{{ $name }}-input-wrapper">
+<div
+    class="{{ isset($addon) ? 'tw-flex tw-justify-start' : '' }}"
+    dusk="{{ $name }}-input-wrapper"
+>
     @include('components.inputs.inc.label')
-    <div class="control">
-        <!--suppress HtmlFormInputWithoutLabel -->
+
+    <div class="{{ isset($addon) ? 'tw-mr-[-1px]' : '' }}">
         <input
             id="{{ $name }}"
             name="{{ $name }}"
@@ -28,9 +31,8 @@
             {{ $attributes->merge($defaultAttributes) }}
         >
     </div>
-    @isset($addon)
-        {{ $addon }}
-    @endisset
+
+    @isset($addon){{ $addon }}@endisset
     @include('components.inputs.inc.error')
     @include('components.inputs.inc.help')
 </div>

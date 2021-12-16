@@ -1,8 +1,8 @@
 @if ($paginator->hasPages())
-    <nav class="pagination" role="navigation" aria-label="pagination">
+    <nav class="tw-pagination" role="navigation" aria-label="premikanje po straneh">
         {{-- Previous Page Link --}}
         <a
-            class="pagination-previous"
+            class="tw-pagination-previous"
             aria-label="@lang('pagination.previous')"
             dusk="pagination-previous"
             @if ($paginator->onFirstPage())
@@ -18,7 +18,7 @@
 
         {{-- Next Page Link --}}
         <a
-            class="pagination-next"
+            class="tw-pagination-next"
             aria-label="@lang('pagination.next')"
             dusk="pagination-next"
             @if ($paginator->hasMorePages())
@@ -32,13 +32,13 @@
             @lang('pagination.next')
         </a>
 
-        <ul class="pagination-list">
+        <ul class="tw-pagination-list">
             {{-- Pagination Elements --}}
             @foreach ($elements as $element)
                 {{-- "Three Dots" Separator --}}
                 @if (is_string($element))
                     <li>
-                        <span class="pagination-ellipsis" aria-disabled="true">&hellip;</span>
+                        <span class="tw-pagination-ellipsis" aria-disabled="true">&hellip;</span>
                     </li>
                 @endif
 
@@ -47,7 +47,7 @@
                     @foreach ($element as $page => $url)
                         <li>
                             <a
-                                class="pagination-link {{ $page == $paginator->currentPage() ? 'is-current' : '' }}"
+                                class="tw-pagination-link {{ $page == $paginator->currentPage() ? 'tw-pagination-link--is-current' : '' }}"
                                 dusk="pagination-link-page-{{ $page }}"
                                 @if ($page == $paginator->currentPage())
                                     aria-label="Stran {{ $page }}"

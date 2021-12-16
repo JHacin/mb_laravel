@@ -2,19 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .tw-section {
-    @apply tw-block tw-py-12 tw-px-6 md:tw-px-12;
+  @apply tw-block tw-py-12 tw-px-6 md:tw-px-12;
 }
 
 .tw-title {
-    @apply tw-text-secondary tw-text-4xl tw-font-bold tw-mb-6;
+  @apply tw-text-secondary tw-text-4xl tw-font-bold tw-mb-6;
 }
 
 .tw-content-block {
-    @apply tw-mb-6;
+  @apply tw-mb-6;
 }
 
 .tw-icon {
-    @apply tw-inline-flex tw-items-center tw-justify-center tw-h-6 tw-w-6;
+  @apply tw-inline-flex tw-items-center tw-justify-center tw-h-6 tw-w-6;
+}
+
+.tw-btn,
+.tw-pagination-previous,
+.tw-pagination-next,
+.tw-pagination-link {
+  @apply tw-bg-white tw-border tw-border-gray-200 tw-text-black tw-cursor-pointer tw-justify-center
+    tw-p-2 tw-text-center tw-whitespace-nowrap tw-select-none tw-appearance-none tw-items-center tw-inline-flex
+    tw-rounded tw-shadow-none tw-text-base tw-h-10 tw-leading-normal tw-relative tw-align-top;
+}
+
+.tw-btn--primary {
+  @apply tw-bg-primary tw-text-white tw-border-transparent;
+}
+
+.tw-pagination,
+.tw-pagination-list {
+  @apply tw-flex tw-items-center tw-justify-center tw-text-center;
+}
+
+.tw-pagination {
+  @apply tw-flex-wrap md:tw-flex-nowrap tw-text-base tw-m-[-0.25rem];
+}
+
+.tw-pagination-list {
+  @apply tw-flex-wrap md:tw-flex-grow md:tw-flex-shrink md:tw-justify-start md:tw-order-1;
+}
+
+.tw-pagination-previous,
+.tw-pagination-next {
+  @apply tw-grow md:tw-grow-0 tw-shrink md:tw-shrink-0 tw-px-3 tw-m-1 tw-min-w-[2.5em];
+}
+
+.tw-pagination-previous,
+.tw-pagination-next,
+.tw-pagination-link,
+.tw-pagination-ellipsis {
+  @apply md:tw-my-0 tw-text-base tw-justify-center tw-m-1 tw-px-2 tw-text-center;
+}
+
+.tw-pagination-previous,
+.tw-pagination-next,
+.tw-pagination-link {
+    @apply hover:tw-border-gray-400;
+}
+
+.tw-pagination-previous {
+  @apply md:tw-order-2;
+}
+
+.tw-pagination-next {
+  @apply md:tw-order-3;
+}
+
+.tw-pagination-link {
+    @apply tw-min-w-[2.5em];
+}
+
+.tw-pagination-link--is-current {
+    @apply tw-bg-primary tw-border-primary hover:tw-border-primary tw-text-white hover:tw-text-white;
+}
+
+.tw-pagination-previous[disabled],
+.tw-pagination-next[disabled],
+.tw-pagination-link[disabled] {
+  @apply tw-bg-gray-200 tw-border-gray-200 tw-text-gray-500 tw-opacity-50 tw-cursor-not-allowed;
 }
