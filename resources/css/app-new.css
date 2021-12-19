@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .tw-btn {
+    @apply tw-bg-white tw-border tw-border-gray-200 tw-text-black tw-cursor-pointer tw-justify-center tw-p-2 tw-text-center;
+    @apply tw-whitespace-nowrap tw-select-none tw-appearance-none tw-items-center tw-inline-flex tw-rounded tw-shadow-none;
+    @apply tw-text-base tw-h-10 tw-leading-normal tw-relative tw-align-top;
+  }
+}
+
 .tw-section {
   @apply tw-block tw-py-12 tw-px-6 md:tw-px-12;
 }
@@ -18,17 +26,14 @@
   @apply tw-inline-flex tw-items-center tw-justify-center tw-h-6 tw-w-6;
 }
 
-.tw-btn,
 .tw-pagination-previous,
 .tw-pagination-next,
 .tw-pagination-link {
-  @apply tw-bg-white tw-border tw-border-gray-200 tw-text-black tw-cursor-pointer tw-justify-center
-    tw-p-2 tw-text-center tw-whitespace-nowrap tw-select-none tw-appearance-none tw-items-center tw-inline-flex
-    tw-rounded tw-shadow-none tw-text-base tw-h-10 tw-leading-normal tw-relative tw-align-top;
+  @apply tw-btn;
 }
 
 .tw-btn--primary {
-  @apply tw-bg-primary tw-text-white tw-border-transparent;
+  @apply tw-bg-primary tw-text-white hover:tw-text-white tw-border-transparent;
 }
 
 .tw-pagination,
@@ -59,7 +64,7 @@
 .tw-pagination-previous,
 .tw-pagination-next,
 .tw-pagination-link {
-    @apply hover:tw-border-gray-400;
+  @apply hover:tw-border-gray-400;
 }
 
 .tw-pagination-previous {
@@ -71,15 +76,31 @@
 }
 
 .tw-pagination-link {
-    @apply tw-min-w-[2.5em];
+  @apply tw-min-w-[2.5em];
 }
 
 .tw-pagination-link--is-current {
-    @apply tw-bg-primary tw-border-primary hover:tw-border-primary tw-text-white hover:tw-text-white;
+  @apply tw-bg-primary tw-border-primary hover:tw-border-primary tw-text-white hover:tw-text-white;
 }
 
 .tw-pagination-previous[disabled],
 .tw-pagination-next[disabled],
 .tw-pagination-link[disabled] {
   @apply tw-bg-gray-200 tw-border-gray-200 tw-text-gray-500 tw-opacity-50 tw-cursor-not-allowed;
+}
+
+.tw-special-sponsorship-type-card {
+  @apply tw-mb-6;
+}
+
+.tw-special-sponsorship-type-card__title {
+  @apply tw-text-primary tw-font-bold tw-text-2xl tw-mb-2;
+}
+
+.tw-special-sponsorship-type-card__content {
+  @apply tw-mb-3;
+}
+
+.tw-special-sponsorship-type-card__button {
+  @apply tw-btn tw-btn--primary;
 }

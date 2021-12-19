@@ -8,7 +8,7 @@
     @endforeach
     <x-inputs.base.input name="search" placeholder="Išči po imenu" value="{{ request('search') }}">
         <x-slot name="addon">
-            <button type="submit" class="tw-btn button is-primary" dusk="search-submit">
+            <button type="submit" class="tw-btn tw-btn--primary" dusk="search-submit">
                 <span class="icon">
                     <i class="fas fa-arrow-circle-right"></i>
                 </span>

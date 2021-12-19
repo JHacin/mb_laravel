@@ -11,7 +11,7 @@
     $classes = [
         'field',
         'mb-radio',
-        $isInline ? 'mb-radio--inline' : '',
+        $isInline ? 'tw-flex' : '',
     ];
 
     $wrapperClass = implode(' ', array_filter($classes));
