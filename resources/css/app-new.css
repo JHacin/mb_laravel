@@ -26,6 +26,10 @@
   @apply tw-inline-flex tw-items-center tw-justify-center tw-h-6 tw-w-6;
 }
 
+.tw-icon--large {
+  @apply tw-h-12 tw-w-12;
+}
+
 .tw-pagination-previous,
 .tw-pagination-next,
 .tw-pagination-link {

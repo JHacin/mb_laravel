@@ -19,7 +19,7 @@
 @endphp
 
 @foreach($socialLinks as $socialLink)
-    <span class="icon is-large">
+    <span class="tw-icon tw-icon--large">
         <a
             href="{{ $socialLink['href'] }}"
             class="nav-social-link {{ $link_class }}"
