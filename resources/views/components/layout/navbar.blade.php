@@ -43,28 +43,28 @@
     ];
 @endphp
 
-<header class="tw-bg-primary">
+<header class="bg-primary">
     <nav
         role="navigation"
         aria-label="glavni meni"
         class="
-        tw-px-4 tw-py-3 tw-grid tw-grid-cols-[60px_1fr_auto] tw-items-center
-        xl:tw-grid-cols-[132px_1fr] xl:tw-grid-rows-[1fr_1fr] tw-max-w-screen-xl tw-mx-auto
+        px-4 py-3 grid grid-cols-[60px_1fr_auto] items-center
+        xl:grid-cols-[132px_1fr] xl:grid-rows-[1fr_1fr] max-w-screen-xl mx-auto
     "
     >
         <a
             href="{{ route('home') }}"
             dusk="navbar-home-link"
-            class="xl:tw-row-span-2"
+            class="xl:row-span-2"
         >
             <img src="{{ mix('img/logo.png') }}" alt="Mačji boter">
         </a>
 
-        <div class="tw-flex tw-justify-self-end tw-mr-4 xl:tw-mr-0">
+        <div class="flex justify-self-end mr-4 xl:mr-0">
             @foreach($socialLinks as $socialLink)
                 <a
                     href="{{ $socialLink['href'] }}"
-                    class="tw-text-white hover:tw-text-gray-200 tw-mx-1 tw-text-xl"
+                    class="text-white hover:text-gray-200 mx-1 text-xl"
                     dusk="{{ $socialLink['dusk'] }}"
                     target="_blank"
                 >
@@ -73,12 +73,12 @@
             @endforeach
         </div>
 
-        <div class="tw-hidden xl:tw-flex tw-justify-end">
+        <div class="hidden xl:flex justify-end">
             @foreach($pageLinks as $pageLink)
                 <a
                     class="
-                        tw-text-white tw-font-semibold tw-p-3 hover:tw-bg-white
-                        {{ $currentRouteName === $pageLink['route_name'] ? ' tw-bg-white tw-text-black' : '' }}
+                        text-white font-semibold p-3 hover:bg-white
+                        {{ $currentRouteName === $pageLink['route_name'] ? ' bg-white text-black' : '' }}
                     "
                     href="{{ route($pageLink['route_name']) }}"
                     dusk="{{ $pageLink['dusk'] }}"
@@ -91,10 +91,10 @@
         <a
             role="button"
             class="
-            xl:tw-hidden
-            tw-flex tw-items-center tw-w-[40px] tw-h-[26px] tw-cursor-pointer
-            tw-border-y-2 tw-border-white hover:tw-border-gray-200 hover:before:tw-border-gray-200
-            before:tw-block before:tw-w-full before:tw-h-0 before:tw-border-white before:tw-border-b-2
+            xl:hidden
+            flex items-center w-[40px] h-[26px] cursor-pointer
+            border-y-2 border-white hover:border-gray-200 hover:before:border-gray-200
+            before:block before:w-full before:h-0 before:border-white before:border-b-2
         "
             aria-label="meni"
             aria-expanded="false"

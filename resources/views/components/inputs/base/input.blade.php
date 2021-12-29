@@ -17,12 +17,12 @@
 @endphp
 
 <div
-    class="{{ isset($addon) ? 'tw-flex tw-justify-start' : '' }}"
+    class="{{ isset($addon) ? 'flex justify-start' : '' }}"
     dusk="{{ $name }}-input-wrapper"
 >
     @include('components.inputs.inc.label')
 
-    <div class="{{ isset($addon) ? 'tw-mr-[-1px]' : '' }}">
+    <div class="{{ isset($addon) ? 'mr-[-1px]' : '' }}">
         <input
             id="{{ $name }}"
             name="{{ $name }}"

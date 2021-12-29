@@ -6,110 +6,110 @@
 @tailwind utilities;
 
 @layer components {
-  .tw-btn {
-    @apply tw-bg-white tw-border tw-border-gray-200 tw-text-black tw-cursor-pointer tw-justify-center tw-p-2 tw-text-center;
-    @apply tw-whitespace-nowrap tw-select-none tw-appearance-none tw-items-center tw-inline-flex tw-rounded tw-shadow-none;
-    @apply tw-text-base tw-h-10 tw-leading-normal tw-relative tw-align-top;
+  .btn {
+    @apply bg-white border border-gray-200 text-black cursor-pointer justify-center p-2 text-center;
+    @apply whitespace-nowrap select-none appearance-none items-center inline-flex rounded shadow-none;
+    @apply text-base h-10 leading-normal relative align-top;
   }
 }
 
-.tw-section {
-  @apply tw-block tw-py-12 tw-px-6 md:tw-px-12;
+.section {
+  @apply block py-12 px-6 md:px-12;
 }
 
-.tw-title {
-  @apply tw-text-secondary tw-text-4xl tw-font-bold tw-mb-6;
+.title {
+  @apply text-secondary text-4xl font-bold mb-6;
 }
 
-.tw-content-block {
-  @apply tw-mb-6;
+.content-block {
+  @apply mb-6;
 }
 
-.tw-icon {
-  @apply tw-inline-flex tw-items-center tw-justify-center tw-h-6 tw-w-6;
+.icon {
+  @apply inline-flex items-center justify-center h-6 w-6;
 }
 
-.tw-icon--large {
-  @apply tw-h-12 tw-w-12;
+.icon--large {
+  @apply h-12 w-12;
 }
 
-.tw-pagination-previous,
-.tw-pagination-next,
-.tw-pagination-link {
-  @apply tw-btn;
+.pagination-previous,
+.pagination-next,
+.pagination-link {
+  @apply btn;
 }
 
-.tw-btn--primary {
-  @apply tw-bg-primary tw-text-white hover:tw-text-white tw-border-transparent;
+.btn--primary {
+  @apply bg-primary text-white hover:text-white border-transparent;
 }
 
-.tw-pagination,
-.tw-pagination-list {
-  @apply tw-flex tw-items-center tw-justify-center tw-text-center;
+.pagination,
+.pagination-list {
+  @apply flex items-center justify-center text-center;
 }
 
-.tw-pagination {
-  @apply tw-flex-wrap md:tw-flex-nowrap tw-text-base tw-m-[-0.25rem];
+.pagination {
+  @apply flex-wrap md:flex-nowrap text-base m-[-0.25rem];
 }
 
-.tw-pagination-list {
-  @apply tw-flex-wrap md:tw-flex-grow md:tw-flex-shrink md:tw-justify-start md:tw-order-1;
+.pagination-list {
+  @apply flex-wrap md:flex-grow md:flex-shrink md:justify-start md:order-1;
 }
 
-.tw-pagination-previous,
-.tw-pagination-next {
-  @apply tw-grow md:tw-grow-0 tw-shrink md:tw-shrink-0 tw-px-3 tw-m-1 tw-min-w-[2.5em];
+.pagination-previous,
+.pagination-next {
+  @apply grow md:grow-0 shrink md:shrink-0 px-3 m-1 min-w-[2.5em];
 }
 
-.tw-pagination-previous,
-.tw-pagination-next,
-.tw-pagination-link,
-.tw-pagination-ellipsis {
-  @apply md:tw-my-0 tw-text-base tw-justify-center tw-m-1 tw-px-2 tw-text-center;
+.pagination-previous,
+.pagination-next,
+.pagination-link,
+.pagination-ellipsis {
+  @apply md:my-0 text-base justify-center m-1 px-2 text-center;
 }
 
-.tw-pagination-previous,
-.tw-pagination-next,
-.tw-pagination-link {
-  @apply hover:tw-border-gray-400;
+.pagination-previous,
+.pagination-next,
+.pagination-link {
+  @apply hover:border-gray-400;
 }
 
-.tw-pagination-previous {
-  @apply md:tw-order-2;
+.pagination-previous {
+  @apply md:order-2;
 }
 
-.tw-pagination-next {
-  @apply md:tw-order-3;
+.pagination-next {
+  @apply md:order-3;
 }
 
-.tw-pagination-link {
-  @apply tw-min-w-[2.5em];
+.pagination-link {
+  @apply min-w-[2.5em];
 }
 
-.tw-pagination-link--is-current {
-  @apply tw-bg-primary tw-border-primary hover:tw-border-primary tw-text-white hover:tw-text-white;
+.pagination-link--is-current {
+  @apply bg-primary border-primary hover:border-primary text-white hover:text-white;
 }
 
-.tw-pagination-previous[disabled],
-.tw-pagination-next[disabled],
-.tw-pagination-link[disabled] {
-  @apply tw-bg-gray-200 tw-border-gray-200 tw-text-gray-500 tw-opacity-50 tw-cursor-not-allowed;
+.pagination-previous[disabled],
+.pagination-next[disabled],
+.pagination-link[disabled] {
+  @apply bg-gray-200 border-gray-200 text-gray-500 opacity-50 cursor-not-allowed;
 }
 
-.tw-special-sponsorship-type-card {
-  @apply tw-mb-6;
+.special-sponsorship-type-card {
+  @apply mb-6;
 }
 
-.tw-special-sponsorship-type-card__title {
-  @apply tw-text-primary tw-font-bold tw-text-2xl tw-mb-2;
+.special-sponsorship-type-card__title {
+  @apply text-primary font-bold text-2xl mb-2;
 }
 
-.tw-special-sponsorship-type-card__content {
-  @apply tw-mb-3;
+.special-sponsorship-type-card__content {
+  @apply mb-3;
 }
 
-.tw-special-sponsorship-type-card__button {
-  @apply tw-btn tw-btn--primary;
+.special-sponsorship-type-card__button {
+  @apply btn btn--primary;
 }
 
 *::-webkit-scrollbar {

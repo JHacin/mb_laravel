@@ -1,65 +1,65 @@
 <div
-    class="tw-shadow-xl tw-border-2 tw-rounded-xl
-           tw-grow is-flex tw-flex tw-flex-col tw-overflow-hidden
-           {{ $cat->is_group ? 'tw-text-white' : 'tw-text-black' }}
-           {{ $cat->is_group ? 'tw-border-primary' : 'tw-border-secondary' }}
-           {{ $cat->is_group ? 'tw-bg-primary' : 'tw-bg-secondary' }}"
+    class="shadow-xl border-2 rounded-xl
+           grow is-flex flex flex-col overflow-hidden
+           {{ $cat->is_group ? 'text-white' : 'text-black' }}
+           {{ $cat->is_group ? 'border-primary' : 'border-secondary' }}
+           {{ $cat->is_group ? 'bg-primary' : 'bg-secondary' }}"
     dusk="cat-list-item"
     data-cat-id="{{ $cat->id }}"
 >
     <div
-      class="tw-border-b-2 tw-block tw-relative
-             {{ $cat->is_group ? 'tw-border-primary' : 'tw-border-secondary' }}"
+      class="border-b-2 block relative
+             {{ $cat->is_group ? 'border-primary' : 'border-secondary' }}"
     >
-        <figure class="tw-block tw-relative tw-pt-[100%]">
+        <figure class="block relative pt-[100%]">
             <img
-              class="tw-block tw-max-w-full tw-absolute tw-top-0 tw-left-0 tw-right-0 tw-bottom-0 tw-h-full tw-w-full"
+              class="block max-w-full absolute top-0 left-0 right-0 bottom-0 h-full w-full"
               src="{{ $cat->first_photo_url }}"
               alt="{{ $cat->name }}"
             >
         </figure>
     </div>
 
-    <div class="tw-p-6 tw-grow tw-flex tw-flex-col {{ $cat->is_group ? 'tw-bg-primary' : 'tw-bg-white' }}">
+    <div class="p-6 grow flex flex-col {{ $cat->is_group ? 'bg-primary' : 'bg-white' }}">
         <h5
-          class="tw-font-bold tw-text-xl tw-mb-3 {{ $cat->is_group ? 'tw-text-white' : 'tw-text-secondary' }}"
+          class="font-bold text-xl mb-3 {{ $cat->is_group ? 'text-white' : 'text-secondary' }}"
           dusk="cat-list-item-name"
         >{{ $cat->name }}</h5>
 
-        <div class="tw-mb-4">
-            <div class="tw-mb-2">
+        <div class="mb-4">
+            <div class="mb-2">
                 <span>Trenutno botrov:</span>
-                    <span class="tw-font-semibold" dusk="cat-list-item-sponsorship-count">
+                    <span class="font-semibold" dusk="cat-list-item-sponsorship-count">
                     {{ $cat->sponsorships_count }}
                 </span>
             </div>
 
             @if(!$cat->is_group)
-                <div class="tw-mb-2">
+                <div class="mb-2">
                     <span>Datum vstopa v botrstvo:</span>
-                    <div class="tw-font-semibold" dusk="cat-list-item-date-of-arrival-boter">
+                    <div class="font-semibold" dusk="cat-list-item-date-of-arrival-boter">
                         {{ $dateOfArrivalBoter }}
                     </div>
                 </div>
 
-                <div class="tw-mb-2">
+                <div class="mb-2">
                     <span>Trenutna starost:</span>
-                    <div class="tw-font-semibold" dusk="cat-list-item-current-age">
+                    <div class="font-semibold" dusk="cat-list-item-current-age">
                         {{ $currentAge }}
                     </div>
                 </div>
             @endif
         </div>
 
-        <div class="tw-mt-auto">
-            <div class="tw-mb-2">
+        <div class="mt-auto">
+            <div class="mb-2">
                 <a
-                    class="tw-flex tw-items-center tw-font-semibold
-                           {{ $cat->is_group ? 'tw-text-white' : 'tw-text-secondary' }}"
+                    class="flex items-center font-semibold
+                           {{ $cat->is_group ? 'text-white' : 'text-secondary' }}"
                     href="{{ route('cat_details', $cat) }}"
                     dusk="cat-list-item-details-link"
                 >
-                    <span class="tw-icon">
+                    <span class="icon">
                         <i class="fas fa-arrow-circle-right"></i>
                     </span>
                     <span>
@@ -77,11 +77,11 @@
                     <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
                 @else
                     <a
-                        class="tw-flex tw-items-center tw-font-semibold tw-text-primary"
+                        class="flex items-center font-semibold text-primary"
                         href="{{ route('become_cat_sponsor', $cat) }}"
                         dusk="cat-list-item-sponsorship-form-link"
                     >
-                    <span class="tw-icon">
+                    <span class="icon">
                         <i class="fas fa-arrow-circle-right"></i>
                     </span>
                         <span>

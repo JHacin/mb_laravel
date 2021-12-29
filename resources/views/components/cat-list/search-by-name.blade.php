@@ -8,7 +8,7 @@
     @endforeach
     <x-inputs.base.input name="search" placeholder="Išči po imenu" value="{{ request('search') }}">
         <x-slot name="addon">
-            <button type="submit" class="tw-btn tw-btn--primary" dusk="search-submit">
+            <button type="submit" class="btn btn--primary" dusk="search-submit">
                 <span class="icon">
                     <i class="fas fa-arrow-circle-right"></i>
                 </span>
@@ -17,15 +17,15 @@
     </x-inputs.base.input>
 </form>
 @if(request('search'))
-    <div class="tw-mt-2">
-        <div class="tw-mb-1">
-            <span class="tw-font-semibold">Št. rezultatov:</span>
+    <div class="mt-2">
+        <div class="mb-1">
+            <span class="font-semibold">Št. rezultatov:</span>
             <span>{{ $numResults }}</span>
         </div>
 
         <div>
             <a
-                class="tw-text-primary"
+                class="text-primary"
                 href="{{ route('cat_list', array_merge($activeQueryParams, ['search' => null])) }}"
                 dusk="clear-search-link"
             >

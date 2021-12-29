@@ -33,11 +33,11 @@
 @endphp
 
 @section('content')
-    <div class="tw-section">
-        <div class="tw-container tw-mx-auto">
-            <h1 class="tw-title">Posebna botrstva</h1>
+    <div class="section">
+        <div class="container mx-auto">
+            <h1 class="title">Posebna botrstva</h1>
 
-            <div class="tw-mb-6">
+            <div class="mb-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean hendrerit, ex eu sagittis rhoncus,
                 enim risus facilisis neque, vitae lacinia diam eros at felis. Vivamus commodo rhoncus ipsum ut
                 eleifend. Sed bibendum, nisl vel tristique varius, diam tortor maximus est, at finibus mi turpis ut
@@ -47,18 +47,18 @@
                 iaculis erat consequat nec.
             </div>
 
-            <div class="tw-mb-6">
+            <div class="mb-6">
                 <strong>Pri tem vam ponujamo več možnosti:</strong>
             </div>
 
-            <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-6">
-                <div class="tw-col-span-1 lg:tw-col-span-3">
-                    <div class="tw-special-sponsorship-type-card">
-                        <h3 class="tw-special-sponsorship-type-card__title">
+            <div class="grid grid-cols-1 lg:grid-cols-6">
+                <div class="col-span-1 lg:col-span-3">
+                    <div class="special-sponsorship-type-card">
+                        <h3 class="special-sponsorship-type-card__title">
                             {{ $type_boter_meseca['label'] }}
                         </h3>
-                        <div class="tw-special-sponsorship-type-card__content">
-                            <div class="tw-mb-2">
+                        <div class="special-sponsorship-type-card__content">
+                            <div class="mb-2">
                                 Boter meseca je nastal v začetku leta 2013 in je namenjen vsem tistim, ki nam želite
                                 pomagati pri oskrbi muc, ne da bi se pri tem zavezali k vsakomesečnim donacijam. Kot
                                 Boter meseca nam pomagate takrat, ko to sami želite oz. zmorete.
@@ -75,21 +75,21 @@
                         </div>
                         <div>
                             <a
-                                class="tw-special-sponsorship-type-card__button"
+                                class="special-sponsorship-type-card__button"
                                 href="{{ $type_boter_meseca['formLink'] }}"
                             >
-                                <span class="tw-icon"><i class="fas fa-arrow-circle-right"></i></span>
+                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="tw-special-sponsorship-type-card">
-                        <h3 class="tw-special-sponsorship-type-card__title">
+                    <div class="special-sponsorship-type-card">
+                        <h3 class="special-sponsorship-type-card__title">
                             {{ $type_muc_gre_brez_skrbi_v_nove_dni['label'] }}
                         </h3>
-                        <div class="tw-special-sponsorship-type-card__content">
-                            <div class="tw-mb-2">
+                        <div class="special-sponsorship-type-card__content">
+                            <div class="mb-2">
                                 Z donacijo
                                 <strong>{{ $type_muc_gre_brez_skrbi_v_nove_dni['amount'] }} €</strong>
                                 pokrijete stroške kastracije enega mačka.
@@ -103,21 +103,21 @@
                         </div>
                         <div>
                             <a
-                                class="tw-special-sponsorship-type-card__button"
+                                class="special-sponsorship-type-card__button"
                                 href="{{ $type_muc_gre_brez_skrbi_v_nove_dni['formLink'] }}"
                             >
-                                <span class="tw-icon"><i class="fas fa-arrow-circle-right"></i></span>
+                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="tw-special-sponsorship-type-card">
-                        <h3 class="tw-special-sponsorship-type-card__title">
+                    <div class="special-sponsorship-type-card">
+                        <h3 class="special-sponsorship-type-card__title">
                             {{ $type_muca_gre_brez_skrbi_v_nove_dni['label'] }}
                         </h3>
-                        <div class="tw-special-sponsorship-type-card__content">
-                            <div class="tw-mb-2">
+                        <div class="special-sponsorship-type-card__content">
+                            <div class="mb-2">
                                 Z donacijo
                                 <strong>{{ $type_muca_gre_brez_skrbi_v_nove_dni['amount'] }} €</strong>
                                 pokrijete stroške sterilizacije ene mačke.
@@ -131,21 +131,21 @@
                         </div>
                         <div>
                             <a
-                                class="tw-special-sponsorship-type-card__button"
+                                class="special-sponsorship-type-card__button"
                                 href="{{ $type_muca_gre_brez_skrbi_v_nove_dni['formLink'] }}"
                             >
-                                <span class="tw-icon"><i class="fas fa-arrow-circle-right"></i></span>
+                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="tw-special-sponsorship-type-card">
-                        <h3 class="tw-special-sponsorship-type-card__title">
+                    <div class="special-sponsorship-type-card">
+                        <h3 class="special-sponsorship-type-card__title">
                             {{ $type_nov_zacetek['label'] }}
                         </h3>
-                        <div class="tw-special-sponsorship-type-card__content">
-                            <div class="tw-mb-2">
+                        <div class="special-sponsorship-type-card__content">
+                            <div class="mb-2">
                                 Z donacijo
                                 <strong>{{ $type_nov_zacetek['amount'] }} €</strong>
                                 enemu mucku zagotovite pregled, razparazitenje,
@@ -167,10 +167,10 @@
                         </div>
                         <div>
                             <a
-                                class="tw-special-sponsorship-type-card__button"
+                                class="special-sponsorship-type-card__button"
                                 href="{{ $type_nov_zacetek['formLink'] }}"
                             >
-                                <span class="tw-icon"><i class="fas fa-arrow-circle-right"></i></span>
+                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
                         </div>
@@ -191,15 +191,15 @@
                         ustanavljamo poseben FIP sklad. Z botrstvom tako pomagate enemu trenutnemu ali bodočemu FIP
                         bojevniku na njegovi poti do FIP zmagovalca.
                     </div>
-                    <div class="tw-mb-6">
+                    <div class="mb-6">
                         <strong>Pomagate lahko kot:</strong>
                     </div>
 
-                    <div class="tw-special-sponsorship-type-card">
-                        <h3 class="tw-special-sponsorship-type-card__title">
+                    <div class="special-sponsorship-type-card">
+                        <h3 class="special-sponsorship-type-card__title">
                             {{ $type_fip_bojevnik_za_1_dan['label'] }}
                         </h3>
-                        <div class="tw-special-sponsorship-type-card__content">
+                        <div class="special-sponsorship-type-card__content">
                             <div>
                                 Z donacijo
                                 <strong>{{ $type_fip_bojevnik_za_1_dan['amount'] }} €</strong>
@@ -211,20 +211,20 @@
                         </div>
                         <div>
                             <a
-                                class="tw-special-sponsorship-type-card__button"
+                                class="special-sponsorship-type-card__button"
                                 href="{{ $type_fip_bojevnik_za_1_dan['formLink'] }}"
                             >
-                                <span class="tw-icon"><i class="fas fa-arrow-circle-right"></i></span>
+                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="tw-special-sponsorship-type-card">
-                        <h3 class="tw-special-sponsorship-type-card__title">
+                    <div class="special-sponsorship-type-card">
+                        <h3 class="special-sponsorship-type-card__title">
                             {{ $type_fip_bojevnik_za_2_dni['label'] }}
                         </h3>
-                        <div class="tw-special-sponsorship-type-card__content">
+                        <div class="special-sponsorship-type-card__content">
                             <div>
                                 Z donacijo
                                 <strong>{{ $type_fip_bojevnik_za_2_dni['amount'] }} €</strong>
@@ -236,20 +236,20 @@
                         </div>
                         <div>
                             <a
-                                class="tw-special-sponsorship-type-card__button"
+                                class="special-sponsorship-type-card__button"
                                 href="{{ $type_fip_bojevnik_za_2_dni['formLink'] }}"
                             >
-                                <span class="tw-icon"><i class="fas fa-arrow-circle-right"></i></span>
+                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
                         </div>
                     </div>
 
-                    <div class="tw-special-sponsorship-type-card">
-                        <h3 class="tw-special-sponsorship-type-card__title">
+                    <div class="special-sponsorship-type-card">
+                        <h3 class="special-sponsorship-type-card__title">
                             {{ $type_fip_bojevnik_za_1_teden['label'] }}
                         </h3>
-                        <div class="tw-special-sponsorship-type-card__content">
+                        <div class="special-sponsorship-type-card__content">
                             <div>
                                 Z donacijo
                                 <strong>{{ $type_fip_bojevnik_za_1_teden['amount'] }} €</strong>
@@ -263,16 +263,16 @@
                         </div>
                         <div>
                             <a
-                                class="tw-special-sponsorship-type-card__button"
+                                class="special-sponsorship-type-card__button"
                                 href="{{ $type_fip_bojevnik_za_1_teden['formLink'] }}"
                             >
-                                <span class="tw-icon"><i class="fas fa-arrow-circle-right"></i></span>
+                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
                                 <span>Izberi</span>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="tw-col-span-1 lg:tw-col-span-2 lg:tw-col-start-5">
+                <div class="col-span-1 lg:col-span-2 lg:col-start-5">
                     <x-special-sponsorships.sponsors-of-this-month />
                 </div>
             </div>

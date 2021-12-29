@@ -27,11 +27,11 @@
 
         <footer>
             <div
-              class="tw-bg-secondary tw-text-white tw-p-4 tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-justify-center"
+              class="bg-secondary text-white p-4 flex flex-col md:flex-row items-center justify-center"
             >
-                <div class="tw-mb-5 md:tw-mb-0 tw-mx-5">
+                <div class="mb-5 md:mb-0 mx-5">
                     <a
-                      class="tw-text-white hover:tw-text-gray-200 tw-inline-block tw-border tw-border-white tw-py-3 tw-px-5 tw-font-semibold tw-text-xl"
+                      class="text-white hover:text-gray-200 inline-block border border-white py-3 px-5 font-semibold text-xl"
                       href="{{ route('faq') }}"
                       dusk="footer-faq-link"
                     >
@@ -39,36 +39,36 @@
                     </a>
                 </div>
 
-                <div class="tw-flex tw-items-center tw-mx-5">
+                <div class="flex items-center mx-5">
                     <a
-                      class="tw-h-[55px] tw-px-4"
+                      class="h-[55px] px-4"
                       href="{{ config('links.macja_hisa') }}"
                       dusk="footer-mh-link"
                     >
                         <img
-                          class="tw-max-h-full"
+                          class="max-h-full"
                           src="{{ mix('img/mh_logo.png') }}"
                           alt="Mačja hiša"
                         >
                     </a>
                     <a
-                      class="tw-h-[55px] tw-px-4"
+                      class="h-[55px] px-4"
                       href="{{ config('links.veterina_mh') }}"
                       dusk="footer-vet-link"
                     >
                         <img
-                          class="tw-max-h-full"
+                          class="max-h-full"
                           src="{{ mix('img/vet_logo.png') }}"
                           alt="Veterina MH"
                         >
                     </a>
                     <a
-                      class="tw-h-[55px] tw-px-4"
+                      class="h-[55px] px-4"
                       href="{{ config('links.super_combe') }}"
                       dusk="footer-combe-link"
                     >
                         <img
-                          class="tw-max-h-full"
+                          class="max-h-full"
                           src="{{ mix('img/combe_logo.png') }}"
                           alt="Super Čombe"
                         >
@@ -76,20 +76,20 @@
                 </div>
             </div>
 
-            <div class="tw-bg-primary tw-text-white tw-text-sm tw-text-center tw-p-4">
-                <span class="tw-block md:tw-inline-block">Zavod Mačja hiša © {{ date('Y') }} Mačji boter</span>
-                <span class="tw-hidden md:tw-inline-block tw-px-2">|</span>
-                <span class="tw-block md:tw-inline-block">Vse pravice pridržane.</span>
-                <span class="tw-hidden md:tw-inline-block tw-px-2">|</span>
-                <span class="tw-block md:tw-inline-block">
+            <div class="bg-primary text-white text-sm text-center p-4">
+                <span class="block md:inline-block">Zavod Mačja hiša © {{ date('Y') }} Mačji boter</span>
+                <span class="hidden md:inline-block px-2">|</span>
+                <span class="block md:inline-block">Vse pravice pridržane.</span>
+                <span class="hidden md:inline-block px-2">|</span>
+                <span class="block md:inline-block">
                     <a
-                      class="tw-text-white hover:tw-text-gray-200 tw-font-semibold"
+                      class="text-white hover:text-gray-200 font-semibold"
                       href="{{ route('privacy') }}"
                       dusk="footer-privacy-link"
                     >Zasebnost</a>
                 </span>
-                <span class="tw-hidden md:tw-inline-block tw-px-2">|</span>
-                <span class="tw-block md:tw-inline-block">Oblikovanje: <em>Lana</em>, izvedba: <em>Jan Hacin</em></span>
+                <span class="hidden md:inline-block px-2">|</span>
+                <span class="block md:inline-block">Oblikovanje: <em>Lana</em>, izvedba: <em>Jan Hacin</em></span>
             </div>
         </footer>
 
