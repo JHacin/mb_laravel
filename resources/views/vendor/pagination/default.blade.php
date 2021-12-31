@@ -1,36 +1,32 @@
+{{--Todo: disable link functionality if href equals empty string--}}
+
 @if ($paginator->hasPages())
     <nav class="pagination" role="navigation" aria-label="premikanje po straneh">
         {{-- Previous Page Link --}}
-        <a
+        <x-button
+            as="link"
+            is-disabled="{{ $paginator->onFirstPage() }}"
             class="pagination-previous"
+            href="{{ $paginator->onFirstPage() ? '' : $paginator->previousPageUrl() }}"
+            rel="{{ $paginator->onFirstPage() ? '' : 'prev' }}"
             aria-label="@lang('pagination.previous')"
             dusk="pagination-previous"
-            @if ($paginator->onFirstPage())
-                aria-disabled="true"
-                disabled
-            @else
-                href="{{ $paginator->previousPageUrl() }}"
-                rel="prev"
-            @endif
         >
             @lang('pagination.previous')
-        </a>
+        </x-button>
 
         {{-- Next Page Link --}}
-        <a
+        <x-button
+            as="link"
+            is-disabled="{{ !$paginator->hasMorePages() }}"
             class="pagination-next"
+            href="{{ $paginator->hasMorePages() ? $paginator->nextPageUrl() : '' }}"
+            rel="{{ $paginator->hasMorePages() ? 'next' : '' }}"
             aria-label="@lang('pagination.next')"
             dusk="pagination-next"
-            @if ($paginator->hasMorePages())
-                href="{{ $paginator->nextPageUrl() }}"
-                rel="next"
-            @else
-                aria-disabled="true"
-                disabled
-            @endif
         >
             @lang('pagination.next')
-        </a>
+        </x-button>
 
         <ul class="pagination-list">
             {{-- Pagination Elements --}}
@@ -46,19 +42,15 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         <li>
-                            <a
+                            <x-button
+                                as="link"
                                 class="pagination-link {{ $page == $paginator->currentPage() ? 'pagination-link--is-current' : '' }}"
-                                dusk="pagination-link-page-{{ $page }}"
-                                @if ($page == $paginator->currentPage())
-                                    aria-label="Stran {{ $page }}"
-                                    aria-current="page"
-                                @else
-                                    href="{{ $url }}"
-                                    aria-label="Pojdi na stran {{ $page }}"
-                                @endif
+                                aria-label="{{ $page == $paginator->currentPage() ? 'Stran '.$page : 'Pojdi na stran'.$page }}"
+                                aria-current="{{ $page == $paginator->currentPage() ? 'page' : '' }}"
+                                href="{{ $page != $paginator->currentPage() ? $url : '' }}"
                             >
                                 {{ $page }}
-                            </a>
+                            </x-button>
                         </li>
                     @endforeach
                 @endif

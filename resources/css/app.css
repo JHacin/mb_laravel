@@ -36,7 +36,7 @@
 .pagination-previous,
 .pagination-next,
 .pagination-link {
-  @apply btn;
+  /*@apply btn;*/
 }
 
 .btn--primary {
@@ -90,11 +90,11 @@
   @apply bg-primary border-primary hover:border-primary text-white hover:text-white;
 }
 
-.pagination-previous[disabled],
-.pagination-next[disabled],
-.pagination-link[disabled] {
-  @apply bg-gray-200 border-gray-200 text-gray-500 opacity-50 cursor-not-allowed;
-}
+/*.pagination-previous[disabled],*/
+/*.pagination-next[disabled],*/
+/*.pagination-link[disabled] {*/
+/*  @apply bg-gray-200 border-gray-200 text-gray-500 opacity-50 cursor-not-allowed;*/
+/*}*/
 
 .special-sponsorship-type-card {
   @apply mb-6;

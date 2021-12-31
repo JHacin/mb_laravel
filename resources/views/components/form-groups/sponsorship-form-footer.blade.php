@@ -29,3 +29,5 @@
         Pošlji obrazec
     </button>
 </div>
+
+<x-button variant="secondary" dusk="cat-sponsorship-submit">Pošlji obrazec</x-button>

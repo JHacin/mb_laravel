@@ -1,5 +1,10 @@
 module.exports = {
-  content: ['./resources/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue'],
+  content: [
+    './resources/**/*.blade.php',
+    './app/View/Components/**/*.php',
+    './resources/**/*.js',
+    './resources/**/*.vue',
+  ],
   theme: {
     colors: {
       primary: '#d76f44',

@@ -79,22 +79,25 @@
                         @if($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
                             <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
                         @else
-                            <a
-                                class="button is-primary is-medium"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ route('become_cat_sponsor', $cat) }}"
                                 dusk="cat-details-become-sponsor-form-link"
                             >
-                            <span class="icon">
-                                <i class="fas fa-arrow-circle-right"></i>
-                            </span>
+                                <x-slot name="start_adornment">
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-circle-right"></i>
+                                    </span>
+                                </x-slot>
                                 <span>
-                                @if($cat->is_group)
+                                    @if($cat->is_group)
                                         Postani boter
                                     @else
                                         Postani moj boter
                                     @endif
-                            </span>
-                            </a>
+                                </span>
+                            </x-button>
                         @endif
                     </div>
 
