@@ -82,21 +82,11 @@
                             <x-button
                                 as="link"
                                 variant="primary"
+                                icon="fas fa-arrow-circle-right"
                                 href="{{ route('become_cat_sponsor', $cat) }}"
                                 dusk="cat-details-become-sponsor-form-link"
                             >
-                                <x-slot name="start_adornment">
-                                    <span class="icon">
-                                        <i class="fas fa-arrow-circle-right"></i>
-                                    </span>
-                                </x-slot>
-                                <span>
-                                    @if($cat->is_group)
-                                        Postani boter
-                                    @else
-                                        Postani moj boter
-                                    @endif
-                                </span>
+                                {{ $cat->is_group ? 'Postani boter' : 'Postani moj boter' }}
                             </x-button>
                         @endif
                     </div>

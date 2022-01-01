@@ -5,6 +5,7 @@
         {{-- Previous Page Link --}}
         <x-button
             as="link"
+            variant="base"
             is-disabled="{{ $paginator->onFirstPage() }}"
             class="pagination-previous"
             href="{{ $paginator->onFirstPage() ? '' : $paginator->previousPageUrl() }}"
@@ -18,6 +19,7 @@
         {{-- Next Page Link --}}
         <x-button
             as="link"
+            variant="base"
             is-disabled="{{ !$paginator->hasMorePages() }}"
             class="pagination-next"
             href="{{ $paginator->hasMorePages() ? $paginator->nextPageUrl() : '' }}"

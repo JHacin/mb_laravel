@@ -1,38 +1,25 @@
 @php
     use Illuminate\View\ComponentAttributeBag;
 
-    /** @var array $classes */
-    /** @var bool $isDisabled */
     /** @var ComponentAttributeBag $attributes */
+    /** @var callable $generateAttributes */
+    $attributes = $generateAttributes($attributes);
 
-    $baseAttributes = [
-        'class' => $classes,
-        'aria-disabled' => $isDisabled,
-    ];
-
-    if (true) {
-        $baseAttributes['disabled'] = true;
-    }
-
-    $attributes = $attributes->merge($baseAttributes)
+    /** @var string $as */
+    $tag = $as === 'link' ? 'a' : 'button';
 @endphp
 
-@if($as === 'button')
-    <button {{ $attributes->merge(['type' => 'submit']) }}>
-@endif
-@if($as === 'link')
-    <a {{ $attributes }}>
+<{{ $tag }} {{ $attributes }}>
+
+@if($icon && $iconPosition === 'start')
+    <span class="icon">
+        <i class="{{ $icon }}"></i>
+    </span>
 @endif
 
-@isset($start_adornment)
-    <span class="mr-2">{{ $start_adornment }}</span>
-@endisset
-
-{{ $slot }}
-
-@if($as === 'button')
-    </button>
+{{-- Conditional render due to space-x-2 class --}}
+@if(!$slot->isEmpty())
+    <span>{{ $slot }}</span>
 @endif
-@if($as === 'link')
-    </a>
-@endif
+
+</{{$tag}}>

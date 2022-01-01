@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './resources/**/*.blade.php',
@@ -31,5 +33,10 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    plugin(function ({ addVariant }) {
+      addVariant('disabled', '[disabled]');
+    }),
+  ],
 };

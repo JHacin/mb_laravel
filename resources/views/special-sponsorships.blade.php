@@ -74,13 +74,12 @@
                             </div>
                         </div>
                         <div>
-                            <a
-                                class="special-sponsorship-type-card__button"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ $type_boter_meseca['formLink'] }}"
-                            >
-                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
-                                <span>Izberi</span>
-                            </a>
+                                icon="fas fa-arrow-circle-right"
+                            >Izberi</x-button>
                         </div>
                     </div>
 
@@ -102,13 +101,12 @@
                             </div>
                         </div>
                         <div>
-                            <a
-                                class="special-sponsorship-type-card__button"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ $type_muc_gre_brez_skrbi_v_nove_dni['formLink'] }}"
-                            >
-                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
-                                <span>Izberi</span>
-                            </a>
+                                icon="fas fa-arrow-circle-right"
+                            >Izberi</x-button>
                         </div>
                     </div>
 
@@ -130,13 +128,12 @@
                             </div>
                         </div>
                         <div>
-                            <a
-                                class="special-sponsorship-type-card__button"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ $type_muca_gre_brez_skrbi_v_nove_dni['formLink'] }}"
-                            >
-                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
-                                <span>Izberi</span>
-                            </a>
+                                icon="fas fa-arrow-circle-right"
+                            >Izberi</x-button>
                         </div>
                     </div>
 
@@ -166,13 +163,12 @@
                             </div>
                         </div>
                         <div>
-                            <a
-                                class="special-sponsorship-type-card__button"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ $type_nov_zacetek['formLink'] }}"
-                            >
-                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
-                                <span>Izberi</span>
-                            </a>
+                                icon="fas fa-arrow-circle-right"
+                            >Izberi</x-button>
                         </div>
                     </div>
 
@@ -210,13 +206,12 @@
                             </div>
                         </div>
                         <div>
-                            <a
-                                class="special-sponsorship-type-card__button"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ $type_fip_bojevnik_za_1_dan['formLink'] }}"
-                            >
-                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
-                                <span>Izberi</span>
-                            </a>
+                                icon="fas fa-arrow-circle-right"
+                            >Izberi</x-button>
                         </div>
                     </div>
 
@@ -235,13 +230,12 @@
                             </div>
                         </div>
                         <div>
-                            <a
-                                class="special-sponsorship-type-card__button"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ $type_fip_bojevnik_za_2_dni['formLink'] }}"
-                            >
-                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
-                                <span>Izberi</span>
-                            </a>
+                                icon="fas fa-arrow-circle-right"
+                            >Izberi</x-button>
                         </div>
                     </div>
 
@@ -262,13 +256,12 @@
                             </div>
                         </div>
                         <div>
-                            <a
-                                class="special-sponsorship-type-card__button"
+                            <x-button
+                                as="link"
+                                variant="primary"
                                 href="{{ $type_fip_bojevnik_za_1_teden['formLink'] }}"
-                            >
-                                <span class="icon"><i class="fas fa-arrow-circle-right"></i></span>
-                                <span>Izberi</span>
-                            </a>
+                                icon="fas fa-arrow-circle-right"
+                            >Izberi</x-button>
                         </div>
                     </div>
                 </div>
