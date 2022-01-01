@@ -4,7 +4,8 @@
     <section class="section">
         <div class="container">
             <div class="mb-6">
-                <h1 class="title">Zakaj postati mačji boter?</h1>
+                <x-page-title text="Zakaj postati mačji boter?"></x-page-title>
+
                 <div class="content">
                     <ul>
                         <li>
@@ -42,7 +43,8 @@
             </div>
 
             <div class="mb-6">
-                <h1 class="title">Kako postanem mačji boter?</h1>
+                <x-page-title text="Kako postanem mačji boter?"></x-page-title>
+
                 <div class="content">
                     <p>
                         Preprosto. Na spodnji povezavi si <strong>oglejte muce, ki iščejo botra</strong>. Izberite muco in

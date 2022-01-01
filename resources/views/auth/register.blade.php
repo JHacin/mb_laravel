@@ -5,7 +5,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <h1 class="title">Registracija</h1>
+            <x-page-title text="Registracija"></x-page-title>
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf

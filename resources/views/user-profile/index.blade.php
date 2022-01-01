@@ -21,7 +21,8 @@
                 </x-notification>
             @endif
 
-            <h1 class="title">Moja botrstva</h1>
+            <x-page-title text="Moja botrstva"></x-page-title>
+
             <div dusk="sponsorship-list">
                 @if($sponsorships->count() === 0)
                     <div>Nimate še botrstev.</div>
@@ -36,7 +37,7 @@
                 @endif
             </div>
 
-            <h1 class="title">Moj profil</h1>
+            <x-page-title text="Moj profil"></x-page-title>
 
             <form method="POST" action="{{ route('user-profile') }}">
                 @csrf

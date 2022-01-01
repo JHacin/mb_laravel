@@ -35,7 +35,7 @@
 @section('content')
     <div class="section">
         <div class="container mx-auto">
-            <h1 class="title">Posebna botrstva</h1>
+            <x-page-title text="Posebna botrstva"></x-page-title>
 
             <div class="mb-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean hendrerit, ex eu sagittis rhoncus,

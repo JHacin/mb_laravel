@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <h1 class="title">Pravila in pogosta vprašanja</h1>
+            <x-page-title text="Pravila in pogosta vprašanja"></x-page-title>
 
             <article class="message is-primary">
                 <div class="message-header">Kako postanem mačji boter?</div>

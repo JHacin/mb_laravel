@@ -4,7 +4,7 @@
     <section class="section">
         <div class="container mx-auto max-w-screen-xl">
             <div class="mb-6">
-                <h1 class="title">Novice</h1>
+                <x-page-title text="Novice"></x-page-title>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-12 gap-x-8">
                     <div class="col-span-1 lg:col-span-2">

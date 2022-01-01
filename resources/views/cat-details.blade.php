@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="column is-6">
-                    <h1 class="title" dusk="cat-details-name">{{ $cat->name }}</h1>
+                    <x-page-title text="{{ $cat->name }}" dusk="cat-details-name"></x-page-title>
 
                     @if(!$cat->is_group)
                         <div class="block">

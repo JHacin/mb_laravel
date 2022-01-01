@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="container mx-auto">
-            <h1 class="title">Muce, ki iščejo botra</h1>
+            <x-page-title text="Muce, ki iščejo botra"></x-page-title>
 
             <div class="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-8">
                 <div class="col-span-full lg:col-span-3 xl:col-span-4">

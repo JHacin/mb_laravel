@@ -4,7 +4,7 @@
     <section class="section">
         <div class="container">
             <div class="mb-6">
-                <h1 class="title">Botrstvo je odlično dobrodelno darilo</h1>
+                <x-page-title text="Botrstvo je odlično dobrodelno darilo"></x-page-title>
 
                 <div class="block">
                     Mačje botrstvo je lahko tudi izvirno rojstnodnevno darilo,
