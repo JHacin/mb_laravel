@@ -55,16 +55,15 @@
                 </div>
             </div>
 
-            <a
-                class="button is-primary is-medium"
+            <x-button
+                as="link"
+                variant="primary"
                 href="{{ route('cat_list') }}"
+                icon="fas fa-arrow-circle-right"
                 dusk="go-to-cats-list-link"
             >
-                <span class="icon">
-                    <i class="fas fa-arrow-circle-right"></i>
-                </span>
-                <span>Muce, ki iščejo botra</span>
-            </a>
+                Muce, ki iščejo botra
+            </x-button>
         </div>
     </section>
 @endsection

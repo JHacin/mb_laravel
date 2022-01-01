@@ -12,9 +12,7 @@
 <{{ $tag }} {{ $attributes }}>
 
 @if($icon && $iconPosition === 'start')
-    <span class="icon">
-        <i class="{{ $icon }}"></i>
-    </span>
+    <x-icon icon-class="{{ $icon }}"></x-icon>
 @endif
 
 {{-- Conditional render due to space-x-2 class --}}

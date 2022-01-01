@@ -54,21 +54,12 @@
         <div class="mt-auto">
             <div class="mb-2">
                 <a
-                    class="flex items-center font-semibold
-                           {{ $cat->is_group ? 'text-white' : 'text-secondary' }}"
+                    class="flex items-center font-semibold space-x-2 {{ $cat->is_group ? 'text-white' : 'text-secondary' }}"
                     href="{{ route('cat_details', $cat) }}"
                     dusk="cat-list-item-details-link"
                 >
-                    <span class="icon">
-                        <i class="fas fa-arrow-circle-right"></i>
-                    </span>
-                    <span>
-                        @if($cat->is_group)
-                            Preberi več
-                        @else
-                            Preberi mojo zgodbo
-                        @endif
-                    </span>
+                    <x-icon icon-class="fas fa-arrow-circle-right"></x-icon>
+                    <span>{{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}</span>
                 </a>
             </div>
 
@@ -77,20 +68,12 @@
                     <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
                 @else
                     <a
-                        class="flex items-center font-semibold text-primary"
+                        class="flex items-center font-semibold text-primary space-x-2"
                         href="{{ route('become_cat_sponsor', $cat) }}"
                         dusk="cat-list-item-sponsorship-form-link"
                     >
-                    <span class="icon">
-                        <i class="fas fa-arrow-circle-right"></i>
-                    </span>
-                        <span>
-                        @if($cat->is_group)
-                                Postani boter
-                            @else
-                                Postani moj boter
-                            @endif
-                    </span>
+                        <x-icon icon-class="fas fa-arrow-circle-right"></x-icon>
+                        <span>{{ $cat->is_group ? 'Postani boter' : 'Postani moj boter' }}</span>
                     </a>
                 @endif
             </div>

@@ -64,11 +64,11 @@
             @foreach($socialLinks as $socialLink)
                 <a
                     href="{{ $socialLink['href'] }}"
-                    class="text-white hover:text-gray-200 mx-1 text-xl"
+                    class="text-white hover:text-gray-200 mx-1 text-xl flex items-center"
                     dusk="{{ $socialLink['dusk'] }}"
                     target="_blank"
                 >
-                    <i class="{{ $socialLink['icon'] }}"></i>
+                    <x-icon icon-class="{{ $socialLink['icon'] }}"></x-icon>
                 </a>
             @endforeach
         </div>
