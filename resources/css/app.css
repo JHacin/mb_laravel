@@ -9,10 +9,6 @@
   @apply block py-12 px-6 md:px-12;
 }
 
-.content-block {
-  @apply mb-6;
-}
-
 .icon {
   @apply inline-flex items-center justify-center h-6 w-6;
 }

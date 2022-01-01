@@ -35,20 +35,20 @@
                 </div>
 
                 <div class="col-span-full lg:col-span-1 xl:col-span-1 row-start-2 lg:col-start-4 xl:col-start-5">
-                    <div class="content-block">
+                    <x-content-block>
                         <x-cat-list.search-by-name :numResults="$cats->total()" />
-                    </div>
+                    </x-content-block>
 
                     @if($cats->total() > 1)
-                        <div class="content-block" dusk="sort-options-wrapper">
+                        <x-content-block dusk="sort-options-wrapper">
                             <x-cat-list.sort-links />
-                        </div>
+                        </x-content-block>
                     @endif
 
                     @if($cats->isNotEmpty() && $cats->total() > \App\Models\Cat::PER_PAGE_12)
-                        <div class="content-block" dusk="per_page-options-wrapper">
+                        <x-content-block dusk="per_page-options-wrapper">
                             <x-cat-list.per-page-options :cats="$cats" />
-                        </div>
+                        </x-content-block>
                     @endif
                 </div>
 
