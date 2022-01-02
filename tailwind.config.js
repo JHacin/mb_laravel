@@ -28,8 +28,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Montserrat', 'sans-serif'],
-      serif: ['Montserrat', 'serif'],
+      sans: ['Inter', 'sans-serif'],
+      serif: ['Inter', 'serif'],
     },
     extend: {},
   },
