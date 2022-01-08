@@ -50,21 +50,21 @@ class Button extends Component
             'relative',
             'border',
             'text-center',
-            'text-base',
-            'leading-normal',
+            'text-2xl',
+            'font-extrabold',
+            'tracking-tight',
             'cursor-pointer',
             'inline-flex',
             'justify-center',
             'items-center',
             'align-top',
             'py-2',
-            'px-3',
-            'space-x-2',
+            'px-4',
+            'space-x-3',
             'whitespace-nowrap',
             'select-none',
             'appearance-none',
-            'rounded',
-            'shadow-none',
+            'transition-all',
             'disabled:bg-gray-200',
             'disabled:border-gray-200',
             'disabled:text-gray-500',
@@ -74,8 +74,8 @@ class Button extends Component
 
         $colorVariantClasses = match ($this->variant) {
             'base' => ['bg-white', 'border-gray-200', 'text-black'],
-            'primary' => ['bg-primary', 'border-transparent', 'text-white'],
-            'secondary' => ['bg-secondary', 'border-transparent', 'text-white'],
+            'primary' => ['bg-primary', 'border-transparent', 'text-white', 'hover:bg-primary-dark'],
+            'secondary' => ['bg-secondary', 'border-transparent', 'text-white', 'hover:bg-secondary-dark'],
         };
 
         return implode(' ', array_merge($baseClasses, $colorVariantClasses));

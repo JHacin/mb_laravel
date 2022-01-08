@@ -56,12 +56,21 @@
                 @foreach($pageLinks as $pageLink)
                     <a
                         class="
-                            text-black text-base xl:text-lg 2xl:text-xl transition-all
-                            underline underline-offset-4 decoration-dashed decoration-2 hover:decoration-gray-300
-                            {{ $currentRouteName === $pageLink['route_name']
-                                ? 'decoration-secondary hover:decoration-secondary hover:text-black'
-                                : 'decoration-transparent'
-                            }}
+                            text-black
+                            text-base
+                            xl:text-lg
+                            2xl:text-xl
+                            transition-all
+                            hover:text-gray-500
+                            @if($currentRouteName === $pageLink['route_name'])
+                                underline
+                                underline-offset-4
+                                decoration-dashed
+                                decoration-2
+                                decoration-primary
+                                hover:decoration-primary
+                                hover:text-black
+                            @endif
                         "
                         href="{{ route($pageLink['route_name']) }}"
                         dusk="{{ $pageLink['dusk'] }}"
@@ -76,7 +85,7 @@
                 variant="primary"
                 class="justify-self-end"
             >
-                Postani boter
+                postani boter
             </x-button>
         </div>
     </nav>
