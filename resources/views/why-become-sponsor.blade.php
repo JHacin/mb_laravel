@@ -4,7 +4,7 @@
     <section class="section">
         <div class="container">
             <div class="mb-6">
-                <x-page-title text="Zakaj postati mačji boter?"></x-page-title>
+                <h1 class="mb-page-title">Zakaj postati mačji boter?</h1>
 
                 <div class="content">
                     <ul>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="mb-6">
-                <x-page-title text="Kako postanem mačji boter?"></x-page-title>
+                <h1 class="mb-page-title">Kako postanem mačji boter?</h1>
 
                 <div class="content">
                     <p>
@@ -55,15 +55,14 @@
                 </div>
             </div>
 
-            <x-button
-                as="link"
-                variant="primary"
-                href="{{ route('cat_list') }}"
-                icon="fas fa-arrow-circle-right"
-                dusk="go-to-cats-list-link"
+            <a
+              class="mb-btn mb-btn-primary"
+              href="{{ route('cat_list') }}"
+              dusk="go-to-cats-list-link"
             >
-                Muce, ki iščejo botra
-            </x-button>
+                <x-icon icon="arrow-right"></x-icon>
+                <span>Muce, ki iščejo botra</span>
+            </a>
         </div>
     </section>
 @endsection

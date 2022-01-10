@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="column is-6">
-                    <x-page-title text="{{ $cat->name }}" dusk="cat-details-name"></x-page-title>
+                    <h1 class="mb-page-title" dusk="cat-details-name">{{ $cat->name }}</h1>
 
                     @if(!$cat->is_group)
                         <div class="block">
@@ -79,15 +79,14 @@
                         @if($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
                             <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
                         @else
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                icon="fas fa-arrow-circle-right"
-                                href="{{ route('become_cat_sponsor', $cat) }}"
-                                dusk="cat-details-become-sponsor-form-link"
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ route('become_cat_sponsor', $cat) }}"
+                              dusk="cat-details-become-sponsor-form-link"
                             >
-                                {{ $cat->is_group ? 'Postani boter' : 'Postani moj boter' }}
-                            </x-button>
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>{{ $cat->is_group ? 'Postani boter' : 'Postani moj boter' }}</span>
+                            </a>
                         @endif
                     </div>
 

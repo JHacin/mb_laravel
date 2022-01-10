@@ -30,4 +30,10 @@
     </button>
 </div>
 
-<x-button variant="secondary" dusk="cat-sponsorship-submit">Pošlji obrazec</x-button>
+<button
+  class="mb-btn mb-btn-secondary"
+  type="submit"
+  dusk="cat-sponsorship-submit"
+>
+    Pošlji obrazec
+</button>

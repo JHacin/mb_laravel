@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="container is-max-desktop">
-            <x-page-title text="Dogovor o posvojitvi na daljavo"></x-page-title>
+            <h1 class="mb-page-title">Dogovor o posvojitvi na daljavo</h1>
 
 {{--            <div id="v-app-cat-sponsor-form">--}}
 {{--                <v-cat-sponsor-form />--}}

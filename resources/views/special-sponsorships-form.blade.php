@@ -14,7 +14,7 @@
 @section('content')
     <div class="section">
         <div class="container mb-6 is-max-desktop">
-            <x-page-title text="Dogovor za posebno botrstvo"></x-page-title>
+            <h1 class="mb-page-title">Dogovor za posebno botrstvo</h1>
 
             @if(!$errors->isEmpty())
                 <x-notification type="danger">

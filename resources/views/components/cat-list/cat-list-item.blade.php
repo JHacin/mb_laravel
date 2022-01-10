@@ -58,7 +58,7 @@
                     href="{{ route('cat_details', $cat) }}"
                     dusk="cat-list-item-details-link"
                 >
-                    <x-icon icon-class="fas fa-arrow-circle-right"></x-icon>
+                    <x-icon icon="arrow-right"></x-icon>
                     <span>{{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}</span>
                 </a>
             </div>
@@ -72,7 +72,7 @@
                         href="{{ route('become_cat_sponsor', $cat) }}"
                         dusk="cat-list-item-sponsorship-form-link"
                     >
-                        <x-icon icon-class="fas fa-arrow-circle-right"></x-icon>
+                        <x-icon icon="arrow-right"></x-icon>
                         <span>{{ $cat->is_group ? 'Postani boter' : 'Postani moj boter' }}</span>
                     </a>
                 @endif

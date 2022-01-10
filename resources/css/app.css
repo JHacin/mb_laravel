@@ -1,8 +1,50 @@
-@import "~flatpickr/dist/flatpickr.min.css";
-@import "~flatpickr/dist/themes/airbnb.css";
+@import '~flatpickr/dist/flatpickr.min.css';
+@import '~flatpickr/dist/themes/airbnb.css';
 
 @tailwind base;
 @tailwind components;
+
+@layer components {
+  .mb-btn {
+    @apply relative border bg-white border-gray-200 text-black text-center text-2xl font-extrabold tracking-tight
+    cursor-pointer inline-flex justify-center items-center align-top py-2 px-4 space-x-3 whitespace-nowrap select-none
+    appearance-none transition-all disabled:bg-gray-200 disabled:border-gray-200 disabled:text-gray-500 disabled:opacity-50
+    disabled:cursor-not-allowed;
+  }
+
+  .mb-btn-primary {
+    @apply bg-primary border-transparent text-white hover:bg-primary-dark;
+  }
+
+  .mb-btn-secondary {
+    @apply bg-secondary border-transparent text-white hover:bg-secondary-dark;
+  }
+
+  .mb-container {
+    @apply md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl px-4 lg:px-6 mx-auto;
+  }
+
+  .mb-page-content-container {
+    @apply mb-container py-8 md:py-10 lg:py-12;
+  }
+
+  .mb-content-block {
+    @apply mb-6;
+  }
+
+  .mb-page-title {
+    @apply text-secondary text-5xl font-extrabold tracking-tight mb-4 lg:text-6xl lg:mb-6 xl:text-7xl;
+  }
+
+  .mb-page-subtitle {
+    @apply text-base md:text-lg lg:text-xl;
+  }
+
+  .mb-page-header-container {
+    @apply lg:pl-20 lg:max-w-2xl xl:pl-24 xl:max-w-3xl;
+  }
+}
+
 @tailwind utilities;
 
 .section {
@@ -69,24 +111,24 @@
 }
 
 *::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 *::-webkit-scrollbar-track {
-    margin-right: 2px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
-    background-color: #ded4d3;
+  margin-right: 2px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+  background-color: #ded4d3;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #b39a99;
-    border-radius: 8px;
-    width: 4px;
-    margin-right: 2px;
-    background-clip: padding-box;
+  background-color: #b39a99;
+  border-radius: 8px;
+  width: 4px;
+  margin-right: 2px;
+  background-clip: padding-box;
 }
 
 body {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }

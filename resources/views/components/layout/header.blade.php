@@ -28,17 +28,14 @@
 <header
  class="flex items-center h-[64px] md:h-[95px] xl:h-[178px]"
 >
-    <x-container class="flex-grow">
+    <div class="mb-container flex-grow">
         <nav
             role="navigation"
             aria-label="glavni meni"
             class=" flex justify-between space-x-4"
         >
             <div class="flex items-center">
-                <x-icon
-                    icon-class="fas fa-bars"
-                    class="lg:hidden text-2xl mr-4"
-                ></x-icon>
+                <x-icon icon="burger" class="lg:hidden text-2xl mr-4"></x-icon>
 
                 <a
                     href="{{ route('home') }}"
@@ -81,14 +78,10 @@
                     @endforeach
                 </div>
 
-                <x-button
-                    as="link"
-                    variant="primary"
-                    class="justify-self-end"
-                >
-                    postani boter
-                </x-button>
+                <a class="mb-btn mb-btn-primary justify-self-end">
+                    <span>postani boter</span>
+                </a>
             </div>
         </nav>
-    </x-container>
+    </div>
 </header>

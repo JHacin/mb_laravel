@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <x-page-title text="Zasebnost"></x-page-title>
+            <h1 class="mb-page-title">Zasebnost</h1>
         </div>
     </section>
 @endsection

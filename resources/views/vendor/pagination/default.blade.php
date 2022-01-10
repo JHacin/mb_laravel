@@ -3,32 +3,36 @@
 @if ($paginator->hasPages())
     <nav class="pagination" role="navigation" aria-label="premikanje po straneh">
         {{-- Previous Page Link --}}
-        <x-button
-            as="link"
-            variant="base"
-            is-disabled="{{ $paginator->onFirstPage() }}"
-            class="pagination-previous"
-            href="{{ $paginator->onFirstPage() ? '' : $paginator->previousPageUrl() }}"
-            rel="{{ $paginator->onFirstPage() ? '' : 'prev' }}"
-            aria-label="@lang('pagination.previous')"
-            dusk="pagination-previous"
+        <a
+          class="mb-btn pagination-previous"
+          aria-label="@lang('pagination.previous')"
+          dusk="pagination-previous"
+          @if($paginator->onFirstPage())
+            disabled
+            aria-disabled="true"
+          @else
+            href="{{ $paginator->previousPageUrl() }}"
+            rel="prev"
+          @endif
         >
             @lang('pagination.previous')
-        </x-button>
+        </a>
 
         {{-- Next Page Link --}}
-        <x-button
-            as="link"
-            variant="base"
-            is-disabled="{{ !$paginator->hasMorePages() }}"
-            class="pagination-next"
-            href="{{ $paginator->hasMorePages() ? $paginator->nextPageUrl() : '' }}"
-            rel="{{ $paginator->hasMorePages() ? 'next' : '' }}"
-            aria-label="@lang('pagination.next')"
-            dusk="pagination-next"
+        <a
+          class="mb-btn pagination-next"
+          aria-label="@lang('pagination.next')"
+          dusk="pagination-next"
+          @if($paginator->hasMorePages())
+            href="{{ $paginator->nextPageUrl() }}"
+            rel="next"
+          @else
+            disabled
+            aria-disabled="true"
+          @endif
         >
             @lang('pagination.next')
-        </x-button>
+        </a>
 
         <ul class="pagination-list">
             {{-- Pagination Elements --}}
@@ -44,15 +48,16 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         <li>
-                            <x-button
-                                as="link"
-                                class="pagination-link {{ $page == $paginator->currentPage() ? 'pagination-link--is-current' : '' }}"
-                                aria-label="{{ $page == $paginator->currentPage() ? 'Stran '.$page : 'Pojdi na stran'.$page }}"
-                                aria-current="{{ $page == $paginator->currentPage() ? 'page' : '' }}"
-                                href="{{ $page != $paginator->currentPage() ? $url : '' }}"
+                            <a
+                              class="mb-btn pagination-link {{ $page == $paginator->currentPage() ? 'pagination-link--is-current' : '' }}"
+                              aria-label="{{ $page == $paginator->currentPage() ? 'Stran '.$page : 'Pojdi na stran'.$page }}"
+                              aria-current="{{ $page == $paginator->currentPage() ? 'page' : '' }}"
+                              @if($page != $paginator->currentPage())
+                                href="{{ $url }}"
+                              @endif
                             >
                                 {{ $page }}
-                            </x-button>
+                            </a>
                         </li>
                     @endforeach
                 @endif

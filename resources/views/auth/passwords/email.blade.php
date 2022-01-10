@@ -5,7 +5,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <x-page-title text="Ponastavitev gesla"></x-page-title>
+            <h1 class="mb-page-title">Ponastavitev gesla</h1>
 
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf

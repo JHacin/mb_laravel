@@ -5,7 +5,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <x-page-title text="Prijava"></x-page-title>
+            <h1 class="mb-page-title">Prijava</h1>
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf

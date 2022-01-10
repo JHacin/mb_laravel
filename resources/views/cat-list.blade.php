@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="container mx-auto">
-            <x-page-title text="Muce, ki iščejo botra"></x-page-title>
+            <h1 class="mb-page-title">Muce, ki iščejo botra</h1>
 
             <div class="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-8">
                 <div class="col-span-full lg:col-span-3 xl:col-span-4">
@@ -35,20 +35,20 @@
                 </div>
 
                 <div class="col-span-full lg:col-span-1 xl:col-span-1 row-start-2 lg:col-start-4 xl:col-start-5">
-                    <x-content-block>
+                    <div class="mb-content-block">
                         <x-cat-list.search-by-name :numResults="$cats->total()" />
-                    </x-content-block>
+                    </div>
 
                     @if($cats->total() > 1)
-                        <x-content-block dusk="sort-options-wrapper">
+                        <div class="mb-content-block" dusk="sort-options-wrapper">
                             <x-cat-list.sort-links />
-                        </x-content-block>
+                        </div>
                     @endif
 
                     @if($cats->isNotEmpty() && $cats->total() > \App\Models\Cat::PER_PAGE_12)
-                        <x-content-block dusk="per_page-options-wrapper">
+                        <div class="mb-content-block" dusk="per_page-options-wrapper">
                             <x-cat-list.per-page-options :cats="$cats" />
-                        </x-content-block>
+                        </div>
                     @endif
                 </div>
 

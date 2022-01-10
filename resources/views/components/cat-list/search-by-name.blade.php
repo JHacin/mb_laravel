@@ -8,11 +8,13 @@
     @endforeach
     <x-inputs.base.input name="search" placeholder="Išči po imenu" value="{{ request('search') }}">
         <x-slot name="addon">
-            <x-button
-                variant="primary"
-                icon="fas fa-arrow-circle-right"
+            <button
+                class="mb-btn mb-btn-primary"
+                type="submit"
                 dusk="search-submit"
-            ></x-button>
+            >
+                <x-icon icon="arrow-right"></x-icon>
+            </button>
         </x-slot>
     </x-inputs.base.input>
 </form>

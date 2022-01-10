@@ -35,7 +35,7 @@
 @section('content')
     <div class="section">
         <div class="container mx-auto">
-            <x-page-title text="Posebna botrstva"></x-page-title>
+            <h1 class="mb-page-title">Posebna botrstva</h1>
 
             <div class="mb-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean hendrerit, ex eu sagittis rhoncus,
@@ -74,12 +74,13 @@
                             </div>
                         </div>
                         <div>
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                href="{{ $type_boter_meseca['formLink'] }}"
-                                icon="fas fa-arrow-circle-right"
-                            >Izberi</x-button>
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ $type_boter_meseca['formLink'] }}"
+                            >
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>Izberi</span>
+                            </a>
                         </div>
                     </div>
 
@@ -101,12 +102,13 @@
                             </div>
                         </div>
                         <div>
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                href="{{ $type_muc_gre_brez_skrbi_v_nove_dni['formLink'] }}"
-                                icon="fas fa-arrow-circle-right"
-                            >Izberi</x-button>
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ $type_muc_gre_brez_skrbi_v_nove_dni['formLink'] }}"
+                            >
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>Izberi</span>
+                            </a>
                         </div>
                     </div>
 
@@ -128,12 +130,13 @@
                             </div>
                         </div>
                         <div>
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                href="{{ $type_muca_gre_brez_skrbi_v_nove_dni['formLink'] }}"
-                                icon="fas fa-arrow-circle-right"
-                            >Izberi</x-button>
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ $type_muca_gre_brez_skrbi_v_nove_dni['formLink'] }}"
+                            >
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>Izberi</span>
+                            </a>
                         </div>
                     </div>
 
@@ -163,12 +166,13 @@
                             </div>
                         </div>
                         <div>
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                href="{{ $type_nov_zacetek['formLink'] }}"
-                                icon="fas fa-arrow-circle-right"
-                            >Izberi</x-button>
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ $type_nov_zacetek['formLink'] }}"
+                            >
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>Izberi</span>
+                            </a>
                         </div>
                     </div>
 
@@ -206,12 +210,13 @@
                             </div>
                         </div>
                         <div>
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                href="{{ $type_fip_bojevnik_za_1_dan['formLink'] }}"
-                                icon="fas fa-arrow-circle-right"
-                            >Izberi</x-button>
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ $type_fip_bojevnik_za_1_dan['formLink'] }}"
+                            >
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>Izberi</span>
+                            </a>
                         </div>
                     </div>
 
@@ -230,12 +235,13 @@
                             </div>
                         </div>
                         <div>
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                href="{{ $type_fip_bojevnik_za_2_dni['formLink'] }}"
-                                icon="fas fa-arrow-circle-right"
-                            >Izberi</x-button>
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ $type_fip_bojevnik_za_2_dni['formLink'] }}"
+                            >
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>Izberi</span>
+                            </a>
                         </div>
                     </div>
 
@@ -256,12 +262,13 @@
                             </div>
                         </div>
                         <div>
-                            <x-button
-                                as="link"
-                                variant="primary"
-                                href="{{ $type_fip_bojevnik_za_1_teden['formLink'] }}"
-                                icon="fas fa-arrow-circle-right"
-                            >Izberi</x-button>
+                            <a
+                              class="mb-btn mb-btn-primary"
+                              href="{{ $type_fip_bojevnik_za_1_teden['formLink'] }}"
+                            >
+                                <x-icon icon="arrow-right"></x-icon>
+                                <span>Izberi</span>
+                            </a>
                         </div>
                     </div>
                 </div>
