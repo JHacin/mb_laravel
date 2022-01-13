@@ -42,7 +42,11 @@
   }
 
   .mb-page-header-container {
-    @apply lg:pl-20 lg:max-w-2xl xl:pl-24 xl:max-w-3xl;
+    @apply mb-12 lg:mb-20 lg:pl-20 lg:max-w-2xl xl:pl-24 xl:max-w-3xl xl:mb-36;
+  }
+
+  .mb-divider {
+    @apply border-b-4 border-primary my-6;
   }
 }
 

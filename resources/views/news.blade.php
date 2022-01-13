@@ -1,37 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="section">
-        <div class="container mx-auto max-w-screen-xl">
-            <div class="mb-6">
-                <h1 class="mb-page-title">Novice</h1>
+  <div class="mb-page-content-container">
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-12 gap-x-8">
-                    <div class="col-span-1 lg:col-span-2">
-                        <div class="mb-5">
-                            @foreach($news as $newsPiece)
-                                <div class="mb-5">
-                                    <div class="font-semibold mb-1">{{ $newsPiece->title }}</div>
-                                    <div class="text-secondary font-semibold mb-1">
-                                        {{ $newsPiece->created_at->format(config('date.format.default')) }}
-                                    </div>
-                                    <div>{{ $newsPiece->body }}</div>
-                                    <hr>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div>{{ $news->links() }}</div>
-                    </div>
-                    <div class="col-span-1 lg:col-span-1">
-                        <div class="text-center mb-6">
-                            <x-fb-feed />
-                        </div>
-                        <div class="text-center">
-                            IG feed
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="mb-page-header-container">
+      <h1 class="mb-page-title">novice</h1>
+      <h2 class="mb-page-subtitle">
+        Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Sed porttitor lectus nibh. Cras
+        ultricies ligula sed magna dictum porta.
+      </h2>
+    </div>
+
+    <div class="mb-divider"></div>
+
+    <div class="mb-content-block grid grid-cols-1 gap-6 lg:grid-cols-2">
+      @foreach($news as $newsPiece)
+        <x-news-piece
+          date="{{ $newsPiece->created_at->format(config('date.format.default'))}} "
+          title="{{ $newsPiece->title}} "
+          body="{{ $newsPiece->body }}"
+        ></x-news-piece>
+      @endforeach
+    </div>
+
+    <div>{{ $news->links() }}</div>
+  </div>
 @endsection
