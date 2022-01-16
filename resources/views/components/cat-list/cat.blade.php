@@ -8,13 +8,10 @@
         dusk="cat-list-item"
         data-cat-id="{{ $cat->id }}"
     >
-        <figure class="relative pt-[100%]">
-            <img
-                class="absolute inset-0"
-                src="{{ $cat->first_photo_url }}"
-                alt="{{ $cat->name }}"
-            >
-        </figure>
+        <x-cat-photo
+            src="{{ $cat->first_photo_url }}"
+            alt="{{ $cat->name }}"
+        ></x-cat-photo>
 
         <div class="px-5 pt-5 pb-10 space-y-4">
             <div class="space-y-1">
@@ -28,7 +25,7 @@
             </div>
 
             <div class="font-mono tracking-tight">
-                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                [kratek opis] Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
                 Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
             </div>
 
