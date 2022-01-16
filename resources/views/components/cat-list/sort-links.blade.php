@@ -1,28 +1,39 @@
-<h6 class="font-semibold">Razvrsti po:</h6>
-<div class="flex items-baseline">
-    <span class="mr-2">
-        <x-cat-list.sort-link-toggle query="sponsorship_count" label="številu botrov" />
-    </span>
-    <span class="mr-1">
-        <x-cat-list.sort-link-arrow query="sponsorship_count" direction="asc" />
-    </span>
-    <x-cat-list.sort-link-arrow query="sponsorship_count" direction="desc" />
-</div>
-<div class="flex items-baseline">
-    <span class="mr-2">
-        <x-cat-list.sort-link-toggle query="age" label="starosti" />
-    </span>
-    <span class="mr-1">
-        <x-cat-list.sort-link-arrow query="age" direction="asc" />
-    </span>
-    <x-cat-list.sort-link-arrow query="age" direction="desc" />
-</div>
-<div class="flex items-baseline">
-    <span class="mr-2">
-        <x-cat-list.sort-link-toggle query="id" label="datumu objave" />
-    </span>
-    <span class="mr-1">
-        <x-cat-list.sort-link-arrow query="id" direction="asc" />
-    </span>
-    <x-cat-list.sort-link-arrow query="id" direction="desc" />
+@php
+$filters = [
+    [
+        'query' => 'sponsorship_count',
+        'label' => 'številu botrov',
+    ],
+    [
+        'query' => 'age',
+        'label' => 'starosti',
+    ],
+    [
+        'query' => 'id',
+        'label' => 'datumu objave',
+    ],
+];
+@endphp
+
+<div class="flex space-x-4">
+    <h6 class="font-semibold">Razvrsti po:</h6>
+
+    @foreach($filters as $filter)
+        <div class="flex space-x-2">
+            <x-cat-list.sort-link-toggle
+                query="{{ $filter['query'] }}"
+                label="{{ $filter['label'] }}"
+            ></x-cat-list.sort-link-toggle>
+
+            <x-cat-list.sort-link-arrow
+                query="{{ $filter['query'] }}"
+                direction="asc"
+            ></x-cat-list.sort-link-arrow>
+
+            <x-cat-list.sort-link-arrow
+                query="{{ $filter['query'] }}"
+                direction="desc"
+            ></x-cat-list.sort-link-arrow>
+        </div>
+    @endforeach
 </div>
