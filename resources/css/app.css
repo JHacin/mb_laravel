@@ -25,6 +25,14 @@
     @apply text-primary underline underline-offset-2;
   }
 
+  .mb-title-1 {
+    @apply font-extrabold tracking-tight text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl;
+  }
+
+  .mb-title-2 {
+    @apply font-extrabold tracking-tight text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl;
+  }
+
   .mb-container {
     @apply md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl px-4 lg:px-6 mx-auto;
   }
@@ -38,7 +46,7 @@
   }
 
   .mb-page-title {
-    @apply text-black text-3xl font-extrabold tracking-tight mb-4  md:text-5xl lg:text-6xl lg:mb-6 xl:text-7xl;
+    @apply mb-title-1 text-black mb-4 lg:mb-6;
   }
 
   .mb-page-subtitle {
