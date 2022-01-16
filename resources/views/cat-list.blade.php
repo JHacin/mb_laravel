@@ -16,8 +16,6 @@
             </h2>
         </div>
 
-        <div class="mb-divider"></div>
-
         <div class="mb-content-block flex items-center justify-between space-x-8">
             <div>
                 <x-cat-list.search-by-name :numResults="$cats->total()"></x-cat-list.search-by-name>
@@ -36,16 +34,16 @@
             @endif
         </div>
 
-        <div class="mb-content-block">
+        <div class="mb-divider"></div>
+
+        <div class="mb-12">
             @if($cats->isNotEmpty())
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                    class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 md:gap-8 xl:gap-10 2xl:gap-12"
                     dusk="cat-list-items"
                 >
                     @foreach($cats as $cat)
-                        <div class="flex" dusk="cat-list-item-wrapper">
-                            <x-cat-list.cat-list-item :cat="$cat"></x-cat-list.cat-list-item>
-                        </div>
+                        <x-cat-list.cat :cat="$cat"></x-cat-list.cat>
                     @endforeach
                 </div>
             @else
