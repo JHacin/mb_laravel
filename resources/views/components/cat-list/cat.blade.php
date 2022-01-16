@@ -27,14 +27,12 @@
                 </div>
             </div>
 
-
-
             <div class="font-mono tracking-tight">
                 Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
                 Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
             </div>
 
-            <div class="text-primary font-mono tracking-tight underline underline-offset-4 transition-all">
+            <div class="mb-link font-mono tracking-tight">
                 {{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}
             </div>
         </div>
