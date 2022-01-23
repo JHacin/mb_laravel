@@ -111,7 +111,7 @@
         <div class="mb-content-offset-x-3 mt-12 md:mt-14 lg:mt-20 xl:mt-28">
             <div>
                 <h4 class="mb-content-section-title">
-                    {{ $cat->is_group ? 'Moja zgodba' : 'O nas' }}
+                    {{ $cat->is_group ? 'O nas' : 'Moja zgodba' }}
                 </h4>
 
                 <div class="mb-typography-content-base">{!! $cat->story !!}</div>
