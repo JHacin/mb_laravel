@@ -138,6 +138,10 @@
     @apply lg:pl-20 xl:pl-24;
   }
 
+  .mb-content-offset-r-2 {
+    @apply lg:pr-20 xl:pr-24;
+  }
+
   .mb-content-offset-l-3 {
     @apply lg:pl-40 xl:pl-48;
   }
@@ -148,6 +152,10 @@
 
   .mb-content-offset-r-4 {
     @apply lg:pr-72 xl:pr-96;
+  }
+
+  .mb-content-offset-x-2 {
+    @apply mb-content-offset-l-2 mb-content-offset-r-2;
   }
 
   .mb-content-offset-x-3 {
