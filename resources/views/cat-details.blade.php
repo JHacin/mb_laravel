@@ -56,6 +56,17 @@
 @section('content')
     <div class="mb-page-content-container">
         <div class="mb-content-offset-l-2">
+            <div class="flex items-center gap-3 mb-10">
+                <a
+                  href="{{ route('cat_list') }}"
+                  class="mb-link mb-typography-content-sm mb-font-secondary-regular"
+                >
+                    muce, ki iščejo botra
+                </a>
+                <span class="w-px h-4 bg-gray-300"></span>
+                <span class="mb-typography-content-sm mb-font-secondary-regular">{{ $cat->name }}</span>
+            </div>
+
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-8 xl:gap-10 2xl:gap-16">
                 <div class="col-span-1 lg:col-start-2">
                     <h1 class="mb-typography-title-1">{{ $cat->name }}</h1>

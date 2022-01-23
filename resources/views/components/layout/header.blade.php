@@ -26,7 +26,7 @@
 @endphp
 
 <header
- class="flex items-center h-[64px] md:h-[95px] xl:h-[178px]"
+ class="flex items-center h-[64px] md:h-[95px] xl:h-[178px] 2xl:h-[206px]"
 >
     <div class="mb-container flex-grow">
         <nav

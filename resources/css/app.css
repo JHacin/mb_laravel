@@ -113,7 +113,7 @@
    * BUTTONS
    */
   .mb-btn {
-    @apply relative border bg-white border-gray-200 text-black text-center text-2xl font-extrabold tracking-tight
+    @apply relative border bg-white border-gray-200 text-black mb-typography-content-lg mb-font-primary-bold
     cursor-pointer inline-flex justify-center items-center align-top py-2 px-4 space-x-3 whitespace-nowrap select-none
     appearance-none transition-all disabled:bg-gray-200 disabled:border-gray-200 disabled:text-gray-500 disabled:opacity-50
     disabled:cursor-not-allowed;
@@ -159,7 +159,7 @@
   }
 
   .mb-page-content-container {
-    @apply mb-container py-8 md:py-10 lg:py-12;
+    @apply mb-container py-8 md:py-10 lg:py-12 xl:py-14;
   }
 
   .mb-content-block {
