@@ -15,21 +15,21 @@
 
         <div class="px-5 pt-5 pb-10 space-y-4">
             <div class="space-y-1">
-                <h5 class="font-extrabold text-2xl truncate" dusk="cat-list-item-name">
+                <h5 class="mb-typography-content-lg mb-font-primary-bold truncate" dusk="cat-list-item-name">
                     {{ $cat->name }}
                 </h5>
 
-                <div class="text-gray-500">
+                <div class="mb-typography-content-sm mb-font-color-semigray">
                     {{ trans_choice('cat.num_sponsors', $cat->sponsorships_count) }}
                 </div>
             </div>
 
-            <div class="font-mono tracking-tight">
+            <div class="mb-typography-content-sm mb-font-secondary-regular mb-font-color-darkgray">
                 [kratek opis] Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
                 Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
             </div>
 
-            <div class="mb-link font-mono tracking-tight">
+            <div class="mb-link mb-typography-content-sm mb-font-secondary-regular">
                 {{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}
             </div>
         </div>

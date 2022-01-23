@@ -10,7 +10,7 @@
                 preberete več na
                 <a
                     href="{{ route('why_become_sponsor') }}"
-                    class="font-semibold"
+                    class="mb-link"
                     dusk="why-become-sponsor-link"
                 >tej povezavi</a>.
             </h2>
