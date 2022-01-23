@@ -22,15 +22,43 @@
 
     $ageOnArrivalMh = $cat->date_of_arrival_mh && $cat->date_of_birth
         ? AgeFormat::formatToAgeString($cat->date_of_birth->diff($cat->date_of_arrival_mh))
-        : $fallback
+        : $fallback;
+
+    $dataPieces = [
+        [
+            'label' => 'Datum vstopa v botrstvo',
+            'value' => $dateOfArrivalBoter,
+            'dusk' => 'cat-details-date_of_arrival_boter'
+        ],
+        [
+            'label' => 'Trenutna starost',
+            'value' => $currentAge,
+            'dusk' => 'cat-details-current_age'
+        ],
+        [
+            'label' => 'Datum prihoda v Mačjo hišo',
+            'value' => $dateOfArrivalMh,
+            'dusk' => 'cat-details-date_of_arrival_mh'
+        ],
+        [
+            'label' => 'Starost ob prihodu',
+            'value' => $ageOnArrivalMh,
+            'dusk' => 'cat-details-age_on_arrival_mh'
+        ],
+        [
+            'label' => 'Spol',
+            'value' => $cat->gender_label,
+            'dusk' => 'cat-details-gender_label'
+        ],
+    ];
 @endphp
 
 @section('content')
     <div class="mb-page-content-container">
-        <div class="lg:pl-20 xl:pl-24 2xl:pl-28">
+        <div class="mb-content-offset-l-2">
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-8 xl:gap-10 2xl:gap-16">
                 <div class="col-span-1 lg:col-start-2">
-                    <h1 class="mb-title-1">{{ $cat->name }}</h1>
+                    <h1 class="mb-typography-title-1">{{ $cat->name }}</h1>
                 </div>
 
                 <div class="col-span-1 lg:col-start-1 lg:row-start-1 lg:row-span-2">
@@ -41,41 +69,27 @@
                 </div>
 
                 <div class="col-span-1 lg:col-start-2">
-                    <div class="text-lg">
+                    <div class="mb-typography-content-lg">
                         [kratek opis] Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
                         Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
                     </div>
 
                     @if(!$cat->is_group)
-                        <div class="block">
-                            <div class="mb-2">
-                                <span>Datum vstopa v botrstvo:</span>
-                                <strong dusk="cat-details-date_of_arrival_boter">{{ $dateOfArrivalBoter }}</strong>
-                            </div>
-
-                            <div class="mb-2">
-                                <span>Trenutna starost:</span>
-                                <strong dusk="cat-details-current_age">{{ $currentAge }}</strong>
-                            </div>
-
-                            <div class="mb-2">
-                                <span>Datum prihoda v Mačjo hišo:</span>
-                                <strong dusk="cat-details-date_of_arrival_mh">{{ $dateOfArrivalMh }}</strong>
-                            </div>
-
-                            <div class="mb-2">
-                                <span>Starost ob prihodu:</span>
-                                <strong dusk="cat-details-age_on_arrival_mh">{{ $ageOnArrivalMh }}</strong>
-                            </div>
-
-                            <div>
-                                <span>Spol:</span>
-                                <strong dusk="cat-details-gender_label">{{ $cat->gender_label }}</strong>
-                            </div>
+                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-12">
+                            @foreach($dataPieces as $dataPiece)
+                                <div class="space-y-1">
+                                    <div class="mb-typography-content-base text-primary mb-font-primary-semibold">
+                                        {{ $dataPiece['label'] }}
+                                    </div>
+                                    <div class="mb-typography-content-base" dusk="{{ $dataPiece['dusk'] }}">
+                                        {{ $dataPiece['value'] }}
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     @endif
 
-                    <div>
+                    <div class=" mt-12">
                         @if($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
                             <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
                         @else
@@ -94,22 +108,18 @@
         </div>
 
 
-        <div class="lg:px-28 xl:px-40 2xl:px-56 mt-12 md:mt-14 lg:mt-20 xl:mt-28">
+        <div class="mb-content-offset-x-3 mt-12 md:mt-14 lg:mt-20 xl:mt-28">
             <div>
-                @if(!$cat->is_group)
-                    <h4 class="mb-title-2 text-primary mb-6 lg:mb-10 xl:mb-14 2xl:mb-20">Moja zgodba</h4>
-                @endif
+                <h4 class="mb-content-section-title">
+                    {{ $cat->is_group ? 'Moja zgodba' : 'O nas' }}
+                </h4>
 
-                <div>{!! $cat->story !!}</div>
+                <div class="mb-typography-content-base">{!! $cat->story !!}</div>
             </div>
 
             <div>
-                <h4>
-                    @if($cat->is_group)
-                        Trenutni botri
-                    @else
-                        Moji botri
-                    @endif
+                <h4 class="mb-content-section-title">
+                    {{ $cat->is_group ? 'Naši botri' : 'Moji botri' }}
                 </h4>
                 <div>
                     @if($cat->sponsorships()->count() === 0)
