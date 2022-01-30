@@ -186,6 +186,22 @@ class CatCrudController extends CrudController
             ],
             'hint' => 'Ali naj se ta vnos obravnava kot druge skupine - Čombe, Pozitivčki, Bubiji...',
         ]);
+        $this->crud->addField([
+            'name' => 'story_short',
+            'label' => trans('cat.story_short'),
+            'type' => 'textarea',
+            'hint' => 'Največ ' . config('validation.cat.story_short_maxlength') . ' znakov.',
+            'attributes' => [
+                'maxlength' => config('validation.cat.story_short_maxlength'),
+                'required' => 'required',
+                'rows' => 3,
+            ],
+        ]);
+        $this->crud->addField([
+            'name' => 'story',
+            'label' => trans('cat.story'),
+            'type' => 'wysiwyg',
+        ]);
         $this->crud->addField(CrudFieldGenerator::dateField([
             'name' => 'date_of_birth',
             'label' => trans('cat.date_of_birth'),
@@ -217,11 +233,6 @@ class CatCrudController extends CrudController
                 ],
             ]);
         }
-        $this->crud->addField([
-            'name' => 'story',
-            'label' => trans('cat.story'),
-            'type' => 'wysiwyg',
-        ]);
         $this->crud->addField([
             'name' => 'location_id',
             'label' => trans('cat.location'),

@@ -13,6 +13,7 @@ class CreateCatsTable extends Migration
             $table->string('name');
             $table->smallInteger('gender')->nullable();
             $table->smallInteger('status')->default(Cat::STATUS_NOT_SEEKING_SPONSORS);
+            $table->text('story_short')->nullable();
             $table->text('story')->nullable();
             $table->date('date_of_arrival_mh')->nullable();
             $table->date('date_of_arrival_boter')->nullable();

@@ -82,8 +82,7 @@
 
                 <div class="col-span-1 lg:col-start-2">
                     <div class="mb-typography-content-lg">
-                        [kratek opis] Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                        {!! $cat->story_short !!}
                     </div>
 
                     @if(!$cat->is_group)
