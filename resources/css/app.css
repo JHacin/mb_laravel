@@ -186,10 +186,6 @@
   }
 }
 
-.section {
-  @apply block py-12 px-6 md:px-12;
-}
-
 .pagination,
 .pagination-list {
   @apply flex items-center justify-center text-center;
