@@ -3,7 +3,7 @@
 @section('content')
   <div class="mb-page-content-container">
     <div class="mb-page-header-container">
-      <h1 class="mb-page-title">pravila in pogosta vprašanja</h1>
+      <h1 class="mb-page-title">pogosta vprašanja</h1>
     </div>
 
     <div class="mb-content-offset-l-4 mb-content-offset-r-3">

@@ -18,7 +18,7 @@ return [
     'special_sponsorships_archive' => '/posebna-botrstva/arhiv',
     'gift_sponsorship' => '/podari-botrstvo',
     'news' => '/novice',
-    'faq' => '/pravila-in-pogosta-vprasanja',
+    'faq' => '/pogosta-vprasanja',
     'privacy' => '/zasebnost',
     'admin' => [
         'dashboard' => 'dashboard',
