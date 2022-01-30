@@ -22,6 +22,11 @@
             'route_name' => 'news',
             'dusk' => 'navbar-news-link',
         ],
+        [
+            'label' => 'Pogosta vprašanja',
+            'route_name' => 'faq',
+            'dusk' => 'navbar-faq-link',
+        ],
     ];
 @endphp
 
@@ -50,7 +55,7 @@
             </div>
 
             <div class="flex items-center">
-                <div class="hidden lg:flex items-center space-x-4 mr-6">
+                <div class="hidden lg:flex items-center space-x-4 mr-6 xl:space-x-6">
                     @foreach($pageLinks as $pageLink)
                         <a
                             class="

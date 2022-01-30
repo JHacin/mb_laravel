@@ -5,6 +5,7 @@
 $icon_class = match ($icon) {
     'arrow-right' => 'fas fa-arrow-circle-right',
     'burger' => 'fas fa-bars',
+    'plus' => 'fas fa-plus',
 }
 @endphp
 
