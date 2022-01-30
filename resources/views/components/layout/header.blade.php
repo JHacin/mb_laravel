@@ -3,7 +3,7 @@
 
     $pageLinks = [
         [
-            'label' => 'Postani redni boter',
+            'label' => 'Redno botrstvo',
             'route_name' => 'cat_list',
             'dusk' => 'navbar-cat-list-link',
         ],

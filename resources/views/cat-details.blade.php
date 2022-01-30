@@ -103,7 +103,9 @@
 
                     <div class=" mt-12">
                         @if($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
-                            <em>{{ trans('cat.temp_not_seeking_sponsors_text') }}</em>
+                            <div class="mb-typography-content-base italic">
+                                {{ trans('cat.temp_not_seeking_sponsors_text') }}
+                            </div>
                         @else
                             <a
                                 class="mb-btn mb-btn-primary"
@@ -133,18 +135,27 @@
                 <h4 class="mb-content-section-title">
                     {{ $cat->is_group ? 'Naši botri' : 'Moji botri' }}
                 </h4>
-                <div>
-                    @if($cat->sponsorships()->count() === 0)
+
+                @if($cat->sponsorships()->count() === 0)
+                    <div class="mb-typography-content-base">
                         Muca še nima botrov.
-                    @else
+                    </div>
+                @else
+                    <div class="space-y-2">
                         @foreach($sponsors['identified'] as $sponsor)
-                            <x-sponsor-details :sponsor="$sponsor"></x-sponsor-details>
+                            <x-sponsor-details
+                              class="mb-typography-content-base"
+                              :sponsor="$sponsor"
+                            ></x-sponsor-details>
                         @endforeach
+
                         @if(count($sponsors['anonymous']) > 0)
-                            <div>{{ $sponsors['anonymous_count_label'] }}</div>
+                            <div class="mb-typography-content-base">
+                                {{ $sponsors['anonymous_count_label'] }}
+                            </div>
                         @endif
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
         </div>
 

@@ -9,6 +9,6 @@ class SponsorshipSeeder extends Seeder
 {
     public function run()
     {
-        Sponsorship::factory()->count(5)->create();
+        Sponsorship::factory()->count(100)->create();
     }
 }
