@@ -9,7 +9,9 @@ $icon_class = match ($icon) {
     'instagram' => 'fab fa-instagram',
     'facebook' => 'fab fa-facebook-f',
     'email' => 'far fa-envelope',
-    'heart' => 'fas fa-heart'
+    'heart' => 'fas fa-heart',
+    'chevron-left' => 'fas fa-chevron-left',
+    'chevron-right' => 'fas fa-chevron-right',
 }
 @endphp
 

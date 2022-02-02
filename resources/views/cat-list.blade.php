@@ -52,7 +52,7 @@
         </div>
 
         <div>
-            {{ $cats->links() }}
+            {{ $cats->onEachSide(1)->links() }}
         </div>
     </div>
 @endsection

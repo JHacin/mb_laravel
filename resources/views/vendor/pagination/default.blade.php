@@ -1,67 +1,73 @@
 {{--Todo: disable link functionality if href equals empty string--}}
 
 @if ($paginator->hasPages())
-    <nav class="pagination" role="navigation" aria-label="premikanje po straneh">
+    <nav
+      class="flex flex-wrap justify-center md:justify-end gap-x-1 gap-y-2"
+      role="navigation"
+      aria-label="premikanje po straneh"
+    >
         {{-- Previous Page Link --}}
         <a
-          class="mb-btn pagination-previous"
+          @class([
+            'mb-pagination-btn',
+            'pointer-events-none text-gray-300' => $paginator->onFirstPage()
+          ])
           aria-label="@lang('pagination.previous')"
           dusk="pagination-previous"
           @if($paginator->onFirstPage())
-            disabled
             aria-disabled="true"
           @else
             href="{{ $paginator->previousPageUrl() }}"
             rel="prev"
           @endif
         >
-            @lang('pagination.previous')
+            <x-icon icon="chevron-left"></x-icon>
         </a>
+
+        {{-- Pagination Elements --}}
+        @foreach ($elements as $element)
+            {{-- "Three Dots" Separator --}}
+            @if (is_string($element))
+                <span
+                  class="mb-pagination-btn pointer-events-none"
+                  aria-disabled="true"
+                >&hellip;</span>
+            @endif
+
+            {{-- Array Of Links --}}
+            @if (is_array($element))
+                @foreach ($element as $page => $url)
+                    <a
+                      @class([
+                        'mb-pagination-btn',
+                        'bg-primary text-white pointer-events-none' => $page == $paginator->currentPage()
+                      ])
+                      aria-label="{{ $page == $paginator->currentPage() ? 'Stran '.$page : 'Pojdi na stran'.$page }}"
+                      aria-current="{{ $page == $paginator->currentPage() ? 'page' : '' }}"
+                      @if($page != $paginator->currentPage())
+                      href="{{ $url }}"
+                      @endif
+                    >{{ $page }}</a>
+                @endforeach
+            @endif
+        @endforeach
 
         {{-- Next Page Link --}}
         <a
-          class="mb-btn pagination-next"
+          @class([
+            'mb-pagination-btn',
+            'pointer-events-none text-gray-300' => !$paginator->hasMorePages()
+          ])
           aria-label="@lang('pagination.next')"
           dusk="pagination-next"
           @if($paginator->hasMorePages())
-            href="{{ $paginator->nextPageUrl() }}"
-            rel="next"
+          href="{{ $paginator->nextPageUrl() }}"
+          rel="next"
           @else
-            disabled
-            aria-disabled="true"
+          aria-disabled="true"
           @endif
         >
-            @lang('pagination.next')
+            <x-icon icon="chevron-right"></x-icon>
         </a>
-
-        <ul class="pagination-list">
-            {{-- Pagination Elements --}}
-            @foreach ($elements as $element)
-                {{-- "Three Dots" Separator --}}
-                @if (is_string($element))
-                    <li>
-                        <span class="pagination-ellipsis" aria-disabled="true">&hellip;</span>
-                    </li>
-                @endif
-
-                {{-- Array Of Links --}}
-                @if (is_array($element))
-                    @foreach ($element as $page => $url)
-                        <li>
-                            <a
-                              class="mb-btn pagination-link {{ $page == $paginator->currentPage() ? 'pagination-link--is-current' : '' }}"
-                              aria-label="{{ $page == $paginator->currentPage() ? 'Stran '.$page : 'Pojdi na stran'.$page }}"
-                              aria-current="{{ $page == $paginator->currentPage() ? 'page' : '' }}"
-                              @if($page != $paginator->currentPage())
-                                href="{{ $url }}"
-                              @endif
-                            >
-                                {{ $page }}
-                            </a>
-                        </li>
-                    @endforeach
-                @endif
-            @endforeach
-        </ul>
     </nav>
 @endif

@@ -188,53 +188,11 @@
   .mb-divider {
     @apply border-b-4 border-primary my-6;
   }
-}
 
-.pagination,
-.pagination-list {
-  @apply flex items-center justify-center text-center;
-}
-
-.pagination {
-  @apply flex-wrap md:flex-nowrap text-base m-[-0.25rem];
-}
-
-.pagination-list {
-  @apply flex-wrap md:flex-grow md:flex-shrink md:justify-start md:order-1;
-}
-
-.pagination-previous,
-.pagination-next {
-  @apply grow md:grow-0 shrink md:shrink-0 px-3 m-1 min-w-[2.5em];
-}
-
-.pagination-previous,
-.pagination-next,
-.pagination-link,
-.pagination-ellipsis {
-  @apply md:my-0 text-base justify-center m-1 px-2 text-center;
-}
-
-.pagination-previous,
-.pagination-next,
-.pagination-link {
-  @apply hover:border-gray-400;
-}
-
-.pagination-previous {
-  @apply md:order-2;
-}
-
-.pagination-next {
-  @apply md:order-3;
-}
-
-.pagination-link {
-  @apply min-w-[2.5em];
-}
-
-.pagination-link--is-current {
-  @apply bg-primary border-primary hover:border-primary text-white hover:text-white;
+  .mb-pagination-btn {
+    @apply flex justify-center font-semibold items-center w-[40px] h-[40px] leading-none rounded select-none transition-all
+    hover:bg-gray-100;
+  }
 }
 
 .special-sponsorship-type-card {

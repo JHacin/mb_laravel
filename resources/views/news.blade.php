@@ -23,6 +23,6 @@
       @endforeach
     </div>
 
-    <div>{{ $news->links() }}</div>
+    <div>{{ $news->onEachSide(1)->links() }}</div>
   </div>
 @endsection
