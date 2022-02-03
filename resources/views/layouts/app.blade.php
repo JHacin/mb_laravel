@@ -23,7 +23,7 @@
 
         <x-layout.header></x-layout.header>
         <main>@yield('content')</main>
-        <x-layout.footer></x-layout.footer>
+        <x-footer></x-footer>
 
         <script src="{{ mix('js/app.js') }}"></script>
 

@@ -90,17 +90,8 @@
 
     <hr>
 
-    <div class="text-sm text-gray-500 font-light pt-4 lg:pt-6 xl:pt-8 2xl:pt-10">
-      <div>Zavod Mačja hiša © {{ date('Y') }} Mačji boter</div>
-      <div>Vse pravice pridržane.</div>
-      <div>Izvedba: Jan Hacin</div>
-      <div class="mt-2">
-        <a
-          class="mb-link text-gray-500"
-          href="{{ route('privacy') }}"
-          dusk="footer-privacy-link"
-        >Zasebnost</a>
-      </div>
+    <div class="pt-4 lg:pt-6 xl:pt-8 2xl:pt-10">
+      <x-footer.copy></x-footer.copy>
     </div>
   </div>
 </footer>

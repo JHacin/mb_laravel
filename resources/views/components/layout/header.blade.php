@@ -30,6 +30,7 @@
     ];
 @endphp
 
+{{-- Desktop nav --}}
 <header
  class="flex items-center h-[64px] md:h-[95px] xl:h-[178px] 2xl:h-[206px]"
 >
@@ -39,8 +40,14 @@
             aria-label="glavni meni"
             class=" flex justify-between space-x-4"
         >
-            <div class="flex items-center">
-                <x-icon icon="burger" class="lg:hidden text-2xl mr-4"></x-icon>
+            <div class="flex items-center justify-between">
+                <span
+                  class="lg:hidden flex items-center cursor-pointer p-2 mr-4"
+                  role="button"
+                  data-mobile-nav-open-btn
+                >
+                    <x-icon icon="burger" class="text-2xl"></x-icon>
+                </span>
 
                 <a
                     href="{{ route('home') }}"
@@ -90,3 +97,66 @@
         </nav>
     </div>
 </header>
+
+{{-- Mobile nav --}}
+<div
+  class="hidden fixed top-0 left-0 w-full h-full bg-white z-50 flex overflow-hidden"
+  data-mobile-nav
+>
+    <div class="grow flex flex-col">
+        <div class="px-4 space-y-10">
+            <div class="flex justify-between items-center mt-4">
+                <a
+                  href="{{ route('home') }}"
+                >
+                    <img
+                      src="{{ mix('img/logo.png') }}"
+                      alt="Mačji boter"
+                      class="h-auto w-[70px]"
+                    >
+                </a>
+
+                <span
+                  class="flex items-center cursor-pointer p-2"
+                  role="button"
+                  data-mobile-nav-close-btn
+                >
+              <x-icon icon="close" class="text-2xl"></x-icon>
+            </span>
+            </div>
+
+            <div>
+                @foreach($pageLinks as $pageLink)
+                    <a
+                      class="block border-b border-gray-300 py-3 text-lg font-semibold"
+                      href="{{ route($pageLink['route_name']) }}"
+                    >
+                        {{ $pageLink['label'] }}
+                    </a>
+                @endforeach
+            </div>
+
+            <div>
+                <a class="mb-btn mb-btn-primary block text-center">
+                    <span>postani boter</span>
+                </a>
+            </div>
+
+            <div>
+                <h6 class="mb-2">Spremljajte nas</h6>
+                <div class="flex gap-6 text-xl">
+                    <a href="{{ config('links.facebook_page') }}">
+                        <x-icon class="hover:text-primary w-[12px]" icon="facebook"></x-icon>
+                    </a>
+                    <a href="{{ config('links.instagram_page') }}">
+                        <x-icon class="hover:text-primary w-[12px]" icon="instagram"></x-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="grow mt-10 bg-gray-100 p-4">
+            <x-footer.copy></x-footer.copy>
+        </div>
+    </div>
+</div>

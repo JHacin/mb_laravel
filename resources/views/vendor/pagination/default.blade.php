@@ -1,5 +1,3 @@
-{{--Todo: disable link functionality if href equals empty string--}}
-
 @if ($paginator->hasPages())
     <nav
       class="flex flex-wrap justify-center md:justify-end gap-x-1 gap-y-2"
