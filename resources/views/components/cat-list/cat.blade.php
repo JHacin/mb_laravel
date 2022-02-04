@@ -19,12 +19,12 @@
                     {{ $cat->name }}
                 </h5>
 
-                <div class="mb-typography-content-sm mb-font-color-semigray">
+                <div class="mb-typography-content-sm text-gray-semi">
                     {{ trans_choice('cat.num_sponsors', $cat->sponsorships_count) }}
                 </div>
             </div>
 
-            <div class="mb-typography-content-sm mb-font-secondary-regular mb-font-color-darkgray">
+            <div class="mb-typography-content-sm mb-font-secondary-regular text-gray-dark">
                 {!! $cat->story_short !!}
             </div>
 

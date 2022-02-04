@@ -16,7 +16,7 @@
     @endisset
 
     @if(!$loop->last)
-        <span class="w-px h-4 bg-gray-300"></span>
+        <span class="w-px h-4 bg-gray-light"></span>
     @endif
   @endforeach
 </div>

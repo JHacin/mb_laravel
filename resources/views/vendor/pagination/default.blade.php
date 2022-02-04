@@ -8,7 +8,7 @@
         <a
           @class([
             'mb-pagination-btn',
-            'pointer-events-none text-gray-300' => $paginator->onFirstPage()
+            'pointer-events-none text-gray-light' => $paginator->onFirstPage()
           ])
           aria-label="@lang('pagination.previous')"
           dusk="pagination-previous"
@@ -54,7 +54,7 @@
         <a
           @class([
             'mb-pagination-btn',
-            'pointer-events-none text-gray-300' => !$paginator->hasMorePages()
+            'pointer-events-none text-gray-light' => !$paginator->hasMorePages()
           ])
           aria-label="@lang('pagination.next')"
           dusk="pagination-next"

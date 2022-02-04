@@ -1,4 +1,4 @@
-<footer class="bg-gray-100 shadow-lg">
+<footer class="bg-gray-extralight shadow-lg">
   <div class="mb-page-content-container">
     <div class="mb-12 lg:mb-14 lg:flex lg:justify-between lg:items-center xl:mb-16 2xl:mb-18">
       <div class="mb-6">
@@ -15,11 +15,11 @@
       </div>
     </div>
 
-    <div class="mb-font-color-darkgray grid pb-2 lg:grid-cols-3 lg:pb-6 2xl:grid-cols-4 2xl:pb-8 xl:gap-36 2xl:gap-48">
+    <div class="text-gray-dark grid pb-2 lg:grid-cols-3 lg:pb-6 2xl:grid-cols-4 2xl:pb-8 xl:gap-36 2xl:gap-48">
       <div class="mb-8 space-y-8 lg:space-y-0 lg:col-span-2 lg:col-start-2 lg:gap-12 lg:flex 2xl:col-span-3 xl:gap-24 2xl:gap-36">
         <div>
           <h6 class="mb-typography-content-base mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Obiščite tudi</h6>
-          <div class="mb-font-color-darkgray text-sm font-light space-y-2">
+          <div class="text-gray-dark text-sm font-light space-y-2">
             <a class="block hover:underline" href="{{ config('links.macja_hisa') }}" dusk="footer-mh-link">
               Mačja hiša
             </a>

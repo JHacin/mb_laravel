@@ -1,6 +1,6 @@
 @props(['title'])
 
-<article class="border-t border-gray-300 overflow-hidden">
+<article class="border-t border-gray-light overflow-hidden">
   <div
     class="flex justify-between items-center cursor-pointer gap-x-4 py-4"
     data-accordion-trigger

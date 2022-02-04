@@ -71,7 +71,7 @@
                             xl:text-lg
                             2xl:text-xl
                             transition-all
-                            hover:text-gray-500
+                            hover:text-gray-semi
                             @if($currentRouteName === $pageLink['route_name'])
                                 underline
                                 underline-offset-4
@@ -128,7 +128,7 @@
             <div>
                 @foreach($pageLinks as $pageLink)
                     <a
-                      class="block border-b border-gray-300 py-3 text-lg font-semibold"
+                      class="block border-b border-gray-light py-3 text-lg font-semibold"
                       href="{{ route($pageLink['route_name']) }}"
                     >
                         {{ $pageLink['label'] }}
@@ -155,7 +155,7 @@
             </div>
         </div>
 
-        <div class="grow mt-10 bg-gray-100 p-4">
+        <div class="grow mt-10 bg-gray-extralight p-4">
             <x-footer.copy></x-footer.copy>
         </div>
     </div>
