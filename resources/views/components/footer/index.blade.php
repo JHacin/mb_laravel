@@ -3,7 +3,7 @@
     <div class="mb-12 lg:mb-14 lg:flex lg:justify-between lg:items-center xl:mb-16 2xl:mb-18">
       <div class="mb-6">
         <img
-          src="{{ mix('img/logo.png') }}"
+          src="{{ mix('img/logo.svg') }}"
           alt="Mačji boter"
           class="h-auto w-[115px] lg:w-[135px] 2xl:w-[155px]"
         >
@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <hr>
+    <hr class="border-gray-light">
 
     <div class="pt-4 lg:pt-6 xl:pt-8 2xl:pt-10">
       <x-footer.copy></x-footer.copy>

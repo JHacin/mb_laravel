@@ -54,7 +54,7 @@
                     dusk="navbar-home-link"
                 >
                     <img
-                        src="{{ mix('img/logo.png') }}"
+                        src="{{ mix('img/logo.svg') }}"
                         alt="Mačji boter"
                         class="h-auto w-[70px] md:w-[80px] lg:w-[100px] xl:w-[135px] 2xl:w-[165px]"
                     >
@@ -110,7 +110,7 @@
                   href="{{ route('home') }}"
                 >
                     <img
-                      src="{{ mix('img/logo.png') }}"
+                      src="{{ mix('img/logo.svg') }}"
                       alt="Mačji boter"
                       class="h-auto w-[70px]"
                     >
