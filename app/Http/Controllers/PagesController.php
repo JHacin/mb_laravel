@@ -26,6 +26,11 @@ class PagesController extends Controller
         return view('news', ['news' => $newsPaginator]);
     }
 
+    public function becomeSponsorOverview(): View
+    {
+        return view('become-sponsor-overview');
+    }
+
     public function whyBecomeSponsor(): View
     {
         return view('why-become-sponsor');

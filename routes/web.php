@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Publicly visible pages
 Route::get(config('routes.home'), [HomeController::class, 'index'])->name('home');
+Route::get(config('routes.become_sponsor_overview'), [PagesController::class, 'becomeSponsorOverview'])->name('become_sponsor_overview');
 Route::get(config('routes.why_become_sponsor'), [PagesController::class, 'whyBecomeSponsor'])->name('why_become_sponsor');
 Route::get(config('routes.faq'), [PagesController::class, 'faq'])->name('faq');
 Route::get(config('routes.privacy'), [PagesController::class, 'privacy'])->name('privacy');

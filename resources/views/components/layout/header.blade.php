@@ -90,7 +90,10 @@
                     @endforeach
                 </div>
 
-                <a class="mb-btn mb-btn-primary justify-self-end">
+                <a
+                    class="mb-btn mb-btn-primary justify-self-end"
+                    href="{{ route('become_sponsor_overview') }}"
+                >
                     <span>postani boter</span>
                 </a>
             </div>
@@ -137,7 +140,10 @@
             </div>
 
             <div>
-                <a class="mb-btn mb-btn-primary block text-center">
+                <a
+                    class="mb-btn mb-btn-primary block text-center"
+                    href="{{ route('become_sponsor_overview') }}"
+                >
                     <span>postani boter</span>
                 </a>
             </div>

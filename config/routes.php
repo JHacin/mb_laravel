@@ -9,6 +9,7 @@ return [
     'reset_password_form' => '/geslo/ponastavitev/{token}',
     'send_reset_link_email' => '/geslo/email',
     'user_profile' => '/profil',
+    'become_sponsor_overview' => '/postani-boter',
     'why_become_sponsor' => '/zakaj-postati-boter',
     'cat_list' => '/muce',
     'cat_details' => '/muce/{cat}',
