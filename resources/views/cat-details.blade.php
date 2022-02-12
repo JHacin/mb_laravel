@@ -74,10 +74,7 @@
                 </div>
 
                 <div class="col-span-1 lg:col-start-1 lg:row-start-1 lg:row-span-2">
-                    <x-cat-photo
-                        src="{{ $cat->first_photo_url }}"
-                        alt="{{ $cat->name }}"
-                    ></x-cat-photo>
+                    <x-cat-details.gallery :cat="$cat"></x-cat-details.gallery>
                 </div>
 
                 <div class="col-span-1 lg:col-start-2">
@@ -157,7 +154,5 @@
                 @endif
             </div>
         </div>
-
-
     </div>
 @endsection

@@ -218,3 +218,9 @@
 body {
   overflow-x: hidden;
 }
+
+/* Lightgallery thumbnail override */
+.lg-thumb-item:hover,
+.lg-thumb-item.active {
+  @apply !border-primary;
+}

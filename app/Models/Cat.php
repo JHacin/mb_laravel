@@ -37,6 +37,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @property string $slug
  * @property int|null $location_id
  * @property-read string $first_photo_url
+ * @property-read CatPhoto[] $available_photos
  * @property-read string $gender_label
  * @property-read string $name_and_id
  * @property-read string $status_label
@@ -251,6 +252,24 @@ class Cat extends Model
         }
 
         return CatPhotoService::getPlaceholderImage();
+    }
+
+    /**
+     * @return CatPhoto[]
+     */
+    public function getAvailablePhotosAttribute(): array
+    {
+        $result = [];
+
+        foreach (CatPhotoService::INDICES as $index) {
+            $photo = self::getPhotoByIndex($index);
+
+            if ($photo) {
+                $result[] = $photo;
+            }
+        }
+
+        return $result;
     }
 
     public function getNameAndIdAttribute(): string
