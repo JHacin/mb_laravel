@@ -28,7 +28,7 @@
                 {!! $cat->story_short !!}
             </div>
 
-            <div class="mb-link mb-typography-content-sm mb-font-secondary-regular">
+            <div class="mb-link mb-typography-content-sm mb-font-secondary-regular underline underline-offset-2">
                 {{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}
             </div>
         </div>
