@@ -13,6 +13,7 @@ $icon_class = match ($icon) {
     'heart' => 'fas fa-heart',
     'chevron-left' => 'fas fa-chevron-left',
     'chevron-right' => 'fas fa-chevron-right',
+    'paw' => 'fas fa-paw',
 }
 @endphp
 
