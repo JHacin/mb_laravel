@@ -184,18 +184,6 @@
   }
 }
 
-.special-sponsorship-type-card {
-  @apply mb-6;
-}
-
-.special-sponsorship-type-card__title {
-  @apply text-primary font-bold text-2xl mb-2;
-}
-
-.special-sponsorship-type-card__content {
-  @apply mb-3;
-}
-
 *::-webkit-scrollbar {
   width: 8px;
 }
