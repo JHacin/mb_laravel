@@ -73,7 +73,3 @@
     </div>
   </div>
 @endsection
-
-@push('footer-scripts')
-  <script src="{{ mix('js/faq.js') }}"></script>
-@endpush

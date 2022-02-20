@@ -54,11 +54,14 @@
                     <x-slot name="description_short">
                         Z donacijo <strong>{{ $type_boter_meseca['amount'] }} €</strong> postanete boter
                         tekočega meseca in tako
-                        pomagate preživeti izbrani mesec vsem muckom, ki so takrat v oskrbi Mačje hiše. V zameno
-                        za vašo donacijo boste prejeli
-                        <strong>ozadje za namizje s koledarjem "vašega" meseca</strong>.
-                        Verjamemo, da vam bo vsakodnevni pogled nanj pogosto izvabil nasmeh na obraz in tako
-                        tudi vam polepšal izbrani mesec.
+                        pomagate preživeti izbrani mesec vsem muckom, ki so takrat v oskrbi Mačje hiše.
+                    </x-slot>
+                    <x-slot name="description_long">
+                        <div>V zameno za vašo donacijo boste prejeli ozadje za namizje s koledarjem "vašega" meseca.</div>
+                        <div>
+                            Verjamemo, da vam bo vsakodnevni pogled nanj pogosto izvabil nasmeh na obraz in tako
+                            tudi vam polepšal izbrani mesec.
+                        </div>
                     </x-slot>
                 </x-special-sponsorships.type-card>
 
@@ -71,6 +74,23 @@
                         <strong>{{ $type_muc_gre_brez_skrbi_v_nove_dni['amount'] }} €</strong>
                         pokrijete stroške kastracije enega mačka.
                     </x-slot>
+                    <x-slot name="description_long">
+                        <div>
+                            Obdarovanec bo na izbrani datum prejel prirejeno mačje namizje z napisom
+                            "Praznujem in obdarujem", na koledarju namizja pa bo posebej označen njegov
+                            praznični dan.
+                        </div>
+                        <div>
+                            Namizje mu bomo po elektronski pošti poslali v vašem imenu in
+                            z vašim sporočilom, obdarovanec pa bo dva meseca zapored uvrščen na seznam
+                            mesečnih botrov.
+                        </div>
+                        <div>
+                            Najkasneje v roku enega meseca bo obdarovanec prejel tudi
+                            sliko mucka, za katerega je bil porabljen prispevek ter kratko novičko o tem,
+                            kaj se z mucem dogaja.
+                        </div>
+                    </x-slot>
                 </x-special-sponsorships.type-card>
 
                 <x-special-sponsorships.type-card
@@ -81,6 +101,23 @@
                         Z donacijo
                         <strong>{{ $type_muca_gre_brez_skrbi_v_nove_dni['amount'] }} €</strong>
                         pokrijete stroške sterilizacije ene mačke.
+                    </x-slot>
+                    <x-slot name="description_long">
+                        <div>
+                            Obdarovanec bo na izbrani datum po elektronski pošti prejel prirejeno mačje
+                            namizje z napisom "Praznujem in obdarujem", na koledarju namizja pa bo posebej
+                            označen njegov praznični dan.
+                        </div>
+                        <div>
+                            Namizje mu bomo poslali v vašem imenu in z vašim
+                            sporočilom, obdarovanec pa bo tri mesece zapored uvrščen na seznam mesečnih
+                            botrov.
+                        </div>
+                        <div>
+                            Poleg tega bo obdarovanec najkasneje v roku enega meseca prejel sliko
+                            mucke, za katero je bil porabljen prispevek ter kratko novičko o tem, kaj se z
+                            muco dogaja.
+                        </div>
                     </x-slot>
                 </x-special-sponsorships.type-card>
 
@@ -93,7 +130,25 @@
                         <strong>{{ $type_nov_zacetek['amount'] }} €</strong>
                         enemu mucku zagotovite pregled, razparazitenje,
                         cepljenje proti kužnim boleznim, testiranje na FELV in FIV, čipiranje,
-                        izdajo potnega lista in vnos v register
+                        izdajo potnega lista in vnos v register.
+                    </x-slot>
+                    <x-slot name="description_long">
+                        <div>
+                            Vašemu obdarovancu bomo v vašem imenu in z vašim sporočilom na izbrani datum
+                            poslali osebno prilagojeno elektronsko voščilnico. Obdarovanec bo uvrščen na
+                            seznam botrov Bubijev za obdobje enega leta.
+                        </div>
+                        <div>
+                            Najkasneje v roku enega meseca bo
+                            obdarovanec prejel sliko mucka, kateremu je omogočil nov začetek ter kratko
+                            novičko o tem, kaj se z muckom dogaja.
+                        </div>
+                        <div>
+                            Obdarovanec bo eno leto prejemal vse,
+                            kar prejemajo stalni mačji botri Bubijev (pisma muckov, voščilo, dostop do
+                            mesečnih namizij ...), obveščen pa bo tudi o vseh pomembnih dogodkih v zvezi z
+                            mucko, ki ji je pomagal.
+                        </div>
                     </x-slot>
                 </x-special-sponsorships.type-card>
 
@@ -120,10 +175,18 @@
                     <x-slot name="description_short">
                         Z donacijo
                         <strong>{{ $type_fip_bojevnik_za_1_dan['amount'] }} €</strong>
-                        enemu FIP bojevniku omogočite zdravilo za en dan. V zahvalo vi ali
-                        vaš obdarovanec prejmete elektronsko potrdilo/diplomo FIP bojevnik. V primeru, da v času
-                        vašega botrstva zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
-                        botrstvo in kako poteka zdravljenje.
+                        enemu FIP bojevniku omogočite zdravilo za en dan.
+                    </x-slot>
+                    <x-slot name="description_long">
+                        <div>
+                            V zahvalo vi ali
+                            vaš obdarovanec prejmete elektronsko potrdilo/diplomo FIP bojevnik.
+                        </div>
+                        <div>
+                            V primeru, da v času
+                            vašega botrstva zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
+                            botrstvo in kako poteka zdravljenje.
+                        </div>
                     </x-slot>
                 </x-special-sponsorships.type-card>
 
@@ -134,10 +197,18 @@
                     <x-slot name="description_short">
                         Z donacijo
                         <strong>{{ $type_fip_bojevnik_za_2_dni['amount'] }} €</strong>
-                        enemu FIP bojevniku omogočite zdravilo za dva dni. V zahvalo vi ali
-                        vaš obdarovanec prejmete elektronsko potrdilo/diplomo FIP bojevnik. V primeru, da v času
-                        vašega botrstva zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
-                        botrstvo in kako poteka zdravljenje.
+                        enemu FIP bojevniku omogočite zdravilo za dva dni.
+                    </x-slot>
+                    <x-slot name="description_long">
+                        <div>
+                            V zahvalo vi ali
+                            vaš obdarovanec prejmete elektronsko potrdilo/diplomo FIP bojevnik.
+                        </div>
+                        <div>
+                            V primeru, da v času
+                            vašega botrstva zdravimo katerega od muckov, vas obvestimo o tem, komu smo namenili
+                            botrstvo in kako poteka zdravljenje.
+                        </div>
                     </x-slot>
                 </x-special-sponsorships.type-card>
 
@@ -149,11 +220,19 @@
                         Z donacijo
                         <strong>{{ $type_fip_bojevnik_za_1_teden['amount'] }} €</strong>
                         enemu FIP bojevniku omogočite en teden zdravljenja, kar pomeni 1/12
-                        vseh stroškov zdravljenja za enega muca. V zahvalo vi ali vaš obdarovanec prejmete
-                        elektronsko potrdilo/diplomo FIP bojevnik, za dve leti vas (ga) uvrstimo med redne botre
-                        mucka Čombeta in prejemate vse, kar prejemajo mačji botri (pisma muckov, voščilo dostop
-                        do mesečnih namizij ...). V primeru, da v času vašega botrstva zdravimo katerega od
-                        muckov, vas obvestimo o tem, komu smo namenili botrstvo in kako poteka zdravljenje.
+                        vseh stroškov zdravljenja za enega muca.
+                    </x-slot>
+                    <x-slot name="description_long">
+                        <div>
+                            V zahvalo vi ali vaš obdarovanec prejmete
+                            elektronsko potrdilo/diplomo FIP bojevnik, za dve leti vas (ga) uvrstimo med redne botre
+                            mucka Čombeta in prejemate vse, kar prejemajo mačji botri (pisma muckov, voščilo dostop
+                            do mesečnih namizij ...).
+                        </div>
+                        <div>
+                            V primeru, da v času vašega botrstva zdravimo katerega od
+                            muckov, vas obvestimo o tem, komu smo namenili botrstvo in kako poteka zdravljenje.
+                        </div>
                     </x-slot>
                 </x-special-sponsorships.type-card>
             </div>
