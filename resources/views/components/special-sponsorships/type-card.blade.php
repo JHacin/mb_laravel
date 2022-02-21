@@ -7,9 +7,7 @@
     <div class="mb-typography-content-base">
         <div class="mb-4">{{ $description_short }}</div>
         <div class="mb-typography-content-base">
-            <x-expandable
-                triggerClass="inline-flex pb-2"
-            >
+            <x-expandable triggerClass="inline-flex pb-2">
                 <x-slot name="title">
                     <div class="underline">Več podatkov</div>
                 </x-slot>
