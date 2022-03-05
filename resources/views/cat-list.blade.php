@@ -20,17 +20,24 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
             </h2>
         </div>
 
-        <div class="mb-content-block flex items-center justify-between space-x-8">
-            <div>
+        <div class="mb-content-block">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <x-cat-list.search-by-name :numResults="$cats->total()"></x-cat-list.search-by-name>
+
+                @if ($cats->total() > 1)
+                    <div dusk="sort-options-wrapper">
+                        <x-cat-list.sort-links></x-cat-list.sort-links>
+                    </div>
+                @endif
             </div>
 
-            @if ($cats->total() > 1)
-                <div dusk="sort-options-wrapper">
-                    <x-cat-list.sort-links></x-cat-list.sort-links>
+            @if (request('search'))
+                <div class="mt-1">
+                    <x-cat-list.clear-search-link></x-cat-list.clear-search-link>
                 </div>
             @endif
         </div>
+
 
         <div class="mb-divider"></div>
 

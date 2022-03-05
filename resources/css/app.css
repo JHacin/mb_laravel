@@ -109,11 +109,11 @@
   }
 
   .mb-btn-primary {
-    @apply bg-primary border-transparent text-white hover:bg-primary-dark;
+    @apply bg-primary border-primary text-white hover:bg-primary-dark;
   }
 
   .mb-btn-secondary {
-    @apply bg-secondary border-transparent text-white hover:bg-secondary-dark;
+    @apply bg-secondary border-secondary text-white hover:bg-secondary-dark;
   }
 
   /*
@@ -181,6 +181,10 @@
   .mb-pagination-btn {
     @apply flex justify-center font-semibold items-center w-[40px] h-[40px] leading-none rounded select-none transition-all
     hover:bg-gray-extralight;
+  }
+
+  .mb-pagination-btn-active {
+    @apply bg-primary text-white pointer-events-none;
   }
 }
 
