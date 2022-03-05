@@ -48,12 +48,12 @@
                 </div>
 
                 <a
-                  class="mb-btn mb-btn-primary"
-                  href="{{ route('cat_list') }}"
-                  dusk="go-to-cats-list-link"
+                    class="mb-btn mb-btn-primary"
+                    href="{{ route('cat_list') }}"
+                    dusk="go-to-cats-list-link"
                 >
                     <x-icon icon="arrow-right"></x-icon>
-                    <span>Muce, ki iščejo botra</span>
+                    <span>muce, ki iščejo botra</span>
                 </a>
             </div>
         </div>

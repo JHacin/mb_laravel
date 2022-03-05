@@ -16,7 +16,10 @@
 </div>
 
 <div class="block">
-    <x-inputs.base.checkbox name="is_agreed_to_terms" required>
+    <x-inputs.base.checkbox
+        name="is_agreed_to_terms"
+        required
+    >
         <x-slot name="label">
             Potrjujem, da sem seznanjen/a s pravili posvojitve na daljavo in se z njimi strinjam ter
             Mačji hiši dovoljujem rabo osebnih podatkov izključno za namene obveščanja.
@@ -25,15 +28,19 @@
 </div>
 
 <div class="field">
-    <button type="submit" class="button is-primary is-medium" dusk="cat-sponsorship-submit">
+    <button
+        type="submit"
+        class="button is-primary is-medium"
+        dusk="cat-sponsorship-submit"
+    >
         Pošlji obrazec
     </button>
 </div>
 
 <button
-  class="mb-btn mb-btn-secondary"
-  type="submit"
-  dusk="cat-sponsorship-submit"
+    class="mb-btn mb-btn-secondary"
+    type="submit"
+    dusk="cat-sponsorship-submit"
 >
-    Pošlji obrazec
+    pošlji obrazec
 </button>

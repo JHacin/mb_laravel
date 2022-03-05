@@ -26,7 +26,7 @@
             href="{{ $link }}"
         >
             <x-icon icon="arrow-right"></x-icon>
-            <span>Izberi</span>
+            <span>izberi</span>
         </a>
     </div>
 </div>
