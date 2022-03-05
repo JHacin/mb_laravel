@@ -1,3 +1,7 @@
+@php
+$showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::PER_PAGE_12;
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -21,15 +25,9 @@
                 <x-cat-list.search-by-name :numResults="$cats->total()"></x-cat-list.search-by-name>
             </div>
 
-            @if($cats->total() > 1)
+            @if ($cats->total() > 1)
                 <div dusk="sort-options-wrapper">
                     <x-cat-list.sort-links></x-cat-list.sort-links>
-                </div>
-            @endif
-
-            @if($cats->isNotEmpty() && $cats->total() > \App\Models\Cat::PER_PAGE_12)
-                <div dusk="per_page-options-wrapper">
-                    <x-cat-list.per-page-options :cats="$cats"></x-cat-list.per-page-options>
                 </div>
             @endif
         </div>
@@ -37,12 +35,12 @@
         <div class="mb-divider"></div>
 
         <div class="mb-12">
-            @if($cats->isNotEmpty())
+            @if ($cats->isNotEmpty())
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 md:gap-8 xl:gap-10 2xl:gap-12"
                     dusk="cat-list-items"
                 >
-                    @foreach($cats as $cat)
+                    @foreach ($cats as $cat)
                         <x-cat-list.cat :cat="$cat"></x-cat-list.cat>
                     @endforeach
                 </div>
@@ -51,8 +49,16 @@
             @endif
         </div>
 
-        <div>
-            {{ $cats->onEachSide(1)->links() }}
+        <div class="flex flex-col items-center gap-6 lg:flex-row lg:justify-between">
+            @if ($showPerPageOptions)
+                <div dusk="per_page-options-wrapper">
+                    <x-cat-list.per-page-options :cats="$cats"></x-cat-list.per-page-options>
+                </div>
+            @endif
+
+            <div class="lg:ml-auto">
+                {{ $cats->onEachSide(1)->links() }}
+            </div>
         </div>
     </div>
 @endsection
