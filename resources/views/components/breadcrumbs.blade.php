@@ -1,6 +1,6 @@
 @props(['items'])
 
-<div class="flex items-center flex-wrap gap-x-3 mb-6 lg:mb-10 font-mono">
+<div class="flex items-center flex-wrap gap-x-3 font-mono">
     @foreach ($items as $item)
         @isset($item['link'])
             <a

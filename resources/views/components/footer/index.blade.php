@@ -1,6 +1,6 @@
 <footer class="bg-gray-extralight shadow-lg">
     <div class="mb-page-content-container">
-        <div class="flex flex-col items-start gap-6 mb-6 lg:flex-row lg:justify-between lg:items-center">
+        <div class="flex flex-col items-start gap-6 mb-7 lg:flex-row lg:justify-between lg:items-center">
             <img
                 src="{{ mix('img/logo.svg') }}"
                 alt="Mačji boter"

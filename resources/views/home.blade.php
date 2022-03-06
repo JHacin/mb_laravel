@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        <div class="mb-content-section">
+        <div class="py-section mb-content-offset-l-10">
             <x-home.intro-row>
                 <x-slot name="title">
                     pomagamo mucam, ki
@@ -45,7 +45,7 @@
 
         <x-home.stats></x-home.stats>
 
-        <div class="mb-content-section">
+        <div class="py-section mb-content-offset-l-10">
             <x-home.intro-row>
                 <x-slot name="title">
                     botrujete lahko

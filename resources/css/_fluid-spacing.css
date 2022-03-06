@@ -1,4 +1,4 @@
-/* @link https://utopia.fyi/space/calculator?c=320,16,1.2,1536,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6, */
+/* @link https://utopia.fyi/space/calculator?c=320,16,1.2,1536,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6|8|12|16, */
 
 :root {
   --fluid-min-width: 320;
@@ -45,6 +45,15 @@
   --fc-3xl-min: (var(--fc-s-min) * 6);
   --fc-3xl-max: (var(--fc-s-max) * 6);
 
+  --fc-4xl-min: (var(--fc-s-min) * 8);
+  --fc-4xl-max: (var(--fc-s-max) * 8);
+
+  --fc-5xl-min: (var(--fc-s-min) * 12);
+  --fc-5xl-max: (var(--fc-s-max) * 12);
+
+  --fc-6xl-min: (var(--fc-s-min) * 16);
+  --fc-6xl-max: (var(--fc-s-max) * 16);
+
   /* T-shirt sizes */
   --space-3xs: calc(
     ((var(--fc-3xs-min) / 16) * 1rem) + (var(--fc-3xs-max) - var(--fc-3xs-min)) * var(--fluid-bp)
@@ -73,6 +82,15 @@
   --space-3xl: calc(
     ((var(--fc-3xl-min) / 16) * 1rem) + (var(--fc-3xl-max) - var(--fc-3xl-min)) * var(--fluid-bp)
   );
+  --space-4xl: calc(
+    ((var(--fc-4xl-min) / 16) * 1rem) + (var(--fc-4xl-max) - var(--fc-4xl-min)) * var(--fluid-bp)
+  );
+  --space-5xl: calc(
+    ((var(--fc-5xl-min) / 16) * 1rem) + (var(--fc-5xl-max) - var(--fc-5xl-min)) * var(--fluid-bp)
+  );
+  --space-6xl: calc(
+    ((var(--fc-6xl-min) / 16) * 1rem) + (var(--fc-6xl-max) - var(--fc-6xl-min)) * var(--fluid-bp)
+  );
 
   /* One-up pairs */
   --space-3xs-2xs: calc(
@@ -98,6 +116,15 @@
   );
   --space-2xl-3xl: calc(
     ((var(--fc-2xl-min) / 16) * 1rem) + (var(--fc-3xl-max) - var(--fc-2xl-min)) * var(--fluid-bp)
+  );
+  --space-3xl-4xl: calc(
+    ((var(--fc-3xl-min) / 16) * 1rem) + (var(--fc-4xl-max) - var(--fc-3xl-min)) * var(--fluid-bp)
+  );
+  --space-4xl-5xl: calc(
+    ((var(--fc-4xl-min) / 16) * 1rem) + (var(--fc-5xl-max) - var(--fc-4xl-min)) * var(--fluid-bp)
+  );
+  --space-5xl-6xl: calc(
+    ((var(--fc-5xl-min) / 16) * 1rem) + (var(--fc-6xl-max) - var(--fc-5xl-min)) * var(--fluid-bp)
   );
 
   /* Custom pairs */

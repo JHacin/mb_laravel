@@ -6,8 +6,8 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
 
 @section('content')
     <div class="mb-page-content-container">
-        <div class="mb-page-header-container">
-            <h1 class="mb-page-title">muce, ki iščejo botra</h1>
+        <div class="mb-section mb-content-offset-l-10 2xl:pr-12">
+            <h1 class="mb-page-title mb-6">muce, ki iščejo botra</h1>
             <h2 class="mb-page-subtitle">
                 Na seznamu so objavljene vse muce, ki trenutno iščejo botra. Če vas zanima več o tem,
                 kaj je bistvo programa Mačji boter in kako poteka postopek botrstva, si lahko
@@ -20,26 +20,23 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
             </h2>
         </div>
 
-        <div class="mb-content-block">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                <x-cat-list.search-by-name :numResults="$cats->total()"></x-cat-list.search-by-name>
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <x-cat-list.search-by-name :numResults="$cats->total()"></x-cat-list.search-by-name>
 
-                @if ($cats->total() > 1)
-                    <div dusk="sort-options-wrapper">
-                        <x-cat-list.sort-links></x-cat-list.sort-links>
-                    </div>
-                @endif
-            </div>
-
-            @if (request('search'))
-                <div class="mt-1">
-                    <x-cat-list.clear-search-link></x-cat-list.clear-search-link>
+            @if ($cats->total() > 1)
+                <div dusk="sort-options-wrapper">
+                    <x-cat-list.sort-links></x-cat-list.sort-links>
                 </div>
             @endif
         </div>
 
+        @if (request('search'))
+            <div class="mt-1">
+                <x-cat-list.clear-search-link></x-cat-list.clear-search-link>
+            </div>
+        @endif
 
-        <div class="mb-divider"></div>
+        <div class="mb-divider mt-5 mb-6"></div>
 
         <div class="mb-6">
             @if ($cats->isNotEmpty())

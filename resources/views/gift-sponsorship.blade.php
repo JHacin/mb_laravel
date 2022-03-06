@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="mb-page-content-container">
-        <div class="mb-page-header-container">
-            <h1 class="mb-page-title">botrstvo je odlično dobrodelno darilo</h1>
+        <div class="mb-content-offset-l-10 mb-content-offset-r-12">
+            <h1 class="mb-page-title mb-6">botrstvo je odlično dobrodelno darilo</h1>
             <h2 class="mb-page-subtitle">
                 Mačje botrstvo je lahko tudi izvirno rojstnodnevno darilo,
                 lahko pa ga podarite tudi ob kakšni drugi priložnosti (zaključku šolskega leta,

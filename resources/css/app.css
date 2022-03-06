@@ -20,7 +20,7 @@ body {
    * TYPOGRAPHY - REUSABLE VARIANTS
    */
   .mb-page-title {
-    @apply text-4xl font-extrabold mb-4 lg:mb-6;
+    @apply text-4xl font-extrabold;
   }
 
   .mb-page-subtitle {
@@ -28,7 +28,7 @@ body {
   }
 
   .mb-content-section-title {
-    @apply text-2xl text-primary font-extrabold mb-6;
+    @apply text-2xl text-primary font-extrabold;
   }
 
   /*
@@ -56,21 +56,8 @@ body {
     @apply md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl px-4 lg:px-6 mx-auto;
   }
 
-  /* same spacing as content-section-title */
-  .mb-content-section {
-    @apply py-8;
-  }
-
-  .mb-page-header-container {
-    @apply mb-7;
-  }
-
   .mb-page-content-container {
     @apply mb-container py-8;
-  }
-
-  .mb-content-block {
-    @apply mb-6;
   }
 
   /*
@@ -81,11 +68,11 @@ body {
   }
 
   .mb-divider {
-    @apply border-b-4 border-primary my-6;
+    @apply border-b-4 border-primary;
   }
 
   .mb-pagination-btn {
-    @apply flex justify-center font-semibold items-center w-[40px] h-[40px] leading-none rounded select-none transition-all
+    @apply flex justify-center items-center w-[40px] h-[40px] leading-none rounded select-none transition-all
     hover:bg-gray-extralight;
   }
 

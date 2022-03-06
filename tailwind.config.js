@@ -38,6 +38,10 @@ module.exports = {
       7: 'var(--space-xl)',
       8: 'var(--space-2xl)',
       9: 'var(--space-3xl)',
+      10: 'var(--space-4xl)',
+      11: 'var(--space-5xl)',
+      12: 'var(--space-6xl)',
+      section: 'var(--space-3xl)',
     },
     fontSize: {
       xs: [
@@ -108,6 +112,39 @@ module.exports = {
     require('@tailwindcss/forms'),
     plugin(function ({ addVariant }) {
       addVariant('disabled', '[disabled]');
+    }),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'mb-content-offset-l': (value) => ({
+            [`@media (min-width: ${theme('screens').lg})`]: {
+              'padding-left': value,
+            },
+          }),
+        },
+        { values: theme('spacing') }
+      );
+      matchUtilities(
+        {
+          'mb-content-offset-r': (value) => ({
+            [`@media (min-width: ${theme('screens').lg})`]: {
+              'padding-right': value,
+            },
+          }),
+        },
+        { values: theme('spacing') }
+      );
+      matchUtilities(
+        {
+          'mb-content-offset-x': (value) => ({
+            [`@media (min-width: ${theme('screens').lg})`]: {
+              'padding-left': value,
+              'padding-right': value,
+            },
+          }),
+        },
+        { values: theme('spacing') }
+      );
     }),
   ],
 };

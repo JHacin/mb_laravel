@@ -13,7 +13,7 @@
             alt="{{ $cat->name }}"
         ></x-cat-photo>
 
-        <div class="p-4 pb-5 space-y-4">
+        <div class="p-4 pb-6 space-y-4">
             <div class="space-y-1">
                 <h5
                     class="text-lg font-bold truncate"
@@ -27,11 +27,11 @@
                 </div>
             </div>
 
-            <div class="text-sm font-mono text-gray-dark">
+            <div class="text-gray-dark">
                 {!! $cat->story_short !!}
             </div>
 
-            <div class="mb-link text-sm font-mono underline underline-offset-2">
+            <div class="mb-link font-mono underline underline-offset-2">
                 {{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}
             </div>
         </div>

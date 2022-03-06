@@ -140,8 +140,8 @@ $type_fip_bojevnik_za_1_teden = makeTypeVars(SpecialSponsorship::TYPE_FIP_BOJEVN
         </x-slot>
     </x-special-sponsorships.type-card>
 
-    <div>
-        <h2 class="mb-content-section-title">FIP bojevniki</h2>
+    <div class="pt-6">
+        <h2 class="mb-content-section-title mb-6">FIP bojevniki</h2>
         <div class="space-y-2">
             <div>
                 FIP bojevniki so mucki, oboleli za do pred kratkim smrtnonosno boleznijo

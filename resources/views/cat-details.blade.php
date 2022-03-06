@@ -57,8 +57,10 @@ $breadcrumbItems = [
 
 @section('content')
     <div class="mb-page-content-container">
-        <div class="mb-content-offset-l-2">
-            <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>
+        <div class="mb-content-offset-l-10">
+            <div class="mb-6">
+                <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>
+            </div>
 
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr]">
                 <div class="col-span-1 lg:col-start-2">
@@ -110,17 +112,17 @@ $breadcrumbItems = [
         </div>
 
 
-        <div class="mb-content-offset-x-3 mt-6">
-            <div class="mb-content-section">
-                <h4 class="mb-content-section-title">
+        <div class="mb-content-offset-x-12 py-section">
+            <div>
+                <h4 class="mb-content-section-title mb-6">
                     {{ $cat->is_group ? 'O nas' : 'Moja zgodba' }}
                 </h4>
 
                 <div>{!! $cat->story !!}</div>
             </div>
 
-            <div class="mb-content-section">
-                <h4 class="mb-content-section-title">
+            <div class="pt-section">
+                <h4 class="mb-content-section-title mb-6">
                     {{ $cat->is_group ? 'Naši botri' : 'Moji botri' }}
                 </h4>
 
