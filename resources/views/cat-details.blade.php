@@ -60,7 +60,7 @@ $breadcrumbItems = [
         <div class="mb-content-offset-l-2">
             <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>
 
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-8 xl:gap-10 2xl:gap-16">
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr]">
                 <div class="col-span-1 lg:col-start-2">
                     <h1 class="mb-page-title">{{ $cat->name }}</h1>
                 </div>
@@ -75,7 +75,7 @@ $breadcrumbItems = [
                     </div>
 
                     @if (!$cat->is_group)
-                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-12">
+                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
                             @foreach ($dataPieces as $dataPiece)
                                 <div class="space-y-1">
                                     <div class="text-primary font-bold">
@@ -89,7 +89,7 @@ $breadcrumbItems = [
                         </div>
                     @endif
 
-                    <div class=" mt-12">
+                    <div class="mt-6">
                         @if ($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
                             <div class="italic">
                                 {{ trans('cat.temp_not_seeking_sponsors_text') }}
@@ -110,7 +110,7 @@ $breadcrumbItems = [
         </div>
 
 
-        <div class="mb-content-offset-x-3 mt-12 md:mt-14 lg:mt-20 xl:mt-28">
+        <div class="mb-content-offset-x-3 mt-6">
             <div class="mb-content-section">
                 <h4 class="mb-content-section-title">
                     {{ $cat->is_group ? 'O nas' : 'Moja zgodba' }}
@@ -131,9 +131,7 @@ $breadcrumbItems = [
                 @else
                     <div class="space-y-2">
                         @foreach ($sponsors['identified'] as $sponsor)
-                            <x-sponsor-details
-                                :sponsor="$sponsor"
-                            ></x-sponsor-details>
+                            <x-sponsor-details :sponsor="$sponsor"></x-sponsor-details>
                         @endforeach
 
                         @if (count($sponsors['anonymous']) > 0)

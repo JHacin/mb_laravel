@@ -38,7 +38,7 @@
                 </li>
             </ul>
 
-            <div>
+            <div class="mb-content-section">
                 <h2 class="mb-content-section-title">kako postanem boter?</h2>
 
                 <div class="mb-content-block">

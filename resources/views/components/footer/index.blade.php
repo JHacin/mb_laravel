@@ -1,13 +1,11 @@
 <footer class="bg-gray-extralight shadow-lg">
     <div class="mb-page-content-container">
-        <div class="mb-12 lg:mb-14 lg:flex lg:justify-between lg:items-center xl:mb-16 2xl:mb-18">
-            <div class="mb-6">
-                <img
-                    src="{{ mix('img/logo.svg') }}"
-                    alt="Mačji boter"
-                    class="h-[60px] md:h-[75px] lg:h-[90px]"
-                >
-            </div>
+        <div class="flex flex-col items-start gap-6 mb-6 lg:flex-row lg:justify-between lg:items-center">
+            <img
+                src="{{ mix('img/logo.svg') }}"
+                alt="Mačji boter"
+                class="h-[60px] md:h-[75px] lg:h-[90px]"
+            >
 
             <div class="font-extrabold">
                 <span class="text-primary">Hvala</span>
@@ -15,11 +13,10 @@
             </div>
         </div>
 
-        <div class="text-gray-dark grid pb-2 lg:grid-cols-3 lg:pb-6 2xl:grid-cols-4 2xl:pb-8 xl:gap-36 2xl:gap-42">
-            <div
-                class="mb-8 space-y-8 lg:space-y-0 lg:col-span-2 lg:col-start-2 lg:gap-12 lg:flex 2xl:col-span-3 xl:gap-24 2xl:gap-36">
+        <div class="text-gray-dark grid pb-6 lg:grid-cols-3 2xl:grid-cols-4">
+            <div class="mb-6 space-y-6 lg:space-y-0 lg:col-span-2 lg:col-start-2 lg:gap-8 lg:flex 2xl:col-span-3">
                 <div>
-                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Obiščite tudi</h6>
+                    <h6 class="mb-4">Obiščite tudi</h6>
                     <div class="text-gray-dark text-sm font-light space-y-2">
                         <a
                             class="block hover:underline"
@@ -53,7 +50,7 @@
                 </div>
 
                 <div>
-                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Botrstvo</h6>
+                    <h6 class="mb-4">Botrstvo</h6>
                     <div class="text-sm font-light space-y-2">
                         <a
                             class="block hover:underline"
@@ -79,7 +76,7 @@
                 </div>
 
                 <div>
-                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">O projektu</h6>
+                    <h6 class="mb-4">O projektu</h6>
                     <div class="text-sm font-light space-y-2">
                         <a
                             class="block hover:underline"
@@ -94,9 +91,9 @@
 
             </div>
 
-            <div class="lg:col-start-1 lg:row-start-1 space-y-8 mb-8">
+            <div class="lg:col-start-1 lg:row-start-1 space-y-6 lg:mb-6">
                 <div>
-                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Spremljajte nas</h6>
+                    <h6 class="mb-4">Spremljajte nas</h6>
                     <div class="space-y-2">
                         <a
                             class="text-sm font-light flex items-center space-x-2"
@@ -122,7 +119,7 @@
                 </div>
 
                 <div>
-                    <h6 class="mb-1 xl:mb-2">Kontakt</h6>
+                    <h6 class="mb-2">Kontakt</h6>
                     <div class="text-sm font-light flex items-center space-x-2">
                         <x-icon icon="email"></x-icon>
                         <a
@@ -133,7 +130,7 @@
                 </div>
 
                 <div>
-                    <div class="mb-1 xl:mb-2">Želite sponzorirati projekt?</div>
+                    <div class="mb-2">Želite sponzorirati projekt?</div>
                     <div class="text-sm font-light">
                         Pišite nam na <a
                             class="hover:underline"
@@ -146,7 +143,7 @@
 
         <hr class="border-gray-light">
 
-        <div class="pt-4 lg:pt-6 xl:pt-8 2xl:pt-10">
+        <div class="pt-6">
             <x-footer.copy></x-footer.copy>
         </div>
     </div>

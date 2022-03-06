@@ -13,7 +13,7 @@
             alt="{{ $cat->name }}"
         ></x-cat-photo>
 
-        <div class="px-5 pt-5 pb-10 space-y-4">
+        <div class="p-4 pb-5 space-y-4">
             <div class="space-y-1">
                 <h5
                     class="text-lg font-bold truncate"

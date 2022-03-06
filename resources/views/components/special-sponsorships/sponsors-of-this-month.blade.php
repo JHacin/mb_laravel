@@ -1,5 +1,5 @@
-<div class="bg-gray-extralight border border-gray-extralight shadow-lg p-6 space-y-6">
-    <h4 class="text-lg font-extrabold text-primary mb-4">{{ $title }}</h4>
+<div class="bg-gray-extralight border border-gray-extralight shadow-lg p-5 space-y-5">
+    <h4 class="text-lg font-extrabold text-primary">{{ $title }}</h4>
 
     @if (count($sponsorshipsPerType) === 0)
         <div>V tem mescu še nismo imeli novih botrov.</div>

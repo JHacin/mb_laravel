@@ -1,6 +1,6 @@
 @props(['label', 'link', 'description_short', 'description_long'])
 
-<div class="border border-gray-extralight shadow-lg p-4 space-y-4 lg:p-6 lg:space-y-6 xl:p-8 xl:space-y-8">
+<div class="border border-gray-extralight shadow-lg p-5 space-y-5">
     <h3 class="text-lg font-extrabold text-primary">
         {{ $label }}
     </h3>

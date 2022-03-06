@@ -5,7 +5,7 @@
     data-mobile-nav
 >
     <div class="grow flex flex-col">
-        <div class="px-4 space-y-10">
+        <div class="px-4 space-y-6">
             <div class="flex justify-between items-center mt-4">
                 <a href="{{ route('home') }}">
                     <img
@@ -49,7 +49,7 @@
 
             <div>
                 <h6 class="mb-2">Spremljajte nas</h6>
-                <div class="flex gap-6 text-lg">
+                <div class="flex gap-4 text-lg">
                     <a href="{{ config('links.facebook_page') }}">
                         <x-icon
                             class="hover:text-primary w-[12px]"
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <div class="grow mt-10 bg-gray-extralight p-4">
+        <div class="grow mt-6 bg-gray-extralight p-4">
             <x-footer.copy></x-footer.copy>
         </div>
     </div>

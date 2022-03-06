@@ -1,6 +1,7 @@
 @import '~flatpickr/dist/flatpickr.min.css';
 @import '~flatpickr/dist/themes/airbnb.css';
 @import '_fluid-typography.css';
+@import '_fluid-spacing.css';
 
 @tailwind base;
 @tailwind components;
@@ -27,7 +28,7 @@ body {
   }
 
   .mb-content-section-title {
-    @apply text-2xl text-primary font-extrabold mb-6 lg:mb-10 xl:mb-14 2xl:mb-20;
+    @apply text-2xl text-primary font-extrabold mb-6;
   }
 
   /*
@@ -57,47 +58,15 @@ body {
 
   /* same spacing as content-section-title */
   .mb-content-section {
-    @apply py-6 lg:py-10 xl:py-14 2xl:py-20;
-  }
-
-  .mb-content-offset-l-2 {
-    @apply lg:pl-20 xl:pl-24;
-  }
-
-  .mb-content-offset-r-2 {
-    @apply lg:pr-20 xl:pr-24;
-  }
-
-  .mb-content-offset-l-3 {
-    @apply lg:pl-40 xl:pl-48;
-  }
-
-  .mb-content-offset-l-4 {
-    @apply lg:pl-72 xl:pl-96;
-  }
-
-  .mb-content-offset-r-3 {
-    @apply lg:pr-40 xl:pr-48;
-  }
-
-  .mb-content-offset-r-4 {
-    @apply lg:pr-72 xl:pr-96;
-  }
-
-  .mb-content-offset-x-2 {
-    @apply mb-content-offset-l-2 mb-content-offset-r-2;
-  }
-
-  .mb-content-offset-x-3 {
-    @apply mb-content-offset-l-3 mb-content-offset-r-3;
+    @apply py-8;
   }
 
   .mb-page-header-container {
-    @apply mb-content-offset-l-2 mb-content-offset-r-4 mb-12 lg:mb-20 xl:mb-32;
+    @apply mb-7;
   }
 
   .mb-page-content-container {
-    @apply mb-container py-8 md:py-10 lg:py-12 xl:py-14;
+    @apply mb-container py-8;
   }
 
   .mb-content-block {

@@ -5,7 +5,7 @@ $currentRouteName = Route::currentRouteName();
 $isHomepage = $currentRouteName === 'home';
 @endphp
 
-<header class="flex items-center py-2 md:py-4 lg:py-6 xl:py-8 2xl:py-10">
+<header class="flex items-center py-3 lg:py-6">
     <div class="mb-container flex-grow">
         <nav
             role="navigation"
@@ -40,7 +40,7 @@ $isHomepage = $currentRouteName === 'home';
             </div>
 
             <div class="flex items-center">
-                <div class="hidden xl:flex items-center space-x-4 mr-6 xl:space-x-6">
+                <div class="hidden xl:flex items-center space-x-4 mr-6">
                     @foreach ($pageLinks as $pageLink)
                         <a
                             @class([

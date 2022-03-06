@@ -1,6 +1,6 @@
 @props(['title', 'body'])
 
-<div class="grid gap-6 lg:grid-cols-3 lg:gap-10 xl:gap-16 2xl:gap-24">
+<div class="grid gap-6 lg:grid-cols-3">
     <div class="lg:col-span-1">
         <div class="text-xl font-extrabold">
             {{ $title }}

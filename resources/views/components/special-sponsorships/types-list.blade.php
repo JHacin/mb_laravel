@@ -34,7 +34,7 @@ $type_fip_bojevnik_za_2_dni = makeTypeVars(SpecialSponsorship::TYPE_FIP_BOJEVNIK
 $type_fip_bojevnik_za_1_teden = makeTypeVars(SpecialSponsorship::TYPE_FIP_BOJEVNIK_ZA_1_TEDEN);
 @endphp
 
-<div class="space-y-8 lg:space-y-10 xl:space-y-12">
+<div class="space-y-6">
     <x-special-sponsorships.type-card
         label="{{ $type_boter_meseca['label'] }}"
         link="{{ $type_boter_meseca['formLink'] }}"

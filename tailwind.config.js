@@ -26,6 +26,19 @@ module.exports = {
         dark: '#27272a',
       },
     },
+    spacing: {
+      0: '0px',
+      px: '1px',
+      1: 'var(--space-3xs)',
+      2: 'var(--space-2xs)',
+      3: 'var(--space-xs)',
+      4: 'var(--space-s)',
+      5: 'var(--space-m)',
+      6: 'var(--space-l)',
+      7: 'var(--space-xl)',
+      8: 'var(--space-2xl)',
+      9: 'var(--space-3xl)',
+    },
     fontSize: {
       xs: [
         'var(--step--2)',

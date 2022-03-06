@@ -41,10 +41,10 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
 
         <div class="mb-divider"></div>
 
-        <div class="mb-12">
+        <div class="mb-6">
             @if ($cats->isNotEmpty())
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 md:gap-8 xl:gap-10 2xl:gap-12"
+                    class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6"
                     dusk="cat-list-items"
                 >
                     @foreach ($cats as $cat)
