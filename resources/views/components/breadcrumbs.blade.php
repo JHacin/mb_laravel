@@ -1,22 +1,22 @@
 @props(['items'])
 
-<div class="flex items-center flex-wrap gap-x-3 mb-6 lg:mb-10">
-  @foreach($items as $item)
-    @isset($item['link'])
-      <a
-        href="{{ $item['link'] }}"
-        class="mb-link mb-typography-content-sm mb-font-secondary-regular"
-      >
-        {{ $item['label'] }}
-      </a>
-    @else
-      <span class="mb-typography-content-sm mb-font-secondary-regular">
-        {{ $item['label'] }}
-      </span>
-    @endisset
+<div class="flex items-center flex-wrap gap-x-3 mb-6 lg:mb-10 font-mono">
+    @foreach ($items as $item)
+        @isset($item['link'])
+            <a
+                href="{{ $item['link'] }}"
+                class="mb-link"
+            >
+                {{ $item['label'] }}
+            </a>
+        @else
+            <span>
+                {{ $item['label'] }}
+            </span>
+        @endisset
 
-    @if(!$loop->last)
-        <span class="w-px h-4 bg-gray-light"></span>
-    @endif
-  @endforeach
+        @if (!$loop->last)
+            <span class="w-px h-4 bg-gray-light"></span>
+        @endif
+    @endforeach
 </div>

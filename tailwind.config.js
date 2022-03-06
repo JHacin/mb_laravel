@@ -26,10 +26,68 @@ module.exports = {
         dark: '#27272a',
       },
     },
+    fontSize: {
+      xs: [
+        'var(--step--2)',
+        {
+          lineHeight: '1.33',
+          letterSpacing: 'normal',
+        },
+      ],
+      sm: [
+        'var(--step--1)',
+        {
+          lineHeight: '1.4',
+          letterSpacing: 'normal',
+        },
+      ],
+      base: [
+        'var(--step-0)',
+        {
+          lineHeight: '1.5',
+          letterSpacing: 'normal',
+        },
+      ],
+      lg: [
+        'var(--step-1)',
+        {
+          lineHeight: '1.55',
+          letterSpacing: 'normal',
+        },
+      ],
+      xl: [
+        'var(--step-2)',
+        {
+          lineHeight: '1.33',
+          letterSpacing: 'normal',
+        },
+      ],
+      '2xl': [
+        'var(--step-3)',
+        {
+          lineHeight: '1.33',
+          letterSpacing: 'normal',
+        },
+      ],
+      '3xl': [
+        'var(--step-4)',
+        {
+          lineHeight: '1.2',
+          letterSpacing: '-.025em',
+        },
+      ],
+      '4xl': [
+        'var(--step-5)',
+        {
+          lineHeight: '1',
+          letterSpacing: '-.025em',
+        },
+      ],
+    },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
       serif: ['Inter', 'serif'],
-      mono: ['Roboto Mono', 'monospace']
+      mono: ['Roboto Mono', 'monospace'],
     },
     extend: {},
   },

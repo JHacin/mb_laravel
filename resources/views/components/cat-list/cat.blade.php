@@ -15,20 +15,23 @@
 
         <div class="px-5 pt-5 pb-10 space-y-4">
             <div class="space-y-1">
-                <h5 class="mb-typography-content-lg mb-font-primary-bold truncate" dusk="cat-list-item-name">
+                <h5
+                    class="text-lg font-bold truncate"
+                    dusk="cat-list-item-name"
+                >
                     {{ $cat->name }}
                 </h5>
 
-                <div class="mb-typography-content-sm text-gray-semi">
+                <div class="text-sm text-gray-semi">
                     {{ trans_choice('cat.num_sponsors', $cat->sponsorships_count) }}
                 </div>
             </div>
 
-            <div class="mb-typography-content-sm mb-font-secondary-regular text-gray-dark">
+            <div class="text-sm font-mono text-gray-dark">
                 {!! $cat->story_short !!}
             </div>
 
-            <div class="mb-link mb-typography-content-sm mb-font-secondary-regular underline underline-offset-2">
+            <div class="mb-link text-sm font-mono underline underline-offset-2">
                 {{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}
             </div>
         </div>

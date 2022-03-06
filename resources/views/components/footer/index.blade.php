@@ -9,17 +9,17 @@
                 >
             </div>
 
-            <div class="mb-typography-content-base mb-font-primary-bold">
+            <div class="font-extrabold">
                 <span class="text-primary">Hvala</span>
                 za vso pomoč, muce jo resnično potrebujejo.
             </div>
         </div>
 
-        <div class="text-gray-dark grid pb-2 lg:grid-cols-3 lg:pb-6 2xl:grid-cols-4 2xl:pb-8 xl:gap-36 2xl:gap-48">
+        <div class="text-gray-dark grid pb-2 lg:grid-cols-3 lg:pb-6 2xl:grid-cols-4 2xl:pb-8 xl:gap-36 2xl:gap-42">
             <div
                 class="mb-8 space-y-8 lg:space-y-0 lg:col-span-2 lg:col-start-2 lg:gap-12 lg:flex 2xl:col-span-3 xl:gap-24 2xl:gap-36">
                 <div>
-                    <h6 class="mb-typography-content-base mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Obiščite tudi</h6>
+                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Obiščite tudi</h6>
                     <div class="text-gray-dark text-sm font-light space-y-2">
                         <a
                             class="block hover:underline"
@@ -53,7 +53,7 @@
                 </div>
 
                 <div>
-                    <h6 class="mb-typography-content-base mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Botrstvo</h6>
+                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Botrstvo</h6>
                     <div class="text-sm font-light space-y-2">
                         <a
                             class="block hover:underline"
@@ -79,7 +79,7 @@
                 </div>
 
                 <div>
-                    <h6 class="mb-typography-content-base mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">O projektu</h6>
+                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">O projektu</h6>
                     <div class="text-sm font-light space-y-2">
                         <a
                             class="block hover:underline"
@@ -96,7 +96,7 @@
 
             <div class="lg:col-start-1 lg:row-start-1 space-y-8 mb-8">
                 <div>
-                    <h6 class="mb-typography-content-base mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Spremljajte nas</h6>
+                    <h6 class="mb-3 lg:mb-4 xl:mb-5 2xl:mb-6">Spremljajte nas</h6>
                     <div class="space-y-2">
                         <a
                             class="text-sm font-light flex items-center space-x-2"
@@ -122,7 +122,7 @@
                 </div>
 
                 <div>
-                    <h6 class="mb-typography-content-base mb-1 xl:mb-2">Kontakt</h6>
+                    <h6 class="mb-1 xl:mb-2">Kontakt</h6>
                     <div class="text-sm font-light flex items-center space-x-2">
                         <x-icon icon="email"></x-icon>
                         <a
@@ -133,7 +133,7 @@
                 </div>
 
                 <div>
-                    <div class="text-base mb-1 xl:mb-2">Želite sponzorirati projekt?</div>
+                    <div class="mb-1 xl:mb-2">Želite sponzorirati projekt?</div>
                     <div class="text-sm font-light">
                         Pišite nam na <a
                             class="hover:underline"

@@ -1,32 +1,59 @@
 <!DOCTYPE html>
 <html lang="sl">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        <title>@yield('meta_title', 'Mačji boter')</title>
+    <!-- CSRF Token -->
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}"
+    >
 
-        <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+    <title>@yield('meta_title', 'Mačji boter')</title>
 
-        <!-- Styles -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
-        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    </head>
-    <body>
-        @stack('body-start-scripts')
+    <script
+        defer
+        src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
+    ></script>
 
-        <x-layout.header></x-layout.header>
-        <main>@yield('content')</main>
-        <x-footer></x-footer>
+    <!-- Styles -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+    >
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600;700&display=swap"
+        rel="stylesheet"
+    >
+    <link
+        href="{{ mix('css/app.css') }}"
+        rel="stylesheet"
+    >
+</head>
 
-        <script src="{{ mix('js/app.js') }}"></script>
+<body>
+    @stack('body-start-scripts')
 
-        @stack('footer-scripts')
-    </body>
+    <x-header></x-header>
+    <main>@yield('content')</main>
+    <x-footer></x-footer>
+
+    <script src="{{ mix('js/app.js') }}"></script>
+
+    @stack('footer-scripts')
+</body>
+
 </html>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="mb-page-content-container">
         <div class="grid grid-cols-1 auto-rows-fr md:grid-cols-2 xl:grid-cols-4 gap-4">
-            @foreach($heroCats as $heroCat)
+            @foreach ($heroCats as $heroCat)
                 <x-hero-cat :cat="$heroCat"></x-hero-cat>
             @endforeach
 
@@ -26,7 +26,10 @@
                     </x-slot>
                     <x-slot name="body">
                         <div>
-                            Mačji boter je projekt <a href="{{ config('links.macja_hisa') }}" class="mb-link">Mačje hiše</a>, ki omogoča posvojitve muck na daljavo.
+                            Mačji boter je projekt <a
+                                href="{{ config('links.macja_hisa') }}"
+                                class="mb-link"
+                            >Mačje hiše</a>, ki omogoča posvojitve muck na daljavo.
                             Namenjen je vsem tistim, ki nam želite pomagati pri oskrbi nekoč brezdomnih muck.
                             Gre za obliko donacije, ki donatorja poveže z določenim mucem ali skupino mucov in mu
                             hkrati omogoča boljši vpogled v to, za kaj je bil porabljen njegov prispevek.
@@ -55,16 +58,28 @@
                         <div>
                             Mucam v oskrbi Mačje hiše lahko v okviru botrstva pomagate na več načinov.
                             Postanete lahko
-                            <a href="{{ route('why_become_sponsor') }}" class="mb-link" dusk="home-why-become-sponsor-link">redni boter</a>,
+                            <a
+                                href="{{ route('why_become_sponsor') }}"
+                                class="mb-link"
+                                dusk="home-why-become-sponsor-link"
+                            >redni boter</a>,
                             s čemer se zavežete k rednim
                             mesečnim prispevkom do prekinitve.
                             Lahko pa tudi izberete eno od
-                            <a href="{{ route('special_sponsorships') }}" class="mb-link" dusk="home-special-sponsorships-link">posebnih vrst botrstva</a>.
+                            <a
+                                href="{{ route('special_sponsorships') }}"
+                                class="mb-link"
+                                dusk="home-special-sponsorships-link"
+                            >posebnih vrst botrstva</a>.
                             Vse vrste pomoči so več kot dobrodošle in potrebne.
                         </div>
                         <div>
                             Botrstvo lahko tudi
-                            <a href="{{ route('gift_sponsorship') }}" class="mb-link" dusk="home-gift-sponsorship-link">podarite</a>
+                            <a
+                                href="{{ route('gift_sponsorship') }}"
+                                class="mb-link"
+                                dusk="home-gift-sponsorship-link"
+                            >podarite</a>
                             in z njim razveselite obdarovanca
                             ter hkrati v njegovem imenu prispevate k boljšem življenju muc. Pri tem vam
                             ponujamo več različnih možnosti in upamo,

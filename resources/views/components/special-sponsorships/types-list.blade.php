@@ -142,7 +142,7 @@ $type_fip_bojevnik_za_1_teden = makeTypeVars(SpecialSponsorship::TYPE_FIP_BOJEVN
 
     <div>
         <h2 class="mb-content-section-title">FIP bojevniki</h2>
-        <div class="mb-typography-content-base space-y-2">
+        <div class="space-y-2">
             <div>
                 FIP bojevniki so mucki, oboleli za do pred kratkim smrtnonosno boleznijo
                 <strong>mačjega infekcioznega peritonitisa</strong> (Feline Infectious Peritonitis ali FIP).

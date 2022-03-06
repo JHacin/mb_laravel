@@ -1,5 +1,5 @@
 <div class="flex items-center space-x-4">
-    <div class="mb-font-primary-bold">Na stran:</div>
+    <div class="font-extrabold">Na stran:</div>
 
     <div class="flex items-center space-x-2">
         @foreach ($options as $option => $label)

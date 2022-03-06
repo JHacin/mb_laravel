@@ -1,108 +1,40 @@
 @import '~flatpickr/dist/flatpickr.min.css';
 @import '~flatpickr/dist/themes/airbnb.css';
+@import '_fluid-typography.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-size: var(--step-0);
+}
+
+.font-mono {
+  @apply tracking-tighter;
+}
+
 @layer components {
-  /*
-   * TYPOGRAPHY - FONT WEIGHT / FAMILY VARIANTS
-   */
-  .mb-font-primary-bold {
-    @apply font-extrabold tracking-tight;
-  }
-
-  .mb-font-primary-semibold {
-    @apply font-bold tracking-tight;
-  }
-
-  .mb-font-secondary-regular {
-    @apply font-mono tracking-tighter;
-  }
-
-  /*
-   * TYPOGRAPHY - FONT SIZES
-   */
-  .mb-font-size-4xl {
-    @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl;
-  }
-
-  .mb-font-size-3xl {
-    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl;
-  }
-
-  .mb-font-size-2xl {
-    @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl;
-  }
-
-  .mb-font-size-xl {
-    @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl;
-  }
-
-  .mb-font-size-lg {
-    @apply text-lg md:text-xl 2xl:text-2xl;
-  }
-
-  .mb-font-size-base {
-    @apply text-base md:text-lg 2xl:text-xl;
-  }
-
-  .mb-font-size-sm {
-    @apply text-sm xl:text-base 2xl:text-lg;
-  }
-
-  /*
-   * TYPOGRAPHY - FONT STYLES
-   */
-  .mb-typography-title-1 {
-    @apply mb-font-size-4xl mb-font-primary-bold;
-  }
-
-  .mb-typography-title-2 {
-    @apply mb-font-size-3xl mb-font-primary-bold;
-  }
-
-  .mb-typography-title-3 {
-    @apply mb-font-size-2xl mb-font-primary-bold;
-  }
-
-  .mb-typography-title-4 {
-    @apply mb-font-size-xl mb-font-primary-bold;
-  }
-
-  .mb-typography-content-lg {
-    @apply mb-font-size-lg;
-  }
-
-  .mb-typography-content-base {
-    @apply mb-font-size-base;
-  }
-
-  .mb-typography-content-sm {
-    @apply mb-font-size-sm;
-  }
-
   /*
    * TYPOGRAPHY - REUSABLE VARIANTS
    */
   .mb-page-title {
-    @apply mb-typography-title-1 mb-4 lg:mb-6;
+    @apply text-4xl font-extrabold mb-4 lg:mb-6;
   }
 
   .mb-page-subtitle {
-    @apply mb-typography-content-lg;
+    @apply text-lg;
   }
 
   .mb-content-section-title {
-    @apply mb-typography-title-3 text-primary my-6 lg:my-10 xl:my-14 2xl:my-20;
+    @apply text-2xl text-primary font-extrabold mb-6 lg:mb-10 xl:mb-14 2xl:mb-20;
   }
 
   /*
    * BUTTONS
    */
   .mb-btn {
-    @apply relative border bg-white border-gray-light text-black mb-typography-content-lg mb-font-primary-bold
+    @apply relative border bg-white border-gray-light text-black font-extrabold
     cursor-pointer inline-flex justify-center items-center align-top py-2 px-4 space-x-3 whitespace-nowrap select-none
     appearance-none transition-all disabled:bg-gray-light disabled:border-gray-light disabled:text-gray-semi disabled:opacity-50
     disabled:cursor-not-allowed;
@@ -121,6 +53,11 @@
    */
   .mb-container {
     @apply md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl px-4 lg:px-6 mx-auto;
+  }
+
+  /* same spacing as content-section-title */
+  .mb-content-section {
+    @apply py-6 lg:py-10 xl:py-14 2xl:py-20;
   }
 
   .mb-content-offset-l-2 {

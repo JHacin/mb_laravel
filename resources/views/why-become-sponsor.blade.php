@@ -5,7 +5,7 @@
         <div class="mb-content-offset-x-3">
             <h1 class="mb-page-title">zakaj postati boter?</h1>
 
-            <ul class="list-disc mb-typography-content-base mb-content-block ml-8 space-y-2">
+            <ul class="list-disc mb-content-block ml-8 space-y-2">
                 <li>
                     Ker s svojim prispevkom pomagate Mačji hiši <strong>omogočiti nekoč brezdomnim mucam varno
                         in zadovoljno življenje</strong>, četudi morda <strong>ne bodo nikoli posvojene</strong>.
@@ -41,7 +41,7 @@
             <div>
                 <h2 class="mb-content-section-title">kako postanem boter?</h2>
 
-                <div class="mb-typography-content-base mb-content-block">
+                <div class="mb-content-block">
                     Preprosto. Na spodnji povezavi si <strong>oglejte muce, ki iščejo botra</strong>. Izberite muco in
                     izpolnite <strong>Dogovor o posvojitvi na daljavo</strong>. Na svoj elektronski naslov boste prejeli
                     sporočilo o sklenjenem botrstvu. Potem pa vsak mesec sproti <strong>nakazujete izbrani znesek</strong>.
