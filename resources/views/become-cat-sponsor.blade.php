@@ -4,11 +4,9 @@
     <div class="mb-page-content-container">
         <h1 class="mb-page-title">Dogovor o posvojitvi na daljavo</h1>
 
-{{--            <div id="v-app-cat-sponsor-form">--}}
-{{--                <v-cat-sponsor-form />--}}
-{{--            </div>--}}
+        <div id="react-root__cat-sponsor-form"></div>
 
-        @if(!$errors->isEmpty())
+        @if (!$errors->isEmpty())
             <x-notification type="danger">
                 <x-slot name="message">
                     Nekatera od polj niso veljavna.
@@ -16,7 +14,7 @@
             </x-notification>
         @endif
 
-        @if(session('success_message'))
+        @if (session('success_message'))
             <x-notification type="success">
                 <x-slot name="message">
                     {{ session('success_message') }}
@@ -24,14 +22,21 @@
             </x-notification>
         @endif
 
-        <form method="POST" action="{{ route('become_cat_sponsor', $cat) }}">
+        <form
+            method="POST"
+            action="{{ route('become_cat_sponsor', $cat) }}"
+        >
             @csrf
 
             <x-form-groups.payer-data />
 
             <div class="columns">
                 <div class="column is-12">
-                    <x-inputs.money name="monthly_amount" label="{{ trans('sponsorship.monthly_amount') }}" required>
+                    <x-inputs.money
+                        name="monthly_amount"
+                        label="{{ trans('sponsorship.monthly_amount') }}"
+                        required
+                    >
                         <x-slot name="help">
                             Vpišite znesek v €, ki ga želite mesečno nakazovati za vašega posvojenca.
                             <strong>Minimalno: 5€</strong>
