@@ -1,10 +1,30 @@
 @extends('layouts.app')
 
+@php
+    use App\Utilities\CountryList;
+
+    $formComponentProps = [
+        'countryList' => [
+            'options' => CountryList::COUNTRY_NAMES,
+            'default' => CountryList::DEFAULT,
+        ],
+    ];
+@endphp
+
 @section('content')
     <div class="mb-page-content-container">
-        <h1 class="mb-page-title">Dogovor o posvojitvi na daljavo</h1>
+        <h1 class="mb-page-title">dogovor o posvojitvi na daljavo</h1>
 
-        <div id="react-root__cat-sponsor-form"></div>
+        <div class="mt-6 mb-8">
+            <hr>
+            <div class="py-6">
+                <div
+                    id="react-root__cat-sponsor-form"
+                    data-props="{{ json_encode($formComponentProps) }}"
+                ></div>
+            </div>
+            <hr>
+        </div>
 
         @if (!$errors->isEmpty())
             <x-notification type="danger">

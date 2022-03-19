@@ -1,7 +1,12 @@
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-  content: ['./resources/**/*.blade.php', './app/View/Components/**/*.php', './resources/**/*.js'],
+  content: [
+    './resources/**/*.blade.php',
+    './app/View/Components/**/*.php',
+    './resources/**/*.js',
+    './resources/**/*.jsx',
+  ],
   theme: {
     colors: {
       primary: '#d76f44',

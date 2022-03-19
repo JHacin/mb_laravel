@@ -29,7 +29,7 @@
                 id="{{ $name }}"
                 name="{{ $name }}"
                 dusk="{{ $name }}-input"
-                {{ $attributes }}
+                {{ $attributes->merge(['class' => 'mb-select']) }}
             >
                 @if($isEmptyDefault && !$selected)
                     <option disabled selected value class="is-hidden">--</option>

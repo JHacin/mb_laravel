@@ -50,6 +50,17 @@ body {
   }
 
   /*
+   * FORM
+   */
+  .mb-input {
+      @apply w-full bg-gray-extralight border-gray-extralight focus:border-gray-dark focus:ring-0;
+  }
+
+  .mb-select {
+      @apply w-full;
+  }
+
+  /*
    * LAYOUT
    */
   .mb-container {

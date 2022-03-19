@@ -8,7 +8,7 @@ $bracketToDotConvertedName = str_replace(['[', ']'], ['.', ''], $name);
 /** @var ViewErrorBag $errors */
 $hasError = $errors->has($bracketToDotConvertedName);
 
-$classes = join(' ', ['w-full', 'bg-gray-extralight', 'border-gray-extralight', 'focus:border-gray-dark', 'focus:ring-0']);
+$classes = join(' ', ['mb-input']);
 
 /** @var string $label */
 $defaultAttributes = [
