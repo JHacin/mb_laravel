@@ -1,11 +1,21 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useStateMachine } from 'little-state-machine';
+import { updateAction } from './updateAction';
 
 export function Step3({ onPrev }) {
-  const { register } = useFormContext();
+  const { actions, state } = useStateMachine({ updateAction });
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: state.data,
+  });
+
+  const onSubmit = (data) => {
+    actions.updateAction(data);
+  };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>Povzetek</div>
 
       <div className="my-3 border">
@@ -22,6 +32,6 @@ export function Step3({ onPrev }) {
       <button type="submit" className="mb-btn mb-btn-primary">
         Potrdi
       </button>
-    </div>
+    </form>
   );
 }

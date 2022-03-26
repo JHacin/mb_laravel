@@ -15,6 +15,11 @@ body {
   @apply tracking-tighter;
 }
 
+input[type='radio'],
+input[type='checkbox'] {
+  @apply text-primary focus:ring-primary cursor-pointer;
+}
+
 @layer components {
   /*
    * TYPOGRAPHY - REUSABLE VARIANTS
@@ -53,11 +58,23 @@ body {
    * FORM
    */
   .mb-input {
-      @apply w-full bg-gray-extralight border-gray-extralight focus:border-gray-dark focus:ring-0;
+    @apply w-full bg-gray-extralight border-gray-extralight focus:border-gray-dark focus:ring-0;
   }
 
   .mb-select {
-      @apply w-full;
+    @apply w-full;
+  }
+
+  .mb-form-group {
+    @apply mb-4;
+  }
+
+  .mb-form-group-label {
+    @apply font-semibold;
+  }
+
+  .mb-inline-selectable-label {
+    @apply cursor-pointer space-x-2 flex items-center;
   }
 
   /*

@@ -1,18 +1,25 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useStateMachine } from 'little-state-machine';
+import { updateAction } from './updateAction';
 
 export function Step2({ onPrev, onNext, countryList }) {
+  const { actions, state } = useStateMachine({ updateAction });
   const {
     register,
+    handleSubmit,
     formState: { errors },
-  } = useFormContext();
+  } = useForm({
+    defaultValues: state.data,
+  });
 
-  const handleNextClick = () => {
+  const onSubmit = (data) => {
+    actions.updateAction(data);
     onNext();
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="my-3 border">
         <label htmlFor="payer_email">
           Email
@@ -251,9 +258,9 @@ export function Step2({ onPrev, onNext, countryList }) {
         Nazaj
       </button>
 
-      <button type="button" className="mb-btn mb-btn-primary" onClick={handleNextClick}>
+      <button type="submit" className="mb-btn mb-btn-primary">
         Naprej
       </button>
-    </div>
+    </form>
   );
 }
