@@ -103,7 +103,7 @@ $breadcrumbItems = [
                                 dusk="cat-details-become-sponsor-form-link"
                             >
                                 <x-icon icon="arrow-right"></x-icon>
-                                <span>{{ $cat->is_group ? 'postani boter' : 'postani moj boter' }}</span>
+                                <span>{{ $cat->is_group ? 'Postani boter' : 'postani moj boter' }}</span>
                             </a>
                         @endif
                     </div>

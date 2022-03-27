@@ -22,6 +22,10 @@ input[type='checkbox'] {
     @apply text-4xl font-bold xl:text-5xl;
   }
 
+  .mb-page-title-bordered {
+    @apply border-l-4 border-primary pl-4 lg:pl-6 py-2;
+  }
+
   .mb-page-subtitle {
     @apply text-lg;
   }

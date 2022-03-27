@@ -53,7 +53,7 @@ $isHomepage = $currentRouteName === 'home';
                     class="mb-btn mb-btn-primary text-lg justify-self-end"
                     href="{{ route('become_sponsor_overview') }}"
                 >
-                    <span>postani boter</span>
+                    <span>Postani boter</span>
                 </a>
             </div>
         </nav>

@@ -40,7 +40,7 @@
                     class="mb-btn mb-btn-primary block text-center"
                     href="{{ route('become_sponsor_overview') }}"
                 >
-                    <span>postani boter</span>
+                    <span>Postani boter</span>
                 </a>
             </div>
 
