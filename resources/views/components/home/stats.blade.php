@@ -21,14 +21,15 @@ $stats = [
 ];
 @endphp
 
-<div class="grid grid-cols-1 border-t border-gray-light border-dotted md:grid-cols-4">
+<div class="grid grid-cols-1 lg:grid-cols-4">
     @foreach ($stats as $stat)
         <div
-            class="border-b border-gray-light border-dotted py-6 space-y-2 md:px-6 md:border-r md:last:border-r-0 md:first:pl-0 md:last:pr-0">
-            <div class="text-2xl font-extrabold text-primary">
+            class="mb-section space-y-2 border-x border-b last:border-b-0 border-gray-light border-dashed lg:border-r-0 lg:border-b-0 lg:last:border-r lg:space-y-5">
+            <div
+                class="text-4xl font-bold text-primary px-4 relative before:bg-primary before:block before:absolute before:left-0 before:-translate-x-1/2 before:w-[2px] before:h-full lg:px-5 lg:text-5xl">
                 {{ $stat['value'] }}
             </div>
-            <div>
+            <div class="px-4 text-lg md:px-5">
                 {{ $stat['text'] }}
             </div>
         </div>

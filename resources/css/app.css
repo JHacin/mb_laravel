@@ -1,15 +1,9 @@
 @import '~flatpickr/dist/flatpickr.min.css';
 @import '~flatpickr/dist/themes/airbnb.css';
-@import '_fluid-typography.css';
-@import '_fluid-spacing.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-body {
-  font-size: var(--step-0);
-}
 
 .font-mono {
   @apply tracking-tighter;
@@ -25,7 +19,7 @@ input[type='checkbox'] {
    * TYPOGRAPHY - REUSABLE VARIANTS
    */
   .mb-page-title {
-    @apply text-4xl font-extrabold;
+    @apply text-4xl font-bold xl:text-5xl;
   }
 
   .mb-page-subtitle {
@@ -33,17 +27,17 @@ input[type='checkbox'] {
   }
 
   .mb-content-section-title {
-    @apply text-2xl text-primary font-extrabold;
+    @apply text-2xl text-primary font-bold;
   }
 
   /*
    * BUTTONS
    */
   .mb-btn {
-    @apply relative border bg-white border-gray-light text-black font-extrabold
+    @apply relative border bg-white border-gray-light text-black font-bold
     cursor-pointer inline-flex justify-center items-center align-top py-2 px-4 space-x-3 whitespace-nowrap select-none
     appearance-none transition-all disabled:bg-gray-light disabled:border-gray-light disabled:text-gray-semi disabled:opacity-50
-    disabled:cursor-not-allowed;
+    disabled:cursor-not-allowed hover:shadow-lg;
   }
 
   .mb-btn-primary {
@@ -52,6 +46,10 @@ input[type='checkbox'] {
 
   .mb-btn-secondary {
     @apply bg-secondary border-secondary text-white hover:bg-secondary-dark;
+  }
+
+  .mb-btn-outline {
+    @apply bg-transparent border-black text-black hover:bg-gray-extralight;
   }
 
   /*
@@ -84,8 +82,12 @@ input[type='checkbox'] {
     @apply md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl px-4 lg:px-6 mx-auto;
   }
 
-  .mb-page-content-container {
-    @apply mb-container py-8;
+  .mb-section {
+    @apply py-8 lg:py-10;
+  }
+
+  .mb-section-masked {
+    @apply bg-gray-extralight;
   }
 
   /*
@@ -106,6 +108,18 @@ input[type='checkbox'] {
 
   .mb-pagination-btn-active {
     @apply bg-primary text-white pointer-events-none;
+  }
+
+  .mb-footer-column {
+    @apply border-x last:border-b-0 border-dashed border-gray-light px-4 pt-7 last:pb-7 lg:border-r-0 lg:last:border-r lg:pt-9 lg:pb-9 lg:last:pb-9;
+  }
+
+  .mb-footer-heading {
+    @apply font-semibold mb-2;
+  }
+
+  .mb-footer-list {
+    @apply text-gray-dark text-sm font-light space-y-2;
   }
 }
 

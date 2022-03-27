@@ -20,91 +20,31 @@ module.exports = {
       black: '#020202',
       transparent: 'transparent',
       gray: {
-        extralight: '#f4f4f5',
+        extralight: '#fafafa',
         light: '#d4d4d8',
         semi: '#71717a',
         dark: '#27272a',
       },
     },
-    spacing: {
-      0: '0px',
-      px: '1px',
-      1: 'var(--space-3xs)',
-      2: 'var(--space-2xs)',
-      3: 'var(--space-xs)',
-      4: 'var(--space-s)',
-      5: 'var(--space-m)',
-      6: 'var(--space-l)',
-      7: 'var(--space-xl)',
-      8: 'var(--space-2xl)',
-      9: 'var(--space-3xl)',
-      10: 'var(--space-4xl)',
-      11: 'var(--space-5xl)',
-      12: 'var(--space-6xl)',
-      section: 'var(--space-3xl)',
-    },
-    fontSize: {
-      xs: [
-        'var(--step--2)',
-        {
-          lineHeight: '1.33',
-          letterSpacing: 'normal',
-        },
-      ],
-      sm: [
-        'var(--step--1)',
-        {
-          lineHeight: '1.4',
-          letterSpacing: 'normal',
-        },
-      ],
-      base: [
-        'var(--step-0)',
-        {
-          lineHeight: '1.5',
-          letterSpacing: 'normal',
-        },
-      ],
-      lg: [
-        'var(--step-1)',
-        {
-          lineHeight: '1.55',
-          letterSpacing: 'normal',
-        },
-      ],
-      xl: [
-        'var(--step-2)',
-        {
-          lineHeight: '1.33',
-          letterSpacing: 'normal',
-        },
-      ],
-      '2xl': [
-        'var(--step-3)',
-        {
-          lineHeight: '1.33',
-          letterSpacing: 'normal',
-        },
-      ],
-      '3xl': [
-        'var(--step-4)',
-        {
-          lineHeight: '1.2',
-          letterSpacing: '-.025em',
-        },
-      ],
-      '4xl': [
-        'var(--step-5)',
-        {
-          lineHeight: '1',
-          letterSpacing: '-.025em',
-        },
-      ],
-    },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
       serif: ['Inter', 'serif'],
       mono: ['Roboto Mono', 'monospace'],
+    },
+    spacing: {
+      px: '1px',
+      0: '0',
+      1: '0.25rem',
+      2: '0.5rem',
+      3: '0.75rem',
+      4: '1rem',
+      5: '1.5rem',
+      6: '2rem', //
+      7: '3rem',
+      8: '4rem',
+      9: '6rem',
+      10: '8rem',
+      11: '10rem',
     },
     extend: {},
   },
@@ -112,39 +52,6 @@ module.exports = {
     require('@tailwindcss/forms'),
     plugin(function ({ addVariant }) {
       addVariant('disabled', '[disabled]');
-    }),
-    plugin(function ({ matchUtilities, theme }) {
-      matchUtilities(
-        {
-          'mb-content-offset-l': (value) => ({
-            [`@media (min-width: ${theme('screens').lg})`]: {
-              'padding-left': value,
-            },
-          }),
-        },
-        { values: theme('spacing') }
-      );
-      matchUtilities(
-        {
-          'mb-content-offset-r': (value) => ({
-            [`@media (min-width: ${theme('screens').lg})`]: {
-              'padding-right': value,
-            },
-          }),
-        },
-        { values: theme('spacing') }
-      );
-      matchUtilities(
-        {
-          'mb-content-offset-x': (value) => ({
-            [`@media (min-width: ${theme('screens').lg})`]: {
-              'padding-left': value,
-              'padding-right': value,
-            },
-          }),
-        },
-        { values: theme('spacing') }
-      );
     }),
   ],
 };

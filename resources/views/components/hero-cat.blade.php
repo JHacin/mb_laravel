@@ -11,13 +11,13 @@
     <div class="flex items-center bg-primary/90 space-x-4 py-3 px-4">
         <x-icon
             icon="paw"
-            class="text-[#edc0ad] text-xl"
+            class="text-[#edc0ad] text-3xl"
         ></x-icon>
         <div class="text-white grow overflow-hidden">
-            <div class="text-base font-bold truncate">
+            <div class="text-xl font-bold truncate">
                 {{ $cat->name }}
             </div>
-            <div class="text-sm font-light truncate">
+            <div class="font-light truncate">
                 {{ $duration_of_stay }} v Mačji hiši
             </div>
         </div>

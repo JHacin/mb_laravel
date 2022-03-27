@@ -3,10 +3,13 @@
 @section('meta_title', 'Registracija | Mačji boter')
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <h1 class="mb-page-title">Registracija</h1>
 
-        <form method="POST" action="{{ route('register') }}">
+        <form
+            method="POST"
+            action="{{ route('register') }}"
+        >
             @csrf
 
             <x-inputs.base.input
@@ -36,7 +39,11 @@
 
             <div class="field">
                 <div class="control">
-                    <button type="submit" class="button is-link" dusk="register-form-submit">Ustvari račun</button>
+                    <button
+                        type="submit"
+                        class="button is-link"
+                        dusk="register-form-submit"
+                    >Ustvari račun</button>
                 </div>
             </div>
         </form>

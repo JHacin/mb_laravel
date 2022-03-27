@@ -1,23 +1,10 @@
-<footer class="bg-gray-extralight shadow-lg">
-    <div class="mb-page-content-container">
-        <div class="flex flex-col items-start gap-6 mb-7 lg:flex-row lg:justify-between lg:items-center">
-            <img
-                src="{{ mix('img/logo.svg') }}"
-                alt="Mačji boter"
-                class="h-[60px] md:h-[75px] lg:h-[90px]"
-            >
-
-            <div class="font-extrabold">
-                <span class="text-primary">Hvala</span>
-                za vso pomoč, muce jo resnično potrebujejo.
-            </div>
-        </div>
-
-        <div class="text-gray-dark grid pb-6 lg:grid-cols-3 2xl:grid-cols-4">
-            <div class="mb-6 space-y-6 lg:space-y-0 lg:col-span-2 lg:col-start-2 lg:gap-8 lg:flex 2xl:col-span-3">
-                <div>
-                    <h6 class="mb-4">Obiščite tudi</h6>
-                    <div class="text-gray-dark text-sm font-light space-y-2">
+<footer class="mb-section-masked shadow-lg">
+    <div class="border-b border-dashed border-gray-light">
+        <div class="mb-container">
+            <div class="grid lg:grid-cols-4">
+                <div class="mb-footer-column">
+                    <h6 class="mb-footer-heading">Obiščite tudi</h6>
+                    <div class="mb-footer-list">
                         <a
                             class="block hover:underline"
                             href="{{ config('links.macja_hisa') }}"
@@ -49,9 +36,9 @@
                     </div>
                 </div>
 
-                <div>
-                    <h6 class="mb-4">Botrstvo</h6>
-                    <div class="text-sm font-light space-y-2">
+                <div class="mb-footer-column">
+                    <h6 class="mb-footer-heading">Botrstvo</h6>
+                    <div class="mb-footer-list">
                         <a
                             class="block hover:underline"
                             href="{{ route('cat_list') }}"
@@ -75,9 +62,9 @@
                     </div>
                 </div>
 
-                <div>
-                    <h6 class="mb-4">O projektu</h6>
-                    <div class="text-sm font-light space-y-2">
+                <div class="mb-footer-column">
+                    <h6 class="mb-footer-heading">O projektu</h6>
+                    <div class="mb-footer-list">
                         <a
                             class="block hover:underline"
                             href="{{ route('news') }}"
@@ -89,62 +76,61 @@
                     </div>
                 </div>
 
-            </div>
-
-            <div class="lg:col-start-1 lg:row-start-1 space-y-6 lg:mb-6">
-                <div>
-                    <h6 class="mb-4">Spremljajte nas</h6>
-                    <div class="space-y-2">
-                        <a
-                            class="text-sm font-light flex items-center space-x-2"
-                            href="{{ config('links.facebook_page') }}"
-                        >
-                            <x-icon
-                                class="hover:text-primary w-[12px]"
-                                icon="facebook"
-                            ></x-icon>
-                            <span class="hover:underline">Facebook</span>
-                        </a>
-                        <a
-                            class="text-sm font-light flex items-center space-x-2"
-                            href="{{ config('links.instagram_page') }}"
-                        >
-                            <x-icon
-                                class="hover:text-primary w-[12px]"
-                                icon="instagram"
-                            ></x-icon>
-                            <span class="hover:underline">Instagram</span>
-                        </a>
+                <div class="mb-footer-column space-y-6">
+                    <div>
+                        <h6 class="mb-footer-heading">Spremljajte nas</h6>
+                        <div class="mb-footer-list">
+                            <a
+                                class="flex items-center space-x-2"
+                                href="{{ config('links.facebook_page') }}"
+                            >
+                                <x-icon
+                                    class="hover:text-primary w-[12px]"
+                                    icon="facebook"
+                                ></x-icon>
+                                <span class="hover:underline">Facebook</span>
+                            </a>
+                            <a
+                                class="flex items-center space-x-2"
+                                href="{{ config('links.instagram_page') }}"
+                            >
+                                <x-icon
+                                    class="hover:text-primary w-[12px]"
+                                    icon="instagram"
+                                ></x-icon>
+                                <span class="hover:underline">Instagram</span>
+                            </a>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <h6 class="mb-2">Kontakt</h6>
-                    <div class="text-sm font-light flex items-center space-x-2">
-                        <x-icon icon="email"></x-icon>
-                        <a
-                            class="hover:underline"
-                            href="mailto:{{ config('links.contact_email') }}"
-                        >{{ config('links.contact_email') }}</a>
+                    <div>
+                        <h6 class="mb-footer-heading">Kontakt</h6>
+                        <div class="mb-footer-list">
+                            <div class="flex items-center space-x-2">
+                                <x-icon icon="email"></x-icon>
+                                <a
+                                    class="hover:underline"
+                                    href="mailto:{{ config('links.contact_email') }}"
+                                >{{ config('links.contact_email') }}</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <div class="mb-2">Želite sponzorirati projekt?</div>
-                    <div class="text-sm font-light">
-                        Pišite nam na <a
-                            class="hover:underline"
-                            href="mailto:{{ config('links.mh_email') }}"
-                        >info@macjahisa.si</a>.
+                    <div>
+                        <div class="mb-footer-heading">Želite sponzorirati projekt?</div>
+                        <div class="mb-footer-list">
+                            Pišite nam na
+                            <a
+                                class="hover:underline"
+                                href="mailto:{{ config('links.mh_email') }}"
+                            >info@macjahisa.si</a>.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <hr class="border-gray-light">
-
-        <div class="pt-6">
-            <x-footer.copy></x-footer.copy>
-        </div>
+    </div>
+    <div class="mb-container py-7">
+        <x-footer.copy></x-footer.copy>
     </div>
 </footer>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <div class="mb-content-offset-l-10 mb-content-offset-r-12">
             <h1 class="mb-page-title mb-6">botrstvo je odlično dobrodelno darilo</h1>
             <h2 class="mb-page-subtitle">

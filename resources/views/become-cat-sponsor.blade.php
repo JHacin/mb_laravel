@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @php
-    use App\Utilities\CountryList;
+use App\Utilities\CountryList;
 
-    $formComponentProps = [
-        'countryList' => [
-            'options' => CountryList::COUNTRY_NAMES,
-            'default' => CountryList::DEFAULT,
-        ],
-    ];
+$formComponentProps = [
+    'countryList' => [
+        'options' => CountryList::COUNTRY_NAMES,
+        'default' => CountryList::DEFAULT,
+    ],
+];
 @endphp
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <h1 class="mb-page-title">dogovor o posvojitvi na daljavo</h1>
 
         <div class="mt-6 mb-8">

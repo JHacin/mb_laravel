@@ -3,14 +3,17 @@
 @section('meta_title', 'Prijava | Mačji boter')
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <h1 class="mb-page-title">Prijava</h1>
 
-        <form method="POST" action="{{ route('login') }}">
+        <form
+            method="POST"
+            action="{{ route('login') }}"
+        >
             @csrf
 
             @error('email')
-            <div class="notification is-danger">{{ $message }}</div>
+                <div class="notification is-danger">{{ $message }}</div>
             @enderror
 
             <x-inputs.email
@@ -26,16 +29,26 @@
                 autocomplete="current-password"
             />
 
-            <x-inputs.base.checkbox name="remember" label="Zapomni si me" />
+            <x-inputs.base.checkbox
+                name="remember"
+                label="Zapomni si me"
+            />
 
             <div class="field">
                 <div class="control">
-                    <button type="submit" class="button is-link" dusk="login-form-submit">Prijava</button>
+                    <button
+                        type="submit"
+                        class="button is-link"
+                        dusk="login-form-submit"
+                    >Prijava</button>
                 </div>
             </div>
 
             <div class="field">
-                <a href="{{ route('password.request') }}" dusk="login-form-forgot-password">Pozabil/-a sem geslo</a>
+                <a
+                    href="{{ route('password.request') }}"
+                    dusk="login-form-forgot-password"
+                >Pozabil/-a sem geslo</a>
             </div>
         </form>
     </div>

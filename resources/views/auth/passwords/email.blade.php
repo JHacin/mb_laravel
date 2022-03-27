@@ -3,10 +3,13 @@
 @section('meta_title', 'Ponastavitev gesla | Mačji boter')
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <h1 class="mb-page-title">Ponastavitev gesla</h1>
 
-        <form method="POST" action="{{ route('password.email') }}">
+        <form
+            method="POST"
+            action="{{ route('password.email') }}"
+        >
             @csrf
 
             @if (session('status'))
@@ -25,7 +28,11 @@
 
             <div class="field">
                 <div class="control">
-                    <button type="submit" class="button is-link" dusk="forgot-password-form-submit">
+                    <button
+                        type="submit"
+                        class="button is-link"
+                        dusk="forgot-password-form-submit"
+                    >
                         Pošlji navodila za ponastavitev
                     </button>
                 </div>

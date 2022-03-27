@@ -11,19 +11,16 @@
                     <img
                         src="{{ mix('img/logo.svg') }}"
                         alt="Mačji boter"
-                        class="h-[60px]"
+                        class="h-[60px] md:h-[90px] lg:h-[110px]"
                     >
                 </a>
 
                 <span
-                    class="flex items-center cursor-pointer p-2"
+                    class="flex items-center cursor-pointer p-2 text-2xl md:text-4xl"
                     role="button"
                     data-mobile-nav-close-btn
                 >
-                    <x-icon
-                        icon="close"
-                        class="text-2xl"
-                    ></x-icon>
+                    <x-icon icon="close"></x-icon>
                 </span>
             </div>
 

@@ -16,7 +16,7 @@ $filters = [
 @endphp
 
 <div class="flex flex-col lg:flex-row lg:items-center lg:space-x-3">
-    <div class="font-extrabold">Razvrsti po:</div>
+    <div class="font-bold">Razvrsti po:</div>
 
     @foreach ($filters as $filter)
         <div class="flex space-x-2">

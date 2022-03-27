@@ -5,7 +5,7 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <div class="mb-section mb-content-offset-l-10 2xl:pr-12">
             <h1 class="mb-page-title mb-6">muce, ki iščejo botra</h1>
             <h2 class="mb-page-subtitle">

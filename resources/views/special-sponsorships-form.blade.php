@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @php
-    use App\Models\SpecialSponsorship;
+use App\Models\SpecialSponsorship;
 
-    $isGiftRadioOptions = [
-        'no' => 'Zame',
-        'yes' => 'Darilo',
-    ];
+$isGiftRadioOptions = [
+    'no' => 'Zame',
+    'yes' => 'Darilo',
+];
 
-    $typeOptions = SpecialSponsorship::TYPE_LABELS;
+$typeOptions = SpecialSponsorship::TYPE_LABELS;
 @endphp
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <h1 class="mb-page-title">Dogovor za posebno botrstvo</h1>
 
-        @if(!$errors->isEmpty())
+        @if (!$errors->isEmpty())
             <x-notification type="danger">
                 <x-slot name="message">
                     Nekatera od polj niso veljavna.
@@ -23,7 +23,7 @@
             </x-notification>
         @endif
 
-        @if(session('success_message'))
+        @if (session('success_message'))
             <x-notification type="success">
                 <x-slot name="message">
                     {{ session('success_message') }}
@@ -31,7 +31,10 @@
             </x-notification>
         @endif
 
-        <form method="POST" action="{{ route('special_sponsorships_form') }}">
+        <form
+            method="POST"
+            action="{{ route('special_sponsorships_form') }}"
+        >
             @csrf
 
             <div class="columns">
@@ -94,6 +97,5 @@
                 }
             });
         }
-
     </script>
 @endpush

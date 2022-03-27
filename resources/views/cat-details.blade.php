@@ -56,7 +56,7 @@ $breadcrumbItems = [
 @endphp
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <div class="mb-content-offset-l-10">
             <div class="mb-6">
                 <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>

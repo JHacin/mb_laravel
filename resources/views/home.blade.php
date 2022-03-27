@@ -1,21 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-page-content-container">
-        <div class="grid grid-cols-1 auto-rows-fr md:grid-cols-2 xl:grid-cols-4 gap-4">
-            @foreach ($heroCats as $heroCat)
-                <x-hero-cat :cat="$heroCat"></x-hero-cat>
-            @endforeach
+    <section class="mb-section">
+        <div class="mb-container">
+            <div class="grid grid-cols-1 auto-rows-fr md:grid-cols-2 xl:grid-cols-4 gap-5">
+                @foreach ($heroCats as $heroCat)
+                    <x-hero-cat :cat="$heroCat"></x-hero-cat>
+                @endforeach
 
-            <a
-                href="{{ route('cat_list') }}"
-                class="rounded shadow hover:shadow-lg bg-[#e0d5d4] transition-all bg-no-repeat bg-cover bg-center"
-                style="background-image: url('{{ mix('img/home_hero_vse_muce.svg') }}');"
-            >
-            </a>
+                <a
+                    href="{{ route('cat_list') }}"
+                    class="rounded shadow hover:shadow-lg bg-[#e0d5d4] transition-all bg-no-repeat bg-cover bg-center"
+                    style="background-image: url('{{ mix('img/home_hero_vse_muce.svg') }}');"
+                >
+                </a>
+            </div>
         </div>
+    </section>
 
-        <div class="py-section mb-content-offset-l-10">
+    <section class="mb-section-masked">
+        <div class="mb-container">
+            <x-home.stats></x-home.stats>
+        </div>
+    </section>
+
+    <section class="mb-section">
+        <div class="mb-container">
             <x-home.intro-row>
                 <x-slot name="title">
                     pomagamo mucam, ki
@@ -23,17 +33,8 @@
                 </x-slot>
                 <x-slot name="body">
                     <div>
-                        Mačji boter je projekt <a
-                            href="{{ config('links.macja_hisa') }}"
-                            class="mb-link"
-                        >Mačje hiše</a>, ki omogoča posvojitve muck na daljavo.
-                        Namenjen je vsem tistim, ki nam želite pomagati pri oskrbi nekoč brezdomnih muck.
-                        Gre za obliko donacije, ki donatorja poveže z določenim mucem ali skupino mucov in mu
-                        hkrati omogoča boljši vpogled v to, za kaj je bil porabljen njegov prispevek.
-                    </div>
-                    <div>
                         V projekt Mačji boter so vključeni predvsem tisti mucki, ki iz različnih vzrokov
-                        dalj časa iščejo svoj domali pa zaradi njihovih posebnosti
+                        dalj časa iščejo svoj dom ali pa zaradi njihovih posebnosti
                         predvidevamo, da bodo pri nas dalj časa. S pomočjo mačjih botrov jim v skrbništvu
                         ves čas bivanja nudimo kvalitetno hrano, veterinarsko oskrbo in vse,
                         kar potrebujejo za srečno mačje življenje.
@@ -42,10 +43,10 @@
                 </x-slot>
             </x-home.intro-row>
         </div>
+    </section>
 
-        <x-home.stats></x-home.stats>
-
-        <div class="py-section mb-content-offset-l-10">
+    <section class="mb-section border-t border-opacity-75 border-dashed border-gray-light">
+        <div class="mb-container">
             <x-home.intro-row>
                 <x-slot name="title">
                     botrujete lahko
@@ -85,5 +86,5 @@
                 </x-slot>
             </x-home.intro-row>
         </div>
-    </div>
+    </section>
 @endsection

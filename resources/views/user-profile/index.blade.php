@@ -3,15 +3,15 @@
 @section('meta_title', 'Moj profil | Mačji boter')
 
 @php
-    use App\Models\User;
+use App\Models\User;
 
-    /** @var User $user */
-    $user = Auth::getUser()->loadMissing('personData.sponsorships.cat');
-    $sponsorships = $user->personData->sponsorships
+/** @var User $user */
+$user = Auth::getUser()->loadMissing('personData.sponsorships.cat');
+$sponsorships = $user->personData->sponsorships;
 @endphp
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         @if (session('success_message'))
             <x-notification type="success">
                 <x-slot name="message">
@@ -23,10 +23,10 @@
         <h1 class="mb-page-title">Moja botrstva</h1>
 
         <div dusk="sponsorship-list">
-            @if($sponsorships->count() === 0)
+            @if ($sponsorships->count() === 0)
                 <div>Nimate še botrstev.</div>
             @else
-                @foreach($sponsorships as $sponsorship)
+                @foreach ($sponsorships as $sponsorship)
                     <div>
                         <a href="{{ route('cat_details', $sponsorship->cat) }}">
                             {{ $sponsorship->cat->name }}
@@ -38,7 +38,10 @@
 
         <h1 class="mb-page-title">Moj profil</h1>
 
-        <form method="POST" action="{{ route('user-profile') }}">
+        <form
+            method="POST"
+            action="{{ route('user-profile') }}"
+        >
             @csrf
 
             <x-inputs.base.input
@@ -107,7 +110,11 @@
             />
 
             <div class="field">
-                <button type="submit" class="button is-primary" dusk="user-profile-form-submit">
+                <button
+                    type="submit"
+                    class="button is-primary"
+                    dusk="user-profile-form-submit"
+                >
                     {{ trans('forms.confirm') }}
                 </button>
             </div>

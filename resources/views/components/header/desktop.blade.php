@@ -5,7 +5,10 @@ $currentRouteName = Route::currentRouteName();
 $isHomepage = $currentRouteName === 'home';
 @endphp
 
-<header class="flex items-center py-3 lg:py-6">
+<header @class([
+    'flex items-center pt-3 lg:pt-6',
+    'bg-gray-extralight' => $isHomepage,
+])>
     <div class="mb-container flex-grow">
         <nav
             role="navigation"
@@ -14,14 +17,11 @@ $isHomepage = $currentRouteName === 'home';
         >
             <div class="flex items-center justify-between">
                 <span
-                    class="xl:hidden flex items-center cursor-pointer p-2 mr-4"
+                    class="xl:hidden flex items-center cursor-pointer p-2 mr-2 text-2xl md:text-4xl md:mr-4"
                     role="button"
                     data-mobile-nav-open-btn
                 >
-                    <x-icon
-                        icon="burger"
-                        class="text-2xl"
-                    ></x-icon>
+                    <x-icon icon="burger"></x-icon>
                 </span>
 
                 <a
@@ -29,25 +29,18 @@ $isHomepage = $currentRouteName === 'home';
                     dusk="navbar-home-link"
                 >
                     <img
-                        src="{{ mix($isHomepage ? 'img/logo.svg' : 'img/logo_without_text.svg') }}"
+                        src="{{ mix('img/logo.svg') }}"
                         alt="Mačji boter"
-                        @class([
-                            'h-[45px] md:h-[60px] lg:h-[75px] xl:h-[90px] 2xl:h-[110px]' => !$isHomepage,
-                            'h-[75px] md:h-[90px] lg:h-[105px] xl:h-[130px] 2xl:h-[160px]' => $isHomepage,
-                        ])
-                    >
+                        class="h-[60px] md:h-[90px] lg:h-[105px] xl:h-[130px] 2xl:h-[160px]"
+                    />
                 </a>
             </div>
 
             <div class="flex items-center">
-                <div class="hidden xl:flex items-center space-x-4 mr-6">
+                <div class="hidden xl:flex items-center space-x-6 mr-7">
                     @foreach ($pageLinks as $pageLink)
                         <a
-                            @class([
-                                'text-base transition-all hover:text-gray-semi',
-                                'underline underline-offset-4 decoration-dashed decoration-2 decoration-primary hover:decoration-primary hover:text-black' =>
-                                    $currentRouteName === $pageLink['route_name'],
-                            ])
+                            class="text-lg font-semibold transition-all hover:text-gray-semi"
                             href="{{ route($pageLink['route_name']) }}"
                             dusk="{{ $pageLink['dusk'] }}"
                         >
@@ -57,12 +50,34 @@ $isHomepage = $currentRouteName === 'home';
                 </div>
 
                 <a
-                    class="mb-btn mb-btn-primary justify-self-end"
+                    class="mb-btn mb-btn-primary text-lg justify-self-end"
                     href="{{ route('become_sponsor_overview') }}"
                 >
                     <span>postani boter</span>
                 </a>
             </div>
         </nav>
+
+        @if ($isHomepage)
+            <section class="grid grid-cols-4 py-8 lg:py-9">
+                <div class="col-span-full lg:col-span-3 space-y-6">
+                    <h1 class="mb-page-title">
+                        Mačji boter je projekt Mačje hiše, ki omogoča
+                        <span class="text-secondary">posvojitve muck na daljavo</span>.
+                    </h1>
+                    <div class="mb-page-subtitle">
+                        Namenjen je vsem tistim, ki nam želite pomagati pri oskrbi nekoč brezdomnih muck. Gre za obliko
+                        donacije, ki donatorja poveže z določenim mucem ali skupino mucov in mu hkrati omogoča boljši
+                        vpogled v to, za kaj je bil porabljen njegov prispevek.
+                    </div>
+                    <div>
+                        <a
+                            class="mb-btn mb-btn-outline text-lg"
+                            href="{{ route('become_sponsor_overview') }}"
+                        >Postani boter</a>
+                    </div>
+                </div>
+            </section>
+        @endif
     </div>
 </header>

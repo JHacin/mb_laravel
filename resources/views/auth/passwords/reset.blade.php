@@ -3,13 +3,20 @@
 @section('meta_title', 'Sprememba gesla | Mačji boter')
 
 @section('content')
-    <div class="mb-page-content-container">
+    <div class="mb-container">
         <h1 class="mb-page-title">Sprememba gesla</h1>
 
-        <form method="POST" action="{{ route('password.update') }}">
+        <form
+            method="POST"
+            action="{{ route('password.update') }}"
+        >
             @csrf
 
-            <input type="hidden" name="token" value="{{ $token }}">
+            <input
+                type="hidden"
+                name="token"
+                value="{{ $token }}"
+            >
 
             <x-inputs.email
                 name="email"
@@ -35,7 +42,11 @@
 
             <div class="field">
                 <div class="control">
-                    <button type="submit" class="button is-link" dusk="reset-password-form-submit">
+                    <button
+                        type="submit"
+                        class="button is-link"
+                        dusk="reset-password-form-submit"
+                    >
                         Ponastavi geslo
                     </button>
                 </div>
