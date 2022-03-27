@@ -15,8 +15,8 @@ if (mix.inProduction()) {
 } else {
   mix.browserSync({
     ui: false,
+    host: process.env.MIX_BROWSERSYNC_HOST,
     proxy: process.env.MIX_BROWSERSYNC_PROXY,
-    port: process.env.MIX_BROWSERSYNC_PORT,
     notify: false,
     open: process.env.MIX_BROWSERSYNC_OPEN === 'true',
   });
