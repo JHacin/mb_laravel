@@ -95,7 +95,7 @@ input[type='checkbox'] {
   }
 
   .mb-page-header {
-    @apply py-8 lg:py-9;
+    @apply bg-gray-extralight mt-8 py-8 lg:py-9;
   }
 
   /*

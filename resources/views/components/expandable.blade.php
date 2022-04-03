@@ -1,7 +1,7 @@
 @props(['title', 'triggerClass' => ''])
 
 <div
-    class="flex justify-between items-center cursor-pointer gap-x-4 select-none {{ $triggerClass }}"
+    class="flex justify-between items-center cursor-pointer gap-x-7 select-none {{ $triggerClass }}"
     data-expandable-trigger
 >
     <div>{{ $title }}</div>

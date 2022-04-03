@@ -1,24 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-container">
-        <div class="grid grid-cols-5">
-            <div class="mb-page-header col-span-full lg:col-span-3">
-                <h1 class="mb-page-title mb-6">Pogosta vprašanja</h1>
-                <h2 class="mb-page-subtitle">Na tem mestu so zbrani odgovori na nekatera izmed vprašanj, ki se pogosto
-                    pojavijo
-                    novim botrom.
-                    Če vas poleg tega še kar koli zanima, nas lahko kontaktirate prek e-pošte na naslovu <a
-                        href="mailto:{{ config('links.contact_email') }}"
-                        class="mb-link"
-                    >{{ config('links.contact_email') }}</a>, in vam bomo odgovorili v najkrajšem možnem času.</h2>
+    <div class="mb-page-header">
+        <div class="mb-container">
+            <div class="grid grid-cols-5">
+                <div class="col-span-full lg:col-span-3">
+                    <h1 class="mb-page-title mb-6">Pogosta vprašanja</h1>
+                    <h2 class="mb-page-subtitle">Na tem mestu so zbrani odgovori na nekatera izmed vprašanj, ki se pogosto
+                        pojavijo
+                        novim botrom.
+                        Če vas poleg tega še kar koli zanima, nas lahko kontaktirate prek e-pošte na naslovu <a
+                            href="mailto:{{ config('links.contact_email') }}"
+                            class="mb-link"
+                        >{{ config('links.contact_email') }}</a>, in vam bomo odgovorili v najkrajšem možnem času.</h2>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="mb-divider mb-8 lg:mb-9"></div>
-
-        <div class="mb-section pt-0 grid lg:grid-cols-2">
-            <div class="lg:col-span-1">
+    <div class="mb-container">
+        <div class="mb-section grid lg:grid-cols-4">
+            <div class="lg:col-span-3 2xl:col-span-2">
                 <x-faq-item title="Kako postanem mačji boter?">
                     <p>
                         Preprosto. Oglejte si

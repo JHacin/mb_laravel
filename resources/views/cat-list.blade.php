@@ -5,25 +5,28 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-container">
-        <div class="grid grid-cols-5">
-            <div class="mb-page-header col-span-full lg:col-span-3">
-                <h1 class="mb-page-title mb-6">Muce, ki iščejo botra</h1>
-                <h2 class="mb-page-subtitle">
-                    Na seznamu so objavljene vse muce, ki trenutno iščejo botra. Če vas zanima več o tem,
-                    kaj je bistvo programa Mačji boter in kako poteka postopek botrstva, si lahko
-                    preberete več na
-                    <a
-                        href="{{ route('why_become_sponsor') }}"
-                        class="mb-link"
-                        dusk="why-become-sponsor-link"
-                    >tej povezavi</a>.
-                </h2>
+    <div class="mb-page-header">
+        <div class="mb-container">
+            <div class="grid grid-cols-5">
+                <div class="col-span-full lg:col-span-3">
+                    <h1 class="mb-page-title mb-6">Muce, ki iščejo botra</h1>
+                    <h2 class="mb-page-subtitle">
+                        Na seznamu so objavljene vse muce, ki trenutno iščejo botra. Če vas zanima več o tem,
+                        kaj je bistvo programa Mačji boter in kako poteka postopek botrstva, si lahko
+                        preberete več na
+                        <a
+                            href="{{ route('why_become_sponsor') }}"
+                            class="mb-link"
+                            dusk="why-become-sponsor-link"
+                        >tej povezavi</a>.
+                    </h2>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="mb-divider mb-7"></div>
 
+    <div class="mb-container py-8">
         <div class="mb-7">
             <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <x-cat-list.search-by-name :numResults="$cats->total()"></x-cat-list.search-by-name>
