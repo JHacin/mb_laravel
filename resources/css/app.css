@@ -60,7 +60,22 @@ input[type='checkbox'] {
    * FORM
    */
   .mb-input {
-    @apply w-full bg-gray-extralight border-gray-extralight focus:border-gray-dark focus:ring-0;
+    @apply w-full border-0 border-b border-gray-light placeholder-transparent px-0 pb-[8px] pt-[24px] h-[56px];
+    @apply focus:border-primary focus:ring-0 focus:outline-none focus:pb-[8px] focus:pt-[24px];
+  }
+
+  .mb-input-label {
+    @apply absolute left-0 top-0 text-sm text-gray-semi transition-all pointer-events-none;
+    @apply peer-placeholder-shown:text-base peer-placeholder-shown:top-[24px];
+    @apply peer-focus:top-0 peer-focus:text-primary peer-focus:text-sm;
+  }
+
+  .mb-input--with-addon {
+    @apply pr-[40px];
+  }
+
+  .mb-input-addon {
+    @apply absolute top-0 right-0 pb-[8px] pr-[8px] pt-[24px] h-full w-[40px] text-xl flex justify-end;
   }
 
   .mb-select {

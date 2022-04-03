@@ -1,5 +1,6 @@
 @props(['icon'])
 
+{{-- blade-formatter-disable --}}
 @php
 /** @var string $icon */
 $icon_class = match ($icon) {
@@ -14,8 +15,10 @@ $icon_class = match ($icon) {
     'chevron-left' => 'fas fa-chevron-left',
     'chevron-right' => 'fas fa-chevron-right',
     'paw' => 'fas fa-paw',
+    'search' => 'fas fa-search',
 }
 @endphp
+{{-- blade-formatter-enable --}}
 
 <span {{ $attributes->merge(['class' => 'inline-flex items-center justify-center']) }}>
     <i class="{{ $icon_class }}"></i>

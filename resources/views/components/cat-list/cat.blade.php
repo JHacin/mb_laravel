@@ -31,7 +31,7 @@
                 {!! $cat->story_short !!}
             </div>
 
-            <div class="mb-link font-mono underline underline-offset-2">
+            <div class="mb-link underline underline-offset-2">
                 {{ $cat->is_group ? 'Preberi več' : 'Preberi mojo zgodbo' }}
             </div>
         </div>

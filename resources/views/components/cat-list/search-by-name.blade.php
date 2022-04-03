@@ -16,15 +16,16 @@
     <x-inputs.base.input
         name="search"
         placeholder="Išči po imenu"
+        label="Išči po imenu"
         value="{{ request('search') }}"
     >
         <x-slot name="addon">
             <button
-                class="mb-btn mb-btn-primary"
+                class="text-gray-semi hover:text-primary transition-all"
                 type="submit"
                 dusk="search-submit"
             >
-                <x-icon icon="arrow-right"></x-icon>
+                <x-icon icon="search"></x-icon>
             </button>
         </x-slot>
     </x-inputs.base.input>
