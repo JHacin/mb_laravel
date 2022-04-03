@@ -7,32 +7,33 @@ use Illuminate\Support\ViewErrorBag;
 $bracketToDotConvertedName = str_replace(['[', ']'], ['.', ''], $name);
 /** @var ViewErrorBag $errors */
 $hasError = $errors->has($bracketToDotConvertedName);
-$hasAddon = isset($addon);
 
-$classes = ['mb-input peer'];
+$classes = ['mb-input'];
 
 if ($hasError) {
     $classes[] = 'is-danger';
-}
-
-if ($hasAddon) {
-    $classes[] = ' mb-input--with-addon';
 }
 
 /** @var string $label */
 $defaultAttributes = [
     'type' => 'text',
     'class' => join(' ', $classes),
-    'placeholder' => $label ?? ($placeholder ?? ''),
 ];
 
+if (isset($placeholder)) {
+    $defaultAttributes['placeholder'] = $placeholder;
+}
+
+$hasAddon = isset($addon);
 @endphp
 
 <div
-    @class(['w-full', 'flex justify-start' => $hasAddon])
+    class="w-full"
     dusk="{{ $name }}-input-wrapper"
 >
-    <div class="relative">
+    @include('components.inputs.inc.label')
+
+    <div class="flex justify-start">
         <input
             id="{{ $name }}"
             name="{{ $name }}"
@@ -41,14 +42,8 @@ $defaultAttributes = [
             {{ $attributes->merge($defaultAttributes) }}
         >
 
-
-        <label
-            for="{{ $name }}"
-            class="mb-input-label"
-        >{{ $label }}</label>
-
         @if ($hasAddon)
-            <div class="mb-input-addon">{{ $addon }}</div>
+            {{ $addon }}
         @endif
     </div>
 

@@ -6,8 +6,8 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
 
 @section('content')
     <div class="mb-container">
-        <div class="grid grid-cols-6">
-            <div class="py-8 lg:py-9 col-span-full lg:col-span-4">
+        <div class="grid grid-cols-5">
+            <div class="mb-page-header col-span-full lg:col-span-3">
                 <h1 class="mb-page-title mb-6">Muce, ki iščejo botra</h1>
                 <h2 class="mb-page-subtitle">
                     Na seznamu so objavljene vse muce, ki trenutno iščejo botra. Če vas zanima več o tem,
@@ -25,7 +25,7 @@ $showPerPageOptions = $cats->isNotEmpty() && $cats->total() > \App\Models\Cat::P
         <div class="mb-divider mb-7"></div>
 
         <div class="mb-7">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <x-cat-list.search-by-name :numResults="$cats->total()"></x-cat-list.search-by-name>
 
                 @if ($cats->total() > 1)

@@ -15,13 +15,12 @@
     @endforeach
     <x-inputs.base.input
         name="search"
-        placeholder="Išči po imenu"
         label="Išči po imenu"
         value="{{ request('search') }}"
     >
         <x-slot name="addon">
             <button
-                class="text-gray-semi hover:text-primary transition-all"
+                class="mb-btn mb-btn-primary ml-2"
                 type="submit"
                 dusk="search-submit"
             >

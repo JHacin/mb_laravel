@@ -59,7 +59,7 @@ $isHomepage = $currentRouteName === 'home';
         </nav>
 
         @if ($isHomepage)
-            <section class="grid grid-cols-4 py-8 lg:py-9">
+            <section class="mb-page-header grid grid-cols-4">
                 <div class="col-span-full lg:col-span-3 space-y-6">
                     <h1 class="mb-page-title">
                         Mačji boter je projekt Mačje hiše, ki omogoča

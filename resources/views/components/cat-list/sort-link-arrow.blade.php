@@ -2,6 +2,7 @@
     href="{{ route('cat_list', $routeParams) }}"
     dusk="{{ $query }}_sort_{{ $direction }}"
     @class([
+        'text-lg',
         'hover:text-primary transition-all',
         'text-primary pointer-events-none' => $isActive,
         'text-gray-light' => !$isActive,

@@ -1,5 +1,5 @@
 <article
-    class="group flex shadow-lg transition-shadow hover:shadow-xl"
+    class="group flex shadow-lg rounded overflow-hidden transition-shadow hover:shadow-xl"
     dusk="cat-list-item-wrapper"
 >
     <a
