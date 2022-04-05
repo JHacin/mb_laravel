@@ -1,32 +1,28 @@
 @props(['label', 'link', 'description_short', 'description_long'])
 
-<div class="border border-gray-extralight shadow-lg p-5 space-y-5">
-    <h3 class="text-lg font-bold text-primary">
+{{--  --}}
+
+<div class="space-y-5 pl-5 pr-8 pt-7 pb-8 border-t border-gray-light border-dashed">
+    <h3 class="text-2xl font-bold text-primary">
         {{ $label }}
     </h3>
-    <div>
-        <div class="mb-4">{{ $description_short }}</div>
-        <div>
-            <x-expandable triggerClass="inline-flex pb-2">
-                <x-slot name="title">
-                    <div class="underline">Več podatkov</div>
-                </x-slot>
-                <x-slot name="content">
-                    <div class="bg-gray-extralight text-gray-dark p-4 shadow space-y-2">
-                        {{ $description_long }}
-                    </div>
-                </x-slot>
-            </x-expandable>
-        </div>
+    <div class="text-lg">
+        {{ $description_short }}
     </div>
-
+    <div
+        class="text-gray-dark relative before:bg-primary before:block before:absolute before:-left-5 before:-translate-x-1/2 before:w-[1px] before:h-full">
+        {{ $description_long }}
+    </div>
     <div>
         <a
-            class="mb-btn mb-btn-primary"
+            class="mb-link flex items-center space-x-2 font-semibold"
             href="{{ $link }}"
         >
-            <x-icon icon="arrow-right"></x-icon>
-            <span>izberi</span>
+            <span>Izberi</span>
+            <x-icon
+                icon="arrow-right"
+                class="text-lg"
+            ></x-icon>
         </a>
     </div>
 </div>

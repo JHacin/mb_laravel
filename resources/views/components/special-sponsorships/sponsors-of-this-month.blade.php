@@ -1,5 +1,5 @@
-<div class="bg-gray-extralight border border-gray-extralight shadow-lg p-5 space-y-5">
-    <h4 class="text-lg font-bold text-primary">{{ $title }}</h4>
+<div class="bg-gray-extralight border border-gray-light border-dashed py-7 px-6 space-y-5">
+    <h4 class="text-2xl font-bold text-primary">{{ $title }}</h4>
 
     @if (count($sponsorshipsPerType) === 0)
         <div>V tem mescu še nismo imeli novih botrov.</div>
@@ -7,7 +7,7 @@
         <div class="space-y-4">
             @foreach ($sponsorshipsPerType as $type => $sponsorships)
                 <div>
-                    <h5 class="font-bold">
+                    <h5 class="font-semibold">
                         {{ \App\Models\SpecialSponsorship::TYPE_LABELS[$type] }}
                     </h5>
 
@@ -22,15 +22,14 @@
                 </div>
             @endforeach
         </div>
-        <div><strong>Hvala vsem!</strong></div>
     @endif
 
-    <div>
+    {{-- <div>
         <a
             href="{{ route('special_sponsorships_archive') }}"
             class="mb-link"
         >
             Arhiv botrov
         </a>
-    </div>
+    </div> --}}
 </div>
