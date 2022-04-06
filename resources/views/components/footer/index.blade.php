@@ -42,7 +42,7 @@
                         <a
                             class="block hover:underline"
                             href="{{ route('cat_list') }}"
-                        >Muce, ki iščejo dom</a>
+                        >Muce, ki iščejo botra</a>
                         <a
                             class="block hover:underline"
                             href="{{ route('why_become_sponsor') }}"
@@ -55,10 +55,10 @@
                             class="block hover:underline"
                             href="{{ route('gift_sponsorship') }}"
                         >Podari botrstvo</a>
-                        <a
+                        {{-- <a
                             class="block hover:underline"
                             href="{{ route('special_sponsorships_archive') }}"
-                        >Arhiv botrov</a>
+                        >Arhiv botrov</a> --}}
                     </div>
                 </div>
 

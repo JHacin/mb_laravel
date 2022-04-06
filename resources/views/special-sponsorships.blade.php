@@ -18,7 +18,7 @@
     </div>
 
     <div class="mb-container">
-        <div class="grid grid-cols-1 xl:grid-cols-2 pt-8">
+        <div class="grid grid-cols-1 xl:grid-cols-2 pt-8 lg:pt-9">
             <div class="col-span-1 border-x border-b xl:border-r-0 xl:border-b-0 border-gray-light border-dashed">
                 <x-special-sponsorships.types-list></x-special-sponsorships.types-list>
             </div>
