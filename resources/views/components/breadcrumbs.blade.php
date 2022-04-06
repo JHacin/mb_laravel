@@ -1,11 +1,11 @@
 @props(['items'])
 
-<div class="flex items-center flex-wrap gap-x-3 font-mono">
+<div class="flex items-center flex-wrap gap-x-3 text-lg">
     @foreach ($items as $item)
         @isset($item['link'])
             <a
                 href="{{ $item['link'] }}"
-                class="mb-link"
+                class="mb-link underline underline-offset-4"
             >
                 {{ $item['label'] }}
             </a>

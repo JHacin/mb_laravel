@@ -56,93 +56,104 @@ $breadcrumbItems = [
 @endphp
 
 @section('content')
-    <div class="mb-container">
-        <div class="mb-content-offset-l-10">
-            <div class="mb-6">
-                <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>
+    <div class="mb-container mb-section pt-8">
+        <div class="mb-6">
+            <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr]">
+            <div class="col-span-1 lg:col-start-2">
+                <h1 class="mb-page-title">{{ $cat->name }}</h1>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr]">
-                <div class="col-span-1 lg:col-start-2">
-                    <h1 class="mb-page-title">{{ $cat->name }}</h1>
+            <div class="col-span-1 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+                <x-cat-details.gallery :cat="$cat"></x-cat-details.gallery>
+            </div>
+
+            <div class="col-span-1 lg:col-start-2">
+                <div class="mb-page-subtitle">
+                    {!! $cat->story_short !!}
                 </div>
 
-                <div class="col-span-1 lg:col-start-1 lg:row-start-1 lg:row-span-2">
-                    <x-cat-details.gallery :cat="$cat"></x-cat-details.gallery>
-                </div>
-
-                <div class="col-span-1 lg:col-start-2">
-                    <div class="mb-page-subtitle">
-                        {!! $cat->story_short !!}
-                    </div>
-
-                    @if (!$cat->is_group)
-                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
-                            @foreach ($dataPieces as $dataPiece)
-                                <div class="space-y-1">
-                                    <div class="text-primary font-bold">
-                                        {{ $dataPiece['label'] }}
-                                    </div>
-                                    <div dusk="{{ $dataPiece['dusk'] }}">
-                                        {{ $dataPiece['value'] }}
-                                    </div>
+                @if (!$cat->is_group)
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-6">
+                        @foreach ($dataPieces as $dataPiece)
+                            <div class="space-y-1">
+                                <div class="text-primary font-semibold">
+                                    {{ $dataPiece['label'] }}
                                 </div>
-                            @endforeach
-                        </div>
-                    @endif
-
-                    <div class="mt-6">
-                        @if ($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
-                            <div class="italic">
-                                {{ trans('cat.temp_not_seeking_sponsors_text') }}
+                                <div dusk="{{ $dataPiece['dusk'] }}">
+                                    {{ $dataPiece['value'] }}
+                                </div>
                             </div>
-                        @else
-                            <a
-                                class="mb-btn mb-btn-primary"
-                                href="{{ route('become_cat_sponsor', $cat) }}"
-                                dusk="cat-details-become-sponsor-form-link"
-                            >
-                                <x-icon icon="arrow-right"></x-icon>
-                                <span>{{ $cat->is_group ? 'Postani boter' : 'postani moj boter' }}</span>
-                            </a>
-                        @endif
+                        @endforeach
+                    </div>
+                @endif
+
+                <div class="mt-6">
+                    @if ($cat->status === \App\Models\Cat::STATUS_TEMP_NOT_SEEKING_SPONSORS)
+                        <div class="italic">
+                            {{ trans('cat.temp_not_seeking_sponsors_text') }}
+                        </div>
+                    @else
+                        <a
+                            class="mb-btn mb-btn-primary"
+                            href="{{ route('become_cat_sponsor', $cat) }}"
+                            dusk="cat-details-become-sponsor-form-link"
+                        >
+                            <x-icon icon="arrow-right"></x-icon>
+                            <span>{{ $cat->is_group ? 'Postani boter' : 'Postani moj boter' }}</span>
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-section-masked">
+        <div class="mb-container">
+            <div class="grid grid-cols-5 border-l border-dashed border-gray-light">
+                <div class="col-span-full lg:col-span-3">
+                    <div class="mb-section">
+                        <h4
+                            class="mb-content-section-title mb-6 px-4 relative before:bg-primary before:block before:absolute before:left-0 before:-translate-x-1/2 before:w-[2px] before:h-full">
+                            {{ $cat->is_group ? 'O nas' : 'Moja zgodba' }}
+                        </h4>
+
+                        <div class="px-4">{!! $cat->story !!}</div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="mb-container">
+        <div class="grid grid-cols-5 border-l border-dashed border-gray-light">
+            <div class="col-span-full lg:col-span-3">
+                <div class="mb-section">
+                    <h4
+                        class="mb-content-section-title mb-6 px-4 relative before:bg-primary before:block before:absolute before:left-0 before:-translate-x-1/2 before:w-[2px] before:h-full">
+                        {{ $cat->is_group ? 'Naši botri' : 'Moji botri' }}
+                    </h4>
 
-        <div class="mb-content-offset-x-12 py-section">
-            <div>
-                <h4 class="mb-content-section-title mb-6">
-                    {{ $cat->is_group ? 'O nas' : 'Moja zgodba' }}
-                </h4>
+                    @if ($cat->sponsorships()->count() === 0)
+                        <div class="px-4">
+                            Muca še nima botrov.
+                        </div>
+                    @else
+                        <div class="space-y-2 px-4">
+                            @foreach ($sponsors['identified'] as $sponsor)
+                                <x-sponsor-details :sponsor="$sponsor"></x-sponsor-details>
+                            @endforeach
 
-                <div>{!! $cat->story !!}</div>
-            </div>
-
-            <div class="pt-section">
-                <h4 class="mb-content-section-title mb-6">
-                    {{ $cat->is_group ? 'Naši botri' : 'Moji botri' }}
-                </h4>
-
-                @if ($cat->sponsorships()->count() === 0)
-                    <div>
-                        Muca še nima botrov.
-                    </div>
-                @else
-                    <div class="space-y-2">
-                        @foreach ($sponsors['identified'] as $sponsor)
-                            <x-sponsor-details :sponsor="$sponsor"></x-sponsor-details>
-                        @endforeach
-
-                        @if (count($sponsors['anonymous']) > 0)
-                            <div>
-                                {{ $sponsors['anonymous_count_label'] }}
-                            </div>
-                        @endif
-                    </div>
-                @endif
+                            @if (count($sponsors['anonymous']) > 0)
+                                <div>
+                                    {{ $sponsors['anonymous_count_label'] }}
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

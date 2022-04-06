@@ -27,7 +27,7 @@ input[type='checkbox'] {
   }
 
   .mb-content-section-title {
-    @apply text-3xl text-primary font-bold;
+    @apply text-3xl text-primary font-bold xl:text-4xl;
   }
 
   /*
