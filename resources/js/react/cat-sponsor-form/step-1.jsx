@@ -1,18 +1,25 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useController } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
 import { updateAction } from './updateAction';
 
 export function Step1({ onNext }) {
   const { actions, state } = useStateMachine({ updateAction });
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, control, watch } = useForm({
     defaultValues: state.data,
   });
+  const { field: monthlyAmountControl } = useController({ name: 'monthly_amount', control });
+  const { field: durationControl } = useController({ name: 'duration', control });
 
   const onSubmit = (data) => {
     actions.updateAction(data);
     onNext();
   };
+
+  React.useEffect(() => {
+    const subscription = watch((value) => console.log(JSON.stringify(value, null, '\t')));
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -42,8 +49,80 @@ export function Step1({ onNext }) {
         </div>
       </div>
 
-      <div className="mb-form-group">TODO Znesek</div>
-      <div className="mb-form-group">TODO Trajanje (če je gift)</div>
+      <div className="mb-form-group">
+        <div className="mb-form-group-label">Mesečni znesek</div>
+        <div className="flex">
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => monthlyAmountControl.onChange(5)}
+          >
+            5€
+          </button>
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => monthlyAmountControl.onChange(10)}
+          >
+            10€
+          </button>
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => monthlyAmountControl.onChange(20)}
+          >
+            20€
+          </button>
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => monthlyAmountControl.onChange(50)}
+          >
+            50€
+          </button>
+          <input
+            type="number"
+            onChange={(ev) => monthlyAmountControl.onChange(Number(ev.target.value))}
+          />
+        </div>
+      </div>
+      <div className="mb-form-group">
+        <div className="mb-form-group-label">Trajanje (če je gift)</div>
+        <div className="flex">
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => durationControl.onChange(1)}
+          >
+            1 mesec
+          </button>
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => durationControl.onChange(3)}
+          >
+            3 mesece
+          </button>
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => durationControl.onChange(6)}
+          >
+            6 mesecev
+          </button>
+          <button
+            type="button"
+            className="border p-3 cursor-pointer"
+            onClick={() => durationControl.onChange(12)}
+          >
+            1 leto
+          </button>
+          <input
+            type="number"
+            onChange={(ev) => durationControl.onChange(Number(ev.target.value))}
+          />
+        </div>
+      </div>
 
       <div className="mb-form-group">
         <label htmlFor="wants_direct_debit" className="mb-inline-selectable-label">
