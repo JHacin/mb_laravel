@@ -1,17 +1,17 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
-import { updateAction } from './updateAction';
+import { updateFormDataAction } from './updateFormDataAction';
 
 export function Step3({ onPrev }) {
-  const { actions, state } = useStateMachine({ updateAction });
+  const { actions, state } = useStateMachine({ updateFormDataAction });
 
   const { register, handleSubmit } = useForm({
     defaultValues: state.data,
   });
 
   const onSubmit = (data) => {
-    actions.updateAction(data);
+    actions.updateFormDataAction(data);
   };
 
   return (

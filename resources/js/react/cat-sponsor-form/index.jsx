@@ -19,7 +19,7 @@ const steps = {
 };
 
 createStore({
-  data: initialValues,
+  formData: initialValues,
 });
 
 export function CatSponsorForm({ props }) {

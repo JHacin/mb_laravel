@@ -1,10 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
-import { updateAction } from './updateAction';
+import { updateFormDataAction } from './updateFormDataAction';
 
 export function Step2({ onPrev, onNext, countryList }) {
-  const { actions, state } = useStateMachine({ updateAction });
+  const { actions, state } = useStateMachine({ updateFormDataAction });
   const {
     register,
     handleSubmit,
@@ -14,7 +14,7 @@ export function Step2({ onPrev, onNext, countryList }) {
   });
 
   const onSubmit = (data) => {
-    actions.updateAction(data);
+    actions.updateFormDataAction(data);
     onNext();
   };
 
