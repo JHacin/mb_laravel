@@ -16,6 +16,7 @@ module.exports = {
       // info: '#51a3a3',
       // warning: '#dfcc74',
       // success: '#c3e991',
+      danger: '#ef4444',
       white: '#fff',
       black: '#020202',
       transparent: 'transparent',

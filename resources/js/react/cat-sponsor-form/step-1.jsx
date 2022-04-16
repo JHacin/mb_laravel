@@ -4,12 +4,13 @@ import { useStateMachine } from 'little-state-machine';
 import clsx from 'clsx';
 import { updateFormDataAction } from './updateFormDataAction';
 import { BoxOption } from '../components/box-option';
+import { Input } from '../components/input';
+import { Checkbox } from '../components/checkbox';
 
 export function Step1({ onNext }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
 
   const {
-    register,
     handleSubmit,
     control,
     watch,
@@ -71,6 +72,16 @@ export function Step1({ onNext }) {
         return undefined;
       },
     },
+  });
+
+  const { field: wantsDirectDebitControl } = useController({
+    name: 'wants_direct_debit',
+    control,
+  });
+
+  const { field: isAnonymousControl } = useController({
+    name: 'is_anonymous',
+    control,
   });
 
   const [isCustomAmount, setIsCustomAmount] = useState(false);
@@ -155,17 +166,18 @@ export function Step1({ onNext }) {
               {option.label}
             </BoxOption>
           ))}
-          <input
+          <Input
             ref={customAmountInput}
-            className="mb-input"
-            type="text"
+            isInvalid={!!errors.monthly_amount}
             placeholder="Poljubni znesek v evrih"
             onChange={(event) => {
               setIsCustomAmount(true);
               monthlyAmountControl.onChange(event);
             }}
           />
-          {errors.monthly_amount && <span>{errors.monthly_amount.message}</span>}
+          {errors.monthly_amount && (
+            <span className="mb-form-error">{errors.monthly_amount.message}</span>
+          )}
         </div>
       </div>
 
@@ -186,33 +198,34 @@ export function Step1({ onNext }) {
                 {option.label}
               </BoxOption>
             ))}
-            <input
+            <Input
               ref={customDurationInput}
-              className="mb-input"
-              type="text"
+              isInvalid={!!errors.duration}
               placeholder="Poljubno število mesecev"
               onChange={(event) => {
                 setIsCustomDuration(true);
                 durationControl.onChange(event);
               }}
             />
-            {errors.duration && <span>{errors.duration.message}</span>}
+            {errors.duration && <span className="mb-form-error">{errors.duration.message}</span>}
           </div>
         </div>
       )}
 
       <div className="mb-form-group">
-        <label htmlFor="wants_direct_debit" className="mb-inline-selectable-label">
-          <input {...register('wants_direct_debit')} type="checkbox" id="wants_direct_debit" />
-          <span>Želim, da mi pošljete informacije v zvezi z ureditvijo trajnika</span>
-        </label>
+        <Checkbox
+          label="Želim, da mi pošljete informacije v zvezi z ureditvijo trajnika"
+          id="wants_direct_debit"
+          onChange={wantsDirectDebitControl.onChange}
+        />
       </div>
 
       <div className="mb-form-group">
-        <label htmlFor="is_anonymous" className="mb-inline-selectable-label">
-          <input {...register('is_anonymous')} type="checkbox" id="is_anonymous" />
-          <span>Botrstvo naj bo anonimno</span>
-        </label>
+        <Checkbox
+          label="Botrstvo naj bo anonimno"
+          id="is_anonymous"
+          onChange={isAnonymousControl.onChange}
+        />
       </div>
 
       <button
