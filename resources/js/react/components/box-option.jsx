@@ -5,7 +5,11 @@ export function BoxOption({ onClick, isSelected, children }) {
   return (
     <button
       type="button"
-      className={clsx('border-2 p-3 cursor-pointer', isSelected && 'border-primary')}
+      className={clsx(
+        'font-semibold py-2 px-4 cursor-pointer shadow shadow-gray-light border border-gray-light select-none hover:shadow-gray-semi',
+        isSelected &&
+          'bg-secondary border-transparent shadow-transparent text-white pointer-events-none'
+      )}
       onClick={onClick}
     >
       {children}

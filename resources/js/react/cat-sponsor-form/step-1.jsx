@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useForm, useController } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
+import clsx from 'clsx';
 import { updateFormDataAction } from './updateFormDataAction';
 import { BoxOption } from '../components/box-option';
 
@@ -12,11 +13,16 @@ export function Step1({ onNext }) {
     handleSubmit,
     control,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
     getValues,
   } = useForm({
     defaultValues: state.formData,
     mode: 'all',
+  });
+
+  const { field: isGiftControl } = useController({
+    name: 'is_gift',
+    control,
   });
 
   const { field: monthlyAmountControl } = useController({
@@ -77,6 +83,11 @@ export function Step1({ onNext }) {
   const selectedAmount = watch('monthly_amount');
   const selectedDuration = watch('duration');
 
+  const isGiftOptions = [
+    { label: 'Boter bom jaz', value: false },
+    { label: 'Botrstvo želim podariti', value: true },
+  ];
+
   const monthlyAmountOptions = [
     { label: '5€', value: 5 },
     { label: '10€', value: 10 },
@@ -92,7 +103,15 @@ export function Step1({ onNext }) {
   ];
 
   const onSubmit = (data) => {
-    actions.updateFormDataAction(data);
+    const payload = {
+      ...data,
+      monthly_amount: Number(data.monthly_amount),
+      duration: Number(data.duration),
+    };
+
+    console.log('Payload: ', payload);
+
+    actions.updateFormDataAction(payload);
     onNext();
   };
 
@@ -106,26 +125,17 @@ export function Step1({ onNext }) {
       <div className="mb-form-group">
         <div className="mb-form-group-label">Komu je botrstvo namenjeno?</div>
         <div className="flex space-x-4">
-          <label htmlFor="is_gift_no" className="mb-inline-selectable-label">
-            <input
-              {...register('is_gift')}
-              type="radio"
-              name="is_gift"
-              value="no"
-              id="is_gift_no"
-            />
-            <span>Boter bom jaz</span>
-          </label>
-          <label htmlFor="is_gift_yes" className="mb-inline-selectable-label">
-            <input
-              {...register('is_gift')}
-              type="radio"
-              name="is_gift"
-              value="yes"
-              id="is_gift_yes"
-            />
-            <span>Botrstvo želim podariti</span>
-          </label>
+          {isGiftOptions.map((option) => (
+            <BoxOption
+              key={option.value}
+              onClick={() => {
+                isGiftControl.onChange(option.value);
+              }}
+              isSelected={isGift === option.value}
+            >
+              {option.label}
+            </BoxOption>
+          ))}
         </div>
       </div>
 
@@ -159,7 +169,7 @@ export function Step1({ onNext }) {
         </div>
       </div>
 
-      {isGift === 'yes' && (
+      {isGift && (
         <div className="mb-form-group">
           <div className="mb-form-group-label">Trajanje</div>
           <div className="flex space-x-2">
@@ -205,7 +215,10 @@ export function Step1({ onNext }) {
         </label>
       </div>
 
-      <button type="submit" className="mb-btn mb-btn-primary">
+      <button
+        type="submit"
+        className={clsx('mb-btn', isValid && 'mb-btn-primary', !isValid && 'mb-btn-disabled')}
+      >
         Naprej
       </button>
     </form>

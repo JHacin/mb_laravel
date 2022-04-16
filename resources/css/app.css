@@ -52,6 +52,10 @@ input[type='checkbox'] {
     @apply bg-transparent border-black text-black hover:bg-gray-extralight;
   }
 
+  .mb-btn-disabled {
+    @apply bg-gray-light text-gray-semi pointer-events-none;
+  }
+
   /*
    * FORM
    */
