@@ -7,7 +7,7 @@ export function Step3({ onPrev }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
 
   const { register, handleSubmit } = useForm({
-    defaultValues: state.data,
+    defaultValues: state.formData,
   });
 
   const onSubmit = (data) => {

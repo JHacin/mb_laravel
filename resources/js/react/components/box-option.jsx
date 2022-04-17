@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-export function BoxOption({ onClick, isSelected, children }) {
+export function BoxOption({ onClick, isSelected, label }) {
   return (
     <button
       type="button"
@@ -12,7 +12,7 @@ export function BoxOption({ onClick, isSelected, children }) {
       )}
       onClick={onClick}
     >
-      {children}
+      {label}
     </button>
   );
 }

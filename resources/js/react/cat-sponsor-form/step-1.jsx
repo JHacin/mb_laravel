@@ -6,6 +6,9 @@ import { updateFormDataAction } from './updateFormDataAction';
 import { BoxOption } from '../components/box-option';
 import { Input } from '../components/input';
 import { Checkbox } from '../components/checkbox';
+import { errorMessages, isNumber } from './validation';
+import { Error } from '../components/error';
+import { FORM_MODE } from './constants';
 
 export function Step1({ onNext }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
@@ -18,7 +21,7 @@ export function Step1({ onNext }) {
     getValues,
   } = useForm({
     defaultValues: state.formData,
-    mode: 'all',
+    mode: FORM_MODE,
   });
 
   const { field: isGiftControl } = useController({
@@ -32,11 +35,11 @@ export function Step1({ onNext }) {
     rules: {
       validate: (value) => {
         if (!value) {
-          return 'Polje je obvezno.';
+          return errorMessages.required;
         }
 
-        if (!/^\d+$/.test(value)) {
-          return 'Vrednost mora biti polna številka (npr. 5).';
+        if (!isNumber(value)) {
+          return errorMessages.mustBeFullNumber;
         }
 
         if (Number(value) < 5) {
@@ -58,10 +61,10 @@ export function Step1({ onNext }) {
         }
 
         if (!value) {
-          return 'Polje je obvezno.';
+          return errorMessages.required;
         }
 
-        if (!/^\d+$/.test(value)) {
+        if (!isNumber(value)) {
           return 'Vrednost mora biti polna številka (npr. 5).';
         }
 
@@ -89,10 +92,6 @@ export function Step1({ onNext }) {
 
   const customAmountInput = useRef(null);
   const customDurationInput = useRef(null);
-
-  const isGift = watch('is_gift');
-  const selectedAmount = watch('monthly_amount');
-  const selectedDuration = watch('duration');
 
   const isGiftOptions = [
     { label: 'Boter bom jaz', value: false },
@@ -139,13 +138,12 @@ export function Step1({ onNext }) {
           {isGiftOptions.map((option) => (
             <BoxOption
               key={option.value}
+              label={option.label}
               onClick={() => {
                 isGiftControl.onChange(option.value);
               }}
-              isSelected={isGift === option.value}
-            >
-              {option.label}
-            </BoxOption>
+              isSelected={isGiftControl.value === option.value}
+            />
           ))}
         </div>
       </div>
@@ -156,15 +154,14 @@ export function Step1({ onNext }) {
           {monthlyAmountOptions.map((option) => (
             <BoxOption
               key={option.value}
+              label={option.label}
               onClick={() => {
                 setIsCustomAmount(false);
                 monthlyAmountControl.onChange(option.value);
                 customAmountInput.current.value = '';
               }}
-              isSelected={!isCustomAmount && option.value === selectedAmount}
-            >
-              {option.label}
-            </BoxOption>
+              isSelected={!isCustomAmount && option.value === monthlyAmountControl.value}
+            />
           ))}
           <Input
             ref={customAmountInput}
@@ -175,28 +172,25 @@ export function Step1({ onNext }) {
               monthlyAmountControl.onChange(event);
             }}
           />
-          {errors.monthly_amount && (
-            <span className="mb-form-error">{errors.monthly_amount.message}</span>
-          )}
+          {errors.monthly_amount && <Error>{errors.monthly_amount.message}</Error>}
         </div>
       </div>
 
-      {isGift && (
+      {isGiftControl.value === true && (
         <div className="mb-form-group">
           <div className="mb-form-group-label">Trajanje</div>
           <div className="flex space-x-2">
             {durationOptions.map((option) => (
               <BoxOption
                 key={option.value}
+                label={option.label}
                 onClick={() => {
                   setIsCustomDuration(false);
                   durationControl.onChange(option.value);
                   customDurationInput.current.value = '';
                 }}
-                isSelected={!isCustomDuration && option.value === selectedDuration}
-              >
-                {option.label}
-              </BoxOption>
+                isSelected={!isCustomDuration && option.value === durationControl.value}
+              />
             ))}
             <Input
               ref={customDurationInput}
@@ -207,7 +201,7 @@ export function Step1({ onNext }) {
                 durationControl.onChange(event);
               }}
             />
-            {errors.duration && <span className="mb-form-error">{errors.duration.message}</span>}
+            {errors.duration && <Error>{errors.duration.message}</Error>}
           </div>
         </div>
       )}
