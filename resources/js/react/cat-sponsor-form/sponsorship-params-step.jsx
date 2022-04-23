@@ -11,6 +11,7 @@ import { Checkbox } from '../components/checkbox';
 import { Error } from '../components/error';
 import { FORM_MODE } from './constants';
 import { durationOptions, isGiftOptions, monthlyAmountOptions } from './model';
+import { useGlobalSync } from './hooks/use-global-sync'
 
 export function SponsorshipParamsStep({ onNext }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
@@ -55,11 +56,7 @@ export function SponsorshipParamsStep({ onNext }) {
     onNext();
   };
 
-  React.useEffect(() => {
-    // eslint-disable-next-line no-console
-    const subscription = watch((value) => console.log(JSON.stringify(value, null, '\t')));
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  useGlobalSync({ watch })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

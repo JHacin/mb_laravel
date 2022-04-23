@@ -10,6 +10,7 @@ import { FORM_MODE } from './constants';
 import { BoxOption } from '../components/box-option';
 import { Select } from '../components/select';
 import { genderOptions } from './model';
+import { useGlobalSync } from "./hooks/use-global-sync";
 
 export function GifteeDetailsStep({ onPrev, onNext, countryList }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
@@ -56,11 +57,7 @@ export function GifteeDetailsStep({ onPrev, onNext, countryList }) {
     onNext();
   };
 
-  React.useEffect(() => {
-    // eslint-disable-next-line no-console
-    const subscription = watch((value) => console.log(JSON.stringify(value, null, '\t')));
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  useGlobalSync({ watch })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

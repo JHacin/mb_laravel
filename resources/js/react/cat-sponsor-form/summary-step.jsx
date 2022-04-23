@@ -2,17 +2,20 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
 import { updateFormDataAction } from './updateFormDataAction';
+import { useGlobalSync } from "./hooks/use-global-sync";
 
 export function SummaryStep({ onPrev }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: state.formData,
   });
 
   const onSubmit = (data) => {
     actions.updateFormDataAction(data);
   };
+
+  useGlobalSync({ watch })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
