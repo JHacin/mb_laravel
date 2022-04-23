@@ -21,3 +21,27 @@ export const initialValues = {
   giftee_city: '',
   giftee_country: 'SI',
 };
+
+export const isGiftOptions = [
+  { label: 'Boter bom jaz', value: false },
+  { label: 'Botrstvo želim podariti', value: true },
+];
+
+export const monthlyAmountOptions = [
+  { label: '5€', value: 5 },
+  { label: '10€', value: 10 },
+  { label: '20€', value: 20 },
+  { label: '50€', value: 50 },
+];
+
+export const durationOptions = [
+  { label: '1 mesec', value: 1 },
+  { label: '3 meseci', value: 3 },
+  { label: '6 mesecev', value: 6 },
+  { label: '12 mesecev', value: 12 },
+];
+
+export const genderOptions = [
+  { label: 'Ženska', value: 'female' },
+  { label: 'Moški', value: 'male' },
+];

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
 import { updateFormDataAction } from './updateFormDataAction';
 
-export function Step3({ onPrev }) {
+export function SummaryStep({ onPrev }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
 
   const { register, handleSubmit } = useForm({

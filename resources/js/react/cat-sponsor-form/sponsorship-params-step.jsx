@@ -2,90 +2,47 @@ import React, { useState, useRef } from 'react';
 import { useForm, useController } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
 import clsx from 'clsx';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { updateFormDataAction } from './updateFormDataAction';
 import { BoxOption } from '../components/box-option';
 import { Input } from '../components/input';
 import { Checkbox } from '../components/checkbox';
-import { errorMessages, isNumber } from './validation';
 import { Error } from '../components/error';
 import { FORM_MODE } from './constants';
+import { durationOptions, isGiftOptions, monthlyAmountOptions } from './model';
 
-export function Step1({ onNext }) {
+export function SponsorshipParamsStep({ onNext }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
+
+  const validationSchema = yup.object({
+    is_gift: yup.boolean(),
+    monthly_amount: yup.number().integer().min(5).required(),
+    duration: yup.number().when('is_gift', {
+      is: true,
+      then: (schema) => schema.integer().positive().required(),
+      otherwise: (schema) => schema.strip(),
+    }),
+    wants_direct_debit: yup.boolean(),
+    is_anonymous: yup.boolean(),
+  });
 
   const {
     handleSubmit,
     control,
     watch,
     formState: { errors, isValid },
-    getValues,
   } = useForm({
     defaultValues: state.formData,
     mode: FORM_MODE,
+    resolver: yupResolver(validationSchema),
   });
 
-  const { field: isGiftControl } = useController({
-    name: 'is_gift',
-    control,
-  });
-
-  const { field: monthlyAmountControl } = useController({
-    name: 'monthly_amount',
-    control,
-    rules: {
-      validate: (value) => {
-        if (!value) {
-          return errorMessages.required;
-        }
-
-        if (!isNumber(value)) {
-          return errorMessages.mustBeFullNumber;
-        }
-
-        if (Number(value) < 5) {
-          return 'Znesek ne sme biti manjši od 5€.';
-        }
-
-        return undefined;
-      },
-    },
-  });
-
-  const { field: durationControl } = useController({
-    name: 'duration',
-    control,
-    rules: {
-      validate: (value) => {
-        if (getValues('is_gift') === 'no') {
-          return undefined;
-        }
-
-        if (!value) {
-          return errorMessages.required;
-        }
-
-        if (!isNumber(value)) {
-          return 'Vrednost mora biti polna številka (npr. 5).';
-        }
-
-        if (Number(value) < 1) {
-          return 'Vrednost mora biti višja od 1.';
-        }
-
-        return undefined;
-      },
-    },
-  });
-
-  const { field: wantsDirectDebitControl } = useController({
-    name: 'wants_direct_debit',
-    control,
-  });
-
-  const { field: isAnonymousControl } = useController({
-    name: 'is_anonymous',
-    control,
-  });
+  const { field: isGiftControl } = useController({ name: 'is_gift', control });
+  const { field: monthlyAmountControl } = useController({ name: 'monthly_amount', control });
+  const { field: durationControl } = useController({ name: 'duration', control });
+  const { field: wantsDirectDebitControl } = useController({ name: 'wants_direct_debit', control });
+  const { field: isAnonymousControl } = useController({ name: 'is_anonymous', control });
 
   const [isCustomAmount, setIsCustomAmount] = useState(false);
   const [isCustomDuration, setIsCustomDuration] = useState(false);
@@ -93,39 +50,13 @@ export function Step1({ onNext }) {
   const customAmountInput = useRef(null);
   const customDurationInput = useRef(null);
 
-  const isGiftOptions = [
-    { label: 'Boter bom jaz', value: false },
-    { label: 'Botrstvo želim podariti', value: true },
-  ];
-
-  const monthlyAmountOptions = [
-    { label: '5€', value: 5 },
-    { label: '10€', value: 10 },
-    { label: '20€', value: 20 },
-    { label: '50€', value: 50 },
-  ];
-
-  const durationOptions = [
-    { label: '1 mesec', value: 1 },
-    { label: '3 meseci', value: 3 },
-    { label: '6 mesecev', value: 6 },
-    { label: '12 mesecev', value: 12 },
-  ];
-
   const onSubmit = (data) => {
-    const payload = {
-      ...data,
-      monthly_amount: Number(data.monthly_amount),
-      duration: Number(data.duration),
-    };
-
-    console.log('Payload: ', payload);
-
-    actions.updateFormDataAction(payload);
+    actions.updateFormDataAction(data);
     onNext();
   };
 
   React.useEffect(() => {
+    // eslint-disable-next-line no-console
     const subscription = watch((value) => console.log(JSON.stringify(value, null, '\t')));
     return () => subscription.unsubscribe();
   }, [watch]);

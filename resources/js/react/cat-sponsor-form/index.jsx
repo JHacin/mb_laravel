@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { createStore, StateMachineProvider } from 'little-state-machine';
-import { Step1 } from './step-1';
-import { Step3 } from './step-3';
-import { Step2 } from './step-2';
+import { SponsorshipParamsStep } from './sponsorship-params-step';
+import { SummaryStep } from './summary-step';
+import { PayerDetailsStep } from './payer-details-step';
 import { initialValues } from './model';
 
 const steps = {
@@ -71,9 +71,9 @@ export function CatSponsorForm({ props }) {
         </div>
 
         <div className="p-4">
-          {activeStep === 1 && <Step1 {...sharedStepProps} />}
-          {activeStep === 2 && <Step2 {...sharedStepProps} countryList={countryList} />}
-          {activeStep === 3 && <Step3 {...sharedStepProps} />}
+          {activeStep === 1 && <SponsorshipParamsStep {...sharedStepProps} />}
+          {activeStep === 2 && <PayerDetailsStep {...sharedStepProps} countryList={countryList} />}
+          {activeStep === 3 && <SummaryStep {...sharedStepProps} />}
         </div>
       </StateMachineProvider>
     </div>
