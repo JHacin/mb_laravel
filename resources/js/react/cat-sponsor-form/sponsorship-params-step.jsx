@@ -1,10 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useForm, useController } from 'react-hook-form';
-import { useStateMachine } from 'little-state-machine';
 import clsx from 'clsx';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { updateFormDataAction } from './updateFormDataAction';
 import { BoxOption } from '../components/box-option';
 import { Input } from '../components/input';
 import { Checkbox } from '../components/checkbox';
@@ -12,9 +10,10 @@ import { Error } from '../components/error';
 import { FORM_MODE } from './constants';
 import { durationOptions, isGiftOptions, monthlyAmountOptions } from './model';
 import { useGlobalSync } from './hooks/use-global-sync';
+import { useGlobalState } from './hooks/use-global-state';
 
 export function SponsorshipParamsStep({ onNext }) {
-  const { actions, state } = useStateMachine({ updateFormDataAction });
+  const { actions, state } = useGlobalState();
 
   const validationSchema = yup.object({
     is_gift: yup.boolean(),

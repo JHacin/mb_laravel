@@ -4,15 +4,19 @@ function handleMobileNavToggling() {
   const nav = document.querySelector('[data-mobile-nav]');
   const body = document.querySelector('body');
 
-  openBtn.addEventListener('click', () => {
-    nav.classList.remove('hidden');
-    body.classList.add('overflow-hidden');
-  });
+  if (openBtn) {
+    openBtn.addEventListener('click', () => {
+      nav.classList.remove('hidden');
+      body.classList.add('overflow-hidden');
+    });
+  }
 
-  closeBtn.addEventListener('click', () => {
-    nav.classList.add('hidden');
-    body.classList.remove('overflow-hidden');
-  });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      nav.classList.add('hidden');
+      body.classList.remove('overflow-hidden');
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

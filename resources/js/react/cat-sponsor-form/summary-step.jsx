@@ -1,15 +1,14 @@
 import React from 'react';
 import { useController, useForm } from 'react-hook-form';
-import { useStateMachine } from 'little-state-machine';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
-import { updateFormDataAction } from './updateFormDataAction';
 import { useGlobalSync } from './hooks/use-global-sync';
 import { Checkbox } from '../components/checkbox';
 import { FORM_MODE } from './constants';
+import { useGlobalState } from './hooks/use-global-state';
 
 export function SummaryStep({ onPrev }) {
-  const { actions, state } = useStateMachine({ updateFormDataAction });
+  const { actions, state } = useGlobalState();
 
   const validationSchema = yup.object({
     is_agreed_to_terms: yup.boolean(),
