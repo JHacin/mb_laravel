@@ -47,9 +47,9 @@
 <body>
     @stack('body-start-scripts')
 
-    <x-header></x-header>
+    <x-header :shouldHideNav="$isFormLayout ?? false"></x-header>
     <main>@yield('content')</main>
-    <x-footer></x-footer>
+    <x-footer :shouldHideNav="$isFormLayout ?? false"></x-footer>
 
     <script src="{{ mix('js/app.js') }}"></script>
 
