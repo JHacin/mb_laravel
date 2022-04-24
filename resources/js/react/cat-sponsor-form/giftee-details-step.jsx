@@ -10,7 +10,7 @@ import { FORM_MODE } from './constants';
 import { BoxOption } from '../components/box-option';
 import { Select } from '../components/select';
 import { genderOptions } from './model';
-import { useGlobalSync } from "./hooks/use-global-sync";
+import { useGlobalSync } from './hooks/use-global-sync';
 
 export function GifteeDetailsStep({ onPrev, onNext, countryList }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
@@ -32,7 +32,6 @@ export function GifteeDetailsStep({ onPrev, onNext, countryList }) {
     watch,
     control,
   } = useForm({
-    defaultValues: state.formData,
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
@@ -43,21 +42,53 @@ export function GifteeDetailsStep({ onPrev, onNext, countryList }) {
     value: countryCode,
   }));
 
-  const { field: gifteeEmailControl } = useController({ name: 'giftee_email', control });
-  const { field: gifteeFirstNameControl } = useController({ name: 'giftee_first_name', control });
-  const { field: gifteeLastNameControl } = useController({ name: 'giftee_last_name', control });
-  const { field: gifteeGenderControl } = useController({ name: 'giftee_gender', control });
-  const { field: gifteeAddressControl } = useController({ name: 'giftee_address', control });
-  const { field: gifteeZipcodeControl } = useController({ name: 'giftee_zip_code', control });
-  const { field: gifteeCityControl } = useController({ name: 'giftee_city', control });
-  const { field: gifteeCountryControl } = useController({ name: 'giftee_country', control });
+  const { field: gifteeEmailControl } = useController({
+    name: 'giftee_email',
+    control,
+    defaultValue: state.formData.giftee_email,
+  });
+  const { field: gifteeFirstNameControl } = useController({
+    name: 'giftee_first_name',
+    control,
+    defaultValue: state.formData.giftee_first_name,
+  });
+  const { field: gifteeLastNameControl } = useController({
+    name: 'giftee_last_name',
+    control,
+    defaultValue: state.formData.giftee_last_name,
+  });
+  const { field: gifteeGenderControl } = useController({
+    name: 'giftee_gender',
+    control,
+    defaultValue: state.formData.giftee_gender,
+  });
+  const { field: gifteeAddressControl } = useController({
+    name: 'giftee_address',
+    control,
+    defaultValue: state.formData.giftee_address,
+  });
+  const { field: gifteeZipcodeControl } = useController({
+    name: 'giftee_zip_code',
+    control,
+    defaultValue: state.formData.giftee_zip_code,
+  });
+  const { field: gifteeCityControl } = useController({
+    name: 'giftee_city',
+    control,
+    defaultValue: state.formData.giftee_city,
+  });
+  const { field: gifteeCountryControl } = useController({
+    name: 'giftee_country',
+    control,
+    defaultValue: state.formData.giftee_country,
+  });
 
   const onSubmit = (data) => {
     actions.updateFormDataAction(data);
     onNext();
   };
 
-  useGlobalSync({ watch })
+  useGlobalSync({ watch });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

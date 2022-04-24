@@ -10,7 +10,7 @@ import { FORM_MODE } from './constants';
 import { BoxOption } from '../components/box-option';
 import { Select } from '../components/select';
 import { genderOptions } from './model';
-import { useGlobalSync } from "./hooks/use-global-sync";
+import { useGlobalSync } from './hooks/use-global-sync';
 
 export function PayerDetailsStep({ onPrev, onNext, countryList }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
@@ -32,7 +32,6 @@ export function PayerDetailsStep({ onPrev, onNext, countryList }) {
     watch,
     control,
   } = useForm({
-    defaultValues: state.formData,
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
@@ -43,21 +42,53 @@ export function PayerDetailsStep({ onPrev, onNext, countryList }) {
     value: countryCode,
   }));
 
-  const { field: payerEmailControl } = useController({ name: 'payer_email', control });
-  const { field: payerFirstNameControl } = useController({ name: 'payer_first_name', control });
-  const { field: payerLastNameControl } = useController({ name: 'payer_last_name', control });
-  const { field: payerGenderControl } = useController({ name: 'payer_gender', control });
-  const { field: payerAddressControl } = useController({ name: 'payer_address', control });
-  const { field: payerZipcodeControl } = useController({ name: 'payer_zip_code', control });
-  const { field: payerCityControl } = useController({ name: 'payer_city', control });
-  const { field: payerCountryControl } = useController({ name: 'payer_country', control });
+  const { field: payerEmailControl } = useController({
+    name: 'payer_email',
+    control,
+    defaultValue: state.formData.payer_email,
+  });
+  const { field: payerFirstNameControl } = useController({
+    name: 'payer_first_name',
+    control,
+    defaultValue: state.formData.payer_first_name,
+  });
+  const { field: payerLastNameControl } = useController({
+    name: 'payer_last_name',
+    control,
+    defaultValue: state.formData.payer_last_name,
+  });
+  const { field: payerGenderControl } = useController({
+    name: 'payer_gender',
+    control,
+    defaultValue: state.formData.payer_gender,
+  });
+  const { field: payerAddressControl } = useController({
+    name: 'payer_address',
+    control,
+    defaultValue: state.formData.payer_address,
+  });
+  const { field: payerZipcodeControl } = useController({
+    name: 'payer_zip_code',
+    control,
+    defaultValue: state.formData.payer_zip_code,
+  });
+  const { field: payerCityControl } = useController({
+    name: 'payer_city',
+    control,
+    defaultValue: state.formData.payer_city,
+  });
+  const { field: payerCountryControl } = useController({
+    name: 'payer_country',
+    control,
+    defaultValue: state.formData.payer_country,
+  });
 
   const onSubmit = (data) => {
     actions.updateFormDataAction(data);
     onNext();
   };
 
-  useGlobalSync({ watch })
+  useGlobalSync({ watch });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

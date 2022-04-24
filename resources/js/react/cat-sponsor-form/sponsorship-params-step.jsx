@@ -11,7 +11,7 @@ import { Checkbox } from '../components/checkbox';
 import { Error } from '../components/error';
 import { FORM_MODE } from './constants';
 import { durationOptions, isGiftOptions, monthlyAmountOptions } from './model';
-import { useGlobalSync } from './hooks/use-global-sync'
+import { useGlobalSync } from './hooks/use-global-sync';
 
 export function SponsorshipParamsStep({ onNext }) {
   const { actions, state } = useStateMachine({ updateFormDataAction });
@@ -34,16 +34,35 @@ export function SponsorshipParamsStep({ onNext }) {
     watch,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: state.formData,
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
 
-  const { field: isGiftControl } = useController({ name: 'is_gift', control });
-  const { field: monthlyAmountControl } = useController({ name: 'monthly_amount', control });
-  const { field: durationControl } = useController({ name: 'duration', control });
-  const { field: wantsDirectDebitControl } = useController({ name: 'wants_direct_debit', control });
-  const { field: isAnonymousControl } = useController({ name: 'is_anonymous', control });
+  const { field: isGiftControl } = useController({
+    name: 'is_gift',
+    control,
+    defaultValue: state.formData.is_gift,
+  });
+  const { field: monthlyAmountControl } = useController({
+    name: 'monthly_amount',
+    control,
+    defaultValue: state.formData.monthly_amount,
+  });
+  const { field: durationControl } = useController({
+    name: 'duration',
+    control,
+    defaultValue: state.formData.duration,
+  });
+  const { field: wantsDirectDebitControl } = useController({
+    name: 'wants_direct_debit',
+    control,
+    defaultValue: state.formData.wants_direct_debit,
+  });
+  const { field: isAnonymousControl } = useController({
+    name: 'is_anonymous',
+    control,
+    defaultValue: state.formData.is_anonymous,
+  });
 
   const [isCustomAmount, setIsCustomAmount] = useState(false);
   const [isCustomDuration, setIsCustomDuration] = useState(false);
@@ -56,7 +75,7 @@ export function SponsorshipParamsStep({ onNext }) {
     onNext();
   };
 
-  useGlobalSync({ watch })
+  useGlobalSync({ watch });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
