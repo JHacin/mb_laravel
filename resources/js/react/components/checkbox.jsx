@@ -1,10 +1,12 @@
 import React from 'react';
 
-export function Checkbox({ id, onChange, label }) {
+function CheckboxComponent({ id, onChange, label, value }, ref) {
   return (
     <label htmlFor={id} className="mb-inline-selectable-label">
-      <input type="checkbox" id={id} onChange={onChange} />
+      <input ref={ref} type="checkbox" id={id} onChange={onChange} checked={value} />
       <span>{label}</span>
     </label>
   );
 }
+
+export const Checkbox = React.forwardRef(CheckboxComponent);

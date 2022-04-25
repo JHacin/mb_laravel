@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
-function InputComponent({ isInvalid = false, placeholder = '', onChange }, ref) {
+function InputComponent({ isInvalid = false, placeholder = '', onChange, value }, ref) {
   return (
     <input
       ref={ref}
@@ -9,6 +9,7 @@ function InputComponent({ isInvalid = false, placeholder = '', onChange }, ref) 
       className={clsx('mb-input', isInvalid && 'mb-input--invalid')}
       placeholder={placeholder}
       onChange={onChange}
+      value={value}
     />
   );
 }

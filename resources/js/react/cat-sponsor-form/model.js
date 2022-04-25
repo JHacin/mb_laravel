@@ -58,7 +58,7 @@ export const isGiftOptions = [
   { label: 'Botrstvo želim podariti', value: true },
 ];
 
-export const monthlyAmountOptions = [
+export const amountOptions = [
   { label: '5€', value: 5 },
   { label: '10€', value: 10 },
   { label: '20€', value: 20 },

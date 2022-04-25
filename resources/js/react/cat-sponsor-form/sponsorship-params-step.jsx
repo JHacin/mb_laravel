@@ -8,7 +8,7 @@ import { Input } from '../components/input';
 import { Checkbox } from '../components/checkbox';
 import { Error } from '../components/error';
 import { FORM_MODE } from './constants';
-import { durationOptions, isGiftOptions, monthlyAmountOptions } from './model';
+import { durationOptions, isGiftOptions, amountOptions } from './model';
 import { useGlobalSync } from './hooks/use-global-sync';
 import { useGlobalState } from './hooks/use-global-state';
 
@@ -42,7 +42,7 @@ export function SponsorshipParamsStep({ onNext }) {
     control,
     defaultValue: state.formData.is_gift,
   });
-  const { field: monthlyAmountControl } = useController({
+  const { field: amountControl } = useController({
     name: 'monthly_amount',
     control,
     defaultValue: state.formData.monthly_amount,
@@ -63,8 +63,11 @@ export function SponsorshipParamsStep({ onNext }) {
     defaultValue: state.formData.is_anonymous,
   });
 
-  const [isCustomAmount, setIsCustomAmount] = useState(false);
-  const [isCustomDuration, setIsCustomDuration] = useState(false);
+  const defaultAmountIsCustom = !amountOptions.some((o) => o.value === amountControl.value);
+  const [isCustomAmount, setIsCustomAmount] = useState(defaultAmountIsCustom);
+
+  const defaultDurationIsCustom = !durationOptions.some((o) => o.value === durationControl.value);
+  const [isCustomDuration, setIsCustomDuration] = useState(defaultDurationIsCustom);
 
   const customAmountInput = useRef(null);
   const customDurationInput = useRef(null);
@@ -97,25 +100,25 @@ export function SponsorshipParamsStep({ onNext }) {
       <div className="mb-form-group">
         <div className="mb-form-group-label">Mesečni znesek</div>
         <div className="flex space-x-4">
-          {monthlyAmountOptions.map((option) => (
+          {amountOptions.map((option) => (
             <BoxOption
               key={option.value}
               label={option.label}
               onClick={() => {
                 setIsCustomAmount(false);
-                monthlyAmountControl.onChange(option.value);
-                customAmountInput.current.value = '';
+                amountControl.onChange(option.value);
               }}
-              isSelected={!isCustomAmount && option.value === monthlyAmountControl.value}
+              isSelected={!isCustomAmount && option.value === amountControl.value}
             />
           ))}
           <Input
             ref={customAmountInput}
+            value={isCustomAmount ? amountControl.value : ''}
             isInvalid={!!errors.monthly_amount}
             placeholder="Poljubni znesek v evrih"
             onChange={(event) => {
               setIsCustomAmount(true);
-              monthlyAmountControl.onChange(event);
+              amountControl.onChange(event);
             }}
           />
           {errors.monthly_amount && <Error>{errors.monthly_amount.message}</Error>}
@@ -133,12 +136,12 @@ export function SponsorshipParamsStep({ onNext }) {
                 onClick={() => {
                   setIsCustomDuration(false);
                   durationControl.onChange(option.value);
-                  customDurationInput.current.value = '';
                 }}
                 isSelected={!isCustomDuration && option.value === durationControl.value}
               />
             ))}
             <Input
+              value={isCustomDuration ? durationControl.value : ''}
               ref={customDurationInput}
               isInvalid={!!errors.duration}
               placeholder="Poljubno število mesecev"
@@ -157,6 +160,8 @@ export function SponsorshipParamsStep({ onNext }) {
           label="Želim, da mi pošljete informacije v zvezi z ureditvijo trajnika"
           id="wants_direct_debit"
           onChange={wantsDirectDebitControl.onChange}
+          value={wantsDirectDebitControl.value}
+          ref={wantsDirectDebitControl.ref}
         />
       </div>
 
@@ -165,6 +170,8 @@ export function SponsorshipParamsStep({ onNext }) {
           label="Botrstvo naj bo anonimno"
           id="is_anonymous"
           onChange={isAnonymousControl.onChange}
+          value={isAnonymousControl.value}
+          ref={isAnonymousControl.ref}
         />
       </div>
 
