@@ -76,11 +76,11 @@ input[type='checkbox'] {
   }
 
   .mb-form-group {
-    @apply mb-4;
+    @apply mb-5;
   }
 
   .mb-form-group-label {
-    @apply font-semibold;
+    @apply font-semibold mb-1;
   }
 
   .mb-form-error {
