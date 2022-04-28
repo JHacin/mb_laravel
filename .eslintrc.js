@@ -8,5 +8,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/prop-types': 'off',
+    'react/button-has-type': 'off',
   },
 };

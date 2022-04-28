@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { useForm, useController } from 'react-hook-form';
-import clsx from 'clsx';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { BoxOption } from '../components/box-option';
@@ -11,6 +10,7 @@ import { FORM_MODE } from './constants';
 import { durationOptions, isGiftOptions, amountOptions } from './model';
 import { useGlobalSync } from './hooks/use-global-sync';
 import { useGlobalState } from './hooks/use-global-state';
+import { Button } from '../components/button';
 
 export function SponsorshipParamsStep({ onNext }) {
   const { actions, state } = useGlobalState();
@@ -175,12 +175,9 @@ export function SponsorshipParamsStep({ onNext }) {
         />
       </div>
 
-      <button
-        type="submit"
-        className={clsx('mb-btn', isValid && 'mb-btn-primary', !isValid && 'mb-btn-disabled')}
-      >
+      <Button type="submit" color={isValid ? 'primary' : 'disabled'}>
         Naprej
-      </button>
+      </Button>
     </form>
   );
 }

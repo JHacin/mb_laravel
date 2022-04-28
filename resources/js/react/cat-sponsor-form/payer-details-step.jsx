@@ -7,6 +7,7 @@ import { useGlobalSync } from './hooks/use-global-sync';
 import { useGlobalState } from './hooks/use-global-state';
 import { createPersonDataValidationRules } from './utils';
 import { PersonDataFields } from './components/person-data-fields';
+import { Button } from '../components/button';
 
 export function PayerDetailsStep({ onPrev, onNext, countryList }) {
   const { actions } = useGlobalState();
@@ -30,13 +31,13 @@ export function PayerDetailsStep({ onPrev, onNext, countryList }) {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <PersonDataFields prefix="payer" countryList={countryList} />
 
-        <button type="button" className="mb-btn mb-btn-secondary" onClick={onPrev}>
+        <Button type="button" color="secondary" onClick={onPrev}>
           Nazaj
-        </button>
+        </Button>
 
-        <button type="submit" className="mb-btn mb-btn-primary">
+        <Button type="submit" color="primary">
           Naprej
-        </button>
+        </Button>
       </form>
     </FormProvider>
   );

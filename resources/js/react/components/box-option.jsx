@@ -9,7 +9,8 @@ export function BoxOption({ onClick, isSelected, label }) {
         'font-semibold py-2 px-4 border select-none transition-all',
         !isSelected &&
           'cursor-pointer border-gray-light shadow shadow-gray-light hover:shadow-gray-semi',
-        isSelected && 'bg-secondary border-transparent text-white pointer-events-none'
+        isSelected &&
+          'bg-secondary border-transparent text-white cursor-default pointer-events-none'
       )}
       onClick={onClick}
     >

@@ -6,6 +6,7 @@ import { useGlobalSync } from './hooks/use-global-sync';
 import { Checkbox } from '../components/checkbox';
 import { FORM_MODE } from './constants';
 import { useGlobalState } from './hooks/use-global-state';
+import { Button } from '../components/button';
 
 export function SummaryStep({ onPrev }) {
   const { actions, state } = useGlobalState();
@@ -41,13 +42,13 @@ export function SummaryStep({ onPrev }) {
         />
       </div>
 
-      <button type="button" className="mb-btn mb-btn-secondary" onClick={onPrev}>
+      <Button type="button" color="secondary" onClick={onPrev}>
         Nazaj
-      </button>
+      </Button>
 
-      <button type="submit" className="mb-btn mb-btn-primary">
+      <Button type="submit" color="primary">
         Potrdi
-      </button>
+      </Button>
     </form>
   );
 }

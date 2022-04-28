@@ -108,7 +108,7 @@ export function CatSponsorForm({ props }) {
 
       <div className="p-5">
         {stepComponents.map(({ step, Component }) => (
-          <Transition in={activeStep === step} timeout={transitionDuration}>
+          <Transition in={activeStep === step} timeout={transitionDuration} key={step}>
             {(transitionState) => (
               <div
                 style={{
