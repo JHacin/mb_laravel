@@ -27,6 +27,8 @@ export function PersonDataFields({ prefix, countryList }) {
     COUNTRY: `${prefix}_country`,
   };
 
+  const autoCompletePrefix = prefix === 'giftee' ? 'new-' : '';
+
   const emailControl = useController({
     name: Field.EMAIL,
     control,
@@ -72,17 +74,23 @@ export function PersonDataFields({ prefix, countryList }) {
     <>
       <div className="mb-form-group">
         <div className="mb-form-group-label">Email</div>
-        <SimpleTextField control={emailControl} />
+        <SimpleTextField control={emailControl} autoComplete={`${autoCompletePrefix}email`} />
       </div>
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Ime</div>
-        <SimpleTextField control={firstNameControl} />
+        <SimpleTextField
+          control={firstNameControl}
+          autoComplete={`${autoCompletePrefix}given-name`}
+        />
       </div>
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Priimek</div>
-        <SimpleTextField control={lastNameControl} />
+        <SimpleTextField
+          control={lastNameControl}
+          autoComplete={`${autoCompletePrefix}family-name`}
+        />
       </div>
 
       <div className="mb-form-group">
@@ -103,17 +111,26 @@ export function PersonDataFields({ prefix, countryList }) {
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Ulica in hišna številka</div>
-        <SimpleTextField control={addressControl} />
+        <SimpleTextField
+          control={addressControl}
+          autoComplete={`${autoCompletePrefix}street-address`}
+        />
       </div>
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Poštna številka</div>
-        <SimpleTextField control={zipCodeControl} />
+        <SimpleTextField
+          control={zipCodeControl}
+          autoComplete={`${autoCompletePrefix}postal-code`}
+        />
       </div>
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Kraj</div>
-        <SimpleTextField control={cityControl} />
+        <SimpleTextField
+          control={cityControl}
+          autoComplete={`${autoCompletePrefix}address-level2`}
+        />
       </div>
 
       <div className="mb-form-group">

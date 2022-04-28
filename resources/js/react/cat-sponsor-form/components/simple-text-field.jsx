@@ -2,7 +2,7 @@ import React from 'react';
 import { Error } from '../../components/error';
 import { Input } from '../../components/input';
 
-function SimpleTextFieldComponent({ control: { field, fieldState } }, ref) {
+function SimpleTextFieldComponent({ control: { field, fieldState }, autoComplete }, ref) {
   return (
     <>
       <Input
@@ -10,6 +10,7 @@ function SimpleTextFieldComponent({ control: { field, fieldState } }, ref) {
         hasError={!!fieldState.error}
         value={field.value}
         ref={ref}
+        autoComplete={autoComplete}
       />
       {fieldState.error && <Error>{fieldState.error.message}</Error>}
     </>

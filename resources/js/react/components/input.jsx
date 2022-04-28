@@ -1,7 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 
-function InputComponent({ isInvalid = false, placeholder = '', onChange, value }, ref) {
+function InputComponent(
+  { isInvalid = false, placeholder = '', onChange, value, autoComplete },
+  ref
+) {
   return (
     <input
       ref={ref}
@@ -10,6 +13,7 @@ function InputComponent({ isInvalid = false, placeholder = '', onChange, value }
       placeholder={placeholder}
       onChange={onChange}
       value={value}
+      autoComplete={autoComplete}
     />
   );
 }
