@@ -22,7 +22,7 @@ class SponsorshipMail
      * @param \App\Models\Sponsorship $sponsorship
      * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
      */
-    public function sendInitialInstructionsEmail(Sponsorship $sponsorship)
+    public function sendInitialInstructionsEmail(Sponsorship $sponsorship): void
     {
         $template = $sponsorship->payment_type === Sponsorship::PAYMENT_TYPE_BANK_TRANSFER
             ? 'navodila_za_botrstvo_nakazilo'

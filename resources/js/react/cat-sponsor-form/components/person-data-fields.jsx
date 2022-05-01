@@ -1,12 +1,11 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { genderOptions } from '../model';
 import { BoxOption } from '../../components/box-option';
 import { Select } from '../../components/select';
 import { useGlobalState } from '../hooks/use-global-state';
 import { SimpleTextField } from './simple-text-field';
 
-export function PersonDataFields({ prefix, countryList }) {
+export function PersonDataFields({ prefix, countryList, genderOptions }) {
   const { state } = useGlobalState();
   const { control } = useFormContext();
 

@@ -8,8 +8,8 @@ use App\Mail\SponsorshipMail;
 use App\Models\Cat;
 use App\Models\PersonData;
 use App\Models\Sponsorship;
-
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class CatSponsorshipController extends Controller
@@ -23,7 +23,20 @@ class CatSponsorshipController extends Controller
         $this->sponsorshipMail = $sponsorshipMail;
     }
 
-    public function submit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
+    public function submit(Cat $cat, CatSponsorshipRequest $request): JsonResponse
+    {
+        $this->validateCatStatus($cat);
+
+        // todo: validate
+
+        // todo: make db stuff
+
+        // todo: response
+
+        return response()->json(['hello' => $cat]);
+    }
+
+    public function xsubmit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
     {
         $this->validateCatStatus($cat);
 

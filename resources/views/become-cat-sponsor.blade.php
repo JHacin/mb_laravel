@@ -2,12 +2,18 @@
 
 @php
 use App\Utilities\CountryList;
+use App\Models\PersonData;
 
 $formComponentProps = [
     'countryList' => [
         'options' => CountryList::COUNTRY_NAMES,
         'default' => CountryList::DEFAULT,
     ],
+    'gender' => [
+        'options' => PersonData::GENDER_LABELS,
+        'default' => PersonData::GENDER_FEMALE,
+    ],
+    'requestUrl' => route('become_cat_sponsor', $cat),
 ];
 @endphp
 
@@ -19,7 +25,10 @@ $formComponentProps = [
 
         <div class="grid grid-cols-5">
             <div class="mb-section pt-0 col-span-full lg:col-span-3">
-                <div id="react-root__cat-sponsor-form" data-props="{{ json_encode($formComponentProps) }}"></div>
+                <div
+                    id="react-root__cat-sponsor-form"
+                    data-props="{{ json_encode($formComponentProps) }}"
+                ></div>
             </div>
         </div>
 

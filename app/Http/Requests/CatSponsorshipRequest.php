@@ -13,36 +13,20 @@ class CatSponsorshipRequest extends FormRequest
 {
     public function rules(): array
     {
-        $requiredIfGift = 'required_if:is_gift,yes';
-
-        return [
-            'personData.email' => [
+        $rules = [
+            'payer_email' => [
                 'required',
                 'string',
                 'email',
                 Rule::notIn($this->getCatSponsorEmails()),
             ],
-            'personData.first_name' => ['required', 'string', 'max:255'],
-            'personData.last_name' => ['required', 'string', 'max:255'],
-            'personData.gender' => ['required', Rule::in(PersonData::GENDERS)],
-            'personData.address' => ['required', 'string', 'max:255'],
-            'personData.zip_code' => ['required', 'string', 'max:255'],
-            'personData.city' => ['required', 'string', 'max:255'],
-            'personData.country' => ['required', new CountryCode],
-            'giftee.email' => [
-                $requiredIfGift,
-                'nullable',
-                'string',
-                'email',
-                Rule::notIn($this->getCatSponsorEmails()),
-            ],
-            'giftee.first_name' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
-            'giftee.last_name' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
-            'giftee.gender' => [$requiredIfGift, 'nullable', Rule::in(PersonData::GENDERS)],
-            'giftee.address' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
-            'giftee.zip_code' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
-            'giftee.city' => [$requiredIfGift, 'nullable', 'string', 'max:255'],
-            'giftee.country' => [$requiredIfGift, 'nullable', new CountryCode],
+            'payer_first_name' => ['required', 'string', 'max:255'],
+            'payer_last_name' => ['required', 'string', 'max:255'],
+            'payer_gender' => ['required', Rule::in(PersonData::GENDERS)],
+            'payer_address' => ['required', 'string', 'max:255'],
+            'payer_zip_code' => ['required', 'string', 'max:255'],
+            'payer_city' => ['required', 'string', 'max:255'],
+            'payer_country' => ['required', new CountryCode],
             'monthly_amount' => [
                 'required',
                 'numeric',
@@ -50,10 +34,33 @@ class CatSponsorshipRequest extends FormRequest
                 'max:' . config('money.decimal_max'),
             ],
             'is_anonymous' => ['boolean'],
-            'is_gift' => [Rule::in(['yes', 'no'])],
+            'is_gift' => ['boolean'],
             'is_agreed_to_terms' => ['accepted'],
             'wants_direct_debit' => ['boolean'],
         ];
+
+        if ($this->get('is_gift')) {
+            $gifteeRules = [
+                'giftee_email' => [
+                    'required',
+                    'nullable',
+                    'string',
+                    'email',
+                    Rule::notIn($this->getCatSponsorEmails()),
+                ],
+                'giftee_first_name' => ['required', 'string', 'max:255'],
+                'giftee_last_name' => ['required', 'string', 'max:255'],
+                'giftee_gender' => ['required', Rule::in(PersonData::GENDERS)],
+                'giftee_address' => ['required', 'string', 'max:255'],
+                'giftee_zip_code' => ['required', 'string', 'max:255'],
+                'giftee_city' => ['required', 'string', 'max:255'],
+                'giftee_country' => ['required', new CountryCode],
+            ];
+
+            $rules = array_merge($rules, $gifteeRules);
+        }
+
+        return $rules;
     }
 
     /**
@@ -62,10 +69,10 @@ class CatSponsorshipRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'personData.email.not_in' =>
+            'payer_email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
-            'giftee.email.not_in' =>
+            'giftee_email.not_in' =>
                 'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
         ];

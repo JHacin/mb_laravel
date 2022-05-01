@@ -9,7 +9,7 @@ import { createPersonDataValidationRules } from './utils';
 import { PersonDataFields } from './components/person-data-fields';
 import { Button } from '../components/button';
 
-export function GifteeDetailsStep({ onPrev, onNext, countryList }) {
+export function GifteeDetailsStep({ onPrev, onNext, countryList, genderOptions }) {
   const { actions } = useGlobalState();
   const validationSchema = yup.object(createPersonDataValidationRules('giftee'));
 
@@ -28,7 +28,7 @@ export function GifteeDetailsStep({ onPrev, onNext, countryList }) {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <PersonDataFields prefix="giftee" countryList={countryList} />
+        <PersonDataFields prefix="giftee" countryList={countryList} genderOptions={genderOptions} />
 
         <Button type="button" color="secondary" onClick={onPrev}>
           Nazaj

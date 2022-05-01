@@ -64,7 +64,7 @@
                 dusk="go-to-cats-list-link"
             >
                 <x-icon icon="arrow-right"></x-icon>
-                <span>muce, ki iščejo botra</span>
+                <span>Muce, ki iščejo botra</span>
             </a>
         </div>
     </div>

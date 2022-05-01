@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useStateMachine } from 'little-state-machine';
-import { updateFormDataAction } from '../updateFormDataAction';
+import { updateFormDataAction } from '../actions/updateFormDataAction';
 
 export function useGlobalSync({ watch }) {
   const { actions } = useStateMachine({ updateFormDataAction });

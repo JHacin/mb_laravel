@@ -1,20 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
-import { useStateMachine } from 'little-state-machine';
 import { setLocale } from 'yup';
 import { Transition } from 'react-transition-group';
+import axios from 'axios';
 import { SponsorshipParamsStep } from './sponsorship-params-step';
 import { SummaryStep } from './summary-step';
 import { PayerDetailsStep } from './payer-details-step';
 import { GifteeDetailsStep } from './giftee-details-step';
 import { stepsWithGift, stepsWithoutGift, stepConfig, Step } from './model';
 import { locale } from './yup-locale';
+import { useGlobalState } from "./hooks/use-global-state";
 
 setLocale(locale);
 
-export function CatSponsorForm({ props }) {
-  const { countryList } = props;
-  const { state } = useStateMachine();
+export function CatSponsorForm({ serverSideProps }) {
+  const { state, actions } = useGlobalState()
   const [activeStep, setActiveStep] = useState(Step.SPONSORSHIP_PARAMS);
   const scrollRef = useRef(null);
 
@@ -27,6 +27,18 @@ export function CatSponsorForm({ props }) {
 
   const goToPrevStep = () => {
     setActiveStep(availableSteps[activeStepIndex - 1]);
+  };
+
+  const onFinalSubmit = async () => {
+    actions.updateFormStateAction({ isSubmitting: true })
+
+    try {
+      await axios.post(serverSideProps.requestUrl, state.formData);
+    } catch (error) {
+      console.log(error.response);
+    }
+
+    actions.updateFormStateAction({ isSubmitting: false })
   };
 
   const scrollBackToTop = () => {
@@ -45,14 +57,43 @@ export function CatSponsorForm({ props }) {
   const sharedStepProps = {
     onPrev: goToPrevStep,
     onNext: goToNextStep,
-    countryList,
+    countryList: serverSideProps.countryList,
+    genderOptions: Object.keys(serverSideProps.gender.options).map((genderEnumValue) => ({
+      label: serverSideProps.gender.options[genderEnumValue],
+      value: Number(genderEnumValue),
+    })),
   };
 
   const stepComponents = [
-    { step: Step.SPONSORSHIP_PARAMS, Component: SponsorshipParamsStep },
-    { step: Step.PAYER_DETAILS, Component: PayerDetailsStep },
-    { step: Step.GIFTEE_DETAILS, Component: GifteeDetailsStep },
-    { step: Step.SUMMARY, Component: SummaryStep },
+    {
+      step: Step.SPONSORSHIP_PARAMS,
+      Component: SponsorshipParamsStep,
+      props: {
+        ...sharedStepProps,
+      },
+    },
+    {
+      step: Step.PAYER_DETAILS,
+      Component: PayerDetailsStep,
+      props: {
+        ...sharedStepProps,
+      },
+    },
+    {
+      step: Step.GIFTEE_DETAILS,
+      Component: GifteeDetailsStep,
+      props: {
+        ...sharedStepProps,
+      },
+    },
+    {
+      step: Step.SUMMARY,
+      Component: SummaryStep,
+      props: {
+        ...sharedStepProps,
+        onFinalSubmit,
+      },
+    },
   ];
 
   const transitionDuration = 300;
@@ -107,7 +148,7 @@ export function CatSponsorForm({ props }) {
       </div>
 
       <div className="p-5">
-        {stepComponents.map(({ step, Component }) => (
+        {stepComponents.map(({ step, Component, props }) => (
           <Transition in={activeStep === step} timeout={transitionDuration} key={step}>
             {(transitionState) => (
               <div
@@ -117,7 +158,7 @@ export function CatSponsorForm({ props }) {
                   ...transitionStyles[transitionState],
                 }}
               >
-                {activeStep === step && <Component {...sharedStepProps} />}
+                {activeStep === step && <Component {...props} />}
               </div>
             )}
           </Transition>
