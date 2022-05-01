@@ -1,9 +1,10 @@
 <?php
 // @formatter:off
+// phpcs:ignoreFile
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.66.0.
+ * Generated for Laravel 8.83.10.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -393,6 +394,17 @@
         {
                         /** @var \Illuminate\Foundation\Application $instance */
                         return $instance->runningUnitTests();
+        }
+                    /**
+         * Determine if the application is running with debug mode enabled.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasDebugModeEnabled()
+        {
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        return $instance->hasDebugModeEnabled();
         }
                     /**
          * Register all of the configured providers.
@@ -2260,6 +2272,16 @@
         {
                         return \Illuminate\Auth\SessionGuard::hasMacro($name);
         }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Auth\SessionGuard::flushMacros();
+        }
          
     }
             /**
@@ -2314,6 +2336,30 @@
         {
                         /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
                         return $instance->compileString($value);
+        }
+                    /**
+         * Evaluate and render a Blade string to HTML.
+         *
+         * @param string $string
+         * @param array $data
+         * @param bool $deleteCachedView
+         * @return string 
+         * @static 
+         */ 
+        public static function render($string, $data = [], $deleteCachedView = false)
+        {
+                        return \Illuminate\View\Compilers\BladeCompiler::render($string, $data, $deleteCachedView);
+        }
+                    /**
+         * Render a component instance to HTML.
+         *
+         * @param \Illuminate\View\Component $component
+         * @return string 
+         * @static 
+         */ 
+        public static function renderComponent($component)
+        {
+                        return \Illuminate\View\Compilers\BladeCompiler::renderComponent($component);
         }
                     /**
          * Strip the parentheses from the given expression.
@@ -3166,6 +3212,18 @@
                         $instance->assertBatched($callback);
         }
                     /**
+         * Assert the number of batches that have been dispatched.
+         *
+         * @param int $count
+         * @return void 
+         * @static 
+         */ 
+        public static function assertBatchCount($count)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        $instance->assertBatchCount($count);
+        }
+                    /**
          * Get all of the jobs matching a truth-test callback.
          *
          * @param string $command
@@ -3583,7 +3641,7 @@
          * Get an item from the cache, or execute the given Closure and store the result.
          *
          * @param string $key
-         * @param \DateTimeInterface|\DateInterval|int|null $ttl
+         * @param \Closure|\DateTimeInterface|\DateInterval|int|null $ttl
          * @param \Closure $callback
          * @return mixed 
          * @static 
@@ -3839,6 +3897,16 @@
         public static function hasMacro($name)
         {
                         return \Illuminate\Cache\Repository::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Cache\Repository::flushMacros();
         }
                     /**
          * Dynamically handle calls to the class.
@@ -4269,6 +4337,16 @@
         {
                         return \Illuminate\Cookie\CookieJar::hasMacro($name);
         }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Cookie\CookieJar::flushMacros();
+        }
          
     }
             /**
@@ -4385,6 +4463,22 @@
         {
                         /** @var \Illuminate\Database\DatabaseManager $instance */
                         return $instance->connection($name);
+        }
+                    /**
+         * Register a custom Doctrine type.
+         *
+         * @param string $class
+         * @param string $name
+         * @param string $type
+         * @return void 
+         * @throws \Doctrine\DBAL\DBALException
+         * @throws \RuntimeException
+         * @static 
+         */ 
+        public static function registerDoctrineType($class, $name, $type)
+        {
+                        /** @var \Illuminate\Database\DatabaseManager $instance */
+                        $instance->registerDoctrineType($class, $name, $type);
         }
                     /**
          * Disconnect from the given database and remove from local cache.
@@ -5635,6 +5729,16 @@
                         return \Illuminate\Events\Dispatcher::hasMacro($name);
         }
                     /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Events\Dispatcher::flushMacros();
+        }
+                    /**
          * Assert if an event has a listener attached to it.
          *
          * @param string $expectedEvent
@@ -6318,6 +6422,16 @@
         {
                         return \Illuminate\Filesystem\Filesystem::hasMacro($name);
         }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Filesystem\Filesystem::flushMacros();
+        }
          
     }
             /**
@@ -6337,6 +6451,36 @@
         {
                         /** @var \Illuminate\Auth\Access\Gate $instance */
                         return $instance->has($ability);
+        }
+                    /**
+         * Perform an on-demand authorization check. Throw an authorization exception if the condition or callback is false.
+         *
+         * @param \Illuminate\Auth\Access\Response|\Closure|bool $condition
+         * @param string|null $message
+         * @param string|null $code
+         * @return \Illuminate\Auth\Access\Response 
+         * @throws \Illuminate\Auth\Access\AuthorizationException
+         * @static 
+         */ 
+        public static function allowIf($condition, $message = null, $code = null)
+        {
+                        /** @var \Illuminate\Auth\Access\Gate $instance */
+                        return $instance->allowIf($condition, $message, $code);
+        }
+                    /**
+         * Perform an on-demand authorization check. Throw an authorization exception if the condition or callback is true.
+         *
+         * @param \Illuminate\Auth\Access\Response|\Closure|bool $condition
+         * @param string|null $message
+         * @param string|null $code
+         * @return \Illuminate\Auth\Access\Response 
+         * @throws \Illuminate\Auth\Access\AuthorizationException
+         * @static 
+         */ 
+        public static function denyIf($condition, $message = null, $code = null)
+        {
+                        /** @var \Illuminate\Auth\Access\Gate $instance */
+                        return $instance->denyIf($condition, $message, $code);
         }
                     /**
          * Define a new ability.
@@ -7016,6 +7160,16 @@
                         return \Illuminate\Http\Client\Factory::hasMacro($name);
         }
                     /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Http\Client\Factory::flushMacros();
+        }
+                    /**
          * Dynamically handle calls to the class.
          *
          * @param string $method
@@ -7277,6 +7431,17 @@
                         $instance->setParsedKey($key, $parsed);
         }
                     /**
+         * Flush the cache of parsed keys.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushParsedKeys()
+        {            //Method inherited from \Illuminate\Support\NamespacedItemResolver         
+                        /** @var \Illuminate\Translation\Translator $instance */
+                        $instance->flushParsedKeys();
+        }
+                    /**
          * Register a custom macro.
          *
          * @param string $name
@@ -7311,6 +7476,16 @@
         public static function hasMacro($name)
         {
                         return \Illuminate\Translation\Translator::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Translation\Translator::flushMacros();
         }
          
     }
@@ -7374,17 +7549,6 @@
                         return $instance->driver($driver);
         }
                     /**
-         * 
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getChannels()
-        {
-                        /** @var \Illuminate\Log\LogManager $instance */
-                        return $instance->getChannels();
-        }
-                    /**
          * Get the default log driver name.
          *
          * @return string|null 
@@ -7431,6 +7595,17 @@
         {
                         /** @var \Illuminate\Log\LogManager $instance */
                         return $instance->forgetChannel($driver);
+        }
+                    /**
+         * Get all of the resolved log channels.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getChannels()
+        {
+                        /** @var \Illuminate\Log\LogManager $instance */
+                        return $instance->getChannels();
         }
                     /**
          * System is unusable.
@@ -7566,6 +7741,10 @@
             /**
      * 
      *
+     * @method static void alwaysFrom(string $address, string|null $name = null)
+     * @method static void alwaysReplyTo(string $address, string|null $name = null)
+     * @method static void alwaysReturnPath(string $address)
+     * @method static void alwaysTo(string $address, string|null $name = null)
      * @method static mixed laterOn(string $queue, \DateTimeInterface|\DateInterval|int $delay, \Illuminate\Contracts\Mail\Mailable|string|array $view)
      * @method static mixed queueOn(string $queue, \Illuminate\Contracts\Mail\Mailable|string|array $view)
      * @method static void plain(string $view, array $data, $callback)
@@ -8179,9 +8358,23 @@
                     /**
          * Assert the total amount of times a notification was sent.
          *
+         * @param string $notification
+         * @param int $expectedCount
+         * @return void 
+         * @static 
+         */ 
+        public static function assertSentTimes($notification, $expectedCount)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\NotificationFake $instance */
+                        $instance->assertSentTimes($notification, $expectedCount);
+        }
+                    /**
+         * Assert the total amount of times a notification was sent.
+         *
          * @param int $expectedCount
          * @param string $notification
          * @return void 
+         * @deprecated Use the assertSentTimes method instead
          * @static 
          */ 
         public static function assertTimesSent($expectedCount, $notification)
@@ -8251,6 +8444,16 @@
         public static function hasMacro($name)
         {
                         return \Illuminate\Support\Testing\Fakes\NotificationFake::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Support\Testing\Fakes\NotificationFake::flushMacros();
         }
          
     }
@@ -8609,7 +8812,7 @@
                     /**
          * Push a new job onto the queue.
          *
-         * @param string $job
+         * @param string|object $job
          * @param mixed $data
          * @param string|null $queue
          * @return mixed 
@@ -8638,7 +8841,7 @@
          * Push a new job onto the queue after a delay.
          *
          * @param \DateTimeInterface|\DateInterval|int $delay
-         * @param string $job
+         * @param string|object $job
          * @param mixed $data
          * @param string|null $queue
          * @return mixed 
@@ -8653,7 +8856,7 @@
          * Push a new job onto the queue.
          *
          * @param string $queue
-         * @param string $job
+         * @param string|object $job
          * @param mixed $data
          * @return mixed 
          * @static 
@@ -8668,7 +8871,7 @@
          *
          * @param string $queue
          * @param \DateTimeInterface|\DateInterval|int $delay
-         * @param string $job
+         * @param string|object $job
          * @param mixed $data
          * @return mixed 
          * @static 
@@ -9049,6 +9252,16 @@
         {
                         return \Illuminate\Routing\Redirector::hasMacro($name);
         }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Routing\Redirector::flushMacros();
+        }
          
     }
             /**
@@ -9317,6 +9530,18 @@
         {
                         /** @var \Illuminate\Http\Request $instance */
                         return $instance->merge($input);
+        }
+                    /**
+         * Merge new input into the request's input, but only when that key is missing from the request.
+         *
+         * @param array $input
+         * @return \Illuminate\Http\Request 
+         * @static 
+         */ 
+        public static function mergeIfMissing($input)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->mergeIfMissing($input);
         }
                     /**
          * Replace the input for the current request.
@@ -9680,7 +9905,7 @@
                     /**
          * Gets the list of trusted proxies.
          *
-         * @return array An array of trusted proxies
+         * @return array 
          * @static 
          */ 
         public static function getTrustedProxies()
@@ -9712,7 +9937,7 @@
                     /**
          * Gets the list of trusted host patterns.
          *
-         * @return array An array of trusted host patterns
+         * @return array 
          * @static 
          */ 
         public static function getTrustedHosts()
@@ -9725,7 +9950,7 @@
          * It builds a normalized query string, where keys/value pairs are alphabetized,
          * have consistent escaping and unneeded delimiters are removed.
          *
-         * @return string A normalized query string for the Request
+         * @return string 
          * @static 
          */ 
         public static function normalizeQueryString($qs)
@@ -9752,7 +9977,7 @@
                     /**
          * Checks whether support for the _method request parameter is enabled.
          *
-         * @return bool True when the _method request parameter is enabled, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function getHttpMethodParameterOverride()
@@ -9778,7 +10003,8 @@
          * like whether the session is started or not. It is just a way to check if this Request
          * is associated with a Session instance.
          *
-         * @return bool true when the Request contains a Session object, false otherwise
+         * @param bool $skipIfUninitialized When true, ignores factories injected by `setSessionFactory`
+         * @return bool 
          * @static 
          */ 
         public static function hasSession()
@@ -9800,6 +10026,7 @@
          * 
          *
          * @internal 
+         * @param \Symfony\Component\HttpFoundation\callable():  SessionInterface $factory
          * @static 
          */ 
         public static function setSessionFactory($factory)
@@ -9816,7 +10043,7 @@
          * 
          * Use this method carefully; you should use getClientIp() instead.
          *
-         * @return array The client IP addresses
+         * @return array 
          * @see getClientIp()
          * @static 
          */ 
@@ -9838,7 +10065,7 @@
          * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
          * argument of the Request::setTrustedProxies() method instead.
          *
-         * @return string|null The client IP address
+         * @return string|null 
          * @see getClientIps()
          * @see https://wikipedia.org/wiki/X-Forwarded-For
          * @static 
@@ -9932,7 +10159,7 @@
          * 
          * The "X-Forwarded-Port" header must contain the client port.
          *
-         * @return int|string can be a string if fetched from the server bag
+         * @return int|string|null Can be a string if fetched from the server bag
          * @static 
          */ 
         public static function getPort()
@@ -9965,7 +10192,7 @@
                     /**
          * Gets the user info.
          *
-         * @return string A user name and, optionally, scheme-specific information about how to gain authorization to access the server
+         * @return string|null A user name if any and, optionally, scheme-specific information about how to gain authorization to access the server
          * @static 
          */ 
         public static function getUserInfo()
@@ -10003,7 +10230,7 @@
          * If the URL was called with basic authentication, the user
          * and the password are not added to the generated string.
          *
-         * @return string The scheme and HTTP host
+         * @return string 
          * @static 
          */ 
         public static function getSchemeAndHttpHost()
@@ -10014,7 +10241,7 @@
                     /**
          * Generates a normalized URI (URL) for the Request.
          *
-         * @return string A normalized URI (URL) for the Request
+         * @return string 
          * @see getQueryString()
          * @static 
          */ 
@@ -10027,7 +10254,7 @@
          * Generates a normalized URI for the given path.
          *
          * @param string $path A path to use instead of the current one
-         * @return string The normalized URI for the path
+         * @return string 
          * @static 
          */ 
         public static function getUriForPath($path)
@@ -10050,7 +10277,7 @@
          * - "/a/b/c/other" -> "other"
          * - "/a/x/y"       -> "../../x/y"
          *
-         * @return string The relative target path
+         * @return string 
          * @static 
          */ 
         public static function getRelativeUriForPath($path)
@@ -10064,7 +10291,7 @@
          * It builds a normalized query string, where keys/value pairs are alphabetized
          * and have consistent escaping.
          *
-         * @return string|null A normalized query string for the Request
+         * @return string|null 
          * @static 
          */ 
         public static function getQueryString()
@@ -10126,7 +10353,7 @@
          * 
          * The method is always an uppercased string.
          *
-         * @return string The request method
+         * @return string 
          * @see getRealMethod()
          * @static 
          */ 
@@ -10138,7 +10365,7 @@
                     /**
          * Gets the "real" request method.
          *
-         * @return string The request method
+         * @return string 
          * @see getMethod()
          * @static 
          */ 
@@ -10150,7 +10377,7 @@
                     /**
          * Gets the mime type associated with the format.
          *
-         * @return string|null The associated mime type (null if not found)
+         * @return string|null 
          * @static 
          */ 
         public static function getMimeType($format)
@@ -10161,7 +10388,7 @@
                     /**
          * Gets the mime types associated with the format.
          *
-         * @return array The associated mime types
+         * @return array 
          * @static 
          */ 
         public static function getMimeTypes($format)
@@ -10171,7 +10398,7 @@
                     /**
          * Gets the format associated with the mime type.
          *
-         * @return string|null The format (null if not found)
+         * @return string|null 
          * @static 
          */ 
         public static function getFormat($mimeType)
@@ -10200,7 +10427,7 @@
          *  * $default
          *
          * @see getPreferredFormat
-         * @return string|null The request format
+         * @return string|null 
          * @static 
          */ 
         public static function getRequestFormat($default = 'html')
@@ -10221,7 +10448,7 @@
                     /**
          * Gets the format associated with the request.
          *
-         * @return string|null The format (null if no content type is present)
+         * @return string|null 
          * @static 
          */ 
         public static function getContentType()
@@ -10310,7 +10537,7 @@
          * Checks whether the method is cacheable or not.
          *
          * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
-         * @return bool True for GET and HEAD, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isMethodCacheable()
@@ -10339,7 +10566,7 @@
          * Returns the request body content.
          *
          * @param bool $asResource If true, a resource will be returned
-         * @return string|resource The request body content or a resource to read the body stream
+         * @return string|resource 
          * @static 
          */ 
         public static function getContent($asResource = false)
@@ -10350,7 +10577,7 @@
                     /**
          * Gets the Etags.
          *
-         * @return array The entity tags
+         * @return array 
          * @static 
          */ 
         public static function getETags()
@@ -10388,7 +10615,7 @@
          * Returns the preferred language.
          *
          * @param string[] $locales An array of ordered available locales
-         * @return string|null The preferred locale
+         * @return string|null 
          * @static 
          */ 
         public static function getPreferredLanguage($locales = null)
@@ -10397,9 +10624,9 @@
                         return $instance->getPreferredLanguage($locales);
         }
                     /**
-         * Gets a list of languages acceptable by the client browser.
+         * Gets a list of languages acceptable by the client browser ordered in the user browser preferences.
          *
-         * @return array Languages ordered in the user browser preferences
+         * @return array 
          * @static 
          */ 
         public static function getLanguages()
@@ -10408,9 +10635,9 @@
                         return $instance->getLanguages();
         }
                     /**
-         * Gets a list of charsets acceptable by the client browser.
+         * Gets a list of charsets acceptable by the client browser in preferable order.
          *
-         * @return array List of charsets in preferable order
+         * @return array 
          * @static 
          */ 
         public static function getCharsets()
@@ -10419,9 +10646,9 @@
                         return $instance->getCharsets();
         }
                     /**
-         * Gets a list of encodings acceptable by the client browser.
+         * Gets a list of encodings acceptable by the client browser in preferable order.
          *
-         * @return array List of encodings in preferable order
+         * @return array 
          * @static 
          */ 
         public static function getEncodings()
@@ -10430,9 +10657,9 @@
                         return $instance->getEncodings();
         }
                     /**
-         * Gets a list of content types acceptable by the client browser.
+         * Gets a list of content types acceptable by the client browser in preferable order.
          *
-         * @return array List of content types in preferable order
+         * @return array 
          * @static 
          */ 
         public static function getAcceptableContentTypes()
@@ -10447,7 +10674,7 @@
          * It is known to work with common JavaScript frameworks:
          *
          * @see https://wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
-         * @return bool true if the request is an XMLHttpRequest, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isXmlHttpRequest()
@@ -10472,7 +10699,7 @@
          * This can be useful to determine whether or not to trust the
          * contents of a proxy-specific header.
          *
-         * @return bool true if the request came from a trusted proxy, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isFromTrustedProxy()
@@ -10866,6 +11093,20 @@
                         return $instance->boolean($key, $default);
         }
                     /**
+         * Retrieve input from the request as a Carbon instance.
+         *
+         * @param string $key
+         * @param string|null $format
+         * @param string|null $tz
+         * @return \Illuminate\Support\Carbon|null 
+         * @static 
+         */ 
+        public static function date($key, $format = null, $tz = null)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->date($key, $format, $tz);
+        }
+                    /**
          * Retrieve input from the request as a collection.
          *
          * @param array|string|null $key
@@ -10991,7 +11232,7 @@
                     /**
          * Dump the request items and end the script.
          *
-         * @param array|mixed $keys
+         * @param mixed $keys
          * @return void 
          * @static 
          */ 
@@ -11003,7 +11244,7 @@
                     /**
          * Dump the items.
          *
-         * @param array $keys
+         * @param mixed $keys
          * @return \Illuminate\Http\Request 
          * @static 
          */ 
@@ -11047,6 +11288,16 @@
         public static function hasMacro($name)
         {
                         return \Illuminate\Http\Request::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Http\Request::flushMacros();
         }
                     /**
          * 
@@ -11343,17 +11594,29 @@
         {
                         return \Illuminate\Routing\ResponseFactory::hasMacro($name);
         }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Routing\ResponseFactory::flushMacros();
+        }
          
     }
             /**
      * 
      *
      * @method static \Illuminate\Routing\RouteRegistrar as(string $value)
+     * @method static \Illuminate\Routing\RouteRegistrar controller(string $controller)
      * @method static \Illuminate\Routing\RouteRegistrar domain(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar middleware(array|string|null $middleware)
      * @method static \Illuminate\Routing\RouteRegistrar name(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar namespace(string|null $value)
      * @method static \Illuminate\Routing\RouteRegistrar prefix(string $prefix)
+     * @method static \Illuminate\Routing\RouteRegistrar scopeBindings()
      * @method static \Illuminate\Routing\RouteRegistrar where(array $where)
      * @see \Illuminate\Routing\Router
      */ 
@@ -12205,6 +12468,16 @@
                         return \Illuminate\Routing\Router::hasMacro($name);
         }
                     /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Routing\Router::flushMacros();
+        }
+                    /**
          * Dynamically handle calls to the class.
          *
          * @param string $method
@@ -12560,8 +12833,6 @@
          * @param string $name
          * @param string $type
          * @return void 
-         * @throws \Doctrine\DBAL\DBALException
-         * @throws \RuntimeException
          * @static 
          */ 
         public static function registerCustomDoctrineType($class, $name, $type)
@@ -13438,6 +13709,18 @@
                         return $instance->extend($driver, $callback);
         }
                     /**
+         * Set the application instance used by the manager.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application $app
+         * @return \Illuminate\Filesystem\FilesystemManager 
+         * @static 
+         */ 
+        public static function setApplication($app)
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemManager $instance */
+                        return $instance->setApplication($app);
+        }
+                    /**
          * Assert that the given file exists.
          *
          * @param string|array $path
@@ -13544,7 +13827,7 @@
          * Write the contents of a file.
          *
          * @param string $path
-         * @param string|resource $contents
+         * @param \Psr\Http\Message\StreamInterface|\Illuminate\Http\File|\Illuminate\Http\UploadedFile|string|resource $contents
          * @param mixed $options
          * @return bool 
          * @static 
@@ -13881,6 +14164,18 @@
                         return $instance->getDriver();
         }
                     /**
+         * Define a custom temporary URL builder callback.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function buildTemporaryUrlsUsing($callback)
+        {
+                        /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
+                        $instance->buildTemporaryUrlsUsing($callback);
+        }
+                    /**
          * Register a custom macro.
          *
          * @param string $name
@@ -13915,6 +14210,16 @@
         public static function hasMacro($name)
         {
                         return \Illuminate\Filesystem\FilesystemAdapter::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Filesystem\FilesystemAdapter::flushMacros();
         }
                     /**
          * Dynamically handle calls to the class.
@@ -14416,6 +14721,16 @@
         {
                         return \Illuminate\Routing\UrlGenerator::hasMacro($name);
         }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\Routing\UrlGenerator::flushMacros();
+        }
          
     }
             /**
@@ -14655,6 +14970,21 @@
         {
                         /** @var \Illuminate\View\Factory $instance */
                         return $instance->renderWhen($condition, $view, $data, $mergeData);
+        }
+                    /**
+         * Get the rendered content of the view based on the negation of a given condition.
+         *
+         * @param bool $condition
+         * @param string $view
+         * @param \Illuminate\Contracts\Support\Arrayable|array $data
+         * @param array $mergeData
+         * @return string 
+         * @static 
+         */ 
+        public static function renderUnless($condition, $view, $data = [], $mergeData = [])
+        {
+                        /** @var \Illuminate\View\Factory $instance */
+                        return $instance->renderUnless($condition, $view, $data, $mergeData);
         }
                     /**
          * Get the rendered contents of a partial from a loop.
@@ -15016,6 +15346,16 @@
                         return \Illuminate\View\Factory::hasMacro($name);
         }
                     /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Illuminate\View\Factory::flushMacros();
+        }
+                    /**
          * Start a component rendering process.
          *
          * @param \Illuminate\Contracts\View\View|\Illuminate\Contracts\Support\Htmlable|\Closure|string $view
@@ -15239,7 +15579,7 @@
                         return \Illuminate\View\Factory::parentPlaceholder($section);
         }
                     /**
-         * Check if the section exists.
+         * Check if section exists.
          *
          * @param string $name
          * @return bool 
@@ -15725,14 +16065,14 @@
                     /**
          * Insert a row in the database.
          *
-         * @param array $data All input values to be inserted.
+         * @param array $input All input values to be inserted.
          * @return \Illuminate\Database\Eloquent\Model 
          * @static 
          */ 
-        public static function create($data)
+        public static function create($input)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->create($data);
+                        return $instance->create($input);
         }
                     /**
          * Get all fields needed for the ADD NEW ENTRY form.
@@ -15748,48 +16088,14 @@
                     /**
          * Get all fields with relation set (model key set on field).
          *
+         * @param array $fields
          * @return array The fields with model key set.
          * @static 
          */ 
-        public static function getRelationFields()
+        public static function getRelationFields($fields = [])
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->getRelationFields();
-        }
-                    /**
-         * Get all fields with n-n relation set (pivot table is true).
-         *
-         * @return array The fields with n-n relationships.
-         * @static 
-         */ 
-        public static function getRelationFieldsWithPivot()
-        {
-                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->getRelationFieldsWithPivot();
-        }
-                    /**
-         * Create the relations for the current model.
-         *
-         * @param \Illuminate\Database\Eloquent\Model $item The current CRUD model.
-         * @param array $data The form data.
-         * @static 
-         */ 
-        public static function createRelations($item, $data)
-        {
-                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->createRelations($item, $data);
-        }
-                    /**
-         * Sync the declared many-to-many associations through the pivot field.
-         *
-         * @param \Illuminate\Database\Eloquent\Model $model The current CRUD model.
-         * @param array $data The form data.
-         * @static 
-         */ 
-        public static function syncPivot($model, $data)
-        {
-                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->syncPivot($model, $data);
+                        return $instance->getRelationFields($fields);
         }
                     /**
          * Find and retrieve the id of the current entry.
@@ -16156,14 +16462,14 @@
          * Update a row in the database.
          *
          * @param int $id The entity's id
-         * @param array $data All inputs to be updated.
+         * @param array $input All inputs to be updated.
          * @return object 
          * @static 
          */ 
-        public static function update($id, $data)
+        public static function update($id, $input)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->update($id, $data);
+                        return $instance->update($id, $input);
         }
                     /**
          * Get all fields needed for the EDIT ENTRY form.
@@ -16705,7 +17011,7 @@
                         return $instance->column($name);
         }
                     /**
-         * Get the CRUD fields for the current operation.
+         * Get the CRUD fields for the current operation with name processed to be usable in HTML.
          *
          * @return array 
          * @static 
@@ -16714,6 +17020,17 @@
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
                         return $instance->fields();
+        }
+                    /**
+         * Returns the fields as they are stored inside operation setting, not running the
+         * presentation callbacks like converting the `dot.names` into `dot[names]` for html for example.
+         *
+         * @static 
+         */ 
+        public static function getCleanStateFields()
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->getCleanStateFields();
         }
                     /**
          * The only REALLY MANDATORY attribute when defining a field is the 'name'.
@@ -16729,6 +17046,20 @@
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
                         return $instance->makeSureFieldHasNecessaryAttributes($field);
+        }
+                    /**
+         * Register all Eloquent Model events that are defined on fields.
+         * 
+         * Eg. saving, saved, creating, created, updating, updated.
+         *
+         * @see https://laravel.com/docs/master/eloquent#events
+         * @return void 
+         * @static 
+         */ 
+        public static function registerFieldEvents()
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        $instance->registerFieldEvents();
         }
                     /**
          * Add a field to the create/update form or both.
@@ -16874,12 +17205,15 @@
          * So that they are not json_encoded twice before they are stored in the db
          * (once by Backpack in front-end, once by Laravel Attribute Casting).
          *
+         * @param array $input
+         * @param mixed $model
+         * @return array 
          * @static 
          */ 
-        public static function decodeJsonCastedAttributes($data)
+        public static function decodeJsonCastedAttributes($input, $model = false)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->decodeJsonCastedAttributes($data);
+                        return $instance->decodeJsonCastedAttributes($input, $model);
         }
                     /**
          * 
@@ -17032,12 +17366,14 @@
          * 
          * Only specific field names that have been introduced with addField() are kept in the request.
          *
+         * @param \Illuminate\Http\Request $request
+         * @return array 
          * @static 
          */ 
-        public static function getStrippedSaveRequest()
+        public static function getStrippedSaveRequest($request)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->getStrippedSaveRequest();
+                        return $instance->getStrippedSaveRequest($request);
         }
                     /**
          * Check if a field exists, by any given attribute.
@@ -17144,6 +17480,18 @@
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
                         return $instance->overwriteFieldNameFromDotNotationToArray($field);
+        }
+                    /**
+         * Run the field name overwrite in multiple fields.
+         *
+         * @param array $fields
+         * @return array 
+         * @static 
+         */ 
+        public static function overwriteFieldNamesFromDotNotationToArray($fields)
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->overwriteFieldNamesFromDotNotationToArray($fields);
         }
                     /**
          * Add another clause to the query (for ex, a WHERE clause).
@@ -17474,10 +17822,10 @@
          * @return void 
          * @static 
          */ 
-        public static function setFromDb()
+        public static function setFromDb($setFields = true, $setColumns = true)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        $instance->setFromDb();
+                        $instance->setFromDb($setFields, $setColumns);
         }
                     /**
          * Get all columns from the database for that table.
@@ -17563,16 +17911,15 @@
          * plus the '_token' and 'redirect_after_save' variables.
          *
          * @param array $requestInput The request input.
-         * @param string $form The CRUD form. Can be 'create' or 'update' . Default is 'create'.
-         * @param int|bool $id The CRUD entry id in the case of the 'update' form.
+         * @param array $fields
          * @see \Illuminate\Http\Request::all() For an example on how to get the request input.
          * @return array The updated request input.
          * @static 
          */ 
-        public static function compactFakeFields($requestInput)
+        public static function compactFakeFields($requestInput, $model = false, $fields = [])
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->compactFakeFields($requestInput);
+                        return $instance->compactFakeFields($requestInput, $model, $fields);
         }
                     /**
          * Returns an array of database columns names, that are used to store fake values or ['extras']
@@ -18393,6 +18740,42 @@
                         return $instance->getUpdateContentClass();
         }
                     /**
+         * Get the first view path that exists for a certain field. If a viewNamespace is given
+         * (second parameter) look there and stop. Otherwise, look in all directories
+         * configured in backpack.crud.view_namespaces.fields.
+         *
+         * @param string $viewPath Path to field view (starting from /fields/..)
+         * @param bool|string $viewNamespace Optional override, to use this namespace instead of the viewstack.
+         * @return string 
+         * @static 
+         */ 
+        public static function getFirstFieldView($viewPath, $viewNamespace = false)
+        {
+                        return \Backpack\CRUD\app\Library\CrudPanel\CrudPanel::getFirstFieldView($viewPath, $viewNamespace);
+        }
+                    /**
+         * Adds the required rules from an array and allows validation of that array.
+         *
+         * @param array $requiredFields
+         * @static 
+         */ 
+        public static function setValidationFromArray($rules, $messages = [])
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->setValidationFromArray($rules, $messages);
+        }
+                    /**
+         * Take the rules defined on fields and create a validation
+         * array from them.
+         *
+         * @static 
+         */ 
+        public static function setValidationFromFields()
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->setValidationFromFields();
+        }
+                    /**
          * Mark a FormRequest file as required for the current operation, in Settings.
          * 
          * Adds the required rules to an array for easy access.
@@ -18400,10 +18783,24 @@
          * @param string $class Class that extends FormRequest
          * @static 
          */ 
-        public static function setValidation($class)
+        public static function setValidationFromRequest($class)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->setValidation($class);
+                        return $instance->setValidationFromRequest($class);
+        }
+                    /**
+         * Mark a FormRequest file as required for the current operation, in Settings.
+         * 
+         * Adds the required rules to an array for easy access.
+         *
+         * @param string|array $classOrRulesArray Class that extends FormRequest or array of validation rules
+         * @param array $messages Array of validation messages.
+         * @static 
+         */ 
+        public static function setValidation($classOrRulesArray = false, $messages = [])
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->setValidation($classOrRulesArray, $messages);
         }
                     /**
          * Remove the current FormRequest from configuration, so it will no longer be validated.
@@ -18464,13 +18861,13 @@
          * Parse a FormRequest class, figure out what inputs are required
          * and store this knowledge in the current object.
          *
-         * @param string $class Class that extends FormRequest
+         * @param string|array $classOrRulesArray Class that extends FormRequest or rules array
          * @static 
          */ 
-        public static function setRequiredFields($class)
+        public static function setRequiredFields($classOrRulesArray)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->setRequiredFields($class);
+                        return $instance->setRequiredFields($classOrRulesArray);
         }
                     /**
          * Check the current object to see if an input is required
@@ -19039,23 +19436,24 @@
          *
          * @static 
          */ 
-        public static function getOnlyRelationEntity($relation_field)
+        public static function getOnlyRelationEntity($field)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->getOnlyRelationEntity($relation_field);
+                        return $instance->getOnlyRelationEntity($field);
         }
                     /**
          * Get the fields for relationships, according to the relation type. It looks only for direct
          * relations - it will NOT look through relationships of relationships.
          *
          * @param string|array $relation_types Eloquent relation class or array of Eloquent relation classes. Eg: BelongsTo
+         * @param bool $nested Should nested fields be included
          * @return array The fields with corresponding relation types.
          * @static 
          */ 
-        public static function getFieldsWithRelationType($relation_types)
+        public static function getFieldsWithRelationType($relation_types, $nested = false)
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->getFieldsWithRelationType($relation_types);
+                        return $instance->getFieldsWithRelationType($relation_types, $nested);
         }
                     /**
          * Parse the field name back to the related entity after the form is submited.
@@ -19070,18 +19468,6 @@
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
                         return $instance->parseRelationFieldNamesFromHtml($fields);
-        }
-                    /**
-         * Based on relation type returns the default field type.
-         *
-         * @param string $relation_type
-         * @return bool 
-         * @static 
-         */ 
-        public static function inferFieldTypeFromFieldRelation($field)
-        {
-                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
-                        return $instance->inferFieldTypeFromFieldRelation($field);
         }
                     /**
          * Based on relation type returns if relation allows multiple entities.
@@ -19106,6 +19492,28 @@
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
                         return $instance->guessIfFieldHasPivotFromRelationType($relation_type);
+        }
+                    /**
+         * Get all relation fields that don't have pivot set.
+         *
+         * @return array The fields with model key set.
+         * @static 
+         */ 
+        public static function getRelationFieldsWithoutPivot()
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->getRelationFieldsWithoutPivot();
+        }
+                    /**
+         * Get all fields with n-n relation set (pivot table is true).
+         *
+         * @return array The fields with n-n relationships.
+         * @static 
+         */ 
+        public static function getRelationFieldsWithPivot()
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->getRelationFieldsWithPivot();
         }
                     /**
          * In addition to registering the macro, throw an error if the method already exists on the object
@@ -19155,6 +19563,16 @@
         public static function hasMacro($name)
         {
                         return \Backpack\CRUD\app\Library\CrudPanel\CrudPanel::hasMacro($name);
+        }
+                    /**
+         * Flush the existing macros.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushMacros()
+        {
+                        \Backpack\CRUD\app\Library\CrudPanel\CrudPanel::flushMacros();
         }
          
     }
@@ -19211,7 +19629,7 @@
          * Get the gravatar url
          *
          * @param string $email
-         * @param string $configGroup
+         * @param string|array|null $configGroup
          * @return string 
          * @throws InvalidEmailException
          * @static 
@@ -19220,6 +19638,72 @@
         {
                         /** @var \Creativeorange\Gravatar\Gravatar $instance */
                         return $instance->get($email, $configGroup);
+        }
+         
+    }
+     
+}
+
+    namespace DigitallyHappy\Assets\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class Assets {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function echoCss($path)
+        {
+                        /** @var \DigitallyHappy\Assets\AssetManager $instance */
+                        return $instance->echoCss($path);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function echoJs($path)
+        {
+                        /** @var \DigitallyHappy\Assets\AssetManager $instance */
+                        return $instance->echoJs($path);
+        }
+                    /**
+         * Adds the asset to the current loaded assets.
+         *
+         * @param string $asset
+         * @return void 
+         * @static 
+         */ 
+        public static function markAsLoaded($asset)
+        {
+                        /** @var \DigitallyHappy\Assets\AssetManager $instance */
+                        $instance->markAsLoaded($asset);
+        }
+                    /**
+         * Checks if the asset is already on loaded asset list.
+         *
+         * @param string $asset
+         * @return bool 
+         * @static 
+         */ 
+        public static function isLoaded($asset)
+        {
+                        /** @var \DigitallyHappy\Assets\AssetManager $instance */
+                        return $instance->isLoaded($asset);
+        }
+                    /**
+         * Returns the current loaded assets on app lifecycle.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function loaded()
+        {
+                        /** @var \DigitallyHappy\Assets\AssetManager $instance */
+                        return $instance->loaded();
         }
          
     }
@@ -19906,6 +20390,48 @@
         {            //Method inherited from \Illuminate\Support\MessageBag         
                         /** @var \Prologue\Alerts\AlertsMessageBag $instance */
                         return $instance->toJson($options);
+        }
+         
+    }
+     
+}
+
+    namespace Spatie\SignalAwareCommand\Facades { 
+            /**
+     * 
+     *
+     * @see \Spatie\SignalAwareCommand\Signal
+     */ 
+        class Signal {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function handle($signal, $callable)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->handle($signal, $callable);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function executeSignalHandlers($signal, $command)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->executeSignalHandlers($signal, $command);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function clearHandlers($signal = null)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->clearHandlers($signal);
         }
          
     }
@@ -21193,7 +21719,7 @@ namespace  {
              * @param string $relationship
              * @param string $boolean
              * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @throws \Exception
+             * @throws \RuntimeException
              * @static 
              */ 
             public static function whereBelongsTo($related, $relationshipName = null, $boolean = 'and')
@@ -21208,7 +21734,7 @@ namespace  {
              * @param \Illuminate\Database\Eloquent\Model $related
              * @param string $relationship
              * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @throws \Exception
+             * @throws \RuntimeException
              * @static 
              */ 
             public static function orWhereBelongsTo($related, $relationshipName = null)
@@ -21328,18 +21854,6 @@ namespace  {
             }
              
                 /**
-             * Explains the query.
-             *
-             * @return \Illuminate\Support\Collection 
-             * @static 
-             */ 
-            public static function explain()
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->explain();
-            }
-             
-                /**
              * Chunk the results of the query.
              *
              * @param int $count
@@ -21431,7 +21945,7 @@ namespace  {
                 /**
              * Query lazily, by chunking the results of a query by comparing IDs.
              *
-             * @param int $count
+             * @param int $chunkSize
              * @param string|null $column
              * @param string|null $alias
              * @return \Illuminate\Support\LazyCollection 
@@ -21442,6 +21956,22 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->lazyById($chunkSize, $column, $alias);
+            }
+             
+                /**
+             * Query lazily, by chunking the results of a query by comparing IDs in descending order.
+             *
+             * @param int $chunkSize
+             * @param string|null $column
+             * @param string|null $alias
+             * @return \Illuminate\Support\LazyCollection 
+             * @throws \InvalidArgumentException
+             * @static 
+             */ 
+            public static function lazyByIdDesc($chunkSize = 1000, $column = null, $alias = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->lazyByIdDesc($chunkSize, $column, $alias);
             }
              
                 /**
@@ -22193,7 +22723,7 @@ namespace  {
                 /**
              * Add a "where date" statement to the query.
              *
-             * @param string $column
+             * @param \Illuminate\Database\Query\Expression|string $column
              * @param string $operator
              * @param \DateTimeInterface|string|null $value
              * @param string $boolean
@@ -22590,6 +23120,35 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->dynamicWhere($method, $parameters);
+            }
+             
+                /**
+             * Add a "where fulltext" clause to the query.
+             *
+             * @param string|string[] $columns
+             * @param string $value
+             * @param string $boolean
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */ 
+            public static function whereFullText($columns, $value, $options = [], $boolean = 'and')
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->whereFullText($columns, $value, $options, $boolean);
+            }
+             
+                /**
+             * Add a "or where fulltext" clause to the query.
+             *
+             * @param string|string[] $columns
+             * @param string $value
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */ 
+            public static function orWhereFullText($columns, $value, $options = [])
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->orWhereFullText($columns, $value, $options);
             }
              
                 /**
@@ -23305,6 +23864,19 @@ namespace  {
             }
              
                 /**
+             * Cast the given binding value.
+             *
+             * @param mixed $value
+             * @return mixed 
+             * @static 
+             */ 
+            public static function castBinding($value)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->castBinding($value);
+            }
+             
+                /**
              * Merge an array of bindings into our bindings.
              *
              * @param \Illuminate\Database\Query\Builder $query
@@ -23417,6 +23989,18 @@ namespace  {
             }
              
                 /**
+             * Explains the query.
+             *
+             * @return \Illuminate\Support\Collection 
+             * @static 
+             */ 
+            public static function explain()
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->explain();
+            }
+             
+                /**
              * Register a custom macro.
              *
              * @param string $name
@@ -23441,6 +24025,17 @@ namespace  {
             public static function mixin($mixin, $replace = true)
             {
                                 \Illuminate\Database\Query\Builder::mixin($mixin, $replace);
+            }
+             
+                /**
+             * Flush the existing macros.
+             *
+             * @return void 
+             * @static 
+             */ 
+            public static function flushMacros()
+            {
+                                \Illuminate\Database\Query\Builder::flushMacros();
             }
              
                 /**
@@ -23483,9 +24078,11 @@ namespace  {
             class CRUD extends \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade {}
             class Widget extends \Backpack\CRUD\app\Library\Widget {}
             class Gravatar extends \Creativeorange\Gravatar\Facades\Gravatar {}
+            class Assets extends \DigitallyHappy\Assets\Facades\Assets {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Image extends \Intervention\Image\Facades\Image {}
             class Alert extends \Prologue\Alerts\Facades\Alert {}
+            class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
             class Setting extends \Backpack\Settings\app\Models\Setting {}
      
 }

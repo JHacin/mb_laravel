@@ -10,9 +10,10 @@
     "require": {
         "php": "^8.0",
         "backpack/backupmanager": "^3.0",
-        "backpack/crud": "4.1.*",
+        "backpack/crud": "^5.0.0",
         "backpack/logmanager": "^4.0",
         "backpack/permissionmanager": "^6.0",
+        "backpack/pro": "^1.0",
         "backpack/revise-operation": "^1.0",
         "backpack/settings": "^3.0",
         "doctrine/dbal": "^2.10.4",
@@ -86,5 +87,11 @@
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.backpackforlaravel.com/"
+        }
+    ]
 }

@@ -111,6 +111,7 @@ class SponsorshipMessageCrudController extends CrudController
 
         $this->addFilters();
     }
+
     protected function addFilters()
     {
         $this->crud->addFilter(
@@ -153,7 +154,6 @@ class SponsorshipMessageCrudController extends CrudController
             }
         );
     }
-
 
     protected function setupCreateOperation()
     {
@@ -263,6 +263,7 @@ class SponsorshipMessageCrudController extends CrudController
         return response()->json($sponsor->sponsorshipMessages->load('messageType'));
     }
 
+    /** @noinspection PhpUnused */
     public function getParsedTemplatePreview(Request $request): JsonResponse
     {
         $messageType = SponsorshipMessageType::find($request->query('message_type'));
