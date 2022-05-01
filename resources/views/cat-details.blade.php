@@ -101,7 +101,6 @@ $breadcrumbItems = [
                             href="{{ route('become_cat_sponsor', $cat) }}"
                             dusk="cat-details-become-sponsor-form-link"
                         >
-                            <x-icon icon="arrow-right"></x-icon>
                             <span>{{ $cat->is_group ? 'Postani boter' : 'Postani moj boter' }}</span>
                         </a>
                     @endif

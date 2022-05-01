@@ -63,7 +63,6 @@
                 href="{{ route('cat_list') }}"
                 dusk="go-to-cats-list-link"
             >
-                <x-icon icon="arrow-right"></x-icon>
                 <span>Muce, ki iščejo botra</span>
             </a>
         </div>

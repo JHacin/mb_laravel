@@ -4,18 +4,16 @@
 @php
 /** @var string $icon */
 $icon_class = match ($icon) {
-    'arrow-right' => 'fas fa-arrow-circle-right',
-    'burger' => 'fas fa-bars',
-    'close' => 'fas fa-times',
-    'plus' => 'fas fa-plus',
-    'instagram' => 'fab fa-instagram',
-    'facebook' => 'fab fa-facebook-f',
-    'email' => 'far fa-envelope',
-    'heart' => 'fas fa-heart',
-    'chevron-left' => 'fas fa-chevron-left',
-    'chevron-right' => 'fas fa-chevron-right',
-    'paw' => 'fas fa-paw',
-    'search' => 'fas fa-search',
+    'burger' => 'fa-solid fa-bars',
+    'close' => 'fa-solid fa-xmark',
+    'plus' => 'fa-solid fa-plus',
+    'instagram' => 'fa-brands fa-instagram',
+    'facebook' => 'fa-brands fa-facebook-f',
+    'email' => 'fa-solid fa-envelope',
+    'chevron-left' => 'fa-solid fa-chevron-left',
+    'chevron-right' => 'fa-solid fa-chevron-right',
+    'paw' => 'fa-solid fa-paw',
+    'search' => 'fa-solid fa-search',
 }
 @endphp
 {{-- blade-formatter-enable --}}

@@ -16,10 +16,7 @@
 
     <title>@yield('meta_title', 'Mačji boter')</title>
 
-    <script
-        defer
-        src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
-    ></script>
+    <script src="https://kit.fontawesome.com/671182e2cd.js" crossorigin="anonymous"></script>
 
     <!-- Styles -->
     <link
