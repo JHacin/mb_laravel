@@ -45,9 +45,11 @@ if (root) {
   );
 
   ReactDOM.render(
-    <StateMachineProvider>
-      <CatSponsorForm serverSideProps={serverSideProps} />
-    </StateMachineProvider>,
+    <React.StrictMode>
+      <StateMachineProvider>
+        <CatSponsorForm serverSideProps={serverSideProps} />
+      </StateMachineProvider>
+    </React.StrictMode>,
     document.getElementById('react-root__cat-sponsor-form')
   );
 }
