@@ -1,4 +1,4 @@
-import { SelectOption } from '../types';
+import { BoxOptionItem } from '../types';
 
 export enum Step {
   SPONSORSHIP_PARAMS = 'sponsorshipParams',
@@ -33,19 +33,19 @@ export const stepsWithoutGift: Step[] = stepsWithGift.filter(
   (step) => step !== Step.GIFTEE_DETAILS
 );
 
-export const isGiftOptions: SelectOption[] = [
+export const isGiftOptions: BoxOptionItem[] = [
   { label: 'Boter bom jaz', value: false, key: 'false' },
   { label: 'Botrstvo želim podariti', value: true, key: 'true' },
 ];
 
-export const amountOptions: SelectOption[] = [
+export const amountOptions: BoxOptionItem[] = [
   { label: '5€', value: 5, key: '5' },
   { label: '10€', value: 10, key: '10' },
   { label: '20€', value: 20, key: '20' },
   { label: '50€', value: 50, key: '50' },
 ];
 
-export const durationOptions: SelectOption[] = [
+export const durationOptions: BoxOptionItem[] = [
   { label: '1 mesec', value: 1, key: '1' },
   { label: '3 meseci', value: 3, key: '3' },
   { label: '6 mesecev', value: 6, key: '6' },

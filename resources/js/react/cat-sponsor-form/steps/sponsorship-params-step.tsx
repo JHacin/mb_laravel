@@ -2,23 +2,19 @@ import React, { FC, useState } from 'react';
 import { useForm, useController } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { BoxOption } from '../components/box-option';
-import { Input } from '../components/input';
-import { Checkbox } from '../components/checkbox';
-import { Error } from '../components/error';
-import { FORM_MODE } from './constants';
-import { durationOptions, isGiftOptions, amountOptions } from './model';
-import { useGlobalSync } from './hooks/use-global-sync';
-import { useGlobalState } from './hooks/use-global-state';
-import { SubmitButton } from './components/submit-button';
-import { ButtonRow } from './components/button-row';
-import { SponsorshipParamsStepFields } from '../types';
+import { BoxOption } from '../../components/box-option';
+import { Input } from '../../components/input';
+import { Checkbox } from '../../components/checkbox';
+import { Error } from '../../components/error';
+import { FORM_MODE } from '../constants';
+import { durationOptions, isGiftOptions, amountOptions } from '../model';
+import { useGlobalSync } from '../hooks/use-global-sync';
+import { useGlobalState } from '../hooks/use-global-state';
+import { SubmitButton } from '../components/submit-button';
+import { ButtonRow } from '../components/button-row';
+import { SharedStepProps, SponsorshipParamsStepFields } from '../../types';
 
-interface SponsorshipParamsStepProps {
-  onNext: () => void;
-}
-
-export const SponsorshipParamsStep: FC<SponsorshipParamsStepProps> = ({ onNext }) => {
+export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
   const { actions, state } = useGlobalState();
 
   const validationSchema = yup.object({

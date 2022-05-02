@@ -2,24 +2,17 @@ import React, { FC } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FORM_MODE } from './constants';
-import { useGlobalSync } from './hooks/use-global-sync';
-import { useGlobalState } from './hooks/use-global-state';
-import { createPersonDataValidationRules } from './utils';
-import { PersonDataFields } from './components/person-data-fields';
-import { BackButton } from './components/back-button';
-import { SubmitButton } from './components/submit-button';
-import { ButtonRow } from './components/button-row';
-import { PayerDetailsStepFields, SelectOption, PersonType } from '../types';
+import { FORM_MODE } from '../constants';
+import { useGlobalSync } from '../hooks/use-global-sync';
+import { useGlobalState } from '../hooks/use-global-state';
+import { createPersonDataValidationRules } from '../util';
+import { PersonDataFields } from '../components/person-data-fields';
+import { BackButton } from '../components/back-button';
+import { SubmitButton } from '../components/submit-button';
+import { ButtonRow } from '../components/button-row';
+import { PayerDetailsStepFields, PersonType, SharedStepProps } from '../../types';
 
-interface PayerDetailsStepProps {
-  onPrev: () => void;
-  onNext: () => void;
-  countryOptions: SelectOption[];
-  genderOptions: SelectOption[];
-}
-
-export const PayerDetailsStep: FC<PayerDetailsStepProps> = ({
+export const PayerDetailsStep: FC<SharedStepProps> = ({
   onPrev,
   onNext,
   countryOptions,

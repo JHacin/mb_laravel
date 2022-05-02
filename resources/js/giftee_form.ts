@@ -31,12 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   (function handleToggling() {
-    const radios = document.querySelectorAll('input[type="radio"][name="is_gift"]');
+    const radios = document.querySelectorAll<HTMLInputElement>(
+      'input[type="radio"][name="is_gift"]'
+    );
 
     for (let i = 0; i < radios.length; i += 1) {
-      radios[i].addEventListener('change', (event: any) => {
-        toggleFormVisibility(isGiftRadioValue(event.target.value));
-        toggleRequiredAttributes(isGiftRadioValue(event.target.value));
+      radios[i].addEventListener('change', (event) => {
+        const target = event.target as HTMLInputElement;
+        toggleFormVisibility(isGiftRadioValue(target.value));
+        toggleRequiredAttributes(isGiftRadioValue(target.value));
       });
     }
   })();

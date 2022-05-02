@@ -1,19 +1,15 @@
 import React, { useState, useRef, useEffect, FC, MutableRefObject } from 'react';
 import clsx from 'clsx';
-import { setLocale } from 'yup';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import axios from 'axios';
 import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
-import { SponsorshipParamsStep } from './sponsorship-params-step';
-import { SummaryStep } from './summary-step';
-import { PayerDetailsStep } from './payer-details-step';
-import { GifteeDetailsStep } from './giftee-details-step';
+import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
+import { SummaryStep } from './steps/summary-step';
+import { PayerDetailsStep } from './steps/payer-details-step';
+import { GifteeDetailsStep } from './steps/giftee-details-step';
 import { stepsWithGift, stepsWithoutGift, stepConfig, Step } from './model';
-import { locale } from './yup-locale';
 import { useGlobalState } from './hooks/use-global-state';
 import { ServerSideProps, SharedStepProps } from '../types';
-
-setLocale(locale);
 
 interface CatSponsorFormProps {
   serverSideProps: ServerSideProps;
@@ -67,6 +63,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
   const sharedStepProps: SharedStepProps = {
     onPrev: goToPrevStep,
     onNext: goToNextStep,
+    onFinalSubmit,
     countryOptions: Object.keys(serverSideProps.countryList.options).map((countryCode) => ({
       label: serverSideProps.countryList.options[countryCode],
       value: countryCode,
@@ -81,42 +78,33 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
 
   const stepComponents: {
     step: Step;
-    Component: any;
-    props: SharedStepProps & { onFinalSubmit?: () => void };
+    Component: FC<SharedStepProps>;
+    props: SharedStepProps;
     ref: MutableRefObject<HTMLElement | null>;
   }[] = [
     {
       step: Step.SPONSORSHIP_PARAMS,
       Component: SponsorshipParamsStep,
       ref: sponsorshipParamsStepRef,
-      props: {
-        ...sharedStepProps,
-      },
+      props: sharedStepProps,
     },
     {
       step: Step.PAYER_DETAILS,
       Component: PayerDetailsStep,
       ref: payerDetailsStepRef,
-      props: {
-        ...sharedStepProps,
-      },
+      props: sharedStepProps,
     },
     {
       step: Step.GIFTEE_DETAILS,
       Component: GifteeDetailsStep,
       ref: gifteeDetailsStepRef,
-      props: {
-        ...sharedStepProps,
-      },
+      props: sharedStepProps,
     },
     {
       step: Step.SUMMARY,
       Component: SummaryStep,
       ref: summaryStepRef,
-      props: {
-        ...sharedStepProps,
-        onFinalSubmit,
-      },
+      props: sharedStepProps,
     },
   ];
 

@@ -15,11 +15,18 @@ export interface ServerSideProps {
 export interface SharedStepProps {
   onPrev: () => void;
   onNext: () => void;
+  onFinalSubmit: () => void;
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
 }
 
 export interface SelectOption {
+  label: string;
+  value: string | number;
+  key: Key;
+}
+
+export interface BoxOptionItem {
   label: string;
   value: string | number | boolean;
   key: Key;

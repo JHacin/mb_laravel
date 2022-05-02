@@ -2,22 +2,17 @@ import React, { FC } from 'react';
 import { useController, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
-import { useGlobalSync } from './hooks/use-global-sync';
-import { Checkbox } from '../components/checkbox';
-import { FORM_MODE } from './constants';
-import { useGlobalState } from './hooks/use-global-state';
-import { Error } from '../components/error';
-import { BackButton } from './components/back-button';
-import { SubmitButton } from './components/submit-button';
-import { ButtonRow } from './components/button-row';
-import { SummaryStepFields } from '../types';
+import { useGlobalSync } from '../hooks/use-global-sync';
+import { Checkbox } from '../../components/checkbox';
+import { FORM_MODE } from '../constants';
+import { useGlobalState } from '../hooks/use-global-state';
+import { Error } from '../../components/error';
+import { BackButton } from '../components/back-button';
+import { SubmitButton } from '../components/submit-button';
+import { ButtonRow } from '../components/button-row';
+import { SharedStepProps, SummaryStepFields } from '../../types';
 
-interface SummaryStepProps {
-  onPrev: () => void;
-  onFinalSubmit: () => void;
-}
-
-export const SummaryStep: FC<SummaryStepProps> = ({ onPrev, onFinalSubmit }) => {
+export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
   const {
     actions,
     state: {

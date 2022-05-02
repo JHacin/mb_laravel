@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
+import { UseControllerReturn } from 'react-hook-form';
 import { Error } from '../../components/error';
 import { Input } from '../../components/input';
 
 interface HookFormTextFieldProps {
-  control: any;
+  control: UseControllerReturn<any, any>;
   autoComplete: string;
 }
 
