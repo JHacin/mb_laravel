@@ -9,12 +9,12 @@ import { PayerDetailsStep } from './payer-details-step';
 import { GifteeDetailsStep } from './giftee-details-step';
 import { stepsWithGift, stepsWithoutGift, stepConfig, Step } from './model';
 import { locale } from './yup-locale';
-import { useGlobalState } from "./hooks/use-global-state";
+import { useGlobalState } from './hooks/use-global-state';
 
 setLocale(locale);
 
 export function CatSponsorForm({ serverSideProps }) {
-  const { state, actions } = useGlobalState()
+  const { state, actions } = useGlobalState();
   const [activeStep, setActiveStep] = useState(Step.SPONSORSHIP_PARAMS);
   const scrollRef = useRef(null);
 
@@ -30,7 +30,7 @@ export function CatSponsorForm({ serverSideProps }) {
   };
 
   const onFinalSubmit = async () => {
-    actions.updateFormStateAction({ isSubmitting: true })
+    actions.updateFormStateAction({ isSubmitting: true });
 
     try {
       await axios.post(serverSideProps.requestUrl, state.formData);
@@ -38,7 +38,7 @@ export function CatSponsorForm({ serverSideProps }) {
       console.log(error.response);
     }
 
-    actions.updateFormStateAction({ isSubmitting: false })
+    actions.updateFormStateAction({ isSubmitting: false });
   };
 
   const scrollBackToTop = () => {

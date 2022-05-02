@@ -6,11 +6,19 @@ import { useGlobalSync } from './hooks/use-global-sync';
 import { Checkbox } from '../components/checkbox';
 import { FORM_MODE } from './constants';
 import { useGlobalState } from './hooks/use-global-state';
-import { Button } from '../components/button';
 import { Error } from '../components/error';
+import { BackButton } from './components/back-button';
+import { SubmitButton } from './components/submit-button';
+import { ButtonRow } from './components/button-row';
 
 export function SummaryStep({ onPrev, onFinalSubmit }) {
-  const { actions, state } = useGlobalState();
+  const {
+    actions,
+    state: {
+      formData,
+      formState: { isSubmitting },
+    },
+  } = useGlobalState();
 
   const validationSchema = yup.object({
     is_agreed_to_terms: yup
@@ -22,7 +30,7 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
     handleSubmit,
     watch,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
@@ -31,7 +39,7 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
   const { field: isAgreedToTermsControl } = useController({
     name: 'is_agreed_to_terms',
     control,
-    defaultValue: state.formData.is_agreed_to_terms,
+    defaultValue: formData.is_agreed_to_terms,
   });
 
   const onSubmit = (data) => {
@@ -53,13 +61,16 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
         {errors.is_agreed_to_terms && <Error>{errors.is_agreed_to_terms.message}</Error>}
       </div>
 
-      <Button type="button" color="secondary" onClick={onPrev}>
-        Nazaj
-      </Button>
-
-      <Button type="submit" color="primary">
-        {state.formState.isSubmitting ? '...' : 'Potrdi'}
-      </Button>
+      <ButtonRow>
+        <BackButton onClick={onPrev} />
+        <SubmitButton
+          isDisabled={!isValid}
+          isLoading={isSubmitting}
+          startIcon={isSubmitting ? null : <i className="fa-solid fa-paper-plane" />}
+        >
+          {isSubmitting ? 'Pošiljam...' : 'Pošlji'}
+        </SubmitButton>
+      </ButtonRow>
     </form>
   );
 }

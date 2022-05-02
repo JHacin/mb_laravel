@@ -10,7 +10,8 @@ import { FORM_MODE } from './constants';
 import { durationOptions, isGiftOptions, amountOptions } from './model';
 import { useGlobalSync } from './hooks/use-global-sync';
 import { useGlobalState } from './hooks/use-global-state';
-import { Button } from '../components/button';
+import { SubmitButton } from './components/submit-button';
+import { ButtonRow } from './components/button-row';
 
 export function SponsorshipParamsStep({ onNext }) {
   const { actions, state } = useGlobalState();
@@ -175,9 +176,9 @@ export function SponsorshipParamsStep({ onNext }) {
         />
       </div>
 
-      <Button type="submit" color={isValid ? 'primary' : 'disabled'}>
-        Naprej
-      </Button>
+      <ButtonRow>
+        <SubmitButton isDisabled={!isValid}>Naprej</SubmitButton>
+      </ButtonRow>
     </form>
   );
 }

@@ -7,7 +7,9 @@ import { useGlobalSync } from './hooks/use-global-sync';
 import { useGlobalState } from './hooks/use-global-state';
 import { createPersonDataValidationRules } from './utils';
 import { PersonDataFields } from './components/person-data-fields';
-import { Button } from '../components/button';
+import { BackButton } from './components/back-button';
+import { SubmitButton } from './components/submit-button';
+import { ButtonRow } from './components/button-row';
 
 export function GifteeDetailsStep({ onPrev, onNext, countryList, genderOptions }) {
   const { actions } = useGlobalState();
@@ -30,13 +32,10 @@ export function GifteeDetailsStep({ onPrev, onNext, countryList, genderOptions }
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <PersonDataFields prefix="giftee" countryList={countryList} genderOptions={genderOptions} />
 
-        <Button type="button" color="secondary" onClick={onPrev}>
-          Nazaj
-        </Button>
-
-        <Button type="submit" color="primary">
-          Naprej
-        </Button>
+        <ButtonRow>
+          <BackButton onClick={onPrev} />
+          <SubmitButton isDisabled={!methods.formState.isValid}>Naprej</SubmitButton>
+        </ButtonRow>
       </form>
     </FormProvider>
   );

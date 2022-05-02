@@ -7,6 +7,12 @@ module.exports = {
     './resources/**/*.js',
     './resources/**/*.jsx',
   ],
+  safelist: [
+    {
+      // TW can't pickup dynamic classes in the Button React component
+      pattern: /^mb-btn-/,
+    },
+  ],
   theme: {
     colors: {
       primary: '#d76f44',
