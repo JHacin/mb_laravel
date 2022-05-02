@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
+import { GifteeDetailsStepFields, PayerDetailsStepFields, PersonType, SelectOption } from 'react/types';
 import { BoxOption } from '../../components/box-option';
 import { Select } from '../../components/select';
 import { useGlobalState } from '../hooks/use-global-state';
 import { HookFormTextField } from './hook-form-text-field';
 
-export function PersonDataFields({ prefix, countryList, genderOptions }) {
+interface PersonDataFieldsProps {
+  prefix: PersonType
+  countryOptions: SelectOption[]
+  genderOptions: SelectOption[]
+}
+
+export const PersonDataFields: FC<PersonDataFieldsProps> = ({ prefix, countryOptions, genderOptions }) => {
   const { state } = useGlobalState();
-  const { control } = useFormContext();
+  const { control } = useFormContext<PayerDetailsStepFields | GifteeDetailsStepFields>();
 
-  const countryOptions = Object.keys(countryList.options).map((countryCode) => ({
-    key: countryCode,
-    label: countryList.options[countryCode],
-    value: countryCode,
-  }));
-
-  const Field = {
+  const Field: Record<string, keyof PayerDetailsStepFields | keyof GifteeDetailsStepFields> = {
     EMAIL: `${prefix}_email`,
     FIRST_NAME: `${prefix}_first_name`,
     LAST_NAME: `${prefix}_last_name`,
@@ -97,7 +98,7 @@ export function PersonDataFields({ prefix, countryList, genderOptions }) {
         <div className="flex space-x-4">
           {genderOptions.map((option) => (
             <BoxOption
-              key={option.value}
+              key={String(option.value)}
               label={option.label}
               onClick={() => {
                 genderControl.field.onChange(option.value);

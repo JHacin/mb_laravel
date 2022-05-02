@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useController, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
@@ -10,8 +10,14 @@ import { Error } from '../components/error';
 import { BackButton } from './components/back-button';
 import { SubmitButton } from './components/submit-button';
 import { ButtonRow } from './components/button-row';
+import { SummaryStepFields } from 'react/types';
 
-export function SummaryStep({ onPrev, onFinalSubmit }) {
+interface SummaryStepProps {
+  onPrev: () => void
+  onFinalSubmit: () => void
+}
+
+export const SummaryStep: FC<SummaryStepProps> = ({ onPrev, onFinalSubmit }) => {
   const {
     actions,
     state: {
@@ -31,7 +37,7 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
     watch,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<SummaryStepFields>({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
@@ -42,12 +48,12 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
     defaultValue: formData.is_agreed_to_terms,
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: SummaryStepFields) => {
     actions.updateFormDataAction(data);
     onFinalSubmit();
   };
 
-  useGlobalSync({ watch });
+  useGlobalSync<SummaryStepFields>({ watch });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

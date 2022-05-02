@@ -2,11 +2,12 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import { createStore, StateMachineProvider } from 'little-state-machine';
 import { CatSponsorForm } from './cat-sponsor-form/index';
+import { ServerSideProps } from './types';
 
 const root = document.getElementById('react-root__cat-sponsor-form');
 
 if (root) {
-  const serverSideProps = JSON.parse(root.getAttribute('data-props'));
+  const serverSideProps: ServerSideProps = JSON.parse(root.getAttribute('data-props') as string);
 
   createStore(
     {
@@ -23,7 +24,7 @@ if (root) {
         payer_address: '',
         payer_zip_code: '',
         payer_city: '',
-        payer_country: 'SI',
+        payer_country: serverSideProps.countryList.default,
         giftee_email: '',
         giftee_first_name: '',
         giftee_last_name: '',
@@ -31,7 +32,7 @@ if (root) {
         giftee_address: '',
         giftee_zip_code: '',
         giftee_city: '',
-        giftee_country: 'SI',
+        giftee_country: serverSideProps.countryList.default,
         is_agreed_to_terms: false,
       },
       formState: {

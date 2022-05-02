@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "noImplicitAny": true,
+      "module": "es6",
+      "target": "es6",
+      "jsx": "react",
+      "esModuleInterop": true,
+      "noImplicitThis": true,
+      "strictNullChecks": true,
+      "baseUrl": "./",
+      "moduleResolution": "node"
+    }
+}

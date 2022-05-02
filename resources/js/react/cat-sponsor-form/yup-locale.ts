@@ -1,6 +1,15 @@
-/* eslint-disable no-template-curly-in-string */
+import {
+  ArrayLocale,
+  BooleanLocale,
+  DateLocale,
+  LocaleObject,
+  MixedLocale,
+  NumberLocale,
+  ObjectLocale,
+  StringLocale,
+} from 'yup/lib/locale';
 
-const mixed = {
+const mixed: MixedLocale = {
   default: 'Vrednost ni veljavna.',
   required: 'Polje je obvezno.',
   oneOf: 'Vrednost mora biti ena izmed: ${values}.',
@@ -23,7 +32,7 @@ const mixed = {
   },
 };
 
-const string = {
+const string: StringLocale = {
   length: 'Vrednost mora vsebovati točno ${length} znakov.',
   min: 'Vrednost mora vsebovati najmanj ${min} znakov.',
   max: 'Vrednost mora vsebovati največ ${max} znakov.',
@@ -36,7 +45,7 @@ const string = {
   uppercase: 'Vrednost mora vsebovati samo velike tiskane črke.',
 };
 
-const number = {
+const number: NumberLocale = {
   min: 'Vrednost mora biti vsaj ${min}.',
   max: 'Vrednost mora biti največ ${max}.',
   lessThan: 'Vrednost mora biti manj kot ${less}.',
@@ -46,26 +55,26 @@ const number = {
   integer: 'Vrednost mora biti polna številka.',
 };
 
-const date = {
+const date: DateLocale = {
   min: 'Datum mora biti kasneje kot ${min}.',
   max: 'Datum mora biti prej kot ${max}.',
 };
 
-const boolean = {
+const boolean: BooleanLocale = {
   isValue: '${path} field must be ${value}',
 };
 
-const object = {
+const object: ObjectLocale = {
   noUnknown: '${path} field has unspecified keys: ${unknown}',
 };
 
-const array = {
+const array: ArrayLocale = {
   min: '${path} field must have at least ${min} items',
   max: '${path} field must have less than or equal to ${max} items',
   length: '${path} must have ${length} items',
 };
 
-export const locale = {
+export const locale: LocaleObject = {
   mixed,
   string,
   number,

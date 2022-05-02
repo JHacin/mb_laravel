@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useForm, useController } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,8 +12,13 @@ import { useGlobalSync } from './hooks/use-global-sync';
 import { useGlobalState } from './hooks/use-global-state';
 import { SubmitButton } from './components/submit-button';
 import { ButtonRow } from './components/button-row';
+import { SponsorshipParamsStepFields } from 'react/types';
 
-export function SponsorshipParamsStep({ onNext }) {
+interface SponsorshipParamsStepProps {
+  onNext: () => void
+}
+
+export const SponsorshipParamsStep: FC<SponsorshipParamsStepProps> = ({ onNext }) => {
   const { actions, state } = useGlobalState();
 
   const validationSchema = yup.object({
@@ -33,7 +38,7 @@ export function SponsorshipParamsStep({ onNext }) {
     control,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<SponsorshipParamsStepFields>({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
@@ -70,12 +75,12 @@ export function SponsorshipParamsStep({ onNext }) {
   const defaultDurationIsCustom = !durationOptions.some((o) => o.value === durationControl.value);
   const [isCustomDuration, setIsCustomDuration] = useState(defaultDurationIsCustom);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: SponsorshipParamsStepFields) => {
     actions.updateFormDataAction(data);
     onNext();
   };
 
-  useGlobalSync({ watch });
+  useGlobalSync<SponsorshipParamsStepFields>({ watch });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -84,7 +89,7 @@ export function SponsorshipParamsStep({ onNext }) {
         <div className="flex space-x-4">
           {isGiftOptions.map((option) => (
             <BoxOption
-              key={option.value}
+              key={option.key}
               label={option.label}
               onClick={() => {
                 isGiftControl.onChange(option.value);
@@ -100,7 +105,7 @@ export function SponsorshipParamsStep({ onNext }) {
         <div className="flex space-x-4">
           {amountOptions.map((option) => (
             <BoxOption
-              key={option.value}
+              key={option.key}
               label={option.label}
               onClick={() => {
                 setIsCustomAmount(false);
@@ -129,7 +134,7 @@ export function SponsorshipParamsStep({ onNext }) {
           <div className="flex space-x-2">
             {durationOptions.map((option) => (
               <BoxOption
-                key={option.value}
+                key={option.key}
                 label={option.label}
                 onClick={() => {
                   setIsCustomDuration(false);

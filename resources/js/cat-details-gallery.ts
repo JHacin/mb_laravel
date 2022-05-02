@@ -6,7 +6,14 @@ import lgZoom from 'lightgallery/plugins/zoom';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 
 document.addEventListener('DOMContentLoaded', () => {
-  lightGallery(document.querySelector('.js-cat-photo-gallery'), {
+  const element = document.querySelector<HTMLElement>('.js-cat-photo-gallery');
+
+  if (!element) {
+    console.error('Could not find the photo gallery instance element.');
+    return;
+  }
+
+  lightGallery(element, {
     plugins: [lgZoom, lgThumbnail],
     selector: '.js-gallery-image',
     mousewheel: true,

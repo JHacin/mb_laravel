@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import { Button } from '../../components/button';
 
-export function BackButton({ onClick }) {
+interface BackButtonProps {
+  onClick: MouseEventHandler
+}
+
+export const BackButton: FC<BackButtonProps> = ({ onClick }) => {
   return (
     <Button
       type="button"

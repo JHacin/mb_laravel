@@ -2,11 +2,11 @@ const mix = require('laravel-mix');
 
 mix
   .copyDirectory('resources/img', 'public/img')
-  .js('resources/js/app.js', 'public/js')
-  .js('resources/js/giftee_form.js', 'public/js')
-  .js('resources/js/cat-details-gallery.js', 'public/js');
+  .ts('resources/js/app.ts', 'public/js')
+  .ts('resources/js/giftee_form.ts', 'public/js')
+  .ts('resources/js/cat-details-gallery.ts', 'public/js');
 
-mix.js('resources/js/react/cat-sponsor-form.jsx', 'public/js').react();
+mix.ts('resources/js/react/cat-sponsor-form.tsx', 'public/js').react();
 
 mix.postCss('resources/css/app.css', 'public/css', [require('tailwindcss')]);
 

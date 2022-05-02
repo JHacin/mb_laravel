@@ -1,7 +1,13 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 
-export function BoxOption({ onClick, isSelected, label }) {
+interface BoxOptionProps {
+  onClick: MouseEventHandler
+  isSelected: boolean
+  label: string
+}
+
+export const BoxOption: FC<BoxOptionProps> = ({ onClick, isSelected, label }) => {
   return (
     <button
       type="button"

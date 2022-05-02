@@ -1,17 +1,29 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { FC, MouseEventHandler, ReactNode } from 'react';
 
-export function Button({
+interface ButtonProps {
+  type: 'button' | 'submit'
+  color: 'primary' | 'secondary' | 'primary-inverted'
+  size: 'lg'
+  onClick?: MouseEventHandler
+  isLoading?: boolean
+  isDisabled?: boolean
+  startIcon: ReactNode
+  classes?: string
+  children: ReactNode
+}
+
+export const Button: FC<ButtonProps> = ({
   type = 'button',
   color,
   size,
   onClick,
-  isLoading,
-  isDisabled,
+  isLoading = false,
+  isDisabled = false,
   startIcon,
   classes = '',
   children,
-}) {
+}) => {
   return (
     <button
       type={type}

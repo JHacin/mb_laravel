@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,28 +10,45 @@ import { PersonDataFields } from './components/person-data-fields';
 import { BackButton } from './components/back-button';
 import { SubmitButton } from './components/submit-button';
 import { ButtonRow } from './components/button-row';
+import { PayerDetailsStepFields, SelectOption, PersonType } from '../types';
 
-export function PayerDetailsStep({ onPrev, onNext, countryList, genderOptions }) {
+interface PayerDetailsStepProps {
+  onPrev: () => void;
+  onNext: () => void;
+  countryOptions: SelectOption[];
+  genderOptions: SelectOption[];
+}
+
+export const PayerDetailsStep: FC<PayerDetailsStepProps> = ({
+  onPrev,
+  onNext,
+  countryOptions,
+  genderOptions,
+}) => {
   const { actions } = useGlobalState();
 
-  const validationSchema = yup.object(createPersonDataValidationRules('payer'));
+  const validationSchema = yup.object(createPersonDataValidationRules(PersonType.Payer));
 
-  const methods = useForm({
+  const methods = useForm<PayerDetailsStepFields>({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: PayerDetailsStepFields) => {
     actions.updateFormDataAction(data);
     onNext();
   };
 
-  useGlobalSync({ watch: methods.watch });
+  useGlobalSync<PayerDetailsStepFields>({ watch: methods.watch });
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <PersonDataFields prefix="payer" countryList={countryList} genderOptions={genderOptions} />
+        <PersonDataFields
+          prefix={PersonType.Payer}
+          countryOptions={countryOptions}
+          genderOptions={genderOptions}
+        />
 
         <ButtonRow>
           <BackButton onClick={onPrev} />
@@ -40,4 +57,4 @@ export function PayerDetailsStep({ onPrev, onNext, countryList, genderOptions })
       </form>
     </FormProvider>
   );
-}
+};

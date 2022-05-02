@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, FC } from 'react';
 import clsx from 'clsx';
 import { setLocale } from 'yup';
-import { Transition } from 'react-transition-group';
+import { Transition, TransitionStatus } from 'react-transition-group';
 import axios from 'axios';
 import { SponsorshipParamsStep } from './sponsorship-params-step';
 import { SummaryStep } from './summary-step';
@@ -10,13 +10,19 @@ import { GifteeDetailsStep } from './giftee-details-step';
 import { stepsWithGift, stepsWithoutGift, stepConfig, Step } from './model';
 import { locale } from './yup-locale';
 import { useGlobalState } from './hooks/use-global-state';
+import { ServerSideProps, SharedStepProps } from 'react/types';
+import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
 
 setLocale(locale);
 
-export function CatSponsorForm({ serverSideProps }) {
+interface CatSponsorFormProps {
+  serverSideProps: ServerSideProps;
+}
+
+export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => {
   const { state, actions } = useGlobalState();
   const [activeStep, setActiveStep] = useState(Step.SPONSORSHIP_PARAMS);
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const availableSteps = state.formData.is_gift ? stepsWithGift : stepsWithoutGift;
   const activeStepIndex = availableSteps.findIndex((step) => step === activeStep);
@@ -54,17 +60,26 @@ export function CatSponsorForm({ serverSideProps }) {
     }
   };
 
-  const sharedStepProps = {
+  const sharedStepProps: SharedStepProps = {
     onPrev: goToPrevStep,
     onNext: goToNextStep,
-    countryList: serverSideProps.countryList,
+    countryOptions: Object.keys(serverSideProps.countryList.options).map((countryCode) => ({
+      label: serverSideProps.countryList.options[countryCode],
+      value: countryCode,
+      key: countryCode,
+    })),
     genderOptions: Object.keys(serverSideProps.gender.options).map((genderEnumValue) => ({
       label: serverSideProps.gender.options[genderEnumValue],
       value: Number(genderEnumValue),
+      key: String(genderEnumValue),
     })),
   };
 
-  const stepComponents = [
+  const stepComponents: {
+    step: Step;
+    Component: any;
+    props: SharedStepProps & { onFinalSubmit?: () => void };
+  }[] = [
     {
       step: Step.SPONSORSHIP_PARAMS,
       Component: SponsorshipParamsStep,
@@ -98,17 +113,17 @@ export function CatSponsorForm({ serverSideProps }) {
 
   const transitionDuration = 300;
 
-  const transitionStyles = {
-    entering: {
+  const transitionStyles: Partial<Record<TransitionStatus, { opacity: number }>> = {
+    [ENTERING]: {
       opacity: 1,
     },
-    entered: {
+    [ENTERED]: {
       opacity: 1,
     },
-    exiting: {
+    [EXITING]: {
       opacity: 0,
     },
-    exited: {
+    [EXITED]: {
       opacity: 0,
     },
   };
@@ -166,4 +181,4 @@ export function CatSponsorForm({ serverSideProps }) {
       </div>
     </div>
   );
-}
+};

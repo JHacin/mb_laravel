@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Error } from '../../components/error';
 import { Input } from '../../components/input';
 
-export function HookFormTextField({ control: { field, fieldState }, autoComplete }) {
+interface HookFormTextFieldProps {
+  control: any
+  autoComplete: string
+}
+
+export const HookFormTextField: FC<HookFormTextFieldProps> = ({ control: { field, fieldState }, autoComplete }) => {
   return (
     <>
       <Input

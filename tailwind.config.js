@@ -6,6 +6,8 @@ module.exports = {
     './app/View/Components/**/*.php',
     './resources/**/*.js',
     './resources/**/*.jsx',
+    './resources/**/*.ts',
+    './resources/**/*.tsx',
   ],
   safelist: [
     {
