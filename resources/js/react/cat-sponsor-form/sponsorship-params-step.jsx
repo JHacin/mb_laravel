@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useForm, useController } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -32,7 +32,7 @@ export function SponsorshipParamsStep({ onNext }) {
     handleSubmit,
     control,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
@@ -69,9 +69,6 @@ export function SponsorshipParamsStep({ onNext }) {
 
   const defaultDurationIsCustom = !durationOptions.some((o) => o.value === durationControl.value);
   const [isCustomDuration, setIsCustomDuration] = useState(defaultDurationIsCustom);
-
-  const customAmountInput = useRef(null);
-  const customDurationInput = useRef(null);
 
   const onSubmit = (data) => {
     actions.updateFormDataAction(data);
@@ -113,7 +110,7 @@ export function SponsorshipParamsStep({ onNext }) {
             />
           ))}
           <Input
-            ref={customAmountInput}
+            ref={amountControl.ref}
             value={isCustomAmount ? amountControl.value : ''}
             isInvalid={!!errors.monthly_amount}
             placeholder="Poljubni znesek v evrih"
@@ -143,7 +140,7 @@ export function SponsorshipParamsStep({ onNext }) {
             ))}
             <Input
               value={isCustomDuration ? durationControl.value : ''}
-              ref={customDurationInput}
+              ref={durationControl.ref}
               isInvalid={!!errors.duration}
               placeholder="Poljubno število mesecev"
               onChange={(event) => {
@@ -177,7 +174,7 @@ export function SponsorshipParamsStep({ onNext }) {
       </div>
 
       <ButtonRow>
-        <SubmitButton isDisabled={!isValid}>Naprej</SubmitButton>
+        <SubmitButton>Naprej</SubmitButton>
       </ButtonRow>
     </form>
   );

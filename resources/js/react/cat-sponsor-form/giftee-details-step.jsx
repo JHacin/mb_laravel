@@ -34,7 +34,7 @@ export function GifteeDetailsStep({ onPrev, onNext, countryList, genderOptions }
 
         <ButtonRow>
           <BackButton onClick={onPrev} />
-          <SubmitButton isDisabled={!methods.formState.isValid}>Naprej</SubmitButton>
+          <SubmitButton>Naprej</SubmitButton>
         </ButtonRow>
       </form>
     </FormProvider>

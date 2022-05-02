@@ -3,7 +3,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import { BoxOption } from '../../components/box-option';
 import { Select } from '../../components/select';
 import { useGlobalState } from '../hooks/use-global-state';
-import { SimpleTextField } from './simple-text-field';
+import { HookFormTextField } from './hook-form-text-field';
 
 export function PersonDataFields({ prefix, countryList, genderOptions }) {
   const { state } = useGlobalState();
@@ -73,12 +73,12 @@ export function PersonDataFields({ prefix, countryList, genderOptions }) {
     <>
       <div className="mb-form-group">
         <div className="mb-form-group-label">Email</div>
-        <SimpleTextField control={emailControl} autoComplete={`${autoCompletePrefix}email`} />
+        <HookFormTextField control={emailControl} autoComplete={`${autoCompletePrefix}email`} />
       </div>
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Ime</div>
-        <SimpleTextField
+        <HookFormTextField
           control={firstNameControl}
           autoComplete={`${autoCompletePrefix}given-name`}
         />
@@ -86,7 +86,7 @@ export function PersonDataFields({ prefix, countryList, genderOptions }) {
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Priimek</div>
-        <SimpleTextField
+        <HookFormTextField
           control={lastNameControl}
           autoComplete={`${autoCompletePrefix}family-name`}
         />
@@ -110,7 +110,7 @@ export function PersonDataFields({ prefix, countryList, genderOptions }) {
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Ulica in hišna številka</div>
-        <SimpleTextField
+        <HookFormTextField
           control={addressControl}
           autoComplete={`${autoCompletePrefix}street-address`}
         />
@@ -118,7 +118,7 @@ export function PersonDataFields({ prefix, countryList, genderOptions }) {
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Poštna številka</div>
-        <SimpleTextField
+        <HookFormTextField
           control={zipCodeControl}
           autoComplete={`${autoCompletePrefix}postal-code`}
         />
@@ -126,7 +126,7 @@ export function PersonDataFields({ prefix, countryList, genderOptions }) {
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Kraj</div>
-        <SimpleTextField
+        <HookFormTextField
           control={cityControl}
           autoComplete={`${autoCompletePrefix}address-level2`}
         />

@@ -30,7 +30,7 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
     handleSubmit,
     watch,
     control,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
@@ -57,6 +57,7 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
           id="is_agreed_to_terms"
           onChange={isAgreedToTermsControl.onChange}
           value={isAgreedToTermsControl.value}
+          ref={isAgreedToTermsControl.ref}
         />
         {errors.is_agreed_to_terms && <Error>{errors.is_agreed_to_terms.message}</Error>}
       </div>
@@ -64,7 +65,6 @@ export function SummaryStep({ onPrev, onFinalSubmit }) {
       <ButtonRow>
         <BackButton onClick={onPrev} />
         <SubmitButton
-          isDisabled={!isValid}
           isLoading={isSubmitting}
           startIcon={isSubmitting ? null : <i className="fa-solid fa-paper-plane" />}
         >

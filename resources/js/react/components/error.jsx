@@ -1,5 +1,5 @@
 import React from 'react';
 
 export function Error({ children }) {
-  return <span className="mb-form-error">{children}</span>;
+  return <div className="mb-form-error">{children}</div>;
 }

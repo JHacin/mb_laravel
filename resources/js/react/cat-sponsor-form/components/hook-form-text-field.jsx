@@ -2,19 +2,18 @@ import React from 'react';
 import { Error } from '../../components/error';
 import { Input } from '../../components/input';
 
-function SimpleTextFieldComponent({ control: { field, fieldState }, autoComplete }, ref) {
+export function HookFormTextField({ control: { field, fieldState }, autoComplete }) {
   return (
     <>
       <Input
         onChange={field.onChange}
-        hasError={!!fieldState.error}
+        onBlur={field.onBlur}
+        isInvalid={!!fieldState.error}
         value={field.value}
-        ref={ref}
+        ref={field.ref}
         autoComplete={autoComplete}
       />
       {fieldState.error && <Error>{fieldState.error.message}</Error>}
     </>
   );
 }
-
-export const SimpleTextField = React.forwardRef(SimpleTextFieldComponent);
