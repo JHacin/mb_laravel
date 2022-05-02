@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler } from 'react';
-import { SelectOption } from 'react/types';
+import { SelectOption } from '../types';
 
 interface SelectProps {
   options: SelectOption[];
@@ -8,15 +8,13 @@ interface SelectProps {
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ options, value, onChange }, ref) => {
-    return (
-      <select value={value as any} onChange={onChange} className="mb-select" ref={ref}>
-        {options.map((option) => (
-          <option value={option.value as any} key={option.key}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    );
-  }
+  ({ options, value, onChange }, ref) => (
+    <select value={value as any} onChange={onChange} className="mb-select" ref={ref}>
+      {options.map((option) => (
+        <option value={option.value as any} key={option.key}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  )
 );

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { setLocale } from 'yup';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import axios from 'axios';
+import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
 import { SponsorshipParamsStep } from './sponsorship-params-step';
 import { SummaryStep } from './summary-step';
 import { PayerDetailsStep } from './payer-details-step';
@@ -10,8 +11,7 @@ import { GifteeDetailsStep } from './giftee-details-step';
 import { stepsWithGift, stepsWithoutGift, stepConfig, Step } from './model';
 import { locale } from './yup-locale';
 import { useGlobalState } from './hooks/use-global-state';
-import { ServerSideProps, SharedStepProps } from 'react/types';
-import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
+import { ServerSideProps, SharedStepProps } from '../types';
 
 setLocale(locale);
 
@@ -41,7 +41,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
     try {
       await axios.post(serverSideProps.requestUrl, state.formData);
     } catch (error) {
-      console.log(error.response);
+      throw new Error(error.response);
     }
 
     actions.updateFormStateAction({ isSubmitting: false });

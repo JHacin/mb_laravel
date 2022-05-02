@@ -10,11 +10,11 @@ import { Error } from '../components/error';
 import { BackButton } from './components/back-button';
 import { SubmitButton } from './components/submit-button';
 import { ButtonRow } from './components/button-row';
-import { SummaryStepFields } from 'react/types';
+import { SummaryStepFields } from '../types';
 
 interface SummaryStepProps {
-  onPrev: () => void
-  onFinalSubmit: () => void
+  onPrev: () => void;
+  onFinalSubmit: () => void;
 }
 
 export const SummaryStep: FC<SummaryStepProps> = ({ onPrev, onFinalSubmit }) => {
@@ -79,4 +79,4 @@ export const SummaryStep: FC<SummaryStepProps> = ({ onPrev, onFinalSubmit }) => 
       </ButtonRow>
     </form>
   );
-}
+};

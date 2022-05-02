@@ -6,14 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
       triggers[i].addEventListener('click', () => {
         const content = triggers[i].nextElementSibling as HTMLElement | null;
         if (!content) {
-          console.error('Could not find expandable content.');
-          return;
+          throw new Error('Could not find expandable content.');
         }
 
         const icon = triggers[i].querySelector('svg');
         if (!icon) {
-          console.error('Could not find expandable content SVG icon.');
-          return;
+          throw new Error('Could not find expandable content SVG icon.');
         }
 
         const isOpen = content.getAttribute('data-expandable-content-state') === 'open';

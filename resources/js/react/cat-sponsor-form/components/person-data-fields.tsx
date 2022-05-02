@@ -1,18 +1,27 @@
 import React, { FC } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { GifteeDetailsStepFields, PayerDetailsStepFields, PersonType, SelectOption } from 'react/types';
+import {
+  GifteeDetailsStepFields,
+  PayerDetailsStepFields,
+  PersonType,
+  SelectOption,
+} from '../../types';
 import { BoxOption } from '../../components/box-option';
 import { Select } from '../../components/select';
 import { useGlobalState } from '../hooks/use-global-state';
 import { HookFormTextField } from './hook-form-text-field';
 
 interface PersonDataFieldsProps {
-  prefix: PersonType
-  countryOptions: SelectOption[]
-  genderOptions: SelectOption[]
+  prefix: PersonType;
+  countryOptions: SelectOption[];
+  genderOptions: SelectOption[];
 }
 
-export const PersonDataFields: FC<PersonDataFieldsProps> = ({ prefix, countryOptions, genderOptions }) => {
+export const PersonDataFields: FC<PersonDataFieldsProps> = ({
+  prefix,
+  countryOptions,
+  genderOptions,
+}) => {
   const { state } = useGlobalState();
   const { control } = useFormContext<PayerDetailsStepFields | GifteeDetailsStepFields>();
 
@@ -143,4 +152,4 @@ export const PersonDataFields: FC<PersonDataFieldsProps> = ({ prefix, countryOpt
       </div>
     </>
   );
-}
+};

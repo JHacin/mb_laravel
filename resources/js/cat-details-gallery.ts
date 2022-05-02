@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const element = document.querySelector<HTMLElement>('.js-cat-photo-gallery');
 
   if (!element) {
-    console.error('Could not find the photo gallery instance element.');
-    return;
+    throw new Error('Could not find the photo gallery instance element.');
   }
 
   lightGallery(element, {

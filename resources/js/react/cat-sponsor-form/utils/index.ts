@@ -1,5 +1,5 @@
-import { PersonType } from 'react/types';
 import * as yup from 'yup';
+import { PersonType } from '../../types';
 
 export const createPersonDataValidationRules = (prefix: PersonType) => ({
   [`${prefix}_email`]: yup.string().email().required(),

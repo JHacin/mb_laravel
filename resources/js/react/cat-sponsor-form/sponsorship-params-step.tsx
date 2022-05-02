@@ -12,10 +12,10 @@ import { useGlobalSync } from './hooks/use-global-sync';
 import { useGlobalState } from './hooks/use-global-state';
 import { SubmitButton } from './components/submit-button';
 import { ButtonRow } from './components/button-row';
-import { SponsorshipParamsStepFields } from 'react/types';
+import { SponsorshipParamsStepFields } from '../types';
 
 interface SponsorshipParamsStepProps {
-  onNext: () => void
+  onNext: () => void;
 }
 
 export const SponsorshipParamsStep: FC<SponsorshipParamsStepProps> = ({ onNext }) => {
@@ -183,4 +183,4 @@ export const SponsorshipParamsStep: FC<SponsorshipParamsStepProps> = ({ onNext }
       </ButtonRow>
     </form>
   );
-}
+};

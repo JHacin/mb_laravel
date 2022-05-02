@@ -1,14 +1,12 @@
-import { CatSponsorFormState } from 'react/types';
+import { CatSponsorFormState } from '../../types';
 
 export const updateFormStateAction = (
   state: CatSponsorFormState,
   payload: Partial<CatSponsorFormState['formState']>
-): CatSponsorFormState => {
-  return {
-    ...state,
-    formState: {
-      ...state.formState,
-      ...payload,
-    },
-  };
-};
+): CatSponsorFormState => ({
+  ...state,
+  formState: {
+    ...state.formState,
+    ...payload,
+  },
+});

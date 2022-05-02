@@ -1,4 +1,4 @@
-import { SelectOption } from 'react/types';
+import { SelectOption } from '../types';
 
 export enum Step {
   SPONSORSHIP_PARAMS = 'sponsorshipParams',

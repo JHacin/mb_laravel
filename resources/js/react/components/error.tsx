@@ -1,9 +1,9 @@
 import React, { FC, ReactNode } from 'react';
 
 interface ErrorProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
-export const Error: FC<ErrorProps> = ({ children }) => {
-  return <div className="mb-form-error">{children}</div>;
-}
+export const Error: FC<ErrorProps> = ({ children }) => (
+  <div className="mb-form-error">{children}</div>
+);

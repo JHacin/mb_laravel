@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useStateMachine } from 'little-state-machine';
+import { UseFormWatch } from 'react-hook-form';
 import { updateFormDataAction } from '../actions/updateFormDataAction';
-import { UseFormWatch, WatchObserver } from 'react-hook-form';
-import { AnyStepFields, PayerDetailsStepFields } from 'react/types';
+import { AnyStepFields } from '../../types';
 
 interface UseGlobalSyncParams<TFields extends AnyStepFields> {
   watch: UseFormWatch<TFields>;
@@ -19,5 +19,5 @@ export const useGlobalSync = <TFields extends AnyStepFields>({
     });
 
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, actions]);
 };
