@@ -6,7 +6,7 @@ mix
   .ts('resources/js/giftee_form.ts', 'public/js')
   .ts('resources/js/cat-details-gallery.ts', 'public/js');
 
-mix.ts('resources/js/react/cat-sponsor-form/index.tsx', 'public/js').react();
+mix.ts('resources/js/react/cat-sponsor-form/index.tsx', 'public/js/cat-sponsor-form.js').react();
 
 mix.postCss('resources/css/app.css', 'public/css', [require('tailwindcss')]);
 

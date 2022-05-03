@@ -1,4 +1,5 @@
 import { Key } from 'react';
+import { AnySchema } from 'yup';
 
 export interface SelectOption {
   label: string;
@@ -12,12 +13,9 @@ export interface BoxOptionItem {
   key: Key;
 }
 
-export enum PersonType {
-  Payer = 'payer',
-  Giftee = 'giftee',
-}
-
 export enum PersonGender {
   Male = 1,
   Female = 2,
 }
+
+export type YupValidationSchemaShape<TFields> = Record<keyof TFields, AnySchema>;

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { PersonType, SelectOption } from '../../types';
+import { SelectOption } from '../../types';
 import { BoxOption } from '../../components/box-option';
 import { Select } from '../../components/select';
 import { useGlobalState } from '../hooks/use-global-state';
@@ -8,7 +8,7 @@ import { HookFormTextField } from './hook-form-text-field';
 import { GifteeDetailsStepFields, PayerDetailsStepFields } from '../types';
 
 interface PersonDataFieldsProps {
-  prefix: PersonType;
+  prefix: 'payer' | 'giftee';
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
 }

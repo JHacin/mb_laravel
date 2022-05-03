@@ -11,6 +11,7 @@ import { BackButton } from '../components/back-button';
 import { SubmitButton } from '../components/submit-button';
 import { ButtonRow } from '../components/button-row';
 import { SharedStepProps, SummaryStepFields } from '../types';
+import { YupValidationSchemaShape } from '../../types';
 
 export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
   const {
@@ -21,7 +22,7 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
     },
   } = useGlobalState();
 
-  const validationSchema = yup.object({
+  const validationSchema = yup.object<YupValidationSchemaShape<SummaryStepFields>>({
     is_agreed_to_terms: yup
       .boolean()
       .oneOf([true], 'Prosimo označite, da se strinjate z zgoraj navedenim.'),

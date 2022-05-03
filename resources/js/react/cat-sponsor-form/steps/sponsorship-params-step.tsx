@@ -12,11 +12,12 @@ import { useGlobalState } from '../hooks/use-global-state';
 import { SubmitButton } from '../components/submit-button';
 import { ButtonRow } from '../components/button-row';
 import { SharedStepProps, SponsorshipParamsStepFields } from '../types';
+import { YupValidationSchemaShape } from '../../types';
 
 export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
   const { actions, state } = useGlobalState();
 
-  const validationSchema = yup.object({
+  const validationSchema = yup.object<YupValidationSchemaShape<SponsorshipParamsStepFields>>({
     is_gift: yup.boolean(),
     monthly_amount: yup.number().integer().min(5).required(),
     duration: yup.number().when('is_gift', {

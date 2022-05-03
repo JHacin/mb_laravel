@@ -5,12 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FORM_MODE } from '../constants';
 import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
 import { useGlobalState } from '../hooks/use-global-state';
-import { createPersonDataValidationRules } from '../util';
+import { createPayerValidationRules } from '../util';
 import { PersonDataFields } from '../components/person-data-fields';
 import { BackButton } from '../components/back-button';
 import { SubmitButton } from '../components/submit-button';
 import { ButtonRow } from '../components/button-row';
-import { PersonType } from '../../types';
+import { YupValidationSchemaShape } from '../../types';
 import { PayerDetailsStepFields, SharedStepProps } from '../types';
 
 export const PayerDetailsStep: FC<SharedStepProps> = ({
@@ -21,7 +21,9 @@ export const PayerDetailsStep: FC<SharedStepProps> = ({
 }) => {
   const { actions } = useGlobalState();
 
-  const validationSchema = yup.object(createPersonDataValidationRules(PersonType.Payer));
+  const validationSchema = yup.object<YupValidationSchemaShape<PayerDetailsStepFields>>(
+    createPayerValidationRules()
+  );
 
   const methods = useForm<PayerDetailsStepFields>({
     mode: FORM_MODE,
@@ -39,7 +41,7 @@ export const PayerDetailsStep: FC<SharedStepProps> = ({
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <PersonDataFields
-          prefix={PersonType.Payer}
+          prefix="payer"
           countryOptions={countryOptions}
           genderOptions={genderOptions}
         />
