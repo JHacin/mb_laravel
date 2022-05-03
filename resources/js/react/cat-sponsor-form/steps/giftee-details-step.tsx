@@ -3,14 +3,15 @@ import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FORM_MODE } from '../constants';
-import { useGlobalSync } from '../hooks/use-global-sync';
+import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
 import { useGlobalState } from '../hooks/use-global-state';
 import { createPersonDataValidationRules } from '../util';
 import { PersonDataFields } from '../components/person-data-fields';
 import { BackButton } from '../components/back-button';
 import { SubmitButton } from '../components/submit-button';
 import { ButtonRow } from '../components/button-row';
-import { GifteeDetailsStepFields, PersonType, SharedStepProps } from '../../types';
+import { PersonType } from '../../types';
+import { GifteeDetailsStepFields, SharedStepProps } from '../types';
 
 export const GifteeDetailsStep: FC<SharedStepProps> = ({
   onPrev,
@@ -27,12 +28,12 @@ export const GifteeDetailsStep: FC<SharedStepProps> = ({
     resolver: yupResolver(validationSchema),
   });
 
+  useGlobalFormDataUpdate({ watch: methods.watch, actions });
+
   const onSubmit = (data: GifteeDetailsStepFields) => {
     actions.updateFormDataAction(data);
     onNext();
   };
-
-  useGlobalSync<GifteeDetailsStepFields>({ watch: methods.watch });
 
   return (
     <FormProvider {...methods}>

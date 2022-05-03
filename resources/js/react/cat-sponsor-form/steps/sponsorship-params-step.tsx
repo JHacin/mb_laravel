@@ -6,13 +6,12 @@ import { BoxOption } from '../../components/box-option';
 import { Input } from '../../components/input';
 import { Checkbox } from '../../components/checkbox';
 import { Error } from '../../components/error';
-import { FORM_MODE } from '../constants';
-import { durationOptions, isGiftOptions, amountOptions } from '../model';
-import { useGlobalSync } from '../hooks/use-global-sync';
+import { AMOUNT_OPTIONS, DURATION_OPTIONS, FORM_MODE, IS_GIFT_OPTIONS } from '../constants';
+import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
 import { useGlobalState } from '../hooks/use-global-state';
 import { SubmitButton } from '../components/submit-button';
 import { ButtonRow } from '../components/button-row';
-import { SharedStepProps, SponsorshipParamsStepFields } from '../../types';
+import { SharedStepProps, SponsorshipParamsStepFields } from '../types';
 
 export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
   const { actions, state } = useGlobalState();
@@ -38,6 +37,8 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
+
+  useGlobalFormDataUpdate({ watch, actions });
 
   const { field: isGiftControl } = useController({
     name: 'is_gift',
@@ -65,10 +66,10 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
     defaultValue: state.formData.is_anonymous,
   });
 
-  const defaultAmountIsCustom = !amountOptions.some((o) => o.value === amountControl.value);
+  const defaultAmountIsCustom = !AMOUNT_OPTIONS.some((o) => o.value === amountControl.value);
   const [isCustomAmount, setIsCustomAmount] = useState(defaultAmountIsCustom);
 
-  const defaultDurationIsCustom = !durationOptions.some((o) => o.value === durationControl.value);
+  const defaultDurationIsCustom = !DURATION_OPTIONS.some((o) => o.value === durationControl.value);
   const [isCustomDuration, setIsCustomDuration] = useState(defaultDurationIsCustom);
 
   const onSubmit = (data: SponsorshipParamsStepFields) => {
@@ -76,14 +77,12 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
     onNext();
   };
 
-  useGlobalSync<SponsorshipParamsStepFields>({ watch });
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-form-group">
         <div className="mb-form-group-label">Komu je botrstvo namenjeno?</div>
         <div className="flex space-x-4">
-          {isGiftOptions.map((option) => (
+          {IS_GIFT_OPTIONS.map((option) => (
             <BoxOption
               key={option.key}
               label={option.label}
@@ -99,7 +98,7 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
       <div className="mb-form-group">
         <div className="mb-form-group-label">Mesečni znesek</div>
         <div className="flex space-x-4">
-          {amountOptions.map((option) => (
+          {AMOUNT_OPTIONS.map((option) => (
             <BoxOption
               key={option.key}
               label={option.label}
@@ -128,7 +127,7 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
         <div className="mb-form-group">
           <div className="mb-form-group-label">Trajanje</div>
           <div className="flex space-x-2">
-            {durationOptions.map((option) => (
+            {DURATION_OPTIONS.map((option) => (
               <BoxOption
                 key={option.key}
                 label={option.label}

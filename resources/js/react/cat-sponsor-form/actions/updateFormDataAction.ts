@@ -1,4 +1,4 @@
-import { AnyStepFields, CatSponsorFormState } from '../../types';
+import { AnyStepFields, CatSponsorFormState } from '../types';
 
 export const updateFormDataAction = <TFields extends AnyStepFields>(
   state: CatSponsorFormState,

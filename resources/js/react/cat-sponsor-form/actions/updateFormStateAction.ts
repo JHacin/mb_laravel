@@ -1,4 +1,4 @@
-import { CatSponsorFormState } from '../../types';
+import { CatSponsorFormState } from '../types';
 
 export const updateFormStateAction = (
   state: CatSponsorFormState,
