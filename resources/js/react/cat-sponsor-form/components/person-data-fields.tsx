@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { SelectOption } from '../../types';
 import { BoxOption } from '../../components/box-option';
-import { Select } from '../../components/select';
 import { useGlobalState } from '../hooks/use-global-state';
-import { HookFormTextField } from './hook-form-text-field';
+import { HookFormTextField } from './hook-form-textfield';
 import { GifteeDetailsStepFields, PayerDetailsStepFields } from '../types';
+import { HookFormSelect } from './hook-form-select';
 
 interface PersonDataFieldsProps {
   prefix: 'payer' | 'giftee';
@@ -140,11 +140,7 @@ export const PersonDataFields: FC<PersonDataFieldsProps> = ({
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Država</div>
-        <Select
-          options={countryOptions}
-          value={countryControl.field.value}
-          onChange={countryControl.field.onChange}
-        />
+        <HookFormSelect options={countryOptions} control={countryControl} />
       </div>
     </>
   );

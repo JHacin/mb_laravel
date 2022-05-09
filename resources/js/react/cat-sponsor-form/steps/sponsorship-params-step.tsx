@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { BoxOption } from '../../components/box-option';
 import { Input } from '../../components/input';
-import { Checkbox } from '../../components/checkbox';
 import { Error } from '../../components/error';
 import { AMOUNT_OPTIONS, DURATION_OPTIONS, FORM_MODE, IS_GIFT_OPTIONS } from '../constants';
 import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
@@ -13,6 +12,7 @@ import { SubmitButton } from '../components/submit-button';
 import { ButtonRow } from '../components/button-row';
 import { SharedStepProps, SponsorshipParamsStepFields } from '../types';
 import { YupValidationSchemaShape } from '../../types';
+import { HookFormCheckbox } from '../components/hook-form-checkbox';
 
 export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
   const { actions, state } = useGlobalState();
@@ -56,12 +56,12 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
     control,
     defaultValue: state.formData.duration,
   });
-  const { field: wantsDirectDebitControl } = useController({
+  const wantsDirectDebitControl = useController({
     name: 'wants_direct_debit',
     control,
     defaultValue: state.formData.wants_direct_debit,
   });
-  const { field: isAnonymousControl } = useController({
+  const isAnonymousControl = useController({
     name: 'is_anonymous',
     control,
     defaultValue: state.formData.is_anonymous,
@@ -155,23 +155,14 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
       )}
 
       <div className="mb-form-group">
-        <Checkbox
+        <HookFormCheckbox
           label="Želim, da mi pošljete informacije v zvezi z ureditvijo trajnika"
-          id="wants_direct_debit"
-          onChange={wantsDirectDebitControl.onChange}
-          value={wantsDirectDebitControl.value}
-          ref={wantsDirectDebitControl.ref}
+          control={wantsDirectDebitControl}
         />
       </div>
 
       <div className="mb-form-group">
-        <Checkbox
-          label="Botrstvo naj bo anonimno"
-          id="is_anonymous"
-          onChange={isAnonymousControl.onChange}
-          value={isAnonymousControl.value}
-          ref={isAnonymousControl.ref}
-        />
+        <HookFormCheckbox label="Botrstvo naj bo anonimno" control={isAnonymousControl} />
       </div>
 
       <ButtonRow>

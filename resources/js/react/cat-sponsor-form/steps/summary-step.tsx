@@ -3,15 +3,14 @@ import { useController, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
 import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
-import { Checkbox } from '../../components/checkbox';
 import { FORM_MODE } from '../constants';
 import { useGlobalState } from '../hooks/use-global-state';
-import { Error } from '../../components/error';
 import { BackButton } from '../components/back-button';
 import { SubmitButton } from '../components/submit-button';
 import { ButtonRow } from '../components/button-row';
 import { SharedStepProps, SummaryStepFields } from '../types';
 import { YupValidationSchemaShape } from '../../types';
+import { HookFormCheckbox } from '../components/hook-form-checkbox';
 
 export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
   const {
@@ -28,19 +27,14 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
       .oneOf([true], 'Prosimo označite, da se strinjate z zgoraj navedenim.'),
   });
 
-  const {
-    handleSubmit,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm<SummaryStepFields>({
+  const { handleSubmit, watch, control } = useForm<SummaryStepFields>({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
 
   useGlobalFormDataUpdate({ watch, actions });
 
-  const { field: isAgreedToTermsControl } = useController({
+  const isAgreedToTermsControl = useController({
     name: 'is_agreed_to_terms',
     control,
     defaultValue: formData.is_agreed_to_terms,
@@ -54,14 +48,7 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-form-group">
-        <Checkbox
-          label="Strinjam se"
-          id="is_agreed_to_terms"
-          onChange={isAgreedToTermsControl.onChange}
-          value={isAgreedToTermsControl.value}
-          ref={isAgreedToTermsControl.ref}
-        />
-        {errors.is_agreed_to_terms && <Error>{errors.is_agreed_to_terms.message}</Error>}
+        <HookFormCheckbox label="Strinjam se" control={isAgreedToTermsControl} />
       </div>
 
       <ButtonRow>
