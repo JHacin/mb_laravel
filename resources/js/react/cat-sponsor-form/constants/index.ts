@@ -5,13 +5,13 @@ export const FORM_MODE = 'all';
 
 export const STEP_CONFIG: Record<Step, { label: string }> = {
   [Step.SPONSORSHIP_PARAMS]: {
-    label: 'Podatki botrstva',
+    label: 'Botrstvo',
   },
   [Step.PAYER_DETAILS]: {
-    label: 'Podatki plačnika',
+    label: 'Plačnik',
   },
   [Step.GIFTEE_DETAILS]: {
-    label: 'Podatki obdarovanca',
+    label: 'Obdarovanec',
   },
   [Step.SUMMARY]: {
     label: 'Zaključek',

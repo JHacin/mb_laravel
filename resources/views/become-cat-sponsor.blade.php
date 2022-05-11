@@ -36,8 +36,8 @@ $breadcrumbItems = [
         <div class="mt-8 mb-6">
             <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>
         </div>
-        <div class="mb-section pt-0 grid grid-cols-1 gap-6 lg:grid-cols-5">
-            <div class="lg:col-span-3">
+        <div class="mb-section pt-0 grid grid-cols-1 gap-6 lg:grid-cols-7">
+            <div class="lg:col-span-4">
                 <x-cat-photo
                     src="{{ $cat->first_photo_url }}"
                     alt="{{ $cat->name }}"
@@ -64,7 +64,7 @@ $breadcrumbItems = [
                     </div>
                 </div>
             </div>
-            <div class="lg:col-span-2">
+            <div class="lg:col-span-3">
                 <div
                     id="react-root__cat-sponsor-form"
                     data-props="{{ json_encode($formComponentProps) }}"

@@ -136,7 +136,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
         <div>{`Korak ${activeStepIndex + 1}/${availableSteps.length}`}</div>
       </div>
 
-      <div className="hidden lg:flex space-x-4 bg-gray-extralight p-5">
+      <div className="hidden lg:flex space-x-4 bg-gray-extralight px-5 py-4">
         {availableSteps.map((step, index) => {
           const isActive = activeStep === step;
 
@@ -144,14 +144,20 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
             <div className="flex items-center space-x-2" key={step}>
               <div
                 className={clsx(
-                  'border rounded-full w-5 h-5 flex justify-center items-center',
+                  'border rounded-full w-5 h-5 flex justify-center items-center text-sm',
                   isActive && 'bg-primary border-primary text-white',
                   !isActive && 'text-gray-semi border-gray-semi'
                 )}
               >
                 {index + 1}
               </div>
-              <div className={clsx(!isActive && 'text-gray-semi', isActive && 'text-gray-dark')}>
+              <div
+                className={clsx(
+                  'text-sm',
+                  !isActive && 'text-gray-semi',
+                  isActive && 'text-gray-dark'
+                )}
+              >
                 {STEP_CONFIG[step].label}
               </div>
             </div>
