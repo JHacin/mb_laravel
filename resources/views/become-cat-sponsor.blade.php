@@ -32,49 +32,56 @@ $breadcrumbItems = [
 @endphp
 
 @section('content')
-    <div class="mb-container">
+    <div class="mb-container max-w-7xl">
         <div class="mt-8 mb-6">
             <x-breadcrumbs :items="$breadcrumbItems"></x-breadcrumbs>
         </div>
-
-        <div class="mb-section pt-0 grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <div>
+        <div class="mb-section pt-0 grid grid-cols-1 gap-6 lg:grid-cols-5">
+            <div class="lg:col-span-3">
                 <x-cat-photo
-                        src="{{ $cat->first_photo_url }}"
-                        alt="{{ $cat->name }}"
+                    src="{{ $cat->first_photo_url }}"
+                    alt="{{ $cat->name }}"
                 ></x-cat-photo>
 
                 <div class="mt-6 space-y-4 bg-gray-extralight p-5">
                     <div>
-                        Hvala vam, ker ste se odločili za sklenitev botrovanja.
+                        Hvala vam, ker ste se odločili za sklenitev botrstva.
                         Z vašo pomočjo lahko mucam omogočimo varno in zadovoljno življenje.
                     </div>
                     <div>
                         Več o razlogih za botrovanje si lahko preberete na
-                        <a href="{{ route('why_become_sponsor') }}" class="mb-link">tej povezavi</a>.
+                        <a
+                            href="{{ route('why_become_sponsor') }}"
+                            class="mb-link"
+                        >tej povezavi</a>.
                     </div>
                     <div>
                         Če vas glede postopka botrovanja še kar koli zanima, nam lahko pišete na naslov
-                        <a class="mb-link" href="mailto:{{ config('links.contact_email') }}">{{ config('links.contact_email') }}</a>.
+                        <a
+                            class="mb-link"
+                            href="mailto:{{ config('links.contact_email') }}"
+                        >{{ config('links.contact_email') }}</a>.
                     </div>
                 </div>
             </div>
-            <div
-                id="react-root__cat-sponsor-form"
-                data-props="{{ json_encode($formComponentProps) }}"
-            ></div>
+            <div class="lg:col-span-2">
+                <div
+                    id="react-root__cat-sponsor-form"
+                    data-props="{{ json_encode($formComponentProps) }}"
+                ></div>
+            </div>
         </div>
 
 
 
-{{--        <div class="grid grid-cols-5">--}}
-{{--            <div class="mb-section pt-0 col-span-full lg:col-span-3">--}}
-{{--                <div--}}
-{{--                    id="react-root__cat-sponsor-form"--}}
-{{--                    data-props="{{ json_encode($formComponentProps) }}"--}}
-{{--                ></div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        {{-- <div class="grid grid-cols-5"> --}}
+        {{-- <div class="mb-section pt-0 col-span-full lg:col-span-3"> --}}
+        {{-- <div --}}
+        {{-- id="react-root__cat-sponsor-form" --}}
+        {{-- data-props="{{ json_encode($formComponentProps) }}" --}}
+        {{-- ></div> --}}
+        {{-- </div> --}}
+        {{-- </div> --}}
 
 
         {{-- @if (!$errors->isEmpty()) --}}
