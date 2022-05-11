@@ -1,5 +1,3 @@
-@props(['shouldHideNav'])
-
 @php
 $pageLinks = [
     [
@@ -31,7 +29,7 @@ $pageLinks = [
 @endphp
 
 {{-- Desktop nav --}}
-<x-header.desktop :pageLinks="$pageLinks" :shouldHideNav="$shouldHideNav"></x-header.desktop>
+<x-header.desktop :pageLinks="$pageLinks"></x-header.desktop>
 
 {{-- Mobile nav --}}
 <x-header.mobile :pageLinks="$pageLinks"></x-header.mobile>

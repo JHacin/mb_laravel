@@ -130,7 +130,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
   }, [activeStep]);
 
   return (
-    <div className="border border-gray-semi" ref={scrollRef}>
+    <div className="border border-gray-semi/70" ref={scrollRef}>
       <div className="flex justify-between lg:hidden px-4 pt-4 text-sm text-gray-semi">
         <div>{STEP_CONFIG[activeStep].label}</div>
         <div>{`Korak ${activeStepIndex + 1}/${availableSteps.length}`}</div>

@@ -1,4 +1,4 @@
-@props(['pageLinks', 'shouldHideNav'])
+@props(['pageLinks'])
 
 @php
 $currentRouteName = Route::currentRouteName();
@@ -16,15 +16,13 @@ $isHomepage = $currentRouteName === 'home';
             class="flex justify-between space-x-4"
         >
             <div class="flex items-center justify-between">
-                @if(!$shouldHideNav)
-                    <span
-                        class="xl:hidden flex items-center cursor-pointer p-2 mr-2 text-2xl md:text-4xl md:mr-4"
-                        role="button"
-                        data-mobile-nav-open-btn
-                    >
-                        <x-icon icon="burger"></x-icon>
-                    </span>
-                @endif
+                <span
+                    class="xl:hidden flex items-center cursor-pointer p-2 mr-2 text-2xl md:text-4xl md:mr-4"
+                    role="button"
+                    data-mobile-nav-open-btn
+                >
+                    <x-icon icon="burger"></x-icon>
+                </span>
 
                 <a
                     href="{{ route('home') }}"
@@ -38,28 +36,26 @@ $isHomepage = $currentRouteName === 'home';
                 </a>
             </div>
 
-            @if(!$shouldHideNav)
-                <div class="flex items-center">
-                    <div class="hidden xl:flex items-center space-x-6 mr-7">
-                        @foreach ($pageLinks as $pageLink)
-                            <a
-                                class="text-lg font-semibold transition-all hover:text-gray-semi"
-                                href="{{ route($pageLink['route_name']) }}"
-                                dusk="{{ $pageLink['dusk'] }}"
-                            >
-                                {{ $pageLink['label'] }}
-                            </a>
-                        @endforeach
-                    </div>
-
-                    <a
-                        class="mb-btn mb-btn-primary text-lg justify-self-end"
-                        href="{{ route('become_sponsor_overview') }}"
-                    >
-                        <span>Postani boter</span>
-                    </a>
+            <div class="flex items-center">
+                <div class="hidden xl:flex items-center space-x-6 mr-7">
+                    @foreach ($pageLinks as $pageLink)
+                        <a
+                            class="text-lg font-semibold transition-all hover:text-gray-semi"
+                            href="{{ route($pageLink['route_name']) }}"
+                            dusk="{{ $pageLink['dusk'] }}"
+                        >
+                            {{ $pageLink['label'] }}
+                        </a>
+                    @endforeach
                 </div>
-            @endif
+
+                <a
+                    class="mb-btn mb-btn-primary text-lg justify-self-end"
+                    href="{{ route('become_sponsor_overview') }}"
+                >
+                    <span>Postani boter</span>
+                </a>
+            </div>
         </nav>
 
         @if ($isHomepage)

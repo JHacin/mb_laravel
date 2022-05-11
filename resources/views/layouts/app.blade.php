@@ -16,7 +16,10 @@
 
     <title>@yield('meta_title', 'Mačji boter')</title>
 
-    <script src="https://kit.fontawesome.com/671182e2cd.js" crossorigin="anonymous"></script>
+    <script
+        src="https://kit.fontawesome.com/671182e2cd.js"
+        crossorigin="anonymous"
+    ></script>
 
     <!-- Styles -->
     <link
@@ -44,9 +47,9 @@
 <body>
     @stack('body-start-scripts')
 
-    <x-header :shouldHideNav="$isFormLayout ?? false"></x-header>
+    <x-header></x-header>
     <main>@yield('content')</main>
-    <x-footer :shouldHideNav="$isFormLayout ?? false"></x-footer>
+    <x-footer></x-footer>
 
     <script src="{{ mix('js/app.js') }}"></script>
 
