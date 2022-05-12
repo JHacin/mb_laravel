@@ -17,7 +17,7 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
     actions,
     state: {
       formData,
-      formState: { isSubmitting },
+      formState: { isSubmitting, apiErrors },
     },
   } = useGlobalState();
 
@@ -50,6 +50,24 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
       <div className="mb-form-group">
         <HookFormCheckbox label="Strinjam se" control={isAgreedToTermsControl} />
       </div>
+
+      {apiErrors && (
+        <div className="mb-form-group">
+          {Object.keys(apiErrors).map((fieldName) => (
+            <div key={fieldName}>
+              <div>{fieldName}:</div>
+              <div>
+                <ul>
+                  {apiErrors[fieldName].map((errorMessage) => (
+                    <li key={errorMessage}>{errorMessage}</li>
+                  ))}
+                </ul>
+              </div>
+              <hr />
+            </div>
+          ))}
+        </div>
+      )}
 
       <ButtonRow>
         <BackButton onClick={onPrev} />

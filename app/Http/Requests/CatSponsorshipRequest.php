@@ -70,10 +70,10 @@ class CatSponsorshipRequest extends FormRequest
     {
         return [
             'payer_email.not_in' =>
-                'Muca že ima aktivnega botra s tem email naslovom.' .
+            'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
             'giftee_email.not_in' =>
-                'Muca že ima aktivnega botra s tem email naslovom.' .
+            'Muca že ima aktivnega botra s tem email naslovom.' .
                 ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
         ];
     }

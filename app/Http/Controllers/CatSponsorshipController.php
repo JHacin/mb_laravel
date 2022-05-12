@@ -10,7 +10,6 @@ use App\Models\PersonData;
 use App\Models\Sponsorship;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 
 class CatSponsorshipController extends Controller
 {
@@ -27,19 +26,6 @@ class CatSponsorshipController extends Controller
     {
         $this->validateCatStatus($cat);
 
-        // todo: validate
-
-        // todo: make db stuff
-
-        // todo: response
-
-        return response()->json(['hello' => $cat]);
-    }
-
-    public function xsubmit(Cat $cat, CatSponsorshipRequest $request): RedirectResponse
-    {
-        $this->validateCatStatus($cat);
-
         $payer = $this->getPayerFromFormData($request);
         $giftee = $this->getGifteeFromFormData($request);
 
@@ -47,7 +33,7 @@ class CatSponsorshipController extends Controller
 
         $this->sponsorshipMail->sendInitialInstructionsEmail($sponsorship);
 
-        return $this->successRedirect();
+        return response()->json(['status' => 'success']);
     }
 
     protected function createSponsorship(

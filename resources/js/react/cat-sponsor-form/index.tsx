@@ -40,6 +40,7 @@ if (root) {
     },
     formState: {
       isSubmitting: false,
+      apiErrors: null,
     },
   };
 

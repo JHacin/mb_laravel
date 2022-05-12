@@ -4,30 +4,35 @@ namespace App\Http\Controllers\Traits;
 
 use App\Models\PersonData;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\RedirectResponse;
 
 trait HasSponsorshipForm
 {
     protected function getPayerFromFormData(FormRequest $request): PersonData
     {
-        return $this->updateOrCreatePersonData($request->input('personData'));
+        return $this->updateOrCreatePersonData($this->constructPersonDataFields($request, 'payer'));
     }
 
     protected function getGifteeFromFormData(FormRequest $request): ?PersonData
     {
         if ($request->input('is_gift') === 'yes') {
-            return $this->updateOrCreatePersonData($request->input('giftee'));
+            return $this->updateOrCreatePersonData($this->constructPersonDataFields($request, 'giftee'));
         }
 
         return null;
     }
 
-    protected function successRedirect(): RedirectResponse
+    protected function constructPersonDataFields(FormRequest $request, string $prefix): array
     {
-        return back()->with(
-            'success_message',
-            'Hvala! Na email naslov smo vam poslali navodila za zaključek postopka.'
-        );
+        return [
+            'email' => $request->input($prefix . '_email'),
+            'first_name' => $request->input($prefix . '_first_name'),
+            'last_name' => $request->input($prefix . '_last_name'),
+            'gender' => $request->input($prefix . '_gender'),
+            'address' => $request->input($prefix . '_address'),
+            'zip_code' => $request->input($prefix . '_zip_code'),
+            'city' => $request->input($prefix . '_city'),
+            'country' => $request->input($prefix . '_country'),
+        ];
     }
 
     private function updateOrCreatePersonData(array $personDataFormInput): PersonData

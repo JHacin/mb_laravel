@@ -67,6 +67,7 @@ export interface CatSponsorFormState {
     SummaryStepFields;
   formState: {
     isSubmitting: boolean;
+    apiErrors: CatSponsorFormErrorResponse['errors'] | null;
   };
 }
 
@@ -75,4 +76,9 @@ export enum Step {
   PAYER_DETAILS = 'payerDetails',
   GIFTEE_DETAILS = 'gifteeDetails',
   SUMMARY = 'summary',
+}
+
+export interface CatSponsorFormErrorResponse {
+  errors: Record<string, string[]>;
+  message: string;
 }

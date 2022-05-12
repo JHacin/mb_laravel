@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect, FC, MutableRefObject } from 'react';
 import clsx from 'clsx';
 import { Transition, TransitionStatus } from 'react-transition-group';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
 import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
 import { SummaryStep } from './steps/summary-step';
 import { PayerDetailsStep } from './steps/payer-details-step';
 import { GifteeDetailsStep } from './steps/giftee-details-step';
 import { useGlobalState } from './hooks/use-global-state';
-import { ServerSideProps, SharedStepProps, Step } from './types';
+import { CatSponsorFormErrorResponse, ServerSideProps, SharedStepProps, Step } from './types';
 import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from './constants';
 
 interface CatSponsorFormProps {
@@ -40,8 +40,9 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
 
     try {
       await axios.post(serverSideProps.requestUrl, state.formData);
-    } catch (error) {
-      throw new Error(error.response);
+    } catch (error: unknown) {
+      const { errors } = (error as AxiosError<CatSponsorFormErrorResponse>)!.response!.data!;
+      actions.updateFormStateAction({ apiErrors: errors });
     }
 
     actions.updateFormStateAction({ isSubmitting: false });
