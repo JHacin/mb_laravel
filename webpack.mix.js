@@ -20,4 +20,5 @@ if (mix.inProduction()) {
     notify: false,
     open: process.env.MIX_BROWSERSYNC_OPEN === 'true',
   });
+  mix.disableNotifications(); // only thing that seems to work in Win11 to disable annoying alerts
 }

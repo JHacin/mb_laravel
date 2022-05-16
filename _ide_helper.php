@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.83.10.
+ * Generated for Laravel 8.83.12.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -11618,6 +11618,7 @@
      * @method static \Illuminate\Routing\RouteRegistrar prefix(string $prefix)
      * @method static \Illuminate\Routing\RouteRegistrar scopeBindings()
      * @method static \Illuminate\Routing\RouteRegistrar where(array $where)
+     * @method static \Illuminate\Routing\RouteRegistrar withoutMiddleware(array|string $middleware)
      * @see \Illuminate\Routing\Router
      */ 
         class Route {
@@ -12492,9 +12493,12 @@
                         return $instance->macroCall($method, $parameters);
         }
                     /**
+         * The route macro allows developers to generate the routes for a CrudController,
+         * for all operations, using a simple syntax: Route::crud().
          * 
+         * It will go to the given CrudController and get the setupRoutes() method on it.
          *
-         * @see \Backpack\CRUD\BackpackServiceProvider::addRouteMacro()
+         * @see \Backpack\CRUD\BackpackServiceProvider::sendUsageStats()
          * @param mixed $name
          * @param mixed $controller
          * @static 
@@ -15808,6 +15812,27 @@
      *
      */ 
         class Str {
+                    /**
+         * This macro adds the ability to convert a dot.notation string into a [braket][notation] with some special
+         * options that helps us in our usecases.
+         * 
+         * - $ignore: usefull when you want to convert a laravel validator rule for nested items and you
+         *   would like to ignore the `*` element from the string.
+         * 
+         * - $keyFirst: when true, we will use the first part of the string as key and only bracket the remaining elements.
+         *   eg: `address.street`
+         *      - when true: `address[street]`
+         *      - when false: `[address][street]`
+         *
+         * @param mixed $string
+         * @param mixed $ignore
+         * @param mixed $keyFirst
+         * @static 
+         */ 
+        public static function dotsToSquareBrackets($string, $ignore = [], $keyFirst = true)
+        {
+                        return \Illuminate\Support\Str::dotsToSquareBrackets($string, $ignore, $keyFirst);
+        }
          
     }
      
@@ -16130,6 +16155,17 @@
         {
                         /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
                         return $instance->getEntry($id);
+        }
+                    /**
+         * Return a Model builder instance with the current crud query applied.
+         *
+         * @return \Illuminate\Database\Eloquent\Builder 
+         * @static 
+         */ 
+        public static function getModelWithCrudPanelQuery()
+        {
+                        /** @var \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $instance */
+                        return $instance->getModelWithCrudPanelQuery();
         }
                     /**
          * Find and retrieve an entry in the database or fail.
@@ -18847,7 +18883,12 @@
                         return $instance->getFormRequest();
         }
                     /**
-         * Run the authorization and validation the currently set FormRequest.
+         * Run the authorization and validation for the current crud panel.
+         * 
+         * That authorization is gathered from 3 places:
+         * - the FormRequest when provided.
+         * - the rules added in the controller.
+         * - the rules defined in the fields itself.
          *
          * @return \Illuminate\Http\Request 
          * @static 
@@ -20514,9 +20555,12 @@
      */ 
         class Router {
                     /**
+         * The route macro allows developers to generate the routes for a CrudController,
+         * for all operations, using a simple syntax: Route::crud().
          * 
+         * It will go to the given CrudController and get the setupRoutes() method on it.
          *
-         * @see \Backpack\CRUD\BackpackServiceProvider::addRouteMacro()
+         * @see \Backpack\CRUD\BackpackServiceProvider::sendUsageStats()
          * @param mixed $name
          * @param mixed $controller
          * @static 
