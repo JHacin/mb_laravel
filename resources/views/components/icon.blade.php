@@ -12,6 +12,7 @@ $icon_class = match ($icon) {
     'email' => 'fa-solid fa-envelope',
     'chevron-left' => 'fa-solid fa-chevron-left',
     'chevron-right' => 'fa-solid fa-chevron-right',
+    'arrow-right' => 'fa-solid fa-arrow-right',
     'paw' => 'fa-solid fa-paw',
     'search' => 'fa-solid fa-search',
 }

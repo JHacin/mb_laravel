@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
           throw new Error('Could not find expandable content.');
         }
 
-        const icon = triggers[i].querySelector('svg');
+        const icon = triggers[i].querySelector('i');
         if (!icon) {
           throw new Error('Could not find expandable content SVG icon.');
         }
@@ -19,11 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isOpen) {
           content.style.maxHeight = '0px';
           content.setAttribute('data-expandable-content-state', 'closed');
-          icon.setAttribute('data-icon', 'plus');
+          icon.classList.remove('fa-minus');
+          icon.classList.add('fa-plus');
         } else {
           content.style.maxHeight = `${content.scrollHeight}px`;
           content.setAttribute('data-expandable-content-state', 'open');
-          icon.setAttribute('data-icon', 'minus');
+          icon.classList.remove('fa-plus');
+          icon.classList.add('fa-minus');
         }
       });
     }
