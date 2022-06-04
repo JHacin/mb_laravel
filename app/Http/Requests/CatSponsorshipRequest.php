@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Cat;
 use App\Models\PersonData;
 use App\Rules\CountryCode;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class CatSponsorshipRequest extends FormRequest
@@ -14,12 +14,7 @@ class CatSponsorshipRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'payer_email' => [
-                'required',
-                'string',
-                'email',
-                Rule::notIn($this->getCatSponsorEmails()),
-            ],
+            'payer_email' => ['required', 'string', 'email'],
             'payer_first_name' => ['required', 'string', 'max:255'],
             'payer_last_name' => ['required', 'string', 'max:255'],
             'payer_gender' => ['required', Rule::in(PersonData::GENDERS)],
@@ -41,13 +36,7 @@ class CatSponsorshipRequest extends FormRequest
 
         if ($this->get('is_gift')) {
             $gifteeRules = [
-                'giftee_email' => [
-                    'required',
-                    'nullable',
-                    'string',
-                    'email',
-                    Rule::notIn($this->getCatSponsorEmails()),
-                ],
+                'giftee_email' => ['required', 'nullable', 'string', 'email'],
                 'giftee_first_name' => ['required', 'string', 'max:255'],
                 'giftee_last_name' => ['required', 'string', 'max:255'],
                 'giftee_gender' => ['required', Rule::in(PersonData::GENDERS)],
@@ -66,29 +55,16 @@ class CatSponsorshipRequest extends FormRequest
     /**
      * @inheritDoc
      */
-    public function messages(): array
+    protected function failedValidation(Validator $validator)
     {
-        return [
-            'payer_email.not_in' =>
-            'Muca že ima aktivnega botra s tem email naslovom.' .
-                ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.',
-            'giftee_email.not_in' =>
-            'Muca že ima aktivnega botra s tem email naslovom.' .
-                ' Če menite, da je prišlo do napake, nas prosim kontaktirajte na boter@macjahisa.si.'
-        ];
-    }
+        Log::warning(
+            'Validation failed @ CatSponsorshipRequest',
+            [
+                'errors' => $validator->errors(),
+                'input' => $this->all(),
+            ]
+        );
 
-    protected function getCatSponsorEmails(): array
-    {
-        /** @var Cat $cat */
-        $cat = $this->route()->parameter('cat');
-
-        $activeSponsorships = $cat
-            ->sponsorships()
-            ->with('sponsor')
-            ->get()
-            ->toArray();
-
-        return Arr::pluck($activeSponsorships, 'sponsor.email');
+        parent::failedValidation($validator);
     }
 }
