@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { createStore, StateMachineProvider } from 'little-state-machine';
-import { setLocale } from 'yup';
+import * as yup from 'yup';
 import { CatSponsorForm } from './cat-sponsor-form';
 import { locale } from '../config/yup-locale';
 import { CatSponsorFormState, ServerSideProps } from './types';
@@ -11,7 +11,7 @@ const root = document.getElementById('react-root__cat-sponsor-form');
 if (root) {
   const serverSideProps: ServerSideProps = JSON.parse(root.getAttribute('data-props') as string);
 
-  setLocale(locale);
+  yup.setLocale(locale);
 
   const initialState: CatSponsorFormState = {
     formData: {

@@ -1,4 +1,7 @@
 import * as yup from 'yup';
+import { locale } from '../../config/yup-locale'
+
+yup.setLocale(locale)
 
 const Rules = {
   email: yup.string().email().required(),
