@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect, FC, MutableRefObject } from 'react';
 import clsx from 'clsx';
 import { Transition, TransitionStatus } from 'react-transition-group';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
 import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
 import { SummaryStep } from './steps/summary-step';
 import { PayerDetailsStep } from './steps/payer-details-step';
 import { GifteeDetailsStep } from './steps/giftee-details-step';
 import { useGlobalState } from './hooks/use-global-state';
-import { CatSponsorFormErrorResponse, ServerSideProps, SharedStepProps, Step } from './types';
+import { ServerSideProps, SharedStepProps, Step } from './types';
 import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from './constants';
 
 interface CatSponsorFormProps {
@@ -39,14 +39,13 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
   };
 
   const onFinalSubmit = async () => {
-    actions.updateFormStateAction({ isSubmitting: true });
+    actions.updateFormStateAction({ isSubmitting: true, isSubmitError: false });
 
     try {
       await axios.post(serverSideProps.requestUrl, formData);
-      actions.updateFormStateAction({ hasSubmittedSuccessfully: true });
+      actions.updateFormStateAction({ isSubmitSuccess: true });
     } catch (error: unknown) {
-      const { errors } = (error as AxiosError<CatSponsorFormErrorResponse>)!.response!.data!;
-      actions.updateFormStateAction({ apiErrors: errors });
+      actions.updateFormStateAction({ isSubmitError: true })
     }
 
     actions.updateFormStateAction({ isSubmitting: false });
@@ -80,6 +79,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
       key: String(genderEnumValue),
     })),
     validationConfig: serverSideProps.validationConfig,
+    contactEmail: serverSideProps.contactEmail,
   };
 
   const stepComponents: {
@@ -133,7 +133,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
 
   useEffect(() => {
     scrollBackToTop();
-  }, [activeStep, formState.hasSubmittedSuccessfully]);
+  }, [activeStep, formState.isSubmitSuccess]);
 
   return (
     <div className="border border-gray-semi/70" ref={scrollRef}>

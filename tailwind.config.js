@@ -23,7 +23,7 @@ module.exports = {
       'secondary-dark': '#977d7c',
       // info: '#51a3a3',
       // warning: '#dfcc74',
-      // success: '#c3e991',
+      success: '#c3e991',
       danger: '#ef4444',
       white: '#fff',
       black: '#020202',

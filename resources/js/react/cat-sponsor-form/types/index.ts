@@ -10,6 +10,7 @@ export interface ServerSideProps {
     options: Record<string, string>;
     default: number;
   };
+  contactEmail: string
   validationConfig: {
     monthly_amount_min: number;
     monthly_amount_max: number;
@@ -23,6 +24,7 @@ export interface SharedStepProps {
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
   validationConfig: ServerSideProps['validationConfig'];
+  contactEmail: ServerSideProps['contactEmail']
 }
 
 export interface SponsorshipParamsStepFields {
@@ -72,8 +74,8 @@ export interface CatSponsorFormState {
     SummaryStepFields;
   formState: {
     isSubmitting: boolean;
-    hasSubmittedSuccessfully: boolean;
-    apiErrors: CatSponsorFormErrorResponse['errors'] | null;
+    isSubmitSuccess: boolean;
+    isSubmitError: boolean;
   };
 }
 
@@ -82,9 +84,4 @@ export enum Step {
   PAYER_DETAILS = 'payerDetails',
   GIFTEE_DETAILS = 'gifteeDetails',
   SUMMARY = 'summary',
-}
-
-export interface CatSponsorFormErrorResponse {
-  errors: Record<string, string[]>;
-  message: string;
 }

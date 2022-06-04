@@ -40,8 +40,8 @@ if (root) {
     },
     formState: {
       isSubmitting: false,
-      hasSubmittedSuccessfully: false,
-      apiErrors: null,
+      isSubmitSuccess: false,
+      isSubmitError: false,
     },
   };
 

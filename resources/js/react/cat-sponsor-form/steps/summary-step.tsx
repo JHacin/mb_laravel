@@ -12,12 +12,12 @@ import { SharedStepProps, SummaryStepFields } from '../types';
 import { YupValidationSchemaShape } from '../../types';
 import { HookFormCheckbox } from '../components/hook-form-checkbox';
 
-export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
+export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit, contactEmail }) => {
   const {
     actions,
     state: {
       formData,
-      formState: { isSubmitting, apiErrors, hasSubmittedSuccessfully },
+      formState: { isSubmitting, isSubmitSuccess, isSubmitError },
     },
   } = useGlobalState();
 
@@ -45,9 +45,9 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
     onFinalSubmit();
   };
 
-  if (hasSubmittedSuccessfully) {
+  if (isSubmitSuccess) {
     return (
-      <div className="space-y-4">
+      <div className="bg-success/50 p-4 space-y-4">
         <div className="font-bold text-lg">Hvala!</div>
         <div>Na vaš e-mail naslov vam bomo poslali navodila za zaključek postopka.</div>
       </div>
@@ -60,21 +60,16 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
         <HookFormCheckbox label="Strinjam se" control={isAgreedToTermsControl} />
       </div>
 
-      {apiErrors && (
-        <div className="mb-form-group">
-          {Object.keys(apiErrors).map((fieldName) => (
-            <div key={fieldName}>
-              <div>{fieldName}:</div>
-              <div>
-                <ul>
-                  {apiErrors[fieldName].map((errorMessage) => (
-                    <li key={errorMessage}>{errorMessage}</li>
-                  ))}
-                </ul>
-              </div>
-              <hr />
-            </div>
-          ))}
+      {isSubmitError && (
+        <div className="bg-danger/20 p-4 space-y-4">
+          <div>Pri pošiljanju podatkov je žal prišlo do napake. Prosimo, poskusite ponovno.</div>
+          <div>
+            Če se napaka ponovi, nam prosim pišite na{' '}
+            <a href={`mailto:${contactEmail}`} className="mb-link font-bold">
+              {contactEmail}
+            </a>
+            .
+          </div>
         </div>
       )}
 
