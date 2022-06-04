@@ -16,7 +16,10 @@ interface CatSponsorFormProps {
 }
 
 export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => {
-  const { state, actions } = useGlobalState();
+  const {
+    state: { formState, formData },
+    actions,
+  } = useGlobalState();
   const [activeStep, setActiveStep] = useState(Step.SPONSORSHIP_PARAMS);
   const scrollRef = useRef<HTMLDivElement>(null);
   const sponsorshipParamsStepRef = useRef<HTMLElement>(null);
@@ -24,7 +27,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
   const gifteeDetailsStepRef = useRef<HTMLElement>(null);
   const summaryStepRef = useRef<HTMLElement>(null);
 
-  const availableSteps = state.formData.is_gift ? STEPS_WITH_GIFT : STEPS_WITHOUT_GIFT;
+  const availableSteps = formData.is_gift ? STEPS_WITH_GIFT : STEPS_WITHOUT_GIFT;
   const activeStepIndex = availableSteps.findIndex((step) => step === activeStep);
 
   const goToNextStep = () => {
@@ -39,7 +42,8 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
     actions.updateFormStateAction({ isSubmitting: true });
 
     try {
-      await axios.post(serverSideProps.requestUrl, state.formData);
+      await axios.post(serverSideProps.requestUrl, formData);
+      actions.updateFormStateAction({ hasSubmittedSuccessfully: true });
     } catch (error: unknown) {
       const { errors } = (error as AxiosError<CatSponsorFormErrorResponse>)!.response!.data!;
       actions.updateFormStateAction({ apiErrors: errors });
@@ -129,7 +133,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
 
   useEffect(() => {
     scrollBackToTop();
-  }, [activeStep]);
+  }, [activeStep, formState.hasSubmittedSuccessfully]);
 
   return (
     <div className="border border-gray-semi/70" ref={scrollRef}>

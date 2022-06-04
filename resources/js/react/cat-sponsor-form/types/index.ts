@@ -11,9 +11,9 @@ export interface ServerSideProps {
     default: number;
   };
   validationConfig: {
-      monthly_amount_min: number;
-      monthly_amount_max: number;
-  }
+    monthly_amount_min: number;
+    monthly_amount_max: number;
+  };
 }
 
 export interface SharedStepProps {
@@ -22,7 +22,7 @@ export interface SharedStepProps {
   onFinalSubmit: () => void;
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
-  validationConfig: ServerSideProps['validationConfig']
+  validationConfig: ServerSideProps['validationConfig'];
 }
 
 export interface SponsorshipParamsStepFields {
@@ -72,6 +72,7 @@ export interface CatSponsorFormState {
     SummaryStepFields;
   formState: {
     isSubmitting: boolean;
+    hasSubmittedSuccessfully: boolean;
     apiErrors: CatSponsorFormErrorResponse['errors'] | null;
   };
 }

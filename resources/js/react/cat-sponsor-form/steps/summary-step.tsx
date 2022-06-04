@@ -17,7 +17,7 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
     actions,
     state: {
       formData,
-      formState: { isSubmitting, apiErrors },
+      formState: { isSubmitting, apiErrors, hasSubmittedSuccessfully },
     },
   } = useGlobalState();
 
@@ -44,6 +44,15 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit }) => {
     actions.updateFormDataAction(data);
     onFinalSubmit();
   };
+
+  if (hasSubmittedSuccessfully) {
+    return (
+      <div className="space-y-4">
+        <div className="font-bold text-lg">Hvala!</div>
+        <div>Na vaš e-mail naslov vam bomo poslali navodila za zaključek postopka.</div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
