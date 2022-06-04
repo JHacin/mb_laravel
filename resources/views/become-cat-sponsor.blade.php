@@ -14,6 +14,10 @@ $formComponentProps = [
         'default' => PersonData::GENDER_FEMALE,
     ],
     'requestUrl' => route('become_cat_sponsor', $cat),
+    'validationConfig' => [
+        'monthly_amount_min' => config('money.donation_minimum'),
+        'monthly_amount_max' => config('money.decimal_max'),
+    ],
 ];
 
 $breadcrumbItems = [

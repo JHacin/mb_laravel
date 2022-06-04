@@ -10,6 +10,10 @@ export interface ServerSideProps {
     options: Record<string, string>;
     default: number;
   };
+  validationConfig: {
+      monthly_amount_min: number;
+      monthly_amount_max: number;
+  }
 }
 
 export interface SharedStepProps {
@@ -18,6 +22,7 @@ export interface SharedStepProps {
   onFinalSubmit: () => void;
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
+  validationConfig: ServerSideProps['validationConfig']
 }
 
 export interface SponsorshipParamsStepFields {

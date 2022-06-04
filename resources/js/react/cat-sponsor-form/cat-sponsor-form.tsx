@@ -75,6 +75,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
       value: Number(genderEnumValue),
       key: String(genderEnumValue),
     })),
+    validationConfig: serverSideProps.validationConfig,
   };
 
   const stepComponents: {

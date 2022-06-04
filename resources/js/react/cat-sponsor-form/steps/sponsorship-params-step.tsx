@@ -14,12 +14,17 @@ import { SharedStepProps, SponsorshipParamsStepFields } from '../types';
 import { YupValidationSchemaShape } from '../../types';
 import { HookFormCheckbox } from '../components/hook-form-checkbox';
 
-export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
+export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationConfig }) => {
   const { actions, state } = useGlobalState();
 
   const validationSchema = yup.object<YupValidationSchemaShape<SponsorshipParamsStepFields>>({
     is_gift: yup.boolean(),
-    monthly_amount: yup.number().integer().min(5).required(),
+    monthly_amount: yup
+      .number()
+      .integer()
+      .min(validationConfig.monthly_amount_min)
+      .max(validationConfig.monthly_amount_max)
+      .required(),
     duration: yup.number().when('is_gift', {
       is: true,
       then: (schema) => schema.integer().positive().required(),
@@ -98,7 +103,7 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
 
       <div className="mb-form-group">
         <div className="mb-form-group-label">Mesečni znesek</div>
-        <div className="flex space-x-4">
+        <div className="grid grid-cols-2 items-start gap-4 lg:grid-cols-3">
           {AMOUNT_OPTIONS.map((option) => (
             <BoxOption
               key={option.key}
@@ -110,24 +115,26 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
               isSelected={!isCustomAmount && option.value === amountControl.value}
             />
           ))}
-          <Input
-            ref={amountControl.ref}
-            value={isCustomAmount ? amountControl.value : ''}
-            isInvalid={!!errors.monthly_amount}
-            placeholder="Poljubni znesek v evrih"
-            onChange={(event) => {
-              setIsCustomAmount(true);
-              amountControl.onChange(event);
-            }}
-          />
-          {errors.monthly_amount && <Error>{errors.monthly_amount.message}</Error>}
+          <div className="col-span-2">
+            <Input
+              ref={amountControl.ref}
+              value={isCustomAmount ? amountControl.value : ''}
+              isInvalid={!!errors.monthly_amount}
+              placeholder="Poljubni znesek v evrih"
+              onChange={(event) => {
+                setIsCustomAmount(true);
+                amountControl.onChange(event);
+              }}
+            />
+            {errors.monthly_amount && <Error>{errors.monthly_amount.message}</Error>}
+          </div>
         </div>
       </div>
 
       {isGiftControl.value === true && (
         <div className="mb-form-group">
           <div className="mb-form-group-label">Trajanje</div>
-          <div className="flex space-x-2">
+          <div className="grid grid-cols-2 items-start gap-4 lg:grid-cols-3">
             {DURATION_OPTIONS.map((option) => (
               <BoxOption
                 key={option.key}
@@ -139,17 +146,19 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext }) => {
                 isSelected={!isCustomDuration && option.value === durationControl.value}
               />
             ))}
-            <Input
-              value={isCustomDuration ? durationControl.value : ''}
-              ref={durationControl.ref}
-              isInvalid={!!errors.duration}
-              placeholder="Poljubno število mesecev"
-              onChange={(event) => {
-                setIsCustomDuration(true);
-                durationControl.onChange(event);
-              }}
-            />
-            {errors.duration && <Error>{errors.duration.message}</Error>}
+            <div className="col-span-2">
+              <Input
+                value={isCustomDuration ? durationControl.value : ''}
+                ref={durationControl.ref}
+                isInvalid={!!errors.duration}
+                placeholder="Poljubno število mesecev"
+                onChange={(event) => {
+                  setIsCustomDuration(true);
+                  durationControl.onChange(event);
+                }}
+              />
+              {errors.duration && <Error>{errors.duration.message}</Error>}
+            </div>
           </div>
         </div>
       )}
