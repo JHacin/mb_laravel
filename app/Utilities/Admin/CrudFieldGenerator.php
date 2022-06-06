@@ -12,7 +12,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
  */
 class CrudFieldGenerator
 {
-    public static function addAddressFields(CrudPanel $crudPanel, string $namePrefix = '')
+    public static function addAddressFields(CrudPanel $crudPanel, string $namePrefix = ''): void
     {
         $crudPanel->addField([
             'name' => $namePrefix . 'address',
@@ -39,7 +39,7 @@ class CrudFieldGenerator
         ]);
     }
 
-    public static function addPersonDataFields(CrudPanel $crudPanel)
+    public static function addPersonDataFields(CrudPanel $crudPanel): void
     {
         $isNested = !($crudPanel->getModel() instanceof PersonData);
         $namePrefix = $isNested ? 'personData.' : '';
@@ -69,11 +69,14 @@ class CrudFieldGenerator
         $crudPanel->addField([
             'name' => $namePrefix . 'gender',
             'label' => trans('person_data.gender'),
-            'type' => 'radio',
+            'type' => 'select2_from_array',
             'options' => PersonData::GENDER_LABELS,
-            'inline' => true,
+            'allows_null' => true,
             'wrapper' => [
                 'dusk' => 'gender-input-wrapper',
+            ],
+            'attributes' => [
+                'required' => 'required'
             ],
         ]);
         $crudPanel->addField([

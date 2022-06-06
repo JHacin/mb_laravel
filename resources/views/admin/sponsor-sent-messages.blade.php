@@ -62,74 +62,84 @@
 
 @push('crud_fields_scripts')
     <script>
-        $messageTypeSelect = $('select[name="messageType"]');
-        $sponsorSelect = $('select[name="personData"]');
-        $emptyStateMsg = $('.sent-messages-none-selected-msg');
-        $table = $('.sent-messages-table-wrapper');
-        $loader = $('.sent-messages-loader');
-        $alreadySentWarning = $('.already-sent-warning');
+      (function (){
+        const $messageTypeSelect = $('select[name="messageType"]');
+        const $sponsorSelect = $('select[name="sponsor"]');
+        const $emptyStateMsg = $('.sent-messages-none-selected-msg');
+        const $table = $('.sent-messages-table-wrapper');
+        const $loader = $('.sent-messages-loader');
+        const $alreadySentWarning = $('.already-sent-warning');
 
         function toggleStatusIconsVisibility(sentMessageIds) {
-            $('.sent-message-row').attr('data-status', 'not-sent');
+          $('.sent-message-row').attr('data-status', 'not-sent');
 
-            sentMessageIds.forEach(function(messageId) {
-                const $associatedRow = $(`.sent-message-row[data-message-type-id="${messageId}"]`);
-                $associatedRow.attr('data-status', 'sent');
-            });
+          sentMessageIds.forEach(function(messageId) {
+            const $associatedRow = $(`.sent-message-row[data-message-type-id="${messageId}"]`);
+            $associatedRow.attr('data-status', 'sent');
+          });
         }
 
         function checkIfMessageWasAlreadySent(sentMessageIds) {
-            if (sentMessageIds.includes(Number($messageTypeSelect.val()))) {
-                $alreadySentWarning.show();
-            } else {
-                $alreadySentWarning.hide();
-            }
+          if (sentMessageIds.includes(Number($messageTypeSelect.val()))) {
+            $alreadySentWarning.show();
+          } else {
+            $alreadySentWarning.hide();
+          }
         }
 
         $sponsorSelect.on('change', function(e) {
-            $table.hide();
-            $emptyStateMsg.hide();
-            $loader.show();
+          $table.hide();
+          $emptyStateMsg.hide();
+          $loader.show();
 
-            if (!e.target.value) {
-                $emptyStateMsg.show();
-                $loader.hide();
-                return;
+          if (!e.target.value) {
+            $emptyStateMsg.show();
+            $loader.hide();
+            return;
+          }
+
+          const urlWithPlaceholder = "{{ route('admin.get_messages_sent_to_sponsor', ':sponsorId') }}";
+          const requestUrl = urlWithPlaceholder.replace(':sponsorId', e.target.value);
+
+          $.ajax({
+            url: requestUrl,
+            type: 'GET',
+            success: function(result) {
+              const sentMessageIds = result.map(function(message) {
+                return message.message_type.id;
+              });
+
+              toggleStatusIconsVisibility(sentMessageIds)
+              checkIfMessageWasAlreadySent(sentMessageIds)
+
+              $table.show();
+            },
+            error: function() {
+              alert('Prišlo je do napake pri pridobivanju podatkov o poslanih pismih.');
+            },
+            complete: function() {
+              $loader.hide();
             }
-
-            const urlWithPlaceholder = "{{ route('admin.get_messages_sent_to_sponsor', ':sponsorId') }}";
-            const requestUrl = urlWithPlaceholder.replace(':sponsorId', e.target.value);
-
-            $.ajax({
-                url: requestUrl,
-                type: 'GET',
-                success: function(result) {
-                    const sentMessageIds = result.map(function(message) {
-                        return message.message_type.id;
-                    });
-
-                    toggleStatusIconsVisibility(sentMessageIds)
-                    checkIfMessageWasAlreadySent(sentMessageIds)
-
-                    $table.show();
-                },
-                error: function() {
-                    alert('Prišlo je do napake pri pridobivanju podatkov o poslanih pismih.');
-                },
-                complete: function() {
-                    $loader.hide();
-                }
-            });
+          });
         });
+        // if selects already have values, e.g. there's an error when submitting
+        if ($sponsorSelect.val()) {
+          $sponsorSelect.change()
+        }
 
         $messageTypeSelect.on('change', function(e) {
-            const $associatedRow = $(`.sent-message-row[data-message-type-id="${e.target.value}"]`);
+          const $associatedRow = $(`.sent-message-row[data-message-type-id="${e.target.value}"]`);
 
-            if ($associatedRow.attr('data-status') === 'sent') {
-                $alreadySentWarning.show();
-            } else {
-                $alreadySentWarning.hide();
-            }
+          if ($associatedRow.attr('data-status') === 'sent') {
+            $alreadySentWarning.show();
+          } else {
+            $alreadySentWarning.hide();
+          }
         });
+        // if selects already have values, e.g. there's an error when submitting
+        if ($messageTypeSelect.val()) {
+          $messageTypeSelect.change()
+        }
+      })()
     </script>
 @endpush

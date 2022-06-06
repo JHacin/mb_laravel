@@ -9,22 +9,16 @@ use Illuminate\Validation\Rule;
 
 class AdminCatRequest extends FormRequest
 {
-    /**
-     * @return bool
-     */
     public function authorize(): bool
     {
         return backpack_auth()->check();
     }
 
-    /**
-     * @return array
-     */
     public function rules(): array
     {
         $rules = [
             'name' => ['required', 'string', 'min:2', 'max:100'],
-            'gender' => ['required', Rule::in(Cat::GENDERS)],
+            'gender' => ['required_if:is_group,0', 'nullable', Rule::in(Cat::GENDERS)],
             'status' => ['required', Rule::in(Cat::STATUSES)],
             'date_of_birth' => ['nullable', 'date', 'before:now'],
             'date_of_arrival_mh' => ['nullable', 'date', 'before:now', 'after_or_equal:date_of_birth'],

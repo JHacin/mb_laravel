@@ -233,6 +233,10 @@ class Cat extends Model
 
     public function getGenderLabelAttribute(): string
     {
+        if (!$this->gender) {
+            return '/';
+        }
+
         return self::GENDER_LABELS[$this->gender];
     }
 

@@ -227,14 +227,17 @@ class SponsorshipMessageCrudController extends CrudController
         $this->crud->addField([
             'name' => 'should_send_email',
             'label' => 'Želim, da se pismo:',
-            'type' => 'radio',
+            'type' => 'select2_from_array',
             'options' => [
                 true => 'Pošlje na botrov email naslov',
                 false => 'Samo zapiše v bazo',
             ],
-            'inline' => true,
+            'allows_null' => true,
             'wrapper' => [
-                'dusk' => 'should_send_email-input-wrapper'
+                'dusk' => 'should_send_email-input-wrapper',
+            ],
+            'attributes' => [
+                'required' => 'required'
             ],
         ]);
     }

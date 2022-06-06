@@ -43,29 +43,31 @@
     <script src="{{ asset('packages/clipboard-js/dist/clipboard.min.js') }}"></script>
     <!--suppress JSUnresolvedVariable -->
     <script>
-        new ClipboardJS('.msg-preview-copy-to-clipboard');
+        (function() {
+          new ClipboardJS('.msg-preview-copy-to-clipboard');
 
-        const $messageTypeSelect = $('select[name="messageType"]');
-        const $sponsorSelect = $('select[name="sponsor"]');
-        const $catSelect = $('select[name="cat"]');
-        const $generateBtn = $('.msg-preview-generate-btn');
-        const $btnDisabledText = $('.msg-preview-disabled-text');
+          const $messageTypeSelect = $('select[name="messageType"]');
+          const $sponsorSelect = $('select[name="sponsor"]');
+          const $catSelect = $('select[name="cat"]');
+          const $generateBtn = $('.msg-preview-generate-btn');
+          const $btnDisabledText = $('.msg-preview-disabled-text');
 
-        function enableGeneratingPreviewIfPossible() {
+          function enableGeneratingPreviewIfPossible() {
             if ($messageTypeSelect.val() && $sponsorSelect.val() && $catSelect.val()) {
-                $generateBtn.removeAttr('disabled');
-                $btnDisabledText.hide();
+              $generateBtn.removeAttr('disabled');
+              $btnDisabledText.hide();
             } else {
-                $generateBtn.attr('disabled', true);
-                $btnDisabledText.show();
+              $generateBtn.attr('disabled', true);
+              $btnDisabledText.show();
             }
-        }
+          }
 
-        $messageTypeSelect.on('change', enableGeneratingPreviewIfPossible);
-        $sponsorSelect.on('change', enableGeneratingPreviewIfPossible);
-        $catSelect.on('change', enableGeneratingPreviewIfPossible);
+          enableGeneratingPreviewIfPossible() // if selects already have values, e.g. there's an error when submitting
+          $messageTypeSelect.on('change', enableGeneratingPreviewIfPossible);
+          $sponsorSelect.on('change', enableGeneratingPreviewIfPossible);
+          $catSelect.on('change', enableGeneratingPreviewIfPossible);
 
-        $generateBtn.on('click', function() {
+          $generateBtn.on('click', function() {
             const $loader = $('.msg-preview-loader');
             const $content = $('.msg-preview-content');
 
@@ -74,35 +76,36 @@
             $generateBtn.attr('disabled', true);
 
             const urlWithPlaceholder =
-                "{!! route(
+              "{!! route(
                     'admin.get_parsed_template_preview',
                     ['message_type' => 'messageTypeId', 'sponsor' => 'sponsorId', 'cat' => 'catId'])
                 !!}";
 
             const requestUrl = urlWithPlaceholder
-                .replace('messageTypeId', $messageTypeSelect.val())
-                .replace('sponsorId', $sponsorSelect.val())
-                .replace('catId', $catSelect.val());
+              .replace('messageTypeId', $messageTypeSelect.val())
+              .replace('sponsorId', $sponsorSelect.val())
+              .replace('catId', $catSelect.val());
 
             $.ajax({
-                url: requestUrl,
-                type: 'GET',
-                success: function(result) {
-                    const parsedText = result.parsedTemplate;
-                    $('.msg-preview-content-body').html($.parseHTML(parsedText));
-                    $content.show();
-                },
-                error: function(data) {
-                    alert(data.responseJSON.message);
-                },
-                complete: function() {
-                    $generateBtn.text('Osveži predogled pisma');
-                    $generateBtn.removeClass('btn-primary');
-                    $generateBtn.addClass('btn-info');
-                    $generateBtn.removeAttr('disabled');
-                    $loader.hide();
-                }
+              url: requestUrl,
+              type: 'GET',
+              success: function(result) {
+                const parsedText = result.parsedTemplate;
+                $('.msg-preview-content-body').html($.parseHTML(parsedText));
+                $content.show();
+              },
+              error: function(data) {
+                alert(data.responseJSON.message);
+              },
+              complete: function() {
+                $generateBtn.text('Osveži predogled pisma');
+                $generateBtn.removeClass('btn-primary');
+                $generateBtn.addClass('btn-info');
+                $generateBtn.removeAttr('disabled');
+                $loader.hide();
+              }
             });
-        });
+          });
+        })()
     </script>
 @endpush

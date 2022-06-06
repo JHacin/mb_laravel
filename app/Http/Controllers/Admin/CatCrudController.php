@@ -152,6 +152,7 @@ class CatCrudController extends CrudController
             'wrapper' => [
                 'dusk' => 'gender-input-wrapper'
             ],
+            'hint' => 'Pri skupinah muc spol ni obvezen.',
         ]);
         $this->crud->addField([
             'name' => 'status',
