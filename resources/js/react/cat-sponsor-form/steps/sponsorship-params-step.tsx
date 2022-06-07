@@ -5,7 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { BoxOption } from '../../components/box-option';
 import { Input } from '../../components/input';
 import { Error } from '../../components/error';
-import { AMOUNT_OPTIONS, DURATION_OPTIONS, FORM_MODE, IS_GIFT_OPTIONS } from '../constants';
+import {
+  AMOUNT_OPTIONS,
+  REQUESTED_DURATION_OPTIONS,
+  FORM_MODE,
+  IS_GIFT_OPTIONS,
+} from '../constants';
 import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
 import { useGlobalState } from '../hooks/use-global-state';
 import { SubmitButton } from '../components/submit-button';
@@ -23,11 +28,11 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
       .number()
       .integer()
       .min(validationConfig.monthly_amount_min)
-      .max(validationConfig.monthly_amount_max)
+      .max(validationConfig.number_max)
       .required(),
-    duration: yup.number().when('is_gift', {
+    requested_duration: yup.number().when('is_gift', {
       is: true,
-      then: (schema) => schema.integer().positive().required(),
+      then: (schema) => schema.integer().nullable(true).positive().max(validationConfig.number_max),
       otherwise: (schema) => schema.strip(),
     }),
     wants_direct_debit: yup.boolean(),
@@ -56,10 +61,10 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
     control,
     defaultValue: state.formData.monthly_amount,
   });
-  const { field: durationControl } = useController({
-    name: 'duration',
+  const { field: requestedDurationControl } = useController({
+    name: 'requested_duration',
     control,
-    defaultValue: state.formData.duration,
+    defaultValue: state.formData.requested_duration,
   });
   const wantsDirectDebitControl = useController({
     name: 'wants_direct_debit',
@@ -75,8 +80,12 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
   const defaultAmountIsCustom = !AMOUNT_OPTIONS.some((o) => o.value === amountControl.value);
   const [isCustomAmount, setIsCustomAmount] = useState(defaultAmountIsCustom);
 
-  const defaultDurationIsCustom = !DURATION_OPTIONS.some((o) => o.value === durationControl.value);
-  const [isCustomDuration, setIsCustomDuration] = useState(defaultDurationIsCustom);
+  const defaultRequestedDurationIsCustom = !REQUESTED_DURATION_OPTIONS.some(
+    (o) => o.value === requestedDurationControl.value
+  );
+  const [isCustomRequestedDuration, setIsCustomRequestedDuration] = useState(
+    defaultRequestedDurationIsCustom
+  );
 
   const onSubmit = (data: SponsorshipParamsStepFields) => {
     actions.updateFormDataAction(data);
@@ -85,7 +94,7 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-form-group">
+      <div className="p-5 border-b border-gray-light">
         <div className="mb-form-group-label">Komu je botrstvo namenjeno?</div>
         <div className="flex space-x-4">
           {IS_GIFT_OPTIONS.map((option) => (
@@ -99,9 +108,13 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
             />
           ))}
         </div>
+        <div className="mb-form-group-hint">
+          Nulla quis lorem ut libero malesuada feugiat. Vivamus magna justo, lacinia eget
+          consectetur sed, convallis at tellus.
+        </div>
       </div>
 
-      <div className="mb-form-group">
+      <div className="p-5 border-b border-gray-light">
         <div className="mb-form-group-label">Mesečni znesek</div>
         <div className="grid grid-cols-2 items-start gap-4 lg:grid-cols-3">
           {AMOUNT_OPTIONS.map((option) => (
@@ -129,54 +142,74 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
             {errors.monthly_amount && <Error>{errors.monthly_amount.message}</Error>}
           </div>
         </div>
+        <div className="mb-form-group-hint">
+          Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
+        </div>
       </div>
 
       {isGiftControl.value === true && (
-        <div className="mb-form-group">
+        <div className="p-5 border-b border-gray-light">
           <div className="mb-form-group-label">Trajanje</div>
           <div className="grid grid-cols-2 items-start gap-4 lg:grid-cols-3">
-            {DURATION_OPTIONS.map((option) => (
+            {REQUESTED_DURATION_OPTIONS.map((option) => (
               <BoxOption
                 key={option.key}
                 label={option.label}
                 onClick={() => {
-                  setIsCustomDuration(false);
-                  durationControl.onChange(option.value);
+                  setIsCustomRequestedDuration(false);
+                  requestedDurationControl.onChange(option.value);
                 }}
-                isSelected={!isCustomDuration && option.value === durationControl.value}
+                isSelected={
+                  !isCustomRequestedDuration && option.value === requestedDurationControl.value
+                }
               />
             ))}
             <div className="col-span-2">
               <Input
-                value={isCustomDuration ? durationControl.value : ''}
-                ref={durationControl.ref}
-                isInvalid={!!errors.duration}
+                value={
+                  isCustomRequestedDuration && requestedDurationControl.value !== null
+                    ? requestedDurationControl.value
+                    : ''
+                }
+                ref={requestedDurationControl.ref}
+                isInvalid={!!errors.requested_duration}
                 placeholder="Poljubno število mesecev"
                 onChange={(event) => {
-                  setIsCustomDuration(true);
-                  durationControl.onChange(event);
+                  setIsCustomRequestedDuration(true);
+                  requestedDurationControl.onChange(event);
                 }}
               />
-              {errors.duration && <Error>{errors.duration.message}</Error>}
+              {errors.requested_duration && <Error>{errors.requested_duration.message}</Error>}
             </div>
+          </div>
+          <div className="mb-form-group-hint">
+            Proin eget tortor risus. Curabitur non nulla sit amet nisl tempus convallis quis ac
+            lectus.
           </div>
         </div>
       )}
 
-      <div className="mb-form-group">
-        <HookFormCheckbox
-          label="Želim, da mi pošljete informacije v zvezi z ureditvijo trajnika"
-          control={wantsDirectDebitControl}
-        />
-      </div>
+      <div className="p-5">
+        <div className="mb-form-group">
+          <HookFormCheckbox label="Želim plačati prek trajnika" control={wantsDirectDebitControl} />
+          <div className="mb-form-group-hint">
+            Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vestibulum ac diam sit
+            amet quam vehicula elementum sed sit amet dui.
+          </div>
+        </div>
 
-      <div className="mb-form-group">
-        <HookFormCheckbox label="Botrstvo naj bo anonimno" control={isAnonymousControl} />
-      </div>
+        <div className="mb-form-group">
+          <HookFormCheckbox label="Botrstvo naj bo anonimno" control={isAnonymousControl} />
+          <div className="mb-form-group-hint">
+            Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ac diam
+            sit amet quam vehicula elementum sed sit amet dui.
+          </div>
+        </div>
 
-      <ButtonRow>
-        <SubmitButton>Naprej</SubmitButton>
-      </ButtonRow>
+        <ButtonRow>
+          <SubmitButton>Naprej</SubmitButton>
+        </ButtonRow>
+      </div>
     </form>
   );
 };

@@ -16,7 +16,7 @@ $formComponentProps = [
     'requestUrl' => route('become_cat_sponsor', $cat),
     'validationConfig' => [
         'monthly_amount_min' => config('money.donation_minimum'),
-        'monthly_amount_max' => config('money.decimal_max'),
+        'number_max' => config('money.decimal_max'),
     ],
 ];
 

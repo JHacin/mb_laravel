@@ -136,13 +136,13 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
   }, [activeStep, formState.isSubmitSuccess]);
 
   return (
-    <div className="border border-gray-semi/70" ref={scrollRef}>
+    <div className="border border-gray-semi/50 shadow-lg" ref={scrollRef}>
       <div className="flex justify-between lg:hidden px-4 pt-4 text-sm text-gray-semi">
         <div>{STEP_CONFIG[activeStep].label}</div>
         <div>{`Korak ${activeStepIndex + 1}/${availableSteps.length}`}</div>
       </div>
 
-      <div className="hidden lg:flex space-x-4 bg-gray-extralight px-5 py-4">
+      <div className="hidden lg:flex space-x-4 bg-gray-extralight border-b border-gray-light px-5 py-4">
         {availableSteps.map((step, index) => {
           const isActive = activeStep === step;
 
@@ -171,7 +171,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
         })}
       </div>
 
-      <div className="p-5">
+      <div>
         {stepComponents.map(({ step, Component, props, ref }) => (
           <Transition
             in={activeStep === step}

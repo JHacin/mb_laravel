@@ -40,16 +40,18 @@ export const GifteeDetailsStep: FC<SharedStepProps> = ({
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <PersonDataFields
-          prefix="giftee"
-          countryOptions={countryOptions}
-          genderOptions={genderOptions}
-        />
+        <div className="p-5">
+          <PersonDataFields
+            prefix="giftee"
+            countryOptions={countryOptions}
+            genderOptions={genderOptions}
+          />
 
-        <ButtonRow>
-          <BackButton onClick={onPrev} />
-          <SubmitButton>Naprej</SubmitButton>
-        </ButtonRow>
+          <ButtonRow>
+            <BackButton onClick={onPrev} />
+            <SubmitButton>Naprej</SubmitButton>
+          </ButtonRow>
+        </div>
       </form>
     </FormProvider>
   );

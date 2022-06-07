@@ -78,28 +78,29 @@ export const PersonDataFields: FC<PersonDataFieldsProps> = ({
   return (
     <>
       <div className="mb-form-group">
-        <div className="mb-form-group-label">Email</div>
+        <div className="mb-form-group-label">E-mail naslov*</div>
         <HookFormTextField control={emailControl} autoComplete={`${autoCompletePrefix}email`} />
       </div>
 
-      <div className="mb-form-group">
-        <div className="mb-form-group-label">Ime</div>
-        <HookFormTextField
-          control={firstNameControl}
-          autoComplete={`${autoCompletePrefix}given-name`}
-        />
+      <div className="mb-form-group grid sm:grid-cols-5 gap-4">
+        <div className="sm:col-span-2">
+          <div className="mb-form-group-label">Ime*</div>
+          <HookFormTextField
+            control={firstNameControl}
+            autoComplete={`${autoCompletePrefix}given-name`}
+          />
+        </div>
+        <div className="sm:col-span-3">
+          <div className="mb-form-group-label">Priimek*</div>
+          <HookFormTextField
+            control={lastNameControl}
+            autoComplete={`${autoCompletePrefix}family-name`}
+          />
+        </div>
       </div>
 
       <div className="mb-form-group">
-        <div className="mb-form-group-label">Priimek</div>
-        <HookFormTextField
-          control={lastNameControl}
-          autoComplete={`${autoCompletePrefix}family-name`}
-        />
-      </div>
-
-      <div className="mb-form-group">
-        <div className="mb-form-group-label">Spol</div>
+        <div className="mb-form-group-label">Spol*</div>
         <div className="flex space-x-4">
           {genderOptions.map((option) => (
             <BoxOption
@@ -115,31 +116,32 @@ export const PersonDataFields: FC<PersonDataFieldsProps> = ({
       </div>
 
       <div className="mb-form-group">
-        <div className="mb-form-group-label">Ulica in hišna številka</div>
+        <div className="mb-form-group-label">Naslov*</div>
         <HookFormTextField
           control={addressControl}
           autoComplete={`${autoCompletePrefix}street-address`}
         />
       </div>
 
-      <div className="mb-form-group">
-        <div className="mb-form-group-label">Poštna številka</div>
-        <HookFormTextField
-          control={zipCodeControl}
-          autoComplete={`${autoCompletePrefix}postal-code`}
-        />
+      <div className="mb-form-group grid sm:grid-cols-5 gap-4">
+        <div className="sm:col-span-2">
+          <div className="mb-form-group-label">Poštna številka*</div>
+          <HookFormTextField
+            control={zipCodeControl}
+            autoComplete={`${autoCompletePrefix}postal-code`}
+          />
+        </div>
+        <div className="sm:col-span-3">
+          <div className="mb-form-group-label">Kraj*</div>
+          <HookFormTextField
+            control={cityControl}
+            autoComplete={`${autoCompletePrefix}address-level2`}
+          />
+        </div>
       </div>
 
       <div className="mb-form-group">
-        <div className="mb-form-group-label">Kraj</div>
-        <HookFormTextField
-          control={cityControl}
-          autoComplete={`${autoCompletePrefix}address-level2`}
-        />
-      </div>
-
-      <div className="mb-form-group">
-        <div className="mb-form-group-label">Država</div>
+        <div className="mb-form-group-label">Država*</div>
         <HookFormSelect options={countryOptions} control={countryControl} />
       </div>
     </>

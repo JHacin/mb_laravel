@@ -91,6 +91,10 @@ input[type='checkbox'] {
     @apply font-semibold mb-1;
   }
 
+  .mb-form-group-hint {
+    @apply mt-2 text-sm text-gray-dark;
+  }
+
   .mb-form-error {
     @apply text-danger text-sm mt-1;
   }

@@ -13,7 +13,7 @@ export interface ServerSideProps {
   contactEmail: string
   validationConfig: {
     monthly_amount_min: number;
-    monthly_amount_max: number;
+    number_max: number;
   };
 }
 
@@ -32,7 +32,7 @@ export interface SponsorshipParamsStepFields {
   wants_direct_debit: boolean;
   is_anonymous: boolean;
   monthly_amount: number;
-  duration: number;
+  requested_duration: number | null;
 }
 
 export interface PayerDetailsStepFields {

@@ -9,7 +9,7 @@ export interface SelectOption {
 
 export interface BoxOptionItem {
   label: string;
-  value: string | number | boolean;
+  value: string | number | boolean | null;
   key: Key;
 }
 

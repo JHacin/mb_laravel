@@ -41,9 +41,9 @@ export const AMOUNT_OPTIONS: BoxOptionItem[] = [
   { label: '50€', value: 50, key: '50' },
 ];
 
-export const DURATION_OPTIONS: BoxOptionItem[] = [
+export const REQUESTED_DURATION_OPTIONS: BoxOptionItem[] = [
+  { label: 'Do preklica', value: null, key: 'null' },
   { label: '1 mesec', value: 1, key: '1' },
-  { label: '3 meseci', value: 3, key: '3' },
   { label: '6 mesecev', value: 6, key: '6' },
-  { label: '12 mesecev', value: 12, key: '12' },
+  { label: '1 leto', value: 12, key: '12' },
 ];

@@ -19,7 +19,7 @@ if (root) {
       wants_direct_debit: false,
       is_anonymous: false,
       monthly_amount: 5,
-      duration: 12,
+      requested_duration: null,
       payer_email: '',
       payer_first_name: '',
       payer_last_name: '',
