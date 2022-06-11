@@ -15,7 +15,7 @@
     <script>
         if (typeof handleSponsorshipCancel !== 'function') {
             function handleSponsorshipCancel() {
-                $('form[dusk="sponsorship-cancel-form"]').on('submit', function (event) {
+                $(document).on('submit', 'form[dusk="sponsorship-cancel-form"]', function (event) {
                     event.preventDefault();
                     const form = $(this)[0];
 

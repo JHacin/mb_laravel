@@ -53,6 +53,7 @@ class CatSponsorshipController extends Controller
                 ? Sponsorship::PAYMENT_TYPE_DIRECT_DEBIT
                 : Sponsorship::PAYMENT_TYPE_BANK_TRANSFER,
             'is_gift' => $isGift,
+            'requested_duration' => $isGift ? $formInput['requested_duration'] : null,
             'is_anonymous' => $formInput['is_anonymous'] ?? false,
             'is_active' => false,
         ];

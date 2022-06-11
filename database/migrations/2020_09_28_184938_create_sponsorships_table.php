@@ -17,6 +17,7 @@ class CreateSponsorshipsTable extends Migration
             $table->boolean('is_anonymous')->default(false);
             $table->smallInteger('payment_type')->default(Sponsorship::PAYMENT_TYPE_BANK_TRANSFER);
             $table->decimal('monthly_amount')->nullable();
+            $table->integer('requested_duration')->nullable();
             $table->boolean('is_active')->default(false);
             $table->date('ended_at')->nullable();
             $table->timestamps();

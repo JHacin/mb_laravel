@@ -8,5 +8,6 @@ return [
     'is_anonymous' => 'Anonimno',
     'is_active' => 'Aktivno',
     'is_gift' => 'Podarjeno',
+    'requested_duration' => 'Trajanje (v mesecih)',
     'payment_reference_number' => 'Referenca',
 ];

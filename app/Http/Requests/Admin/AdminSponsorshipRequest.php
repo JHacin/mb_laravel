@@ -22,7 +22,7 @@ class AdminSponsorshipRequest extends FormRequest
                 'required',
                 'numeric',
                 'min:' . config('money.donation_minimum'),
-                'max:' . config('money.decimal_max'),
+                'max:' . config('validation.integer_max'),
             ],
             'payment_type' => ['required', Rule::in(Sponsorship::PAYMENT_TYPES)],
             'cat' => [

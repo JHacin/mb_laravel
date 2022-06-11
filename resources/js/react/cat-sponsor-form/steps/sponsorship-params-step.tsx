@@ -28,11 +28,11 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
       .number()
       .integer()
       .min(validationConfig.monthly_amount_min)
-      .max(validationConfig.number_max)
+      .max(validationConfig.integer_max)
       .required(),
     requested_duration: yup.number().when('is_gift', {
       is: true,
-      then: (schema) => schema.integer().nullable(true).positive().max(validationConfig.number_max),
+      then: (schema) => schema.integer().nullable(true).positive().max(validationConfig.integer_max),
       otherwise: (schema) => schema.strip(),
     }),
     wants_direct_debit: yup.boolean(),

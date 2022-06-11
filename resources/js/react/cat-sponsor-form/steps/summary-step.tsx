@@ -45,43 +45,47 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit, contac
     onFinalSubmit();
   };
 
-  if (isSubmitSuccess) {
-    return (
-      <div className="bg-success/50 p-4 space-y-4">
-        <div className="font-bold text-lg">Hvala!</div>
-        <div>Na vaš e-mail naslov vam bomo poslali navodila za zaključek postopka.</div>
-      </div>
-    );
-  }
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-form-group">
-        <HookFormCheckbox label="Strinjam se" control={isAgreedToTermsControl} />
-      </div>
-
-      {isSubmitError && (
-        <div className="bg-danger/20 p-4 space-y-4">
-          <div>Pri pošiljanju podatkov je žal prišlo do napake. Prosimo, poskusite ponovno.</div>
-          <div>
-            Če se napaka ponovi, nam prosim pišite na{' '}
-            <a href={`mailto:${contactEmail}`} className="mb-link font-bold">
-              {contactEmail}
-            </a>
-            .
+    <div className="p-5">
+      {!isSubmitSuccess && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-form-group">
+            <HookFormCheckbox label="Strinjam se" control={isAgreedToTermsControl} />
           </div>
-        </div>
+
+          {isSubmitError && (
+            <div className="bg-danger/20 p-4 space-y-4">
+              <div>
+                Pri pošiljanju podatkov je žal prišlo do napake. Prosimo, poskusite ponovno.
+              </div>
+              <div>
+                Če se napaka ponovi, nam prosim pišite na{' '}
+                <a href={`mailto:${contactEmail}`} className="mb-link font-bold">
+                  {contactEmail}
+                </a>
+                .
+              </div>
+            </div>
+          )}
+
+          <ButtonRow>
+            <BackButton onClick={onPrev} />
+            <SubmitButton
+              isLoading={isSubmitting}
+              startIcon={isSubmitting ? null : <i className="fa-solid fa-paper-plane" />}
+            >
+              {isSubmitting ? 'Pošiljam...' : 'Pošlji'}
+            </SubmitButton>
+          </ButtonRow>
+        </form>
       )}
 
-      <ButtonRow>
-        <BackButton onClick={onPrev} />
-        <SubmitButton
-          isLoading={isSubmitting}
-          startIcon={isSubmitting ? null : <i className="fa-solid fa-paper-plane" />}
-        >
-          {isSubmitting ? 'Pošiljam...' : 'Pošlji'}
-        </SubmitButton>
-      </ButtonRow>
-    </form>
+      {isSubmitSuccess && (
+        <div className="bg-success/50 p-4 space-y-4">
+          <div className="font-bold text-lg">Hvala!</div>
+          <div>Na vaš e-mail naslov vam bomo poslali navodila za zaključek postopka.</div>
+        </div>
+      )}
+    </div>
   );
 };

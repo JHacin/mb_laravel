@@ -14,7 +14,7 @@ trait HasSponsorshipForm
 
     protected function getGifteeFromFormData(FormRequest $request): ?PersonData
     {
-        if ($request->input('is_gift') === 'yes') {
+        if ($request->input('is_gift') === true) {
             return $this->updateOrCreatePersonData($this->constructPersonDataFields($request, 'giftee'));
         }
 

@@ -26,7 +26,7 @@ class CatSponsorshipRequest extends FormRequest
                 'required',
                 'numeric',
                 'min:' . config('money.donation_minimum'),
-                'max:' . config('money.decimal_max'),
+                'max:' . config('validation.integer_max'),
             ],
             'is_anonymous' => ['boolean'],
             'is_gift' => ['boolean'],
@@ -35,8 +35,8 @@ class CatSponsorshipRequest extends FormRequest
         ];
 
         if ($this->get('is_gift')) {
-            $gifteeRules = [
-                'giftee_email' => ['required', 'nullable', 'string', 'email'],
+            $giftRules = [
+                'giftee_email' => ['required', 'string', 'email'],
                 'giftee_first_name' => ['required', 'string', 'max:255'],
                 'giftee_last_name' => ['required', 'string', 'max:255'],
                 'giftee_gender' => ['required', Rule::in(PersonData::GENDERS)],
@@ -44,9 +44,15 @@ class CatSponsorshipRequest extends FormRequest
                 'giftee_zip_code' => ['required', 'string', 'max:255'],
                 'giftee_city' => ['required', 'string', 'max:255'],
                 'giftee_country' => ['required', new CountryCode],
+                'requested_duration' => [
+                    'nullable',
+                    'numeric',
+                    'min:1',
+                    'max:' . config('validation.integer_max'),
+                ],
             ];
 
-            $rules = array_merge($rules, $gifteeRules);
+            $rules = array_merge($rules, $giftRules);
         }
 
         return $rules;

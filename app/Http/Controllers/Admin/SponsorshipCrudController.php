@@ -57,11 +57,6 @@ class SponsorshipCrudController extends CrudController
     {
         $this->crud->addColumn(CrudColumnGenerator::id());
         $this->crud->addColumn([
-           'name' => 'payment_reference_number',
-           'label' => trans('sponsorship.payment_reference_number'),
-           'type' => 'text',
-        ]);
-        $this->crud->addColumn([
             'name' => 'cat',
             'label' => trans('cat.cat'),
             'type' => 'relationship',
@@ -117,9 +112,14 @@ class SponsorshipCrudController extends CrudController
             'label' => trans('admin.sponsorship_monthly_amount')
         ]));
         $this->crud->addColumn([
-            'name' => 'is_anonymous',
-            'label' => trans('sponsorship.is_anonymous'),
+            'name' => 'is_gift',
+            'label' => trans('sponsorship.is_gift'),
             'type' => 'boolean',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'requested_duration',
+            'label' => trans('sponsorship.requested_duration'),
+            'type' => 'number',
         ]);
         $this->crud->addColumn([
             'name' => 'is_active',
@@ -134,7 +134,16 @@ class SponsorshipCrudController extends CrudController
         ]);
         $this->crud->addColumn(CrudColumnGenerator::updatedAt());
         $this->crud->orderBy('created_at', 'DESC');
-
+        $this->crud->addColumn([
+            'name' => 'payment_reference_number',
+            'label' => trans('sponsorship.payment_reference_number'),
+            'type' => 'text',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'is_anonymous',
+            'label' => trans('sponsorship.is_anonymous'),
+            'type' => 'boolean',
+        ]);
         $this->addFilters();
     }
 
@@ -216,6 +225,13 @@ class SponsorshipCrudController extends CrudController
                 'dusk' => 'sponsor-wrapper'
             ]
         ]);
+        $this->crud->addField(CrudFieldGenerator::moneyField([
+            'name' => 'monthly_amount',
+            'label' => trans('admin.sponsorship_monthly_amount'),
+            'wrapper' => [
+                'dusk' => 'monthly_amount-wrapper'
+            ]
+        ]));
         $this->crud->addField([
             'name' => 'is_gift',
             'label' => 'Botrstvo je podarjeno',
@@ -223,6 +239,17 @@ class SponsorshipCrudController extends CrudController
             'wrapper' => [
                 'dusk' => 'is_gift-wrapper'
             ]
+        ]);
+        $this->crud->addField([
+            'name' => 'requested_duration',
+            'label' => trans('sponsorship.requested_duration'),
+            'type' => 'number',
+            'attributes' => [
+                'step' => 1,
+                'min' => 1,
+                'max' => config('validation.integer_max'),
+            ],
+            'hint' => 'Za koliko mesecev se naj podari botrstvo.',
         ]);
         $this->crud->addField([
             'name' => 'payer',
@@ -233,13 +260,7 @@ class SponsorshipCrudController extends CrudController
                 'dusk' => 'payer-wrapper'
             ]
         ]);
-        $this->crud->addField(CrudFieldGenerator::moneyField([
-            'name' => 'monthly_amount',
-            'label' => trans('admin.sponsorship_monthly_amount'),
-            'wrapper' => [
-                'dusk' => 'monthly_amount-wrapper'
-            ]
-        ]));
+
         $this->crud->addField([
             'name' => 'payment_type',
             'label' => trans('sponsorship.payment_type'),

@@ -13,7 +13,7 @@ export interface ServerSideProps {
   contactEmail: string
   validationConfig: {
     monthly_amount_min: number;
-    number_max: number;
+    integer_max: number;
   };
 }
 
