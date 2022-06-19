@@ -32,11 +32,17 @@ class CatSeeder extends Seeder
         }
 
         foreach (CatPhotoService::INDICES as $index) {
-            $catPhotosRoot = CatPhotoService::PATH_ROOT;
+            $pathRoot = CatPhotoService::PATH_ROOT;
+            $photosDirectory = storage_path("app/public/{$pathRoot}");
+
+            // On fresh install, the root dir does not exist.
+            if (!File::isDirectory($photosDirectory)) {
+                File::makeDirectory($photosDirectory, 0777, true, true);
+            }
 
             File::copy(
                 database_path("seeders/assets/fake_cat_photo_$index.jpg"),
-                storage_path("app/public/{$catPhotosRoot}fake_cat_photo_$index.jpg")
+                "{$photosDirectory}/fake_cat_photo_$index.jpg"
             );
         }
     }

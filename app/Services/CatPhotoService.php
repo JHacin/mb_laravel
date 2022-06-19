@@ -11,7 +11,7 @@ use Storage;
 
 class CatPhotoService
 {
-    const PATH_ROOT = 'muce/slike/';
+    const PATH_ROOT = 'muce/slike';
 
     const INDICES = [0, 1, 2, 3];
 
@@ -66,7 +66,7 @@ class CatPhotoService
 
     public static function getFullPath(string $filename): string
     {
-        return self::PATH_ROOT . $filename;
+        return self::PATH_ROOT . '/' . $filename;
     }
 
     public function deleteFromDisk(string $filename)
