@@ -11,7 +11,7 @@
         return [
             'label' => SpecialSponsorship::TYPE_LABELS[$type],
             'amount' => SpecialSponsorship::TYPE_AMOUNTS[$type],
-            'thumbnail' => SpecialSponsorship::TYPE_THUMBNAILS[$type],
+            'thumbnail' => SpecialSponsorship::getTypeThumbnails()[$type],
             'formLink' => formLink($type),
         ];
     }
