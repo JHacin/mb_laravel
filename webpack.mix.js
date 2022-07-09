@@ -4,7 +4,8 @@ mix
   .copyDirectory('resources/img', 'public/img')
   .ts('resources/js/app.ts', 'public/js')
   .ts('resources/js/giftee_form.ts', 'public/js')
-  .ts('resources/js/cat-details-gallery.ts', 'public/js');
+  .ts('resources/js/cat-details-gallery.ts', 'public/js')
+  .ts('resources/js/special-sponsorship-card.ts', 'public/js');
 
 mix.ts('resources/js/react/cat-sponsor-form/index.tsx', 'public/js/cat-sponsor-form.js').react();
 
