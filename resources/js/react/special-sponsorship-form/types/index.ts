@@ -1,10 +1,19 @@
-import { GifteeFields, PayerFields, SelectOption, SponsorshipFormServerSideProps } from '../../types'
+import {
+  GifteeFields,
+  PayerFields,
+  SelectOption,
+  SponsorshipFormServerSideProps,
+} from '../../types';
 
 export interface ServerSideProps extends SponsorshipFormServerSideProps {
   validationConfig: {
     monthly_amount_min: number;
     integer_max: number;
   };
+  sponsorshipTypes: {
+    options: Record<string, string>
+    default: string
+  }
 }
 
 export interface SharedStepProps {
@@ -13,16 +22,16 @@ export interface SharedStepProps {
   onFinalSubmit: () => void;
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
+  typeOptions: SelectOption[];
   validationConfig: ServerSideProps['validationConfig'];
-  contactEmail: ServerSideProps['contactEmail']
+  contactEmail: ServerSideProps['contactEmail'];
 }
 
 export interface SponsorshipParamsStepFields {
+  type: number;
   is_gift: boolean;
-  wants_direct_debit: boolean;
   is_anonymous: boolean;
-  monthly_amount: number;
-  requested_duration: number | null;
+  donation_amount: number;
 }
 
 export interface PayerDetailsStepFields extends PayerFields {}
@@ -39,7 +48,7 @@ export type AnyStepFields =
   | GifteeDetailsStepFields
   | SummaryStepFields;
 
-export interface CatSponsorFormState {
+export interface SpecialSponsorshipFormState {
   formData: SponsorshipParamsStepFields &
     PayerDetailsStepFields &
     GifteeDetailsStepFields &

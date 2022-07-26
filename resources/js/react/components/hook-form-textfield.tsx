@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { UseControllerReturn } from 'react-hook-form';
-import { Error } from '../../components/error';
-import { Input } from '../../components/input';
+import { Error } from './error';
+import { Input } from './input';
 
 interface HookFormTextFieldProps {
   control: UseControllerReturn<any, any>;

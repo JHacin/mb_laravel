@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { UseControllerReturn } from 'react-hook-form';
-import { Checkbox } from '../../components/checkbox';
-import { Error } from '../../components/error';
+import { Checkbox } from './checkbox';
+import { Error } from './error';
 
 interface HookFormCheckboxProps {
   control: UseControllerReturn<any, any>;

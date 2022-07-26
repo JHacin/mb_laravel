@@ -1,25 +1,24 @@
+import { ServerSideProps, SpecialSponsorshipFormState } from './types';
+import * as yup from 'yup';
+import { locale } from '../config/yup-locale';
+import { createStore, StateMachineProvider } from 'little-state-machine';
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { createStore, StateMachineProvider } from 'little-state-machine';
-import * as yup from 'yup';
-import { CatSponsorForm } from './cat-sponsor-form';
-import { locale } from '../config/yup-locale';
-import { CatSponsorFormState, ServerSideProps } from './types';
+import { SpecialSponsorshipForm } from './special-sponsorship-form';
 
-const root = document.getElementById('react-root__cat-sponsor-form');
+const root = document.getElementById('react-root__special-sponsorship-form');
 
 if (root) {
   const serverSideProps: ServerSideProps = JSON.parse(root.getAttribute('data-props') as string);
 
   yup.setLocale(locale);
 
-  const initialState: CatSponsorFormState = {
+  const initialState: SpecialSponsorshipFormState = {
     formData: {
+      type: 0, // todo from selected type
       is_gift: false,
-      wants_direct_debit: false,
       is_anonymous: false,
-      monthly_amount: 5,
-      requested_duration: null,
+      donation_amount: 5, // todo from selected type
       payer_email: '',
       payer_first_name: '',
       payer_last_name: '',
@@ -46,14 +45,14 @@ if (root) {
   };
 
   createStore(initialState, {
-    name: 'cat-sponsor-form',
+    name: 'special-sponsorship-form',
     persist: 'none',
   });
 
   ReactDOM.render(
     <React.StrictMode>
       <StateMachineProvider>
-        <CatSponsorForm serverSideProps={serverSideProps} />
+        <SpecialSponsorshipForm serverSideProps={serverSideProps} />
       </StateMachineProvider>
     </React.StrictMode>,
     root

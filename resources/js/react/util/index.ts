@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { locale } from '../../config/yup-locale'
+import { locale } from '../config/yup-locale'
 
 yup.setLocale(locale)
 

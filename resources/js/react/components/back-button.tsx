@@ -1,5 +1,5 @@
 import React, { FC, MouseEventHandler } from 'react';
-import { Button } from '../../components/button';
+import { Button } from './button';
 
 interface BackButtonProps {
   onClick: MouseEventHandler;

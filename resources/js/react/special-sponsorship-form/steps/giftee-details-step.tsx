@@ -5,13 +5,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FORM_MODE } from '../constants';
 import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
 import { useGlobalState } from '../hooks/use-global-state';
-import { createGifteeValidationRules } from '../../util';
-import { PersonDataFields } from '../../components/person-data-fields';
-import { BackButton } from '../../components/back-button';
-import { SubmitButton } from '../../components/submit-button';
-import { ButtonRow } from '../../components/button-row';
 import { YupValidationSchemaShape } from '../../types';
 import { GifteeDetailsStepFields, SharedStepProps } from '../types';
+import { createGifteeValidationRules } from '../../util';
+import { PersonDataFields } from '../../components/person-data-fields';
+import { ButtonRow } from '../../components/button-row';
+import { BackButton } from '../../components/back-button';
+import { SubmitButton } from '../../components/submit-button';
 
 export const GifteeDetailsStep: FC<SharedStepProps> = ({
   onPrev,

@@ -5,12 +5,12 @@ import * as yup from 'yup';
 import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
 import { FORM_MODE } from '../constants';
 import { useGlobalState } from '../hooks/use-global-state';
-import { BackButton } from '../../components/back-button';
-import { SubmitButton } from '../../components/submit-button';
-import { ButtonRow } from '../../components/button-row';
 import { SharedStepProps, SummaryStepFields } from '../types';
 import { YupValidationSchemaShape } from '../../types';
+import { ButtonRow } from '../../components/button-row';
+import { BackButton } from '../../components/back-button';
 import { HookFormCheckbox } from '../../components/hook-form-checkbox';
+import { SubmitButton } from '../../components/submit-button';
 
 export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit, contactEmail }) => {
   const {

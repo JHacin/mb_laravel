@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import { Button } from '../../components/button';
+import { Button } from './button';
 
 interface SubmitButtonProps {
   isLoading?: boolean;

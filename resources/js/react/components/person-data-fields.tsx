@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { SelectOption } from '../../types';
-import { BoxOption } from '../../components/box-option';
-import { useGlobalState } from '../hooks/use-global-state';
+import { SelectOption } from '../types';
+import { BoxOption } from './box-option';
+import { useGlobalState } from '../cat-sponsor-form/hooks/use-global-state';
 import { HookFormTextField } from './hook-form-textfield';
-import { GifteeDetailsStepFields, PayerDetailsStepFields } from '../types';
+import { GifteeDetailsStepFields, PayerDetailsStepFields } from '../cat-sponsor-form/types';
 import { HookFormSelect } from './hook-form-select';
 
 interface PersonDataFieldsProps {

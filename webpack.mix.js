@@ -8,6 +8,7 @@ mix
   .ts('resources/js/special-sponsorship-card.ts', 'public/js');
 
 mix.ts('resources/js/react/cat-sponsor-form/index.tsx', 'public/js/cat-sponsor-form.js').react();
+mix.ts('resources/js/react/special-sponsorship-form/index.tsx', 'public/js/special-sponsorship-form.js').react();
 
 mix.postCss('resources/css/app.css', 'public/css', [require('tailwindcss')]);
 

@@ -13,11 +13,11 @@ import {
 } from '../constants';
 import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
 import { useGlobalState } from '../hooks/use-global-state';
-import { SubmitButton } from '../components/submit-button';
-import { ButtonRow } from '../components/button-row';
+import { SubmitButton } from '../../components/submit-button';
+import { ButtonRow } from '../../components/button-row';
 import { SharedStepProps, SponsorshipParamsStepFields } from '../types';
 import { YupValidationSchemaShape } from '../../types';
-import { HookFormCheckbox } from '../components/hook-form-checkbox';
+import { HookFormCheckbox } from '../../components/hook-form-checkbox';
 
 export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationConfig }) => {
   const { actions, state } = useGlobalState();
