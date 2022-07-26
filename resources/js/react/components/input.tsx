@@ -4,7 +4,7 @@ import clsx from 'clsx';
 interface InputProps {
   isInvalid: boolean;
   placeholder?: string;
-  onChange: ChangeEventHandler;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler;
   value: string | number;
   name?: string;

@@ -1,5 +1,7 @@
 import { Key } from 'react';
 import { AnySchema } from 'yup';
+import Reference from 'yup/lib/Reference';
+import Lazy from 'yup/lib/Lazy';
 
 export interface SponsorshipFormServerSideProps {
   requestUrl: string;
@@ -31,7 +33,10 @@ export enum PersonGender {
   Female = 2,
 }
 
-export type YupValidationSchemaShape<TFields> = Record<keyof TFields, AnySchema>;
+export type YupValidationSchemaShape<TFields> = Record<
+  keyof TFields,
+  AnySchema | Reference | Lazy<any, any>
+>;
 
 export interface PayerFields {
   payer_email: string;

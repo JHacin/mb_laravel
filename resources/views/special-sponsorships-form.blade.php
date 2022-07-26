@@ -16,6 +16,7 @@
         ],
         'sponsorshipTypes' => [
             'options' => SpecialSponsorship::TYPE_LABELS,
+            'amounts' => SpecialSponsorship::TYPE_AMOUNTS,
             'default' => $selectedType,
         ],
         'requestUrl' => route('special_sponsorships'),

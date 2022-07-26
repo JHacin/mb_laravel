@@ -15,10 +15,10 @@ if (root) {
 
   const initialState: SpecialSponsorshipFormState = {
     formData: {
-      type: 0, // todo from selected type
+      type: Number(serverSideProps.sponsorshipTypes.default),
       is_gift: false,
       is_anonymous: false,
-      donation_amount: 5, // todo from selected type
+      donation_amount: serverSideProps.sponsorshipTypes.amounts[serverSideProps.sponsorshipTypes.default],
       payer_email: '',
       payer_first_name: '',
       payer_last_name: '',

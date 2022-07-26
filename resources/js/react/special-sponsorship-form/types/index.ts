@@ -11,9 +11,10 @@ export interface ServerSideProps extends SponsorshipFormServerSideProps {
     integer_max: number;
   };
   sponsorshipTypes: {
-    options: Record<string, string>
-    default: string
-  }
+    options: Record<string, string>;
+    default: string;
+    amounts: Record<string, number>;
+  };
 }
 
 export interface SharedStepProps {
@@ -23,6 +24,7 @@ export interface SharedStepProps {
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
   typeOptions: SelectOption[];
+  typeAmounts: Record<string, number>
   validationConfig: ServerSideProps['validationConfig'];
   contactEmail: ServerSideProps['contactEmail'];
 }

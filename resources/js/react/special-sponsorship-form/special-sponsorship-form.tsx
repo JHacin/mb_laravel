@@ -83,6 +83,7 @@ export const SpecialSponsorshipForm: FC<SpecialSponsorshipFormProps> = ({ server
       value: Number(type),
       key: String(type),
     })),
+    typeAmounts: serverSideProps.sponsorshipTypes.amounts,
     validationConfig: serverSideProps.validationConfig,
     contactEmail: serverSideProps.contactEmail,
   };

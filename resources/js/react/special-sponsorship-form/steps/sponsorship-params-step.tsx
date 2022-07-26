@@ -19,17 +19,21 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({
   onNext,
   validationConfig,
   typeOptions,
+  typeAmounts,
 }) => {
   const { actions, state } = useGlobalState();
 
   const validationSchema = yup.object<YupValidationSchemaShape<SponsorshipParamsStepFields>>({
     is_gift: yup.boolean(),
-    donation_amount: yup
-      .number()
-      .integer()
-      .min(validationConfig.monthly_amount_min)
-      .max(validationConfig.integer_max)
-      .required(),
+    donation_amount: yup.lazy((_value, options) => {
+      const parent: SponsorshipParamsStepFields = options.parent;
+      return yup
+        .number()
+        .integer()
+        .min(typeAmounts[parent.type])
+        .max(validationConfig.integer_max)
+        .required();
+    }),
     type: yup.number(),
     is_anonymous: yup.boolean(),
   });
@@ -68,6 +72,11 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({
     defaultValue: state.formData.is_anonymous,
   });
 
+  const handleTypeChange = (type: string) => {
+    const newMinAmount = typeAmounts[type];
+    amountControl.onChange(newMinAmount);
+  };
+
   const onSubmit = (data: SponsorshipParamsStepFields) => {
     actions.updateFormDataAction(data);
     onNext();
@@ -77,7 +86,7 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="p-5 border-b border-gray-light">
         <div className="mb-form-group-label">Tip botrstva</div>
-        <HookFormSelect options={typeOptions} control={typeControl} />
+        <HookFormSelect options={typeOptions} control={typeControl} onChange={handleTypeChange} />
         <div className="mb-form-group-hint">
           Nulla quis lorem ut libero malesuada feugiat. Vivamus magna justo, lacinia eget
           consectetur sed, convallis at tellus.
