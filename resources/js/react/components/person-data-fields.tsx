@@ -2,23 +2,28 @@ import React, { FC } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { SelectOption } from '../types';
 import { BoxOption } from './box-option';
-import { useGlobalState } from '../cat-sponsor-form/hooks/use-global-state';
 import { HookFormTextField } from './hook-form-textfield';
-import { GifteeDetailsStepFields, PayerDetailsStepFields } from '../cat-sponsor-form/types';
+import {
+  CatSponsorshipFormStoreValues,
+  GifteeDetailsStepFields,
+  PayerDetailsStepFields,
+} from '../cat-sponsor-form/types';
 import { HookFormSelect } from './hook-form-select';
+import { SpecialSponsorshipFormStoreValues } from '../special-sponsorship-form/types'
 
 interface PersonDataFieldsProps {
   prefix: 'payer' | 'giftee';
   countryOptions: SelectOption[];
   genderOptions: SelectOption[];
+  storeValues: CatSponsorshipFormStoreValues | SpecialSponsorshipFormStoreValues;
 }
 
 export const PersonDataFields: FC<PersonDataFieldsProps> = ({
   prefix,
   countryOptions,
   genderOptions,
+  storeValues,
 }) => {
-  const { state } = useGlobalState();
   const { control } = useFormContext<PayerDetailsStepFields | GifteeDetailsStepFields>();
 
   const Field: Record<string, keyof PayerDetailsStepFields | keyof GifteeDetailsStepFields> = {
@@ -37,42 +42,42 @@ export const PersonDataFields: FC<PersonDataFieldsProps> = ({
   const emailControl = useController({
     name: Field.EMAIL,
     control,
-    defaultValue: state.formData[Field.EMAIL],
+    defaultValue: storeValues[Field.EMAIL],
   });
   const firstNameControl = useController({
     name: Field.FIRST_NAME,
     control,
-    defaultValue: state.formData[Field.FIRST_NAME],
+    defaultValue: storeValues[Field.FIRST_NAME],
   });
   const lastNameControl = useController({
     name: Field.LAST_NAME,
     control,
-    defaultValue: state.formData[Field.LAST_NAME],
+    defaultValue: storeValues[Field.LAST_NAME],
   });
   const genderControl = useController({
     name: Field.GENDER,
     control,
-    defaultValue: state.formData[Field.GENDER],
+    defaultValue: storeValues[Field.GENDER],
   });
   const addressControl = useController({
     name: Field.ADDRESS,
     control,
-    defaultValue: state.formData[Field.ADDRESS],
+    defaultValue: storeValues[Field.ADDRESS],
   });
   const zipCodeControl = useController({
     name: Field.ZIP_CODE,
     control,
-    defaultValue: state.formData[Field.ZIP_CODE],
+    defaultValue: storeValues[Field.ZIP_CODE],
   });
   const cityControl = useController({
     name: Field.CITY,
     control,
-    defaultValue: state.formData[Field.CITY],
+    defaultValue: storeValues[Field.CITY],
   });
   const countryControl = useController({
     name: Field.COUNTRY,
     control,
-    defaultValue: state.formData[Field.COUNTRY],
+    defaultValue: storeValues[Field.COUNTRY],
   });
 
   return (

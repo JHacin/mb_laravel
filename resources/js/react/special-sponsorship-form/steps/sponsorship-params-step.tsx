@@ -5,15 +5,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { BoxOption } from '../../components/box-option';
 import { Input } from '../../components/input';
 import { Error } from '../../components/error';
-import { FORM_MODE, IS_GIFT_OPTIONS } from '../constants';
-import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
-import { useGlobalState } from '../hooks/use-global-state';
-import { SharedStepProps, SponsorshipParamsStepFields } from '../types';
-import { YupValidationSchemaShape } from '../../types';
+import { SharedStepProps, SpecialSponsorshipParamsStepFields } from '../types';
 import { ButtonRow } from '../../components/button-row';
 import { HookFormCheckbox } from '../../components/hook-form-checkbox';
 import { SubmitButton } from '../../components/submit-button';
 import { HookFormSelect } from '../../components/hook-form-select';
+import { useSpecialSponsorshipFormStore } from '../store';
+import { YupValidationSchemaShape } from '../../sponsorship-forms/types';
+import { FORM_MODE, IS_GIFT_OPTIONS } from '../../sponsorship-forms/constants';
+import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
 
 export const SponsorshipParamsStep: FC<SharedStepProps> = ({
   onNext,
@@ -21,55 +21,57 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({
   typeOptions,
   typeAmounts,
 }) => {
-  const { actions, state } = useGlobalState();
+  const { values, updateValues } = useSpecialSponsorshipFormStore();
 
-  const validationSchema = yup.object<YupValidationSchemaShape<SponsorshipParamsStepFields>>({
-    is_gift: yup.boolean(),
-    donation_amount: yup.lazy((_value, options) => {
-      const parent: SponsorshipParamsStepFields = options.parent;
-      return yup
-        .number()
-        .integer()
-        .min(typeAmounts[parent.type])
-        .max(validationConfig.integer_max)
-        .required();
-    }),
-    type: yup.number(),
-    is_anonymous: yup.boolean(),
-  });
+  const validationSchema = yup.object<YupValidationSchemaShape<SpecialSponsorshipParamsStepFields>>(
+    {
+      is_gift: yup.boolean(),
+      donation_amount: yup.lazy((_value, options) => {
+        const parent: SpecialSponsorshipParamsStepFields = options.parent;
+        return yup
+          .number()
+          .integer()
+          .min(typeAmounts[parent.type])
+          .max(validationConfig.integer_max)
+          .required();
+      }),
+      type: yup.number(),
+      is_anonymous: yup.boolean(),
+    }
+  );
 
   const {
     handleSubmit,
     control,
     watch,
     formState: { errors },
-  } = useForm<SponsorshipParamsStepFields>({
+  } = useForm<SpecialSponsorshipParamsStepFields>({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
 
-  useGlobalFormDataUpdate({ watch, actions });
+  useStoreValuesSync<SpecialSponsorshipParamsStepFields>({ watch, callback: updateValues });
 
   const typeControl = useController({
     name: 'type',
     control,
-    defaultValue: state.formData.type,
+    defaultValue: values.type,
   });
 
   const { field: isGiftControl } = useController({
     name: 'is_gift',
     control,
-    defaultValue: state.formData.is_gift,
+    defaultValue: values.is_gift,
   });
   const { field: amountControl } = useController({
     name: 'donation_amount',
     control,
-    defaultValue: state.formData.donation_amount,
+    defaultValue: values.donation_amount,
   });
   const isAnonymousControl = useController({
     name: 'is_anonymous',
     control,
-    defaultValue: state.formData.is_anonymous,
+    defaultValue: values.is_anonymous,
   });
 
   const handleTypeChange = (type: string) => {
@@ -77,8 +79,8 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({
     amountControl.onChange(newMinAmount);
   };
 
-  const onSubmit = (data: SponsorshipParamsStepFields) => {
-    actions.updateFormDataAction(data);
+  const onSubmit = (data: SpecialSponsorshipParamsStepFields) => {
+    updateValues(data);
     onNext();
   };
 

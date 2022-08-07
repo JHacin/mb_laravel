@@ -2,24 +2,22 @@ import React, { FC } from 'react';
 import { useController, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
-import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
-import { FORM_MODE } from '../constants';
-import { useGlobalState } from '../hooks/use-global-state';
 import { SharedStepProps, SummaryStepFields } from '../types';
-import { YupValidationSchemaShape } from '../../types';
 import { ButtonRow } from '../../components/button-row';
 import { BackButton } from '../../components/back-button';
 import { HookFormCheckbox } from '../../components/hook-form-checkbox';
 import { SubmitButton } from '../../components/submit-button';
+import { useSpecialSponsorshipFormStore } from '../store';
+import { YupValidationSchemaShape } from '../../sponsorship-forms/types';
+import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
+import { FORM_MODE } from '../../sponsorship-forms/constants';
 
 export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit, contactEmail }) => {
   const {
-    actions,
-    state: {
-      formData,
-      formState: { isSubmitting, isSubmitSuccess, isSubmitError },
-    },
-  } = useGlobalState();
+    values,
+    status: { isSubmitting, isSubmitSuccess, isSubmitError },
+    updateValues,
+  } = useSpecialSponsorshipFormStore();
 
   const validationSchema = yup.object<YupValidationSchemaShape<SummaryStepFields>>({
     is_agreed_to_terms: yup
@@ -32,16 +30,16 @@ export const SummaryStep: FC<SharedStepProps> = ({ onPrev, onFinalSubmit, contac
     resolver: yupResolver(validationSchema),
   });
 
-  useGlobalFormDataUpdate({ watch, actions });
+  useStoreValuesSync<SummaryStepFields>({ watch, callback: updateValues });
 
   const isAgreedToTermsControl = useController({
     name: 'is_agreed_to_terms',
     control,
-    defaultValue: formData.is_agreed_to_terms,
+    defaultValue: values.is_agreed_to_terms,
   });
 
   const onSubmit = (data: SummaryStepFields) => {
-    actions.updateFormDataAction(data);
+    updateValues(data);
     onFinalSubmit();
   };
 

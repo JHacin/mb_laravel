@@ -5,24 +5,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { BoxOption } from '../../components/box-option';
 import { Input } from '../../components/input';
 import { Error } from '../../components/error';
-import {
-  AMOUNT_OPTIONS,
-  REQUESTED_DURATION_OPTIONS,
-  FORM_MODE,
-  IS_GIFT_OPTIONS,
-} from '../constants';
-import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
-import { useGlobalState } from '../hooks/use-global-state';
+import { AMOUNT_OPTIONS, REQUESTED_DURATION_OPTIONS } from '../constants';
 import { SubmitButton } from '../../components/submit-button';
 import { ButtonRow } from '../../components/button-row';
-import { SharedStepProps, SponsorshipParamsStepFields } from '../types';
-import { YupValidationSchemaShape } from '../../types';
+import { SharedStepProps, CatSponsorshipParamsStepFields } from '../types';
 import { HookFormCheckbox } from '../../components/hook-form-checkbox';
+import { useCatSponsorshipFormStore } from '../store';
+import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
+import { FORM_MODE, IS_GIFT_OPTIONS } from '../../sponsorship-forms/constants';
+import { YupValidationSchemaShape } from '../../sponsorship-forms/types'
 
 export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationConfig }) => {
-  const { actions, state } = useGlobalState();
+  const { values, updateValues } = useCatSponsorshipFormStore();
 
-  const validationSchema = yup.object<YupValidationSchemaShape<SponsorshipParamsStepFields>>({
+  const validationSchema = yup.object<YupValidationSchemaShape<CatSponsorshipParamsStepFields>>({
     is_gift: yup.boolean(),
     monthly_amount: yup
       .number()
@@ -32,7 +28,8 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
       .required(),
     requested_duration: yup.number().when('is_gift', {
       is: true,
-      then: (schema) => schema.integer().nullable(true).positive().max(validationConfig.integer_max),
+      then: (schema) =>
+        schema.integer().nullable(true).positive().max(validationConfig.integer_max),
       otherwise: (schema) => schema.strip(),
     }),
     wants_direct_debit: yup.boolean(),
@@ -44,37 +41,37 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
     control,
     watch,
     formState: { errors },
-  } = useForm<SponsorshipParamsStepFields>({
+  } = useForm<CatSponsorshipParamsStepFields>({
     mode: FORM_MODE,
     resolver: yupResolver(validationSchema),
   });
 
-  useGlobalFormDataUpdate({ watch, actions });
+  useStoreValuesSync<CatSponsorshipParamsStepFields>({ watch, callback: updateValues });
 
   const { field: isGiftControl } = useController({
     name: 'is_gift',
     control,
-    defaultValue: state.formData.is_gift,
+    defaultValue: values.is_gift,
   });
   const { field: amountControl } = useController({
     name: 'monthly_amount',
     control,
-    defaultValue: state.formData.monthly_amount,
+    defaultValue: values.monthly_amount,
   });
   const { field: requestedDurationControl } = useController({
     name: 'requested_duration',
     control,
-    defaultValue: state.formData.requested_duration,
+    defaultValue: values.requested_duration,
   });
   const wantsDirectDebitControl = useController({
     name: 'wants_direct_debit',
     control,
-    defaultValue: state.formData.wants_direct_debit,
+    defaultValue: values.wants_direct_debit,
   });
   const isAnonymousControl = useController({
     name: 'is_anonymous',
     control,
-    defaultValue: state.formData.is_anonymous,
+    defaultValue: values.is_anonymous,
   });
 
   const defaultAmountIsCustom = !AMOUNT_OPTIONS.some((o) => o.value === amountControl.value);
@@ -87,8 +84,8 @@ export const SponsorshipParamsStep: FC<SharedStepProps> = ({ onNext, validationC
     defaultRequestedDurationIsCustom
   );
 
-  const onSubmit = (data: SponsorshipParamsStepFields) => {
-    actions.updateFormDataAction(data);
+  const onSubmit = (data: CatSponsorshipParamsStepFields) => {
+    updateValues(data);
     onNext();
   };
 

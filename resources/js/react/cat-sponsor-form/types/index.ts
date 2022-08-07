@@ -1,4 +1,10 @@
-import { GifteeFields, PayerFields, SelectOption, SponsorshipFormServerSideProps } from '../../types'
+import {
+  GifteeFields,
+  PayerFields,
+  SponsorshipFormServerSideProps,
+  SponsorshipFormSharedStepProps,
+  SponsorshipParamsStepFields,
+} from '../../sponsorship-forms/types';
 
 export interface ServerSideProps extends SponsorshipFormServerSideProps {
   validationConfig: {
@@ -7,20 +13,12 @@ export interface ServerSideProps extends SponsorshipFormServerSideProps {
   };
 }
 
-export interface SharedStepProps {
-  onPrev: () => void;
-  onNext: () => void;
-  onFinalSubmit: () => void;
-  countryOptions: SelectOption[];
-  genderOptions: SelectOption[];
+export interface SharedStepProps extends SponsorshipFormSharedStepProps {
   validationConfig: ServerSideProps['validationConfig'];
-  contactEmail: ServerSideProps['contactEmail']
 }
 
-export interface SponsorshipParamsStepFields {
-  is_gift: boolean;
+export interface CatSponsorshipParamsStepFields extends SponsorshipParamsStepFields {
   wants_direct_debit: boolean;
-  is_anonymous: boolean;
   monthly_amount: number;
   requested_duration: number | null;
 }
@@ -34,26 +32,12 @@ export interface SummaryStepFields {
 }
 
 export type AnyStepFields =
-  | SponsorshipParamsStepFields
+  | CatSponsorshipParamsStepFields
   | PayerDetailsStepFields
   | GifteeDetailsStepFields
   | SummaryStepFields;
 
-export interface CatSponsorFormState {
-  formData: SponsorshipParamsStepFields &
-    PayerDetailsStepFields &
-    GifteeDetailsStepFields &
-    SummaryStepFields;
-  formState: {
-    isSubmitting: boolean;
-    isSubmitSuccess: boolean;
-    isSubmitError: boolean;
-  };
-}
-
-export enum Step {
-  SPONSORSHIP_PARAMS = 'sponsorshipParams',
-  PAYER_DETAILS = 'payerDetails',
-  GIFTEE_DETAILS = 'gifteeDetails',
-  SUMMARY = 'summary',
-}
+export type CatSponsorshipFormStoreValues = CatSponsorshipParamsStepFields &
+  PayerDetailsStepFields &
+  GifteeDetailsStepFields &
+  SummaryStepFields;

@@ -1,9 +1,11 @@
+import { SelectOption } from '../../types';
 import {
   GifteeFields,
   PayerFields,
-  SelectOption,
   SponsorshipFormServerSideProps,
-} from '../../types';
+  SponsorshipFormSharedStepProps,
+  SponsorshipParamsStepFields,
+} from '../../sponsorship-forms/types';
 
 export interface ServerSideProps extends SponsorshipFormServerSideProps {
   validationConfig: {
@@ -17,22 +19,14 @@ export interface ServerSideProps extends SponsorshipFormServerSideProps {
   };
 }
 
-export interface SharedStepProps {
-  onPrev: () => void;
-  onNext: () => void;
-  onFinalSubmit: () => void;
-  countryOptions: SelectOption[];
-  genderOptions: SelectOption[];
+export interface SharedStepProps extends SponsorshipFormSharedStepProps {
   typeOptions: SelectOption[];
-  typeAmounts: Record<string, number>
+  typeAmounts: Record<string, number>;
   validationConfig: ServerSideProps['validationConfig'];
-  contactEmail: ServerSideProps['contactEmail'];
 }
 
-export interface SponsorshipParamsStepFields {
+export interface SpecialSponsorshipParamsStepFields extends SponsorshipParamsStepFields {
   type: number;
-  is_gift: boolean;
-  is_anonymous: boolean;
   donation_amount: number;
 }
 
@@ -45,26 +39,12 @@ export interface SummaryStepFields {
 }
 
 export type AnyStepFields =
-  | SponsorshipParamsStepFields
+  | SpecialSponsorshipParamsStepFields
   | PayerDetailsStepFields
   | GifteeDetailsStepFields
   | SummaryStepFields;
 
-export interface SpecialSponsorshipFormState {
-  formData: SponsorshipParamsStepFields &
-    PayerDetailsStepFields &
-    GifteeDetailsStepFields &
-    SummaryStepFields;
-  formState: {
-    isSubmitting: boolean;
-    isSubmitSuccess: boolean;
-    isSubmitError: boolean;
-  };
-}
-
-export enum Step {
-  SPONSORSHIP_PARAMS = 'sponsorshipParams',
-  PAYER_DETAILS = 'payerDetails',
-  GIFTEE_DETAILS = 'gifteeDetails',
-  SUMMARY = 'summary',
-}
+export type SpecialSponsorshipFormStoreValues = SpecialSponsorshipParamsStepFields &
+  PayerDetailsStepFields &
+  GifteeDetailsStepFields &
+  SummaryStepFields;

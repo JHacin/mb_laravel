@@ -7,19 +7,17 @@ import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
 import { SummaryStep } from './steps/summary-step';
 import { PayerDetailsStep } from './steps/payer-details-step';
 import { GifteeDetailsStep } from './steps/giftee-details-step';
-import { useGlobalState } from './hooks/use-global-state';
-import { ServerSideProps, SharedStepProps, Step } from './types';
-import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from './constants';
+import { ServerSideProps, SharedStepProps } from './types';
+import { useCatSponsorshipFormStore } from './store';
+import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from '../sponsorship-forms/constants';
+import { Step } from '../sponsorship-forms/types';
 
 interface CatSponsorFormProps {
   serverSideProps: ServerSideProps;
 }
 
 export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => {
-  const {
-    state: { formState, formData },
-    actions,
-  } = useGlobalState();
+  const { values, status, updateStatus } = useCatSponsorshipFormStore();
   const [activeStep, setActiveStep] = useState(Step.SPONSORSHIP_PARAMS);
   const scrollRef = useRef<HTMLDivElement>(null);
   const sponsorshipParamsStepRef = useRef<HTMLElement>(null);
@@ -27,7 +25,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
   const gifteeDetailsStepRef = useRef<HTMLElement>(null);
   const summaryStepRef = useRef<HTMLElement>(null);
 
-  const availableSteps = formData.is_gift ? STEPS_WITH_GIFT : STEPS_WITHOUT_GIFT;
+  const availableSteps = values.is_gift ? STEPS_WITH_GIFT : STEPS_WITHOUT_GIFT;
   const activeStepIndex = availableSteps.findIndex((step) => step === activeStep);
 
   const goToNextStep = () => {
@@ -39,16 +37,16 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
   };
 
   const onFinalSubmit = async () => {
-    actions.updateFormStateAction({ isSubmitting: true, isSubmitError: false });
+    updateStatus({ isSubmitting: true, isSubmitError: false });
 
     try {
-      await axios.post(serverSideProps.requestUrl, formData);
-      actions.updateFormStateAction({ isSubmitSuccess: true });
+      await axios.post(serverSideProps.requestUrl, values);
+      updateStatus({ isSubmitSuccess: true });
     } catch (error: unknown) {
-      actions.updateFormStateAction({ isSubmitError: true })
+      updateStatus({ isSubmitError: true });
     }
 
-    actions.updateFormStateAction({ isSubmitting: false });
+    updateStatus({ isSubmitting: false });
   };
 
   const scrollBackToTop = () => {
@@ -133,7 +131,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
 
   useEffect(() => {
     scrollBackToTop();
-  }, [activeStep, formState.isSubmitSuccess]);
+  }, [activeStep, status.isSubmitSuccess]);
 
   return (
     <div className="border border-gray-semi/50 shadow-lg" ref={scrollRef}>

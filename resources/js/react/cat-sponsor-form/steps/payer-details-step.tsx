@@ -2,16 +2,16 @@ import React, { FC } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FORM_MODE } from '../constants';
-import { useGlobalFormDataUpdate } from '../hooks/use-global-form-data-update';
-import { useGlobalState } from '../hooks/use-global-state';
 import { createPayerValidationRules } from '../../util';
 import { PersonDataFields } from '../../components/person-data-fields';
 import { BackButton } from '../../components/back-button';
 import { SubmitButton } from '../../components/submit-button';
 import { ButtonRow } from '../../components/button-row';
-import { YupValidationSchemaShape } from '../../types';
 import { PayerDetailsStepFields, SharedStepProps } from '../types';
+import { useCatSponsorshipFormStore } from '../store';
+import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
+import { FORM_MODE } from '../../sponsorship-forms/constants'
+import { YupValidationSchemaShape } from '../../sponsorship-forms/types'
 
 export const PayerDetailsStep: FC<SharedStepProps> = ({
   onPrev,
@@ -19,7 +19,7 @@ export const PayerDetailsStep: FC<SharedStepProps> = ({
   countryOptions,
   genderOptions,
 }) => {
-  const { actions } = useGlobalState();
+  const { values, updateValues } = useCatSponsorshipFormStore();
 
   const validationSchema = yup.object<YupValidationSchemaShape<PayerDetailsStepFields>>(
     createPayerValidationRules()
@@ -30,10 +30,10 @@ export const PayerDetailsStep: FC<SharedStepProps> = ({
     resolver: yupResolver(validationSchema),
   });
 
-  useGlobalFormDataUpdate({ watch: methods.watch, actions });
+  useStoreValuesSync<PayerDetailsStepFields>({ watch: methods.watch, callback: updateValues });
 
   const onSubmit = (data: PayerDetailsStepFields) => {
-    actions.updateFormDataAction(data);
+    updateValues(data);
     onNext();
   };
 
@@ -45,6 +45,7 @@ export const PayerDetailsStep: FC<SharedStepProps> = ({
             prefix="payer"
             countryOptions={countryOptions}
             genderOptions={genderOptions}
+            storeValues={values}
           />
 
           <ButtonRow>
