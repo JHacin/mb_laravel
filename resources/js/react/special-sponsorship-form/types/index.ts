@@ -1,9 +1,11 @@
 import { SelectOption } from '../../types';
 import {
+  FormStore,
   GifteeFields,
   PayerFields,
   SponsorshipFormServerSideProps,
   SponsorshipFormSharedStepProps,
+  SponsorshipFormSummaryStepFields,
   SponsorshipParamsStepFields,
 } from '../../sponsorship-forms/types';
 
@@ -34,9 +36,7 @@ export interface PayerDetailsStepFields extends PayerFields {}
 
 export interface GifteeDetailsStepFields extends GifteeFields {}
 
-export interface SummaryStepFields {
-  is_agreed_to_terms: boolean;
-}
+export interface SummaryStepFields extends SponsorshipFormSummaryStepFields {}
 
 export type AnyStepFields =
   | SpecialSponsorshipParamsStepFields
@@ -48,3 +48,8 @@ export type SpecialSponsorshipFormStoreValues = SpecialSponsorshipParamsStepFiel
   PayerDetailsStepFields &
   GifteeDetailsStepFields &
   SummaryStepFields;
+
+export type SpecialSponsorshipFormStore = FormStore<
+  SpecialSponsorshipFormStoreValues,
+  AnyStepFields
+>;

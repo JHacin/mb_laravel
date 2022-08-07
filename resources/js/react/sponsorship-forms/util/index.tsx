@@ -2,28 +2,55 @@ import * as yup from 'yup';
 import { locale } from '../../config/yup-locale';
 import ReactDOM from 'react-dom';
 import React, { FC } from 'react';
+import { SponsorshipFormStoreContext } from '../store';
+import { StoreApi } from 'zustand';
+import { FormStore } from '../types';
 
-interface RenderRootParams<TServerSideProps> {
+interface GetServerSidePropsParams {
   rootId: string;
-  EntryComponent: FC<{ serverSideProps: TServerSideProps }>;
 }
 
-export const renderRoot = <TServerSideProps,>({
+interface RenderRootParams<TServerSideProps, TValues, TAnyStepFields> {
+  rootId: string;
+  EntryComponent: FC<{ serverSideProps: TServerSideProps }>;
+  serverSideProps: TServerSideProps;
+  storeContextValue: StoreApi<FormStore<TValues, TAnyStepFields>>;
+}
+
+const getRootElement = (id: string) => {
+  const root = document.getElementById(id);
+
+  if (!root) {
+    throw new Error('React root node missing.');
+  }
+
+  return root;
+};
+
+export const getServerSideProps = <TServerSideProps,>({ rootId }: GetServerSidePropsParams) => {
+  const root = getRootElement(rootId);
+
+  const serverSideProps: TServerSideProps = JSON.parse(root.getAttribute('data-props') as string);
+
+  return serverSideProps;
+};
+
+export const renderRoot = <TServerSideProps, TValues, TAnyStepFields>({
   rootId,
   EntryComponent,
-}: RenderRootParams<TServerSideProps>) => {
-  const root = document.getElementById(rootId);
+  serverSideProps,
+  storeContextValue,
+}: RenderRootParams<TServerSideProps, TValues, TAnyStepFields>) => {
+  const root = getRootElement(rootId);
 
-  if (root) {
-    const serverSideProps: TServerSideProps = JSON.parse(root.getAttribute('data-props') as string);
+  yup.setLocale(locale);
 
-    yup.setLocale(locale);
-
-    ReactDOM.render(
-      <React.StrictMode>
+  ReactDOM.render(
+    <React.StrictMode>
+      <SponsorshipFormStoreContext.Provider value={storeContextValue}>
         <EntryComponent serverSideProps={serverSideProps} />
-      </React.StrictMode>,
-      root
-    );
-  }
+      </SponsorshipFormStoreContext.Provider>
+    </React.StrictMode>,
+    root
+  );
 };

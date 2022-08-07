@@ -1,9 +1,5 @@
-import { BoxOptionItem, PersonGender } from '../../types';
+import { BoxOptionItem } from '../../types';
 import { Step } from '../types';
-
-export const DEFAULT_GENDER = PersonGender.Female;
-
-export const DEFAULT_COUNTRY = 'SI';
 
 export const FORM_MODE = 'all';
 

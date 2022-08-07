@@ -76,3 +76,7 @@ export interface GifteeFields {
   giftee_city: string;
   giftee_country: string;
 }
+
+export interface SponsorshipFormSummaryStepFields {
+  is_agreed_to_terms: boolean;
+}

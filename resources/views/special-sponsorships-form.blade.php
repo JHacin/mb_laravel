@@ -24,6 +24,7 @@
             'monthly_amount_min' => config('money.donation_minimum'),
             'integer_max' => config('validation.integer_max'),
         ],
+        'contactEmail' => config('links.contact_email'),
     ];
 @endphp
 
