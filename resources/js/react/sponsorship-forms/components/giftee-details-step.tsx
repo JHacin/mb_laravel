@@ -11,14 +11,24 @@ import { SubmitButton } from '../../components/submit-button';
 import { useStoreValuesSync } from '../store/use-store-values-sync';
 import { YupValidationSchemaShape } from '../types';
 import { FORM_MODE } from '../constants';
+import {
+  AnyStepFields as CatSponsorshipFormAnyStepFields,
+  CatSponsorshipFormStoreValues,
+} from '../../cat-sponsor-form/types';
+import {
+  AnyStepFields as SpecialSponsorshipFormAnyStepFields,
+  SpecialSponsorshipFormStoreValues,
+} from '../../special-sponsorship-form/types';
 
 interface GifteeDetailsStepProps extends SponsorshipFormSharedStepProps {
   onPrev: SponsorshipFormSharedStepProps['onPrev'];
   onNext: SponsorshipFormSharedStepProps['onNext'];
   countryOptions: SponsorshipFormSharedStepProps['countryOptions'];
   genderOptions: SponsorshipFormSharedStepProps['genderOptions'];
-  values: any;
-  updateValues: any;
+  values: CatSponsorshipFormStoreValues | SpecialSponsorshipFormStoreValues;
+  updateValues: (
+    payload: CatSponsorshipFormAnyStepFields | SpecialSponsorshipFormAnyStepFields
+  ) => void;
 }
 
 export const GifteeDetailsStep: FC<GifteeDetailsStepProps> = ({

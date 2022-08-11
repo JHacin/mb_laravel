@@ -7,20 +7,38 @@ import { PersonDataFields } from '../../components/person-data-fields';
 import { BackButton } from '../../components/back-button';
 import { SubmitButton } from '../../components/submit-button';
 import { ButtonRow } from '../../components/button-row';
-import { SharedStepProps } from '../types';
-import { useCatSponsorshipFormStore } from '../store';
-import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
-import { FORM_MODE } from '../../sponsorship-forms/constants';
-import { PayerDetailsStepFields, YupValidationSchemaShape } from '../../sponsorship-forms/types';
+import { SponsorshipFormSharedStepProps } from '../types';
+import { useStoreValuesSync } from '../store/use-store-values-sync';
+import { FORM_MODE } from '../constants';
+import { PayerDetailsStepFields, YupValidationSchemaShape } from '../types';
+import {
+  AnyStepFields as CatSponsorshipFormAnyStepFields,
+  CatSponsorshipFormStoreValues,
+} from '../../cat-sponsor-form/types';
+import {
+  AnyStepFields as SpecialSponsorshipFormAnyStepFields,
+  SpecialSponsorshipFormStoreValues,
+} from '../../special-sponsorship-form/types';
 
-export const PayerDetailsStep: FC<SharedStepProps> = ({
+interface PayereDetailsStepProps extends SponsorshipFormSharedStepProps {
+  onPrev: SponsorshipFormSharedStepProps['onPrev'];
+  onNext: SponsorshipFormSharedStepProps['onNext'];
+  countryOptions: SponsorshipFormSharedStepProps['countryOptions'];
+  genderOptions: SponsorshipFormSharedStepProps['genderOptions'];
+  values: CatSponsorshipFormStoreValues | SpecialSponsorshipFormStoreValues;
+  updateValues: (
+    payload: CatSponsorshipFormAnyStepFields | SpecialSponsorshipFormAnyStepFields
+  ) => void;
+}
+
+export const PayerDetailsStep: FC<PayereDetailsStepProps> = ({
   onPrev,
   onNext,
   countryOptions,
   genderOptions,
+  values,
+  updateValues,
 }) => {
-  const { values, updateValues } = useCatSponsorshipFormStore();
-
   const validationSchema = yup.object<YupValidationSchemaShape<PayerDetailsStepFields>>(
     createPayerValidationRules()
   );

@@ -5,12 +5,12 @@ import { Transition, TransitionStatus } from 'react-transition-group';
 import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
 import clsx from 'clsx';
 import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
-import { PayerDetailsStep } from './steps/payer-details-step';
 import { SummaryStep } from './steps/summary-step';
 import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from '../sponsorship-forms/constants';
 import { Step } from '../sponsorship-forms/types';
 import { useSpecialSponsorshipFormStore } from './store';
 import { GifteeDetailsStep } from '../sponsorship-forms/components/giftee-details-step';
+import { PayerDetailsStep } from '../sponsorship-forms/components/payer-details-step'
 
 interface SpecialSponsorshipFormProps {
   serverSideProps: ServerSideProps;
@@ -94,7 +94,7 @@ export const SpecialSponsorshipForm: FC<SpecialSponsorshipFormProps> = ({ server
     },
     {
       step: Step.PAYER_DETAILS,
-      content: <PayerDetailsStep {...sharedStepProps} />,
+      content: <PayerDetailsStep {...sharedStepProps} values={values} updateValues={updateValues} />,
       ref: payerDetailsStepRef,
     },
     {

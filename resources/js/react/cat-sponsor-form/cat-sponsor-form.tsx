@@ -5,12 +5,12 @@ import axios from 'axios';
 import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Transition';
 import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
 import { SummaryStep } from './steps/summary-step';
-import { PayerDetailsStep } from './steps/payer-details-step';
 import { ServerSideProps, SharedStepProps } from './types';
 import { useCatSponsorshipFormStore } from './store';
 import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from '../sponsorship-forms/constants';
 import { Step } from '../sponsorship-forms/types';
 import { GifteeDetailsStep } from '../sponsorship-forms/components/giftee-details-step';
+import { PayerDetailsStep } from '../sponsorship-forms/components/payer-details-step'
 
 interface CatSponsorFormProps {
   serverSideProps: ServerSideProps;
@@ -88,7 +88,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
     },
     {
       step: Step.PAYER_DETAILS,
-      content: <PayerDetailsStep {...sharedStepProps} />,
+      content: <PayerDetailsStep {...sharedStepProps} values={values} updateValues={updateValues} />,
       ref: payerDetailsStepRef,
     },
     {
