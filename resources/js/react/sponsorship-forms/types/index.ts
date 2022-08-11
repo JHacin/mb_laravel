@@ -55,7 +55,7 @@ export interface SponsorshipParamsStepFields {
   is_anonymous: boolean;
 }
 
-export interface PayerFields {
+export interface PayerDetailsStepFields {
   payer_email: string;
   payer_first_name: string;
   payer_last_name: string;
@@ -66,7 +66,7 @@ export interface PayerFields {
   payer_country: string;
 }
 
-export interface GifteeFields {
+export interface GifteeDetailsStepFields {
   giftee_email: string;
   giftee_first_name: string;
   giftee_last_name: string;

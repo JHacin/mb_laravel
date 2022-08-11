@@ -3,13 +3,10 @@ import { useController, useFormContext } from 'react-hook-form';
 import { SelectOption } from '../types';
 import { BoxOption } from './box-option';
 import { HookFormTextField } from './hook-form-textfield';
-import {
-  CatSponsorshipFormStoreValues,
-  GifteeDetailsStepFields,
-  PayerDetailsStepFields,
-} from '../cat-sponsor-form/types';
+import { CatSponsorshipFormStoreValues } from '../cat-sponsor-form/types';
 import { HookFormSelect } from './hook-form-select';
-import { SpecialSponsorshipFormStoreValues } from '../special-sponsorship-form/types'
+import { SpecialSponsorshipFormStoreValues } from '../special-sponsorship-form/types';
+import { GifteeDetailsStepFields, PayerDetailsStepFields } from '../sponsorship-forms/types';
 
 interface PersonDataFieldsProps {
   prefix: 'payer' | 'giftee';

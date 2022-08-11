@@ -1,4 +1,4 @@
-import React, { FC, MutableRefObject, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { ServerSideProps, SharedStepProps } from './types';
 import axios from 'axios';
 import { Transition, TransitionStatus } from 'react-transition-group';
@@ -6,18 +6,18 @@ import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Trans
 import clsx from 'clsx';
 import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
 import { PayerDetailsStep } from './steps/payer-details-step';
-import { GifteeDetailsStep } from './steps/giftee-details-step';
 import { SummaryStep } from './steps/summary-step';
 import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from '../sponsorship-forms/constants';
 import { Step } from '../sponsorship-forms/types';
 import { useSpecialSponsorshipFormStore } from './store';
+import { GifteeDetailsStep } from '../sponsorship-forms/components/giftee-details-step';
 
 interface SpecialSponsorshipFormProps {
   serverSideProps: ServerSideProps;
 }
 
 export const SpecialSponsorshipForm: FC<SpecialSponsorshipFormProps> = ({ serverSideProps }) => {
-  const { values, updateStatus, status } = useSpecialSponsorshipFormStore();
+  const { values, updateStatus, status, updateValues } = useSpecialSponsorshipFormStore();
   const [activeStep, setActiveStep] = useState(Step.SPONSORSHIP_PARAMS);
   const scrollRef = useRef<HTMLDivElement>(null);
   const sponsorshipParamsStepRef = useRef<HTMLElement>(null);
@@ -86,35 +86,28 @@ export const SpecialSponsorshipForm: FC<SpecialSponsorshipFormProps> = ({ server
     contactEmail: serverSideProps.contactEmail,
   };
 
-  const stepComponents: {
-    step: Step;
-    Component: FC<SharedStepProps>;
-    props: SharedStepProps;
-    ref: MutableRefObject<HTMLElement | null>;
-  }[] = [
+  const stepComponents = [
     {
       step: Step.SPONSORSHIP_PARAMS,
-      Component: SponsorshipParamsStep,
+      content: <SponsorshipParamsStep {...sharedStepProps} />,
       ref: sponsorshipParamsStepRef,
-      props: sharedStepProps,
     },
     {
       step: Step.PAYER_DETAILS,
-      Component: PayerDetailsStep,
+      content: <PayerDetailsStep {...sharedStepProps} />,
       ref: payerDetailsStepRef,
-      props: sharedStepProps,
     },
     {
       step: Step.GIFTEE_DETAILS,
-      Component: GifteeDetailsStep,
+      content: (
+        <GifteeDetailsStep {...sharedStepProps} values={values} updateValues={updateValues} />
+      ),
       ref: gifteeDetailsStepRef,
-      props: sharedStepProps,
     },
     {
       step: Step.SUMMARY,
-      Component: SummaryStep,
+      content: <SummaryStep {...sharedStepProps} />,
       ref: summaryStepRef,
-      props: sharedStepProps,
     },
   ];
 
@@ -176,7 +169,7 @@ export const SpecialSponsorshipForm: FC<SpecialSponsorshipFormProps> = ({ server
       </div>
 
       <div>
-        {stepComponents.map(({ step, Component, props, ref }) => (
+        {stepComponents.map(({ step, content, ref }) => (
           <Transition
             in={activeStep === step}
             timeout={transitionDuration}
@@ -191,7 +184,7 @@ export const SpecialSponsorshipForm: FC<SpecialSponsorshipFormProps> = ({ server
                   ...transitionStyles[transitionState],
                 }}
               >
-                {activeStep === step && <Component {...props} />}
+                {activeStep === step && content}
               </div>
             )}
           </Transition>

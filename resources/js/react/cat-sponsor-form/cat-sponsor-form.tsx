@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, FC, MutableRefObject } from 'react';
+import React, { useState, useRef, useEffect, FC } from 'react';
 import clsx from 'clsx';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import axios from 'axios';
@@ -6,18 +6,18 @@ import { ENTERED, ENTERING, EXITED, EXITING } from 'react-transition-group/Trans
 import { SponsorshipParamsStep } from './steps/sponsorship-params-step';
 import { SummaryStep } from './steps/summary-step';
 import { PayerDetailsStep } from './steps/payer-details-step';
-import { GifteeDetailsStep } from './steps/giftee-details-step';
 import { ServerSideProps, SharedStepProps } from './types';
 import { useCatSponsorshipFormStore } from './store';
 import { STEP_CONFIG, STEPS_WITH_GIFT, STEPS_WITHOUT_GIFT } from '../sponsorship-forms/constants';
 import { Step } from '../sponsorship-forms/types';
+import { GifteeDetailsStep } from '../sponsorship-forms/components/giftee-details-step';
 
 interface CatSponsorFormProps {
   serverSideProps: ServerSideProps;
 }
 
 export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => {
-  const { values, status, updateStatus } = useCatSponsorshipFormStore();
+  const { values, status, updateStatus, updateValues } = useCatSponsorshipFormStore();
   const [activeStep, setActiveStep] = useState(Step.SPONSORSHIP_PARAMS);
   const scrollRef = useRef<HTMLDivElement>(null);
   const sponsorshipParamsStepRef = useRef<HTMLElement>(null);
@@ -80,35 +80,28 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
     contactEmail: serverSideProps.contactEmail,
   };
 
-  const stepComponents: {
-    step: Step;
-    Component: FC<SharedStepProps>;
-    props: SharedStepProps;
-    ref: MutableRefObject<HTMLElement | null>;
-  }[] = [
+  const stepComponents = [
     {
       step: Step.SPONSORSHIP_PARAMS,
-      Component: SponsorshipParamsStep,
+      content: <SponsorshipParamsStep {...sharedStepProps} />,
       ref: sponsorshipParamsStepRef,
-      props: sharedStepProps,
     },
     {
       step: Step.PAYER_DETAILS,
-      Component: PayerDetailsStep,
+      content: <PayerDetailsStep {...sharedStepProps} />,
       ref: payerDetailsStepRef,
-      props: sharedStepProps,
     },
     {
       step: Step.GIFTEE_DETAILS,
-      Component: GifteeDetailsStep,
+      content: (
+        <GifteeDetailsStep {...sharedStepProps} values={values} updateValues={updateValues} />
+      ),
       ref: gifteeDetailsStepRef,
-      props: sharedStepProps,
     },
     {
       step: Step.SUMMARY,
-      Component: SummaryStep,
+      content: <SummaryStep {...sharedStepProps} />,
       ref: summaryStepRef,
-      props: sharedStepProps,
     },
   ];
 
@@ -170,7 +163,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
       </div>
 
       <div>
-        {stepComponents.map(({ step, Component, props, ref }) => (
+        {stepComponents.map(({ step, content, ref }) => (
           <Transition
             in={activeStep === step}
             timeout={transitionDuration}
@@ -185,7 +178,7 @@ export const CatSponsorForm: FC<CatSponsorFormProps> = ({ serverSideProps }) => 
                   ...transitionStyles[transitionState],
                 }}
               >
-                {activeStep === step && <Component {...props} />}
+                {activeStep === step && content}
               </div>
             )}
           </Transition>

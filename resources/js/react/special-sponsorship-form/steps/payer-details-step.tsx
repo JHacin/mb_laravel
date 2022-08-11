@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { PayerDetailsStepFields, SharedStepProps } from '../types';
+import { SharedStepProps } from '../types';
 import { createPayerValidationRules } from '../../util';
 import { PersonDataFields } from '../../components/person-data-fields';
 import { ButtonRow } from '../../components/button-row';
@@ -10,7 +10,7 @@ import { BackButton } from '../../components/back-button';
 import { SubmitButton } from '../../components/submit-button';
 import { useSpecialSponsorshipFormStore } from '../store';
 import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
-import { YupValidationSchemaShape } from '../../sponsorship-forms/types';
+import { PayerDetailsStepFields, YupValidationSchemaShape } from '../../sponsorship-forms/types'
 import { FORM_MODE } from '../../sponsorship-forms/constants';
 
 export const PayerDetailsStep: FC<SharedStepProps> = ({

@@ -1,8 +1,8 @@
 import { SelectOption } from '../../types';
 import {
   FormStore,
-  GifteeFields,
-  PayerFields,
+  GifteeDetailsStepFields,
+  PayerDetailsStepFields,
   SponsorshipFormServerSideProps,
   SponsorshipFormSharedStepProps,
   SponsorshipFormSummaryStepFields,
@@ -31,10 +31,6 @@ export interface SpecialSponsorshipParamsStepFields extends SponsorshipParamsSte
   type: number;
   donation_amount: number;
 }
-
-export interface PayerDetailsStepFields extends PayerFields {}
-
-export interface GifteeDetailsStepFields extends GifteeFields {}
 
 export interface SummaryStepFields extends SponsorshipFormSummaryStepFields {}
 

@@ -1,7 +1,7 @@
 import {
   FormStore,
-  GifteeFields,
-  PayerFields,
+  GifteeDetailsStepFields,
+  PayerDetailsStepFields,
   SponsorshipFormServerSideProps,
   SponsorshipFormSharedStepProps,
   SponsorshipFormSummaryStepFields,
@@ -24,10 +24,6 @@ export interface CatSponsorshipParamsStepFields extends SponsorshipParamsStepFie
   monthly_amount: number;
   requested_duration: number | null;
 }
-
-export interface PayerDetailsStepFields extends PayerFields {}
-
-export interface GifteeDetailsStepFields extends GifteeFields {}
 
 export interface SummaryStepFields extends SponsorshipFormSummaryStepFields {}
 

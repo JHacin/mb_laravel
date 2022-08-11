@@ -2,25 +2,33 @@ import React, { FC } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { GifteeDetailsStepFields, SharedStepProps } from '../types';
+import { GifteeDetailsStepFields, SponsorshipFormSharedStepProps } from '../types';
 import { createGifteeValidationRules } from '../../util';
 import { PersonDataFields } from '../../components/person-data-fields';
 import { ButtonRow } from '../../components/button-row';
 import { BackButton } from '../../components/back-button';
 import { SubmitButton } from '../../components/submit-button';
-import { useSpecialSponsorshipFormStore } from '../store';
-import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
-import { YupValidationSchemaShape } from '../../sponsorship-forms/types';
-import { FORM_MODE } from '../../sponsorship-forms/constants';
+import { useStoreValuesSync } from '../store/use-store-values-sync';
+import { YupValidationSchemaShape } from '../types';
+import { FORM_MODE } from '../constants';
 
-export const GifteeDetailsStep: FC<SharedStepProps> = ({
+interface GifteeDetailsStepProps extends SponsorshipFormSharedStepProps {
+  onPrev: SponsorshipFormSharedStepProps['onPrev'];
+  onNext: SponsorshipFormSharedStepProps['onNext'];
+  countryOptions: SponsorshipFormSharedStepProps['countryOptions'];
+  genderOptions: SponsorshipFormSharedStepProps['genderOptions'];
+  values: any;
+  updateValues: any;
+}
+
+export const GifteeDetailsStep: FC<GifteeDetailsStepProps> = ({
   onPrev,
   onNext,
   countryOptions,
   genderOptions,
+  values,
+  updateValues,
 }) => {
-  const { values, updateValues } = useSpecialSponsorshipFormStore();
-
   const validationSchema = yup.object<YupValidationSchemaShape<GifteeDetailsStepFields>>(
     createGifteeValidationRules()
   );

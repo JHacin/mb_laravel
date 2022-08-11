@@ -7,11 +7,11 @@ import { PersonDataFields } from '../../components/person-data-fields';
 import { BackButton } from '../../components/back-button';
 import { SubmitButton } from '../../components/submit-button';
 import { ButtonRow } from '../../components/button-row';
-import { PayerDetailsStepFields, SharedStepProps } from '../types';
+import { SharedStepProps } from '../types';
 import { useCatSponsorshipFormStore } from '../store';
 import { useStoreValuesSync } from '../../sponsorship-forms/store/use-store-values-sync';
-import { FORM_MODE } from '../../sponsorship-forms/constants'
-import { YupValidationSchemaShape } from '../../sponsorship-forms/types'
+import { FORM_MODE } from '../../sponsorship-forms/constants';
+import { PayerDetailsStepFields, YupValidationSchemaShape } from '../../sponsorship-forms/types';
 
 export const PayerDetailsStep: FC<SharedStepProps> = ({
   onPrev,
